@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>inView</title>
+
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div id="section1" class="iv-watch">
+    </div>
+    <div id="section2" class="iv-watch">
+        <div id="anim-text">
+            <h1>HEJ</h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec erat enim, lobortis non sollicitudin cursus,
+                luctus a sem. Fusce semper, nibh gravida finibus pulvinar, quam magna varius sapien, a venenatis odio est
+                congue nulla. Aliquam nec ex ac nunc fringilla posuere quis vel libero. Sed pharetra iaculis tempus.
+                Etiam lectus quam, blandit vitae felis non, condimentum lacinia eros. Phasellus vel tellus vitae mi scelerisque
+                lacinia. Vestibulum quis porttitor nibh, vel aliquam nisi. Sed ac dui sollicitudin, consequat velit sit amet,
+                imperdiet nisi. Vestibulum tempus tortor quis purus tempus dapibus a quis mauris. Sed pretium metus nec mi viverra,
+                at sollicitudin tortor feugiat. Morbi ac sem nec ligula pharetra sodales eu ac ipsum. Suspendisse fermentum neque
+                in risus facilisis sollicitudin consequat eu turpis.
+            </p>
+            <p>
+                Curabitur in ipsum et magna laoreet tristique nec consequat lacus. Praesent dictum aliquet libero ut tempor.
+                Sed auctor aliquet gravida. Curabitur lacinia quam sem, eget venenatis arcu volutpat finibus. In pulvinar
+                nec mi vel dignissim. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
+                egestas. Maecenas aliquam pretium risus. Duis vel risus convallis, tincidunt metus at, vestibulum lacus.
+                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse
+                hendrerit leo ut mollis mattis.
+            </p>
+        </div>
+    </div>
+    <div id="section3" class="iv-watch">
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="js/ScrollWatch/ScrollWatch.js"></script>
+    <script>
+
+        $(document).ready(function () {
+          
+     
+
+            var textOffPos = $('#anim-text').position().left;
+
+            $('#section1').on('sw-scrolled', function (e, scrollObj) {
+                e.stopPropagation();
+                $(this).css('margin-left', (400 - (scrollObj.visibility * 400)) + 'px');
+            });;
+
+
+            $('#section2').on('sw-scrolled', function (e, scrollObj) {
+                e.stopPropagation();
+                var dist = 400 - textOffPos;
+                var newPos = textOffPos + (dist * scrollObj.visibility);
+                console.log(newPos);
+            
+                $('#anim-text').css('left', newPos + 'px');
+             
+            });;
+
+            $('#section1').on('sw-apear', function (e, scrollObj) {
+                e.stopPropagation();
+             
+                $('#anim-text p').css('color', 'blue');
+            });;
+
+
+            $('#section1').on('sw-disapear', function (e, scrollObj) {
+             
+                e.stopPropagation();
+                $('#anim-text p').css('color', 'red');
+            });;
+
+
+            $('.iv-watch').ScrollWatch({
+                axis: 'y',
+                prioritize: 'max'//'partofviewport'//'partofobject'
+            });
+
+        });
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+﻿body {
+    margin: 0px;
+    padding: 0px;
+}
+
+#section1 {
+    height: 3000px;
+    width: 2000px;
+    background-color: Blue;
+}
+
+#section2 {
+    position: relative;
+    height: 1200px;
+    width: 3000px;
+    background-color: black;
+    overflow: hidden;
+}
+
+#section3 {
+    height: 3000px;
+    width: 2000px;
+    background-color: Blue;
+}
+#anim-text {
+    position: absolute;
+    left: -600px;
+    padding: 20px 40px;
+    color: Red;
+    width: 400px;
+}
+
+h1 {
+    color: lime;
+}
