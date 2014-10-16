@@ -34,7 +34,7 @@
     top: 0px;
     bottom: 100px;
     background-color: transparent;
-    overflow: auto;
+    overflow: hidden;
     -webkit-overflow-scrolling: touch;
     margin: auto;
 }

@@ -50,7 +50,11 @@
         $(document).ready(function () {
             $('#NE-floating-footer').on('click', function () {
                 $('#NE-chapter-1, #NE-chapter-container').css('display', 'block');
+                $('#NE-main-container').animate({ 'scrollTop': $('#NE-chapter-1').outerHeight() }, 500);
+
             });
+
+   
 
             
             setTimeout(function () {
