@@ -1,4 +1,7 @@
-﻿
+﻿html, body, frameset, iframe {
+overflow: hidden;
+}
+
 #NE-floating-footer {
     position: fixed;
     width: 100%;
