@@ -4,10 +4,14 @@
     <title></title>
     <link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 </head>
-<body>
 
-    <iframe src="content.html" style="position:absolute;width:90%;height:90%;-webkit-overflow-scrolling:touch;"></iframe>
-
-</body>
+<frameset framespacing="0" rows="50,*, 50" frameborder="0" noresize=noresize>
+    <frame name="top" src="padd.html" target="top">
+    </frame>
+    <frame name="main" src="content.html" target="main">
+    </frame>
+    <frame name="bott" src="padd.html" target="bott">
+    </frame>
+</frameset>
 
 </html>
