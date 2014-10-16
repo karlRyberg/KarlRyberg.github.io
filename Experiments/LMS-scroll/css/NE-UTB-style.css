@@ -1,14 +1,4 @@
-﻿body, html, frameset {
-    background-color: rgb(0, 0, 220);
-    height: 100%;
-    overflow: hidden;
-}
-
-frame, main {
-    background-color: rgb(0, 220, 0);
-    overflow: hidden;
-}
-
+﻿
 #NE-floating-footer {
     position: fixed;
     width: 100%;
