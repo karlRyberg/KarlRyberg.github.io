@@ -1,5 +1,7 @@
 ﻿body, html {
     background-color: #fff;
+    height: 100%;
+    overflow: auto;
 }
 
 #NE-top-fixed-header {
