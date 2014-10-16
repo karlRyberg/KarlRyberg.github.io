@@ -1,9 +1,12 @@
-﻿body, html {
+﻿body, html, frameset {
     background-color: rgb(0, 200, 220);
     height: 100%;
     overflow: hidden;
 }
-
+frame {
+    background-color: rgb(0, 138, 255);
+    overflow: hidden;
+}
 
 #NE-floating-footer {
     position: fixed;
