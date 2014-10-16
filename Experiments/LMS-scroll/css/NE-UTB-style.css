@@ -27,6 +27,10 @@
     margin: auto;
 }
 
+    #NE-main-container::-webkit-scrollbar {
+    -webkit-appearance:scrollbartrack-horizontal;
+    }
+
 #NE-chapter-container {
     position: absolute;
     background-color: red;
