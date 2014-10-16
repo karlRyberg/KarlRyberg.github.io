@@ -2,13 +2,11 @@
     background-color: rgb(0, 0, 220);
     height: 100%;
     overflow: hidden;
-    -webkit-overflow-scrolling: auto;
 }
 
 frame, main {
     background-color: rgb(0, 220, 0);
     overflow: hidden;
-    -webkit-overflow-scrolling: auto;
 }
 
 #NE-floating-footer {
