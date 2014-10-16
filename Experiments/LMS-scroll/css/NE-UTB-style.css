@@ -36,7 +36,7 @@
 
 #NE-chapter-container {
     position: absolute;
-    top: 0px;
+    top: -100%;
     left: 0px;
     background-color: white;
     width: 100%;
