@@ -18,13 +18,12 @@
 
         <article id="NE-main-container" class="NE-scroll-watched">
 
-            <header id="NE-chapter-0">
-                <div id="NE-header-content">
-                    <h1>Title</h1>
-                </div>
-            </header>
+
 
             <div id="NE-chapter-container">
+                <header id="NE-chapter-0">
+                    asdasd
+                </header>
                 <div id="NE-chapter-1">
                     asdasd asdasd 
                 </div>
@@ -47,12 +46,14 @@
     <script src="libraries/masala-ux/dist/js/masala-ux.min.js"></script>
 
     <script type="text/javascript">
+
+        var currentChap = 0;
+
         $(document).ready(function () {
             $('#NE-floating-footer').on('click', function () {
-                $('#NE-chapter-1, #NE-chapter-container').css('display', 'block');
-                $('#NE-main-container').animate({ 'scrollTop': $('#NE-chapter-1').outerHeight() }, 500, 'swing', function () {
-                    $('#NE-chapter-0').css('display', 'none');
-                });
+                currentChap++;
+                $('#NE-chapter-' + currentChap).css('display', 'block');
+                $('#NE-main-container').animate({ 'scrollTop': '+=' + $('#NE-chapter-' + currentChap).offset().top }, 500, 'swing');
 
             });
 
