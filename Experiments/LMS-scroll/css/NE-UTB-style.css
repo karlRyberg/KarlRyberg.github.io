@@ -33,6 +33,9 @@
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     margin: auto;
+        transition-property: top, bottom;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
 }
 
 #NE-main-container.NE-pushed-down {
