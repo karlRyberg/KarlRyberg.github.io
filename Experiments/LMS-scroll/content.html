@@ -12,7 +12,7 @@
 
 <body aria-role="document">
 
-    <nav id="NE-top-floating-header" class="navigation NE-offcanvas" aria-role="navigation">
+    <nav id="NE-top-floating-header" class="navigation" aria-role="navigation">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -32,7 +32,7 @@
 
     <main>
        
-        <article id="NE-main-container" class="NE-scroll-watched">
+        <article id="NE-main-container">
 
             <div id="NE-chapter-container">
                 <header id="NE-chapter-0" class="NE-chapter NE-scroll-watched">
@@ -66,26 +66,21 @@
 
         $(document).ready(function () {
 
-            $('#NE-main-container').on('sw-scrolled', function (e, scrollObj) {
-                var navObj = $('#NE-top-floating-header');
-
-                if ($('#NE-main-container').scrollTop() > $('#NE-chapter-0').outerHeight() + 200 && navObj.hasClass('NE-offcanvas')) {
-                    navObj.removeClass('NE-offcanvas');
-                    $('#NE-page-indicator').addClass('showing');
-                    $('#NE-main-container').addClass('NE-pushed-down');
-                }
-                else if ($('#NE-main-container').scrollTop() < $('#NE-chapter-0').outerHeight() - 200 && !navObj.hasClass('NE-offcanvas')) {
-                    navObj.addClass('NE-offcanvas');
-                    $('#NE-page-indicator').removeClass('showing');
-                    $('#NE-main-container').removeClass('NE-pushed-down');
-                }
-            });
 
             $('#NE-floating-footer').on('click', function () {
+
+                $('#NE-main-container').css('overflow', 'hidden');
+
                 currentChap++;
                 $('#NE-chapter-' + currentChap).css('display', 'block');
                 var scrollPos = $('#NE-chapter-' + currentChap).position().top;
-                $('#NE-main-container').animate({ 'scrollTop': scrollPos }, 500, 'swing');
+                $('#NE-main-container').animate({ 'scrollTop': scrollPos }, 500, 'swing', function () {
+                    $('#NE-chapter-' + (currentChap - 1)).css('display', 'none');
+                    $('#NE-main-container').scrollTop(0);
+                    $('#NE-main-container').css('overflow', 'auto');
+                });
+               
+               
 
             });
 
