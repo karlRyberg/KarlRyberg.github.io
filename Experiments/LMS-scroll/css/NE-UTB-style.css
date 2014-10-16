@@ -17,9 +17,8 @@
     background-color: transparent;
     overflow: auto;
     margin: auto;
-    -webkit-overflow-scrolling: auto;
+    -webkit-overflow-scrolling: touch;
 }
-
 
 
 #NE-chapter-container {
