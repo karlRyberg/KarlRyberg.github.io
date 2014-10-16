@@ -1,4 +1,4 @@
-﻿body, html, main {
+﻿body, html, main, frameset {
     background-color: rgb(0, 200, 220);
     height: 100%;
     overflow: hidden;
