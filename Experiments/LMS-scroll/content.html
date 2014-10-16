@@ -14,6 +14,12 @@
 
     <main>
 
+        <header id="NE-top-fixed-header">
+            <div id="NE-header-content">
+                <h1>Title</h1>
+            </div>
+        </header>
+
 
         <article id="NE-main-container" class="NE-scroll-watched">
             <div id="NE-chapter-container"></div>
@@ -34,9 +40,15 @@
             $('#NE-floating-footer').on('click', function () {
                 $('#NE-chapter-container').animate({'top': '-100%'});
             });
+
+            
+            setTimeout(function () {
+                // Hide the address bar!
+                window.scrollTo(0, 1);
+            }, 0);
+
         });
 
-        $(window).scrollTop(0);
     </script>
 
 </body>
