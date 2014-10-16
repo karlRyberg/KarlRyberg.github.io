@@ -28,7 +28,7 @@
 }
 
     #NE-main-container::-webkit-scrollbar {
-    -webkit-appearance:scrollbartrack-horizontal;
+    width: 20px;
     }
 
 #NE-chapter-container {
