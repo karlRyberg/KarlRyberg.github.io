@@ -11,46 +11,42 @@
 </head>
 
 <body aria-role="document">
-    <article id="NE-main-container" class="NE-scroll-watched">
+    <main>
 
-        <nav id="NE-top-floating-header" class="navigation NE-offcanvas NE-floating-nav" aria-role="navigation">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                <span class="sr-only">Visa eller dölj navigationen</span>
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <a class="navbar-brand ne-logo" href="/" title="Gå till startsidan för NE.se">NE Nationalencyklopedin</a>
-                            <a class="navbar-brand pl-xs hidden-xs" href="" id="NE-navbar-title" style="font-size: 1.6em; margin-top: -1px">Utbildning</a>
+        <article id="NE-main-container" class="NE-scroll-watched">
+
+            <nav id="NE-top-floating-header" class="navigation NE-offcanvas" aria-role="navigation">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <span class="sr-only">Visa eller dölj navigationen</span>
+                                    <i class="fa fa-bars"></i>
+                                </button>
+                                <a class="navbar-brand ne-logo" href="/" title="Gå till startsidan för NE.se">NE Nationalencyklopedin</a>
+                                <a class="navbar-brand pl-xs hidden-xs" href="" id="NE-navbar-title" style="font-size: 1.6em; margin-top: -1px">Utbildning</a>
+                            </div>
+                            <div id="NE-page-indicator" class=" hidden-xs">0</div>
                         </div>
-                        <!--<div id="NE-page-indicator" class=" hidden-xs">0</div>-->
                     </div>
                 </div>
-            </div>
-        </nav>
-        <main>
-
-
-
-
-
+            </nav>
 
             <div id="NE-chapter-container">
-                <header id="NE-chapter-0">
+                <header id="NE-chapter-0" class="NE-chapter NE-scroll-watched">
                     asdasd
                 </header>
-                <div id="NE-chapter-1">
+                <div id="NE-chapter-1" class="NE-chapter NE-scroll-watched">
                     asdasd asdasd
                 </div>
-                <div id="NE-chapter-2">
+                <div id="NE-chapter-2" class="NE-chapter NE-scroll-watched">
                     dfsdfsdfsdf
                 </div>
             </div>
 
 
-    </article>
+        </article>
 
         <footer id="NE-floating-footer">
             asdasdasd asd asd as
@@ -61,26 +57,71 @@
 
     <script src="libraries/masala-ux/dist/js/jquery.min.js"></script>
     <script src="libraries/masala-ux/dist/js/masala-ux.min.js"></script>
+    <script src="scripts/ScrollWatch.js"></script>
 
     <script type="text/javascript">
 
         var currentChap = 0;
 
         $(document).ready(function () {
+
+            $('#NE-main-container').on('sw-scrolled', function (e, scrollObj) {
+                var navObj = $('#NE-top-floating-header');
+
+                if ($('#NE-main-container').scrollTop() > $('#NE-chapter-0').outerHeight() + 200 && navObj.hasClass('NE-offcanvas')) {
+                    navObj.removeClass('NE-offcanvas');
+                    $('#NE-page-indicator').addClass('showing');
+                    $('#NE-main-container').addClass('NE-pushed-down');
+                }
+                else if ($('#NE-main-container').scrollTop() < $('#NE-chapter-0').outerHeight() - 200 && !navObj.hasClass('NE-offcanvas')) {
+                    navObj.addClass('NE-offcanvas');
+                    $('#NE-page-indicator').removeClass('showing');
+                    $('#NE-main-container').removeClass('NE-pushed-down');
+                }
+            });
+
             $('#NE-floating-footer').on('click', function () {
                 currentChap++;
                 $('#NE-chapter-' + currentChap).css('display', 'block');
-                $('#NE-main-container').animate({ 'scrollTop': '+=' + $('#NE-chapter-' + currentChap).offset().top }, 500, 'swing');
+                var scrollPos = $('#NE-chapter-' + currentChap).position().top;
+                $('#NE-main-container').animate({ 'scrollTop': scrollPos }, 500, 'swing');
 
             });
 
-   
 
-            
-            setTimeout(function () {
-                // Hide the address bar!
-                window.scrollTo(0, 1);
-            }, 0);
+            var mostVisibleChapter,
+                highestVisibility = 0;
+
+            $('#NE-main-container').on('sw-begin-scroll', function () {
+                mostVisibleChapter = null;
+                highestVisibility = 0;
+            })
+
+
+            $('.NE-chapter').on('sw-scrolled', function (e, scrollObj) {
+                var threshold = mostVisibleChapter ? 0.5 : highestVisibility;
+
+                if (scrollObj.visibility > threshold) {
+                    mostVisibleChapter = $(this);
+                    highestVisibility = scrollObj.visibility;
+                }
+
+            });
+
+            $('#NE-main-container').on('sw-end-scroll', function () {
+                if (mostVisibleChapter) {
+                    var chapNum = mostVisibleChapter.attr('id');
+                    chapNum = chapNum.substring(chapNum.lastIndexOf('-') + 1);
+                    $('#NE-page-indicator').html(parseInt(chapNum) + 1);
+                }
+            });
+
+
+            scrollWatcher = $('.NE-scroll-watched').ScrollWatch({
+                axis: 'y',
+                prioritize: 'max', //'partofviewport'//'partofobject'
+                mainListener: $('#NE-main-container') // The element that is watched for scroll events and recives 'global' events such as start and stop. Defautls to window
+            });
 
         });
 
