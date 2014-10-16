@@ -24,6 +24,7 @@
     height: 100px;
     bottom: 0px;
     background-color: #ffd800;
+    z-index: 10;
 }
 
 
