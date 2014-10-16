@@ -1,0 +1,314 @@
+
+// Base16 NE.se color system
+// -------------------------
+
+// Gray scale
+//
+
+@base00: lighten(black, 2%);   // #030303
+@base01: lighten(black, 5%);   // #0c0c0c
+@base02: lighten(black, 20%);  // #262626
+@base03: lighten(black, 45%);  // #5f5f5f
+@base04: lighten(black, 65%);  // #959595
+@base05: lighten(black, 80%);  // #c1c1c1
+@base06: lighten(black, 95%);  // #efefef
+@base07: lighten(black, 98%);  // #fcfcfc
+
+// Primary colors
+//
+
+@base08: #ff3631;              // Red
+@base09: #ff612f;              // Orange
+@base0A: #ffa736;              // Yellow
+@base0B: #4aaf57;              // Green
+@base0C: #4fb9a3;              // Cyan
+@base0D: #18bdd4;              // Blue
+@base0E: #997db7;              // Purple
+@base0F: #eb5a86;              // Pink
+
+// Alternative colors
+// TODO: Remove these alternative colors.
+
+@base18: #ffa4a2;              // Light Red
+@base19: #ffb8a1;              // Light Orange
+@base1A: #ffd7a4;              // Light Yellow
+@base1B: #addbb3;              // Light Green
+@base1C: #b0dfd6;              // Light Cyan
+@base1D: #a7d6eb;              // Light Blue
+@base1E: #d1c4df;              // Light Purple
+@base1F: #f6b5c8;              // Light Pink
+
+
+// Color utilities
+// ---------------
+
+// Color fills with contrasting text color
+//
+
+.fill-with( @bg, @opacity: 100% ) {
+  background: @bg;
+  background: fade(@bg, @opacity);
+  color: contrast(@bg, @text-color, @text-inverse-color, 20%);
+}
+
+.fill-base00 { .fill-with( @base00 ); }
+.fill-base01 { .fill-with( @base01 ); }
+.fill-base02 { .fill-with( @base02 ); }
+.fill-base03 { .fill-with( @base03 ); }
+.fill-base04 { .fill-with( @base04 ); }
+.fill-base05 { .fill-with( @base05 ); }
+.fill-base06 { .fill-with( @base06 ); }
+.fill-base07 { .fill-with( @base07 ); }
+
+.fill-base08 { .fill-with( @base08 ); }
+.fill-base09 { .fill-with( @base09 ); }
+.fill-base0A { .fill-with( @base0A ); }
+.fill-base0B { .fill-with( @base0B ); }
+.fill-base0C { .fill-with( @base0C ); }
+.fill-base0D { .fill-with( @base0D ); }
+.fill-base0E { .fill-with( @base0E ); }
+.fill-base0F { .fill-with( @base0F ); }
+
+.fill-base18 { .fill-with( @base18 ); }
+.fill-base19 { .fill-with( @base19 ); }
+.fill-base1A { .fill-with( @base1A ); }
+.fill-base1B { .fill-with( @base1B ); }
+.fill-base1C { .fill-with( @base1C ); }
+.fill-base1D { .fill-with( @base1D ); }
+.fill-base1E { .fill-with( @base1E ); }
+.fill-base1F { .fill-with( @base1F ); }
+
+.fill-white { .fill-with( white ); }
+.fill-black { .fill-with( black ); }
+
+// Grayscale fills with transparency
+
+.fill-white-98 { .fill-with( white, 98% ); }
+.fill-white-95 { .fill-with( white, 95% ); }
+.fill-white-80 { .fill-with( white, 80% ); }
+.fill-white-65 { .fill-with( white, 65% ); }
+.fill-white-45 { .fill-with( white, 45% ); }
+.fill-white-20 { .fill-with( white, 20% ); }
+.fill-white-5 { .fill-with( white, 5% ); }
+.fill-white-2 { .fill-with( white, 2% ); }
+
+.fill-black-98 { .fill-with( black, 98% ); }
+.fill-black-95 { .fill-with( black, 95% ); }
+.fill-black-80 { .fill-with( black, 80% ); }
+.fill-black-65 { .fill-with( black, 65% ); }
+.fill-black-45 { .fill-with( black, 45% ); }
+.fill-black-20 { .fill-with( black, 20% ); }
+.fill-black-5 { .fill-with( black, 5% ); }
+.fill-black-2 { .fill-with( black, 2% ); }
+
+.fill-base01-98 { .fill-with( @base01, 98% ); }
+.fill-base01-95 { .fill-with( @base01, 95% ); }
+.fill-base01-80 { .fill-with( @base01, 80% ); }
+.fill-base01-65 { .fill-with( @base01, 65% ); }
+.fill-base01-45 { .fill-with( @base01, 45% ); }
+.fill-base01-20 { .fill-with( @base01, 20% ); }
+.fill-base01-5 { .fill-with( @base01, 5% ); }
+.fill-base01-2 { .fill-with( @base01, 2% ); }
+
+.fill-base02-98 { .fill-with( @base02, 98% ); }
+.fill-base02-95 { .fill-with( @base02, 95% ); }
+.fill-base02-80 { .fill-with( @base02, 80% ); }
+.fill-base02-65 { .fill-with( @base02, 65% ); }
+.fill-base02-45 { .fill-with( @base02, 45% ); }
+.fill-base02-20 { .fill-with( @base02, 20% ); }
+.fill-base02-5 { .fill-with( @base02, 5% ); }
+.fill-base02-2 { .fill-with( @base02, 2% ); }
+
+.fill-base03-98 { .fill-with( @base03, 98% ); }
+.fill-base03-95 { .fill-with( @base03, 95% ); }
+.fill-base03-80 { .fill-with( @base03, 80% ); }
+.fill-base03-65 { .fill-with( @base03, 65% ); }
+.fill-base03-45 { .fill-with( @base03, 45% ); }
+.fill-base03-20 { .fill-with( @base03, 20% ); }
+.fill-base03-5 { .fill-with( @base03, 5% ); }
+.fill-base03-2 { .fill-with( @base03, 2% ); }
+
+.fill-base04-98 { .fill-with( @base04, 98% ); }
+.fill-base04-95 { .fill-with( @base04, 95% ); }
+.fill-base04-80 { .fill-with( @base04, 80% ); }
+.fill-base04-65 { .fill-with( @base04, 65% ); }
+.fill-base04-45 { .fill-with( @base04, 45% ); }
+.fill-base04-20 { .fill-with( @base04, 20% ); }
+.fill-base04-5 { .fill-with( @base04, 5% ); }
+.fill-base04-2 { .fill-with( @base04, 2% ); }
+
+.fill-base05-98 { .fill-with( @base05, 98% ); }
+.fill-base05-95 { .fill-with( @base05, 95% ); }
+.fill-base05-80 { .fill-with( @base05, 80% ); }
+.fill-base05-65 { .fill-with( @base05, 65% ); }
+.fill-base05-45 { .fill-with( @base05, 45% ); }
+.fill-base05-20 { .fill-with( @base05, 20% ); }
+.fill-base05-5 { .fill-with( @base05, 5% ); }
+.fill-base05-2 { .fill-with( @base05, 2% ); }
+
+.fill-base06-98 { .fill-with( @base06, 98% ); }
+.fill-base06-95 { .fill-with( @base06, 95% ); }
+.fill-base06-80 { .fill-with( @base06, 80% ); }
+.fill-base06-65 { .fill-with( @base06, 65% ); }
+.fill-base06-45 { .fill-with( @base06, 45% ); }
+.fill-base06-20 { .fill-with( @base06, 20% ); }
+.fill-base06-5 { .fill-with( @base06, 5% ); }
+.fill-base06-2 { .fill-with( @base06, 2% ); }
+
+.fill-base07-98 { .fill-with( @base07, 98% ); }
+.fill-base07-95 { .fill-with( @base07, 95% ); }
+.fill-base07-80 { .fill-with( @base07, 80% ); }
+.fill-base07-65 { .fill-with( @base07, 65% ); }
+.fill-base07-45 { .fill-with( @base07, 45% ); }
+.fill-base07-20 { .fill-with( @base07, 20% ); }
+.fill-base07-5 { .fill-with( @base07, 5% ); }
+.fill-base07-2 { .fill-with( @base07, 2% ); }
+
+// Primary color fills with transparency
+
+.fill-base08-98 { .fill-with( @base08, 98% ); }
+.fill-base08-95 { .fill-with( @base08, 95% ); }
+.fill-base08-80 { .fill-with( @base08, 80% ); }
+.fill-base08-65 { .fill-with( @base08, 65% ); }
+.fill-base08-45 { .fill-with( @base08, 45% ); }
+.fill-base08-20 { .fill-with( @base08, 20% ); }
+.fill-base08-5 { .fill-with( @base08, 5% ); }
+.fill-base08-2 { .fill-with( @base08, 2% ); }
+
+.fill-base09-98 { .fill-with( @base09, 98% ); }
+.fill-base09-95 { .fill-with( @base09, 95% ); }
+.fill-base09-80 { .fill-with( @base09, 80% ); }
+.fill-base09-65 { .fill-with( @base09, 65% ); }
+.fill-base09-45 { .fill-with( @base09, 45% ); }
+.fill-base09-20 { .fill-with( @base09, 20% ); }
+.fill-base09-5 { .fill-with( @base09, 5% ); }
+.fill-base09-2 { .fill-with( @base09, 2% ); }
+
+.fill-base0A-98 { .fill-with( @base0A, 98% ); }
+.fill-base0A-95 { .fill-with( @base0A, 95% ); }
+.fill-base0A-80 { .fill-with( @base0A, 80% ); }
+.fill-base0A-65 { .fill-with( @base0A, 65% ); }
+.fill-base0A-45 { .fill-with( @base0A, 45% ); }
+.fill-base0A-20 { .fill-with( @base0A, 20% ); }
+.fill-base0A-5 { .fill-with( @base0A, 5% ); }
+.fill-base0A-2 { .fill-with( @base0A, 2% ); }
+
+.fill-base0B-98 { .fill-with( @base0B, 98% ); }
+.fill-base0B-95 { .fill-with( @base0B, 95% ); }
+.fill-base0B-80 { .fill-with( @base0B, 80% ); }
+.fill-base0B-65 { .fill-with( @base0B, 65% ); }
+.fill-base0B-45 { .fill-with( @base0B, 45% ); }
+.fill-base0B-20 { .fill-with( @base0B, 20% ); }
+.fill-base0B-5 { .fill-with( @base0B, 5% ); }
+.fill-base0B-2 { .fill-with( @base0B, 2% ); }
+
+.fill-base0C-98 { .fill-with( @base0C, 98% ); }
+.fill-base0C-95 { .fill-with( @base0C, 95% ); }
+.fill-base0C-80 { .fill-with( @base0C, 80% ); }
+.fill-base0C-65 { .fill-with( @base0C, 65% ); }
+.fill-base0C-45 { .fill-with( @base0C, 45% ); }
+.fill-base0C-20 { .fill-with( @base0C, 20% ); }
+.fill-base0C-10 { .fill-with( @base0C, 10% ); }
+.fill-base0C-5 { .fill-with( @base0C, 5% ); }
+.fill-base0C-2 { .fill-with( @base0C, 2% ); }
+
+.fill-base0D-98 { .fill-with( @base0D, 98% ); }
+.fill-base0D-95 { .fill-with( @base0D, 95% ); }
+.fill-base0D-80 { .fill-with( @base0D, 80% ); }
+.fill-base0D-65 { .fill-with( @base0D, 65% ); }
+.fill-base0D-45 { .fill-with( @base0D, 45% ); }
+.fill-base0D-20 { .fill-with( @base0D, 20% ); }
+.fill-base0D-5 { .fill-with( @base0D, 5% ); }
+.fill-base0D-2 { .fill-with( @base0D, 2% ); }
+
+.fill-base0E-98 { .fill-with( @base0E, 98% ); }
+.fill-base0E-95 { .fill-with( @base0E, 95% ); }
+.fill-base0E-80 { .fill-with( @base0E, 80% ); }
+.fill-base0E-65 { .fill-with( @base0E, 65% ); }
+.fill-base0E-45 { .fill-with( @base0E, 45% ); }
+.fill-base0E-20 { .fill-with( @base0E, 20% ); }
+.fill-base0E-5 { .fill-with( @base0E, 5% ); }
+.fill-base0E-2 { .fill-with( @base0E, 2% ); }
+
+.fill-base0F-98 { .fill-with( @base0F, 98% ); }
+.fill-base0F-95 { .fill-with( @base0F, 95% ); }
+.fill-base0F-80 { .fill-with( @base0F, 80% ); }
+.fill-base0F-65 { .fill-with( @base0F, 65% ); }
+.fill-base0F-45 { .fill-with( @base0F, 45% ); }
+.fill-base0F-20 { .fill-with( @base0F, 20% ); }
+.fill-base0F-5 { .fill-with( @base0F, 5% ); }
+.fill-base0F-2 { .fill-with( @base0F, 2% ); }
+
+// Alternative color fills with transparency
+
+.fill-base18-98 { .fill-with( @base18, 98% ); }
+.fill-base18-95 { .fill-with( @base18, 95% ); }
+.fill-base18-80 { .fill-with( @base18, 80% ); }
+.fill-base18-65 { .fill-with( @base18, 65% ); }
+.fill-base18-45 { .fill-with( @base18, 45% ); }
+.fill-base18-20 { .fill-with( @base18, 20% ); }
+.fill-base18-5 { .fill-with( @base18, 5% ); }
+.fill-base18-2 { .fill-with( @base18, 2% ); }
+
+.fill-base19-98 { .fill-with( @base19, 98% ); }
+.fill-base19-95 { .fill-with( @base19, 95% ); }
+.fill-base19-80 { .fill-with( @base19, 80% ); }
+.fill-base19-65 { .fill-with( @base19, 65% ); }
+.fill-base19-45 { .fill-with( @base19, 45% ); }
+.fill-base19-20 { .fill-with( @base19, 20% ); }
+.fill-base19-5 { .fill-with( @base19, 5% ); }
+.fill-base19-2 { .fill-with( @base19, 2% ); }
+
+.fill-base1A-98 { .fill-with( @base1A, 98% ); }
+.fill-base1A-95 { .fill-with( @base1A, 95% ); }
+.fill-base1A-80 { .fill-with( @base1A, 80% ); }
+.fill-base1A-65 { .fill-with( @base1A, 65% ); }
+.fill-base1A-45 { .fill-with( @base1A, 45% ); }
+.fill-base1A-20 { .fill-with( @base1A, 20% ); }
+.fill-base1A-5 { .fill-with( @base1A, 5% ); }
+.fill-base1A-2 { .fill-with( @base1A, 2% ); }
+
+.fill-base1B-98 { .fill-with( @base1B, 98% ); }
+.fill-base1B-95 { .fill-with( @base1B, 95% ); }
+.fill-base1B-80 { .fill-with( @base1B, 80% ); }
+.fill-base1B-65 { .fill-with( @base1B, 65% ); }
+.fill-base1B-45 { .fill-with( @base1B, 45% ); }
+.fill-base1B-20 { .fill-with( @base1B, 20% ); }
+.fill-base1B-5 { .fill-with( @base1B, 5% ); }
+.fill-base1B-2 { .fill-with( @base1B, 2% ); }
+
+.fill-base1C-98 { .fill-with( @base1C, 98% ); }
+.fill-base1C-95 { .fill-with( @base1C, 95% ); }
+.fill-base1C-80 { .fill-with( @base1C, 80% ); }
+.fill-base1C-65 { .fill-with( @base1C, 65% ); }
+.fill-base1C-45 { .fill-with( @base1C, 45% ); }
+.fill-base1C-20 { .fill-with( @base1C, 20% ); }
+.fill-base1C-5 { .fill-with( @base1C, 5% ); }
+.fill-base1C-2 { .fill-with( @base1C, 2% ); }
+
+.fill-base1D-98 { .fill-with( @base1D, 98% ); }
+.fill-base1D-95 { .fill-with( @base1D, 95% ); }
+.fill-base1D-80 { .fill-with( @base1D, 80% ); }
+.fill-base1D-65 { .fill-with( @base1D, 65% ); }
+.fill-base1D-45 { .fill-with( @base1D, 45% ); }
+.fill-base1D-20 { .fill-with( @base1D, 20% ); }
+.fill-base1D-5 { .fill-with( @base1D, 5% ); }
+.fill-base1D-2 { .fill-with( @base1D, 2% ); }
+
+.fill-base1E-98 { .fill-with( @base1E, 98% ); }
+.fill-base1E-95 { .fill-with( @base1E, 95% ); }
+.fill-base1E-80 { .fill-with( @base1E, 80% ); }
+.fill-base1E-65 { .fill-with( @base1E, 65% ); }
+.fill-base1E-45 { .fill-with( @base1E, 45% ); }
+.fill-base1E-20 { .fill-with( @base1E, 20% ); }
+.fill-base1E-5 { .fill-with( @base1E, 5% ); }
+.fill-base1E-2 { .fill-with( @base1E, 2% ); }
+
+.fill-base1F-98 { .fill-with( @base1F, 98% ); }
+.fill-base1F-95 { .fill-with( @base1F, 95% ); }
+.fill-base1F-80 { .fill-with( @base1F, 80% ); }
+.fill-base1F-65 { .fill-with( @base1F, 65% ); }
+.fill-base1F-45 { .fill-with( @base1F, 45% ); }
+.fill-base1F-20 { .fill-with( @base1F, 20% ); }
+.fill-base1F-5 { .fill-with( @base1F, 5% ); }
+.fill-base1F-2 { .fill-with( @base1F, 2% ); }

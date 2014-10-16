@@ -1,0 +1,235 @@
+
+// Override default Bootstrap disabled design
+//
+
+.btn {
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    .opacity(1);
+    color: @gray-mid-dark;
+  }
+}
+
+// Animate buttons
+//
+
+.btn {
+  .transition(~'color 90ms linear, background-color 90ms linear, border-color 90ms linear');
+}
+
+
+// Button type alignment modifiers
+//
+
+.btn {
+  &.text-left {
+    text-align: left;
+  }
+  &.text-right {
+    text-align: right;
+  }
+}
+
+
+// Anchor link variant
+//
+
+.btn-anchor-link {
+  .btn-link;
+
+  color: @anchor-color;
+
+  &:hover,
+  &:focus {
+    color: @anchor-hover-color;
+  }
+}
+
+
+// Horizontal padding modifiers
+//
+
+.btn {
+  &,
+  &.btn-lg,
+  &.btn-sm,
+  &.btn-xs {
+    &.btn-lg-horizontal {
+      padding-left: @padding-large-horizontal;
+      padding-right: @padding-large-horizontal;
+    }
+    &.btn-md-horizontal {
+      padding-left: @padding-base-horizontal;
+      padding-right: @padding-base-horizontal;
+    }
+    &.btn-sm-horizontal,
+    &.btn-xs-horizontal {
+      padding-left: @padding-small-horizontal;
+      padding-right: @padding-small-horizontal;
+    }
+    &.btn-no-horizontal {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+
+// Additional colors on Bootstrap buttons
+//
+
+.btn-anchor {
+  .button-variant(@btn-anchor-color, @btn-anchor-bg, @btn-anchor-border);
+}
+.btn-readspeak {
+  .button-variant(@btn-readspeak-color, @btn-readspeak-bg, @btn-readspeak-border);
+}
+.btn-inverse {
+  .button-variant(@btn-inverse-color, @btn-inverse-bg, @btn-inverse-border);
+}
+
+
+// Combine Bootstrap link buttons with text emphasis classes
+//
+
+.btn-link.text-default            { color: @text-color; }
+a.btn-link.text-default:hover,
+a.btn-link.text-default:focus     { color: darken(@text-color, 10%); }
+
+.btn-link.text-muted              { color: @gray-light; }
+a.btn-link.text-muted:hover,
+a.btn-link.text-muted:focus       { color: darken(@gray-light, 10%); }
+
+.btn-link.text-warning            { color: @state-warning-text; }
+a.btn-link.text-warning:hover,
+a.btn-link.text-warning:focus     { color: darken(@state-warning-text, 10%); }
+
+.btn-link.text-danger             { color: @state-danger-text; }
+a.btn-link.text-danger:hover,
+a.btn-link.text-danger:focus      { color: darken(@state-danger-text, 10%); }
+
+.btn-link.text-success            { color: @state-success-text; }
+a.btn-link.text-success:hover,
+a.btn-link.text-success:focus     { color: darken(@state-success-text, 10%); }
+
+
+// Icon buttons
+//
+// Round button containing 1 icon
+// Requires icon to be fixed-width
+// Size is determined by icon size
+//
+
+// Base class
+.btn-icon {
+
+  // Make button invisible
+  color: @text-color;
+  background-color: transparent;
+  border-color: transparent;
+  .box-shadow(none);
+
+  text-align: center;
+  padding: 0;
+
+  // Make icon a circle
+  .fa {
+    background-color: white;
+    border: 2px solid transparent;
+    border-radius: 50%;
+
+    // Width/height
+    line-height: (28em / 15);
+    width: (28em / 13);
+    height: (28em / 13);
+    &.fa-lg {
+      line-height: (36em / 15);
+      width: (36em / 14);
+      height: (36em / 14);
+    }
+
+    // Center icon
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    // Animate icon
+    .transition(~'color 90ms linear, background-color 90ms linear, border-color 90ms linear');
+  }
+
+  // Focus/hover state
+  &:focus,
+  &:hover {
+    background-color: transparent;
+    border-color: transparent;
+    color: @text-color;
+    text-decoration: none;
+    .box-shadow(none);
+  }
+
+  // Active state
+  &.active {
+    background-color: transparent;
+    border-color: transparent;
+    color: @text-color;
+    .box-shadow(none);
+  }
+}
+
+// Default modifier
+.btn-icon.btn-default {
+
+  .fa {
+    border-color: @btn-default-border;
+  }
+
+  &:focus,
+  &:hover,
+  &:active,
+  &.active {
+    .fa {
+      background-color: @btn-default-border;
+      color: @btn-default-color;
+      border-color: @btn-default-border;
+    }
+  }
+}
+
+// Anchor modifier
+.btn-icon.btn-anchor {
+
+  .fa {
+    border-color: @btn-anchor-bg;
+  }
+
+  &:focus,
+  &:hover,
+  &:active,
+  &.active {
+    .fa {
+      background-color: @btn-anchor-bg;
+      color: @btn-anchor-color;
+      border-color: @btn-anchor-bg;
+    }
+  }
+}
+
+// Readspeak modifier
+.btn-icon.btn-readspeak {
+
+  .fa {
+    border-color: @btn-readspeak-bg;
+  }
+
+  &:focus,
+  &:hover,
+  &:active,
+  &.active {
+    .fa {
+      background-color: @btn-readspeak-bg;
+      color: @btn-readspeak-color;
+      border-color: @btn-readspeak-bg;
+    }
+  }
+}

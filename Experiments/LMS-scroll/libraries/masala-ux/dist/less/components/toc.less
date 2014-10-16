@@ -1,0 +1,77 @@
+// Table of contents
+// -----------------
+
+.toc {
+  // Local variables
+  @toc-left-margin:       18px;
+  @toc-item-color:        @base03;
+  @toc-item-hover-color:  @base02;
+  
+  .toc-list {
+    .list-unstyled;
+
+    li {
+      margin-bottom: 0.6em;
+    }
+  }
+
+  .toc-header {
+    margin-top: 0;
+    color: @base04;
+    margin-left: @toc-left-margin;
+    .font-weight-narrow;
+  }
+
+  .toc-link {
+    text-decoration: none;
+    color: @toc-item-color;
+
+    &:hover {
+      color: @toc-item-hover-color;
+    }
+  }
+
+  .toc-expand {
+    float: left;
+    width: 12px;
+    text-align: center;
+
+    a {
+      color: @toc-item-color;
+      &:hover {
+        color: @toc-item-hover-color;
+      }
+    }
+
+    .toc-icon {
+      .fa;
+      .fa-fw;
+      color: @toc-item-color;
+    }
+
+    .toc-toggle {
+      // Set icons for different states
+      .toc-icon:before { content: @fa-var-angle-down; }
+      &.collapsed .toc-icon:before { content: @fa-var-angle-right; }
+    }
+  }
+
+  .toc-item {
+    margin-left: @toc-left-margin;
+  }
+
+  // The list in a list
+  .toc-list .toc-list {
+    margin-top: 0.4em;
+
+    .toc-item {
+      margin-left: @toc-left-margin + 6px;
+      font-size: @font-size-small;
+    }
+
+    // Prevents the list from jumping when expanding
+    li:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}

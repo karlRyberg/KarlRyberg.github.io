@@ -1,0 +1,105 @@
+
+//
+// Encyclopedia searchbar
+//
+
+.searchbar {
+  .fill-black-80;
+  .border-radius(.25 * @typographic-unit);
+
+  form {
+
+    .make-row();
+
+    .form-group {
+      .make-xs-column(12);
+
+      // Remove the focus state from the searchbar
+      input, button {
+        .form-control-focus(transparent);
+        &:focus { .box-shadow(none); }
+      }
+
+      margin-bottom: 0;
+
+      .input-group {
+        input[type='text'] {
+          padding-left: (.5 * @line-height-computed);
+          padding-right: (.5 * @line-height-computed);
+        }
+      }
+
+      // Make form elements invisible
+      .form-control,
+      .input-group-addon,
+      .input-group-btn .btn {
+        color: @base06;
+        background-color: transparent;
+        border-color: transparent;
+      }
+
+      // Select search source from a dropdown menu
+      .input-group-btn {
+        &.sources {
+
+          > label.btn {
+            .selected-source,
+            .fa {
+              .text-base04;
+            }
+          }
+
+          .dropdown-menu {
+            .fill-base07;
+
+            // Leftish-aligned dropdown
+            left: -5px;
+
+            .btn-group-vertical {
+              width: 100%;
+
+              label {
+                &.btn { color: @base02; }
+                &.btn.active {
+                  .relative;
+                  .fill-base05;
+                  box-shadow: none;
+                  padding-right: (@font-size-base * 3); // make room for ".fa-check"
+
+                  &:after {
+                    .absolute;
+                    .fa;
+                    .fa-fw;
+                    content: @fa-var-check;
+                    line-height: 2.5;
+                    right: @font-size-small;
+                    top: 0;
+                  }
+                }
+              }
+
+              > .btn:last-child:not(:first-child),
+              > .btn:first-child:not(:last-child) {
+                border-radius: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.searchbar-big() {
+  .searchbar .input-group {
+    @media (min-width: @screen-sm-min) { padding: (.5 * @line-height-computed); }   
+  }
+}
+
+// Make searchbar react to scroll events
+// Use js to animate top value and set size
+
+.searchbar.fixed {
+  z-index: 990; // Just below navbar
+  .transition(~"top 240ms ease-in-out");
+}

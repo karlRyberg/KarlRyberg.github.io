@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="//cloud.typography.com/7584252/697004/css/fonts.css" rel="stylesheet" title="dev">
+    <link href="//cloud.typography.com/7584252/694584/css/fonts.css" rel="stylesheet" title="prod">
+    <link href="libraries/masala-ux/dist/css/masala-ux.min.css" rel="stylesheet" />
+    <link href="css/NE-Education-Player.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+
+<body aria-role="document">
+
+    <main>
+
+        <header id="NE-top-fixed-header">
+            <div id="NE-header-content">
+                <h1>Title</h1>
+            </div>
+        </header>
+
+
+        <article id="NE-main-container" class="NE-scroll-watched">
+            <div id="NE-chapter-container"></div>
+        </article>
+
+
+
+    </main>
+
+    <script src="libraries/masala-ux/dist/js/jquery.min.js"></script>
+    <script src="libraries/masala-ux/dist/js/masala-ux.min.js"></script>
+    <script src="scripts/ScrollWatch.js"></script>
+
+    <script type="text/javascript">
+        var totalPages = 40;
+        $(document).ready(function () {
+            $('#NE-main-container').css('height', (100 * totalPages) + '%');
+
+            var headerOrgTop = $('#NE-header-content').position().top;
+
+            $(window).on('scroll scrollstop resize', function (e) {
+
+                var mainPos = $('#NE-main-container').offset().top - $(window).scrollTop();
+
+                var posStyle = mainPos <= 0 ? 'fixed' : 'absolute';
+
+
+                $('#NE-chapter-container').css({
+                    'position': posStyle,
+                    'width': $(window).innerWidth(),
+                    'height': $(window).innerHeight() - 20
+                });
+
+                $('#NE-header-content').css('top', (headerOrgTop - ($(window).scrollTop() * .1)) + 'px')
+
+                $('#NE-chapter-container').html(Math.round(($(window).scrollTop() / $('#NE-main-container').outerHeight()) * totalPages));
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

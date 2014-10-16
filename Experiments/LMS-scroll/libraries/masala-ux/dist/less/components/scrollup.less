@@ -1,0 +1,33 @@
+//
+//  Scroll to top component given by scrollup.js
+//  
+
+#scrollUp {
+  .fa;
+
+  .fill-base06;
+  bottom: 20px;
+  right: 20px;
+  font-size: 27px;
+  text-decoration: none;
+  padding: 12px 15px;
+  .opacity(.9);
+  .border-radius(10px);
+  border: 1px solid white;
+  .transition(~"background 200ms linear");
+
+  &:after {
+    content: @fa-var-arrow-up;
+  }
+
+  &:hover {
+    .fill-base05;
+  }
+
+  @media (max-width: @screen-sm-max) {
+    right: 10px;
+    bottom: 10px;
+    font-size: 20px;
+    padding: 7px 15px;
+  }
+}

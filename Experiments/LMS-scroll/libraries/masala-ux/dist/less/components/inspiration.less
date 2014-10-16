@@ -1,0 +1,36 @@
+.inspiration {
+  .panel {
+    &>a {
+      text-decoration: none;
+      .panel-figure {
+        overflow: hidden;
+        .relative;
+        .keyline;
+        .keyline-base06;
+        .keyline-bottom;
+        .keyline-top;
+        .label {
+          padding: 4px 6px;
+          .absolute;
+          .fill-black-95;
+          .mt-xs;
+          .mr-xs;
+          .pin-top-right;
+        }
+        img {
+          margin: 0 auto;
+          display: block;
+        }
+        @media (min-width: @screen-md-min) {
+          max-height: 200px;
+        }
+        @media (max-width: @screen-sm-min) {
+          img {
+            max-height: 400px;
+          }
+        }
+      }
+
+    }
+  }
+}

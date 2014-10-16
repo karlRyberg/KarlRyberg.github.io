@@ -1,0 +1,370 @@
+
+// Grays
+// -------------------------
+
+@near-black:            @base00;
+@gray-darker:           @base01;
+@gray-dark:             @base02;
+@gray-mid-dark:         @base03;
+@gray-mid-light:        @base04;
+@gray-light:            @base05;
+@gray-lighter:          @base06;
+@near-white:            @base07;
+
+@gray:                  mix(@gray-mid-light, @gray-mid-dark, 50%);
+
+
+// Named colors
+// https://kuler.adobe.com/NESE-Warm-color-theme-2900819/
+// https://kuler.adobe.com/NESE-Cold-color-theme-2900847/
+// -------------------------
+
+@red:                   @base08;
+@orange:                @base09;
+@yellow:                @base0A;
+@green:                 @base0B;
+@cyan:                  @base0C;
+@blue:                  @base0D;
+@purple:                @base0E;
+@pink:                  @base0F;
+
+
+// UI colors
+// -------------------------
+
+@brand-primary:         @blue;
+@brand-success:         @green;
+@brand-warning:         @yellow;
+@brand-danger:          @red;
+@brand-info:            @cyan;
+
+
+// Scaffolding
+// -------------------------
+
+@text-color:                @gray-dark;
+@text-inverse-color:        @gray-light;
+@body-bg:                   white;
+
+
+// Links
+// -------------------------
+
+@link-color:            @blue;
+@link-hover-color:      darken(@blue, 15%);
+
+@anchor-color:          @green;
+@anchor-hover-color:    darken(@anchor-color, 15%);
+
+@readspeak-color:       @purple;
+
+
+// Typography
+// -------------------------
+// The typographic unit is 12
+// This should form the foundation for all vertical measurements
+
+@typographic-unit:        12px;
+
+@font-family-sans-serif:  'Gotham Narrow A', 'Gotham Narrow B', Corbel, Tahoma, Arial, sans-serif;
+@font-family-serif:       'Mercury Text G1 A', 'Mercury Text G1 B', Palatino, 'Palatino Linotype', 'Palatino LT STD', Constantia, 'Times New Roman', serif;
+
+@font-weight-narrow:      300;
+@font-weight-normal:      400;
+@font-weight-medium:      500;
+@font-weight-bold:        700;
+
+@font-size-base:          14px;
+@font-size-large:         ceil(@font-size-base * 1.21428571428571);   // ~17px
+@font-size-small:         ceil(@font-size-base * 0.78571428571429);   // ~11px
+
+@line-height-base:        1.71428571428571;   // 24/14
+@line-height-large:       1.41176470588235;   // 24/17
+@line-height-small:       1.09090909090909;   // 12/11
+@line-height-computed:    floor(@font-size-base * @line-height-base); // 24px
+
+@font-size-h0:            ceil(@font-size-base * 3.21428571428571);   // ~45px
+@font-size-h1:            ceil(@font-size-base * 2.57142857142857);   // ~36px
+@font-size-h2:            ceil(@font-size-base * 2);                  // ~28px
+@font-size-h3:            ceil(@font-size-base * 1.5);                // =21px
+@font-size-h4:            @font-size-large;
+@font-size-h5:            @font-size-base;
+@font-size-h6:            @font-size-base;
+
+@headings-font-weight:    @font-weight-medium;
+
+@font-size-body:          @font-size-large;
+@line-height-body:        1.41176470588235; // 24/17
+@max-width-body-ratio:    28;
+@max-width-body:          unit(@max-width-body-ratio, em);
+
+
+// Components
+// -------------------------
+
+@padding-base-horizontal:       @typographic-unit;
+@padding-large-horizontal:      (2 * @typographic-unit);
+@padding-small-horizontal:      (.5 * @typographic-unit);
+@padding-xs-horizontal:         (.125 * @typographic-unit);
+
+@padding-base-vertical:         (.5 * @typographic-unit);
+@padding-large-vertical:        @typographic-unit;
+@padding-small-vertical:        (.25 * @typographic-unit);
+@padding-xs-vertical:           (.125 * @typographic-unit);
+
+@border-radius-base:            0;
+@border-radius-large:           0;
+@border-radius-small:           0;
+
+@component-active-color:        white;
+@component-active-bg:           @anchor-color;
+
+
+// Tables
+// -------------------------
+
+@table-cell-padding:                 @padding-base-horizontal;
+@table-condensed-cell-padding:       @padding-small-horizontal;
+@table-expanded-cell-padding:        @padding-large-horizontal;
+
+@table-bg:                           transparent; // overall background-color
+@table-bg-accent:                    @near-white; // for striping
+@table-bg-hover:                     @gray-lighter;
+@table-bg-active:                    @table-bg-hover;
+
+@table-border-color:                 @gray-lighter; // table and cell border
+
+
+// Buttons
+// -------------------------
+
+@btn-default-color:              @gray-darker;
+@btn-default-bg:                 @near-white;
+@btn-default-border:             @gray-light;
+
+@btn-readspeak-color:              white;
+@btn-readspeak-bg:                 @readspeak-color;
+@btn-readspeak-border:             @btn-readspeak-bg;
+
+@btn-anchor-color:              white;
+@btn-anchor-bg:                 @anchor-color;
+@btn-anchor-border:             darken(@btn-anchor-bg, 6.5%);
+
+@btn-inverse-color:              #474949;
+@btn-inverse-bg:                 #fff;
+@btn-inverse-border:             @btn-inverse-bg;
+
+
+// Forms
+// -------------------------
+
+@input-group-addon-bg:           @btn-default-bg;
+
+
+// List group
+// -------------------------
+@list-group-bg:                   transparent;
+@list-group-border:               @gray-light;
+@list-group-border-radius:        @border-radius-base;
+
+@list-group-hover-bg:             @base07;
+@list-group-active-color:         @component-active-color;
+@list-group-active-bg:            @component-active-bg;
+@list-group-active-border:        @list-group-active-bg;
+
+@list-group-link-color:           @link-color;
+@list-group-link-heading-color:   @text-color;
+
+
+// Panels
+// -------------------------
+@panel-bg:                    transparent;
+@panel-inner-border:          @gray-light;
+@panel-border-radius:         0;
+@panel-footer-bg:             transparent;
+
+@panel-default-text:          @text-color;
+@panel-default-border:        transparent;
+@panel-default-heading-bg:    transparent;
+
+@panel-primary-text:          @panel-default-text;
+@panel-primary-border:        transparent;
+@panel-primary-inner-border:  @panel-inner-border;
+@panel-primary-heading-bg:    transparent;
+
+@panel-success-text:          @panel-default-text;
+@panel-success-border:        transparent;
+@panel-success-inner-border:  @panel-inner-border;
+@panel-success-heading-bg:    transparent;
+
+@panel-warning-text:          @panel-default-text;
+@panel-warning-border:        transparent;
+@panel-warning-inner-border:  @panel-inner-border;
+@panel-warning-heading-bg:    transparent;
+
+@panel-danger-text:           @panel-default-text;
+@panel-danger-border:         transparent;
+@panel-danger-inner-border:   @panel-inner-border;
+@panel-danger-heading-bg:     transparent;
+
+@panel-info-text:             @panel-default-text;
+@panel-info-border:           transparent;
+@panel-info-inner-border:     @panel-inner-border;
+@panel-info-heading-bg:       transparent;
+
+
+// Thumbnails
+// -------------------------
+@thumbnail-padding:           0;
+@thumbnail-bg:                transparent;
+@thumbnail-border:            transparent;
+@thumbnail-border-radius:     0;
+
+@thumbnail-caption-color:     @text-muted;
+@thumbnail-caption-padding:   0;
+
+
+// Media queries breakpoints
+// --------------------------------------------------
+
+// Extra wide desktop
+@screen-xl:                  1600px;
+@screen-xl-min:              @screen-xl;
+@screen-xl-desktop:          @screen-xl-min;
+
+// So media queries don't overlap when required, provide a maximum
+@screen-lg-max:              (@screen-xl-min - 1);
+
+
+// Navbar
+// -------------------------
+
+// Basics of a navbar
+@navbar-height:                    80px;
+@navbar-computed-height:           @navbar-height;
+@navbar-margin-bottom:             0;
+@navbar-border-radius:             0;
+@navbar-padding-horizontal:        floor(@grid-gutter-width);
+@navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);
+
+@navbar-default-color:             @base03;
+
+
+// Navbar links
+@navbar-default-link-color:                fade(black, 65%);
+@navbar-default-link-hover-color:          @link-color;
+@navbar-default-link-hover-bg:             transparent;
+@navbar-default-link-active-color:         @base00;
+@navbar-default-link-active-bg:            @navbar-default-link-hover-bg;
+@navbar-default-link-disabled-color:       fade(black, 45%);
+@navbar-default-link-disabled-bg:          @navbar-default-link-hover-bg;
+
+// Navbar brand label
+@navbar-default-brand-color:               @navbar-default-link-color;
+@navbar-default-brand-hover-color:         @navbar-default-link-hover-color;
+@navbar-default-brand-hover-bg:            @navbar-default-link-hover-bg;
+
+// Navbar toggle
+@navbar-default-toggle-hover-bg:           darken(@base06, 5%);
+@navbar-default-toggle-icon-bar-bg:        fade(black, 80%);
+@navbar-default-toggle-border-color:       fade(black, 20%);
+
+// Inverted navbar
+//
+// Reset inverted navbar basics
+@navbar-inverse-color:                      rgba(255,255,255,.65);
+@navbar-inverse-bg:                         transparent;
+@navbar-inverse-border:                     transparent;
+
+// Inverted navbar links
+@navbar-inverse-link-color:                 rgba(255,255,255,.65);
+@navbar-inverse-link-hover-color:           white;
+@navbar-inverse-link-hover-bg:              transparent;
+@navbar-inverse-link-active-color:          @navbar-inverse-link-hover-color;
+@navbar-inverse-link-active-bg:             @navbar-inverse-link-hover-bg;
+@navbar-inverse-link-disabled-color:        rgba(255,255,255,.45);
+@navbar-inverse-link-disabled-bg:           @navbar-inverse-link-active-bg;
+
+// Inverted navbar brand label
+@navbar-inverse-brand-color:                @navbar-inverse-link-color;
+@navbar-inverse-brand-hover-color:          @navbar-inverse-link-hover-color;
+@navbar-inverse-brand-hover-bg:             @navbar-inverse-link-hover-bg;
+
+
+// Navs
+// -------------------------
+
+@nav-link-padding:                          @padding-base-vertical @padding-base-horizontal;
+@nav-link-hover-bg:                         @base06;
+
+@nav-disabled-link-color:                   @base04;
+@nav-disabled-link-hover-color:             @base04;
+
+@nav-open-link-hover-color:                 white;
+
+// Tabs
+@nav-tabs-border-color:                     @base05;
+
+@nav-tabs-link-hover-border-color:          transparent;
+
+@nav-tabs-active-link-hover-bg:             transparent;
+@nav-tabs-active-link-hover-color:          @text-color;
+@nav-tabs-active-link-hover-border-color:   transparent;
+
+@nav-tabs-justified-link-border-color:            transparent;
+@nav-tabs-justified-active-link-border-color:     transparent;
+
+// Pills
+@nav-pills-border-radius:                   @border-radius-small;
+@nav-pills-active-link-hover-bg:            @component-active-bg;
+@nav-pills-active-link-hover-color:         @component-active-color;
+
+
+// Type
+// ------------------------
+@text-muted:                  @gray-mid-light;
+@abbr-border-color:           @gray-light;
+@headings-small-color:        @gray;
+@blockquote-small-color:      @gray;
+@blockquote-border-color:     @gray-light;
+@page-header-border-color:    @gray-light;
+@page-border-color:           #d9d9d9;
+
+
+// Miscellaneous
+// -------------------------
+
+// URL to box-sizing polyfill
+@box-sizing-polyfill-url:     "../js/boxsizing.htc";
+
+// URL to logotypes
+@ne-logo-url:                 "../images/NE_logo_positiv.svg";
+@ne-logo-inverse-url:         "../images/NE_logo_negativ.svg";
+
+// Hr border color
+@hr-border:                   @gray-light;
+
+
+// Breadcrumbs
+// -------------------------
+@breadcrumb-bg:               transparent;
+@breadcrumb-color:            @gray;
+@breadcrumb-active-color:     @gray;
+@breadcrumb-padding:          0;
+
+
+// Container sizes
+// --------------------------------------------------
+
+// Small screen / tablet
+@container-tablet:            ((720px + @grid-gutter-width));
+
+// Medium screen / desktop
+@container-desktop:           ((940px + @grid-gutter-width));
+
+// Large screen / wide desktop
+@container-large-desktop:     ((1140px + @grid-gutter-width));
+
+// Extra wide screen
+@container-xlarge-desktop:    ((1440px + @grid-gutter-width));
+@container-xl:                @container-xlarge-desktop;

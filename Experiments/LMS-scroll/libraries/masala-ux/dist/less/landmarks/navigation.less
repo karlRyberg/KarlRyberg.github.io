@@ -1,0 +1,138 @@
+
+//
+// Menubar
+// System-wide navigation between products
+//
+
+.navigation {
+
+  // Inherit from BS navbar
+  .navbar;
+  .navbar-default;
+  .navbar-fixed-top;
+  margin-bottom: 0;
+
+  // Reset Bootstrap styles
+  background-color: transparent;
+  border-color: transparent;
+  .navbar-collapse,
+  .navbar-form {
+    border-color: transparent;
+  }
+
+  .fill-white();
+  .keyline;
+  .keyline-vertical;
+  .keyline-bottom;
+  border-color: @page-border-color;
+
+  // Thicker border below active menu option
+  .navbar-nav { margin-bottom: -1px; }
+  .navbar-nav li {
+    a {
+      font-weight: @font-weight-medium;
+      border-style: solid;
+      border-color: transparent;
+      border-width: 0 0 @padding-base-vertical;
+      padding-top:    @navbar-padding-vertical;
+      padding-bottom: @navbar-padding-vertical - 4px; // Negate the border
+    }
+    &.active a {
+      border-bottom-color: @base0D;
+    }
+  }
+
+  .dropdown-menu li a {
+    padding: 6px 20px 0; // Negate the border
+  }
+
+  // Override the Bootstrap navbar-toggle so that it is adjusted for an fa-icon
+  .navbar-toggle {
+    padding: 4px 10px;
+  }
+}
+
+// Logo image replacement
+.navbar-brand.ne-logo {
+  .text-hide();
+
+  background: url(@ne-logo-url) center left no-repeat;
+  background-size: contain;
+
+  height: (@navbar-height - (2 * @padding-base-vertical));
+  margin: (.5 * @padding-large-vertical) (.5 * @grid-gutter-width);
+}
+
+
+//
+// Inverse navbar style
+//
+
+.navigation.inverse {
+
+  // Inherit from BS navbar-inverse
+  .navbar-inverse;
+
+
+  // Reset Bootstrap styles
+  background-color: transparent;
+  border-color: transparent;
+  .navbar-collapse,
+  .navbar-form {
+    border-color: transparent;
+  }
+
+  // Container colors
+  .container {
+    .fill-black-95;
+    border-bottom-color: fade(white, 45%);
+  }
+
+  // Active nav item border color
+  .navbar-nav li.active a {
+    border-bottom-color: fade(white, 45%);
+  }
+
+  // Inverted logo image
+  .navbar-brand.ne-logo {
+    background-image: url(@ne-logo-inverse-url);
+  }
+}
+
+//
+// Seethru navbar style
+// No background, so it should be placed on a solid color or photo
+//
+
+.navigation.seethru,
+.navigation.seethru .container,
+.navigation.seethru.inverse,
+.navigation.seethru.inverse .container {
+  background: none;
+}
+
+//
+// Animate style modifications
+//
+
+.navigation {
+  .transition(~"background-color 140ms linear, color 140ms linear");
+
+  .container,
+  .active,
+  .caret {
+    .transition(~"border-color 140ms linear");
+  }
+
+  a,
+  .navbar-text {
+    .transition(~"color 140ms linear");
+  }
+}
+
+/**
+ * Instead of having to have a specific margin from the top.
+ */
+#navigation-pusher {
+  height: @navbar-computed-height;
+}

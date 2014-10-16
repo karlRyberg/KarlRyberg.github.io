@@ -1,0 +1,36 @@
+﻿body, html {
+    background-color: #fff;
+}
+
+#NE-top-fixed-header {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #808080;
+}
+
+#NE-header-content{
+        position: absolute;
+    top: 30px;
+    left: 100px;
+    color: white;
+
+
+}
+
+#NE-main-container {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    height: 400%;
+    background-color: rgb(0,200,220);
+}
+
+#NE-chapter-container{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: white;
+    width: 100%;
+    height:100%;
+}

@@ -1,0 +1,79 @@
+//
+// Marketing "puffar"
+//
+
+.puffar {
+  .fill-base06;
+  .pt-lg;
+  .pb-lg;
+}
+
+.puffar-list {
+  .make-row;
+}
+
+.puffar-header {
+  font-weight: @font-weight-narrow;
+  .text-center;
+  .text-base03;
+  .mt-none;
+  .mb-md;
+}
+
+.puffar-item-wrapper {
+  .make-sm-column(6);
+  .make-md-column(3);
+}
+
+.puffar-item {
+
+  a { text-decoration: none; }
+
+  &:hover {
+    .puffar-item-header {
+      .keyline-base0D;
+    }
+  }
+
+  // Add bottom margin when the puffs end up above each other
+  @media (max-width: @screen-sm-max) { margin-bottom: 30px; }
+}
+
+.puffar-item-image {
+  position: relative;
+}
+
+.puffar-item-body {
+  
+  .fill-white;
+  padding: @padding-base-horizontal;
+}
+
+
+.puffar-item-header {
+  .mt-xs;
+  .mb-none;
+
+  .inline-block;
+  .keyline;
+  .keyline-transparent; // Color is added on :hover
+  .keyline-bottom.keyline-3x;
+
+  color: @link-color;
+
+  .transition(~"all 140ms linear");
+}
+
+.puffar-item-category {
+  .mb-none;
+  .text-base04;
+  font-size: @font-size-base;
+  line-height: @font-size-base;
+}
+
+.puffar-item-text {
+  overflow: hidden;
+  .mt-xs;
+  height: 150px;
+  @media (max-width: @screen-sm-max) { height: 110px; }
+}
