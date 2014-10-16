@@ -1,5 +1,6 @@
-﻿html, body, frameset, iframe {
+﻿html, body, frameset {
 overflow: hidden;
+height: 100%;
 }
 
 #NE-floating-footer {
