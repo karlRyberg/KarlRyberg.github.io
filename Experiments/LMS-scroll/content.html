@@ -75,8 +75,8 @@
                 $('#NE-chapter-' + currentChap).css('display', 'block');
                 var scrollPos = $('#NE-chapter-' + currentChap).position().top;
                 $('#NE-main-container').animate({ 'scrollTop': scrollPos }, 500, 'swing', function () {
-                  //  $('#NE-chapter-' + (currentChap - 1)).css('display', 'none');
-                  //  $('#NE-main-container').scrollTop(0);
+                    $('#NE-chapter-' + (currentChap - 1)).css('display', 'none');
+                    $('#NE-main-container').scrollTop(0);
                     //     $('#NE-main-container').css('overflow', 'scroll');
                 });
 
@@ -119,9 +119,6 @@
                 mainListener: $('#NE-main-container') // The element that is watched for scroll events and recives 'global' events such as start and stop. Defautls to window
             });
 
-            $('body, html').on('touchmove', function (e) {
-                e.preventDefault();
-            });
 
 
         });
