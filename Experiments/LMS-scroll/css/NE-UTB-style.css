@@ -1,7 +1,7 @@
 ﻿body, html {
     background-color: #fff;
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
 }
 
 #NE-top-fixed-header {
@@ -36,7 +36,7 @@
 
 #NE-chapter-container {
     position: absolute;
-    top: -100%;
+    top: 0px;
     left: 0px;
     background-color: white;
     width: 100%;
