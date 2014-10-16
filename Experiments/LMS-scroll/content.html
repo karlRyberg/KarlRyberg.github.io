@@ -120,8 +120,9 @@
             });
 
 
-            $('body, #NE-floating-footer, NE-top-floating-header').on('touchemove', function (e) {
+            $('body, #NE-floating-footer, #NE-top-floating-header').on('touchmove', function (e) {
                 e.preventDefault();
+                console.log(23);
             });
 
         });
