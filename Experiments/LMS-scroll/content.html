@@ -119,6 +119,11 @@
                 mainListener: $('#NE-main-container') // The element that is watched for scroll events and recives 'global' events such as start and stop. Defautls to window
             });
 
+
+            $('body, #NE-floating-footer, NE-top-floating-header').on('touchemove', function (e) {
+                e.preventDefault();
+            });
+
         });
 
     </script>
