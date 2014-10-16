@@ -31,7 +31,7 @@
     </nav>
 
     <main>
-       
+
         <article id="NE-main-container">
 
             <div id="NE-chapter-container">
@@ -69,18 +69,18 @@
 
             $('#NE-floating-footer').on('click', function () {
 
-           //     $('#NE-main-container').css('overflow', 'hidden');
+                //     $('#NE-main-container').css('overflow', 'hidden');
 
                 currentChap++;
                 $('#NE-chapter-' + currentChap).css('display', 'block');
                 var scrollPos = $('#NE-chapter-' + currentChap).position().top;
                 $('#NE-main-container').animate({ 'scrollTop': scrollPos }, 500, 'swing', function () {
-                    $('#NE-chapter-' + (currentChap - 1)).css('display', 'none');
+                    $('#NE-chapter-' + (currentChap - 1)).css({ 'min-height': '0px', 'height': '0px' });
                     $('#NE-main-container').scrollTop(0);
-               //     $('#NE-main-container').css('overflow', 'scroll');
+                    //     $('#NE-main-container').css('overflow', 'scroll');
                 });
-               
-               
+
+
 
             });
 
