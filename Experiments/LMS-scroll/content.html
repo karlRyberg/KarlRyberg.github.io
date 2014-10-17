@@ -72,7 +72,7 @@
                 currentChap++;
                 $('#NE-chapter-' + currentChap).css('display', 'block');
                 var scrollPos = $('#NE-chapter-' + currentChap).position().top;
-                $('#NE-chapter-container').animate({ 'scrollTop': scrollPos }, 500, 'swing');
+                $('#NE-main-container').animate({ 'scrollTop': scrollPos }, 500, 'swing');
 
 
             });
@@ -80,7 +80,7 @@
             var mostVisibleChapter,
                 highestVisibility = 0;
 
-            $('#NE-chapter-container').on('sw-begin-scroll', function () {
+            $('#NE-main-container').on('sw-begin-scroll', function () {
                 mostVisibleChapter = null;
                 highestVisibility = 0;
             })
@@ -96,7 +96,7 @@
 
             });
             
-            $('#NE-chapter-container').on('sw-end-scroll', function () {
+            $('#NE-main-container').on('sw-end-scroll', function () {
                 if (mostVisibleChapter) {
                     var chapNum = mostVisibleChapter.attr('id');
                     chapNum = chapNum.substring(chapNum.lastIndexOf('-') + 1);
@@ -108,7 +108,7 @@
             scrollWatcher = $('.NE-scroll-watched').ScrollWatch({
                 axis: 'y',
                 prioritize: 'max', //'partofviewport'//'partofobject'
-                mainListener: $('#NE-chapter-container') // The element that is watched for scroll events and recives 'global' events such as start and stop. Defautls to window
+                mainListener: $('#NE-main-container') // The element that is watched for scroll events and recives 'global' events such as start and stop. Defautls to window
             });
 
           
