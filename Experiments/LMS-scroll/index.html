@@ -7,28 +7,28 @@
     <link href="css/NE-UTB-style.css" rel="stylesheet" />
 </head>
 
-    <frameset framespacing="0" rows="0,100%, 0" frameborder="0" noresize=noresize>
-        <frame name="top" src="padd.html" target="top">
-        </frame>
-        <frame name="main" src="content.html" target="main">
-        </frame>
-        <frame name="bott" src="padd.html" target="bott">
-        </frame>
+<frameset framespacing="0" rows="0,100%, 0" frameborder="0" noresize=noresize>
+    <frame name="top" src="padd.html" target="top">
+    </frame>
+    <frame name="main" src="content.html" target="main">
+    </frame>
+    <frame name="bott" src="padd.html" target="bott">
+    </frame>
 
-        <script src="libraries/masala-ux/dist/js/jquery.min.js"></script>
+    <script src="libraries/masala-ux/dist/js/jquery.min.js"></script>
 
-        <script type="text/javascript">
-            $(document).ready(function () {
+    <script type="text/javascript">
+        $(document).ready(function () {
 
-                $(window).on('touchmove', function (e) {
-                    if (!$(e.target).closest('.scrollable').length) { e.preventDefault(); }
-                });
-
+            $(window).on('touchmove', function (e) {
+                e.preventDefault();
             });
 
-        </script>
+        });
 
-    </frameset>
+    </script>
+
+</frameset>
 
 
 </html>
