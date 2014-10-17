@@ -1,12 +1,11 @@
 ﻿html {
-overflow: hidden;
-height: 100%;
+    overflow: hidden;
+    height: 100%;
 }
 
-body {
-position:fixed;
-
-height: 100%;
+body, frame, frameset {
+    position: fixed;
+    height: 100%;
 }
 
 #NE-floating-footer {
@@ -28,7 +27,6 @@ height: 100%;
     overflow: auto;
     margin: auto;
     -webkit-overflow-scrolling: touch;
-
 }
 
 
