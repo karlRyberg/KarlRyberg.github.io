@@ -69,16 +69,14 @@
 
             $('#NE-floating-footer').on('click', function () {
 
-               
                 currentChap++;
                 $('#NE-chapter-' + currentChap).css('display', 'block');
                 var scrollPos = $('#NE-chapter-' + currentChap).position().top;
-                $('#NE-main-container').animate({ 'scrollTop': scrollPos }, 500, 'swing');
+                $('#NE-chapter-container').animate({ 'scrollTop': scrollPos }, 500, 'swing');
 
 
             });
 
-      /*
             var mostVisibleChapter,
                 highestVisibility = 0;
 
@@ -87,7 +85,7 @@
                 highestVisibility = 0;
             })
 
-            */
+            
             $('.NE-chapter').on('sw-scrolled', function (e, scrollObj) {
                 var threshold = mostVisibleChapter ? 0.5 : highestVisibility;
 
@@ -97,7 +95,7 @@
                 }
 
             });
-            /*
+            
             $('#NE-main-container').on('sw-end-scroll', function () {
                 if (mostVisibleChapter) {
                     var chapNum = mostVisibleChapter.attr('id');
@@ -106,7 +104,7 @@
                 }
             });
 
-              */
+            
             scrollWatcher = $('.NE-scroll-watched').ScrollWatch({
                 axis: 'y',
                 prioritize: 'max', //'partofviewport'//'partofobject'
