@@ -16,7 +16,6 @@
     bottom: 40px;
     margin: auto;
     padding: 0px;
-    background-color: red;
     overflow: auto;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
