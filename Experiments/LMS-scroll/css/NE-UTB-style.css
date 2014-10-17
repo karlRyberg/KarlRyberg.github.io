@@ -1,5 +1,11 @@
-﻿html, body, frameset {
+﻿html {
 overflow: hidden;
+height: 100%;
+}
+
+body {
+position:fixed;
+
 height: 100%;
 }
 
@@ -14,7 +20,7 @@ height: 100%;
 
 
 #NE-main-container {
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 80px;
     bottom: 40px;
@@ -22,6 +28,7 @@ height: 100%;
     overflow: auto;
     margin: auto;
     -webkit-overflow-scrolling: touch;
+
 }
 
 
