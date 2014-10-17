@@ -23,10 +23,10 @@ body {
     width: 100%;
     top: 80px;
     bottom: 40px;
-    background-color: red;
-    overflow: scroll;
+    overflow: auto;
     margin: auto;
     -webkit-overflow-scrolling: touch;
+    background-color: red;
 }
 
 
