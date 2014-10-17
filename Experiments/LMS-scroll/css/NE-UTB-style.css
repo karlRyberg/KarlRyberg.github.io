@@ -3,8 +3,8 @@
     height: 100%;
 }
 
-body{
-    position: fixed;
+body {
+    overflow: hidden;
     height: 100%;
 }
 
@@ -19,12 +19,12 @@ body{
 
 
 #NE-main-container {
-    position: fixed;
+    position: absolute;
     width: 100%;
     top: 80px;
     bottom: 40px;
-    background-color: transparent;
-    overflow: auto;
+    background-color: red;
+    overflow: scroll;
     margin: auto;
     -webkit-overflow-scrolling: touch;
 }
