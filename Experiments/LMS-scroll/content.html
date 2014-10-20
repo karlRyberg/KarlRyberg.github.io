@@ -85,17 +85,17 @@
                 highestVisibility = 0;
             })
 
-            /*
+            
             $('.NE-chapter').on('sw-scrolled', function (e, scrollObj) {
-                var threshold = mostVisibleChapter ? 0.5 : highestVisibility;
+            /*    var threshold = mostVisibleChapter ? 0.5 : highestVisibility;
 
                 if (scrollObj.visibility > threshold) {
                     mostVisibleChapter = $(this);
                     highestVisibility = scrollObj.visibility;
                 }
-
+                */
             });
-            */
+            
             $('#NE-main-container').on('sw-end-scroll', function () {
                 if (mostVisibleChapter) {
                     var chapNum = mostVisibleChapter.attr('id');

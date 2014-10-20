@@ -1,4 +1,7 @@
-﻿
+﻿body {
+    background-color: #dedede;
+}
+
 #NE-floating-footer {
     position: fixed;
     width: 100%;
