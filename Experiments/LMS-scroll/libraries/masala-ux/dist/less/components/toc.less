@@ -9,6 +9,7 @@
   
   .toc-list {
     .list-unstyled;
+    .mb-md;
 
     li {
       margin-bottom: 0.6em;
@@ -20,6 +21,10 @@
     color: @base04;
     margin-left: @toc-left-margin;
     .font-weight-narrow;
+
+    display: inline-block;
+    padding-bottom: 3px;
+    border-bottom: 1px solid @base05;
   }
 
   .toc-link {
@@ -57,12 +62,18 @@
   }
 
   .toc-item {
+    color: @toc-item-color;
     margin-left: @toc-left-margin;
+
+    &:first-letter {
+      text-transform: capitalize;
+    }
   }
 
   // The list in a list
   .toc-list .toc-list {
     margin-top: 0.4em;
+    .mb-none;
 
     .toc-item {
       margin-left: @toc-left-margin + 6px;

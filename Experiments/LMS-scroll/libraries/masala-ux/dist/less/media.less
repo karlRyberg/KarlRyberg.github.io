@@ -54,19 +54,19 @@
     }
 
     .media-toptitle {
-      .transition(~"color 140ms linear");
       .text-base01();
-      font-weight: @font-weight-bold;
       line-height: 1.3em;
     }
 
-    &:hover .media-toptitle {
-      color: @link-color;
-    }
 
     .media-bottomtitle {
       .text-base01();
-      line-height: @line-height-small;
+      .transition(~"color 140ms linear");
+      font-weight: @font-weight-bold;
+    }
+
+    &:hover .media-bottomtitle {
+      color: @link-color;
     }
   }
 }

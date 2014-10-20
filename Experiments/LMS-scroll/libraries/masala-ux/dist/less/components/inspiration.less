@@ -9,6 +9,7 @@
         .keyline-base06;
         .keyline-bottom;
         .keyline-top;
+
         .label {
           padding: 4px 6px;
           .absolute;
@@ -17,6 +18,7 @@
           .mr-xs;
           .pin-top-right;
         }
+
         img {
           margin: 0 auto;
           display: block;
@@ -30,7 +32,43 @@
           }
         }
       }
-
     }
   }
 }
+
+// Inspiration variant
+// 
+.inspiration-container {
+  .mb-sm;
+
+  a {
+    text-decoration: none;
+
+    // Handle hover events
+    &:hover {
+
+      // Only the second header should get highligted
+      .inspiration-hgroup {
+        .inspiration-header { text-decoration: none; }
+        .inspiration-header + .inspiration-header { color: @link-color;}
+      }
+    }
+  }
+
+  .inspiration-figure  {
+    @media (max-width: @screen-xs-max) {
+      max-width: 400px;
+    }
+  }
+
+  .inspiration-header {
+    margin: 0.3em 0;
+    .text-base01;
+  }
+
+  .inspiration-hgroup {
+    .inspiration-header { .text-base03; }
+    .inspiration-header + .inspiration-header { .text-base01; }
+  }
+
+} // end .inspiration-container

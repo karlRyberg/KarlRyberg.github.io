@@ -1,6 +1,8 @@
 .ur-series-list {
   .media-list();
 
+  .webkit-overflow-scrollbars();
+
   @media (min-width: @screen-md-min) {
     max-height: 588px;
     overflow: auto;
@@ -17,5 +19,17 @@
   }
 }
 
-.text-tv    { .text-base0D(); }
-.text-radio { .text-base0A(); }
+.ur-label-text() {
+  font-weight: @font-weight-bold;
+  margin-right: 0.2em;
+}
+
+.text-tv {
+  .ur-label-text;
+  .text-base0D;
+}
+.text-radio {
+  .ur-label-text;
+  .text-base0A;
+  font-weight: @font-weight-bold;
+}

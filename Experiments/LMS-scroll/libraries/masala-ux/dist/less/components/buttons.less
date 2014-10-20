@@ -32,21 +32,6 @@
 }
 
 
-// Anchor link variant
-//
-
-.btn-anchor-link {
-  .btn-link;
-
-  color: @anchor-color;
-
-  &:hover,
-  &:focus {
-    color: @anchor-hover-color;
-  }
-}
-
-
 // Horizontal padding modifiers
 //
 
@@ -79,12 +64,6 @@
 // Additional colors on Bootstrap buttons
 //
 
-.btn-anchor {
-  .button-variant(@btn-anchor-color, @btn-anchor-bg, @btn-anchor-border);
-}
-.btn-readspeak {
-  .button-variant(@btn-readspeak-color, @btn-readspeak-bg, @btn-readspeak-border);
-}
 .btn-inverse {
   .button-variant(@btn-inverse-color, @btn-inverse-bg, @btn-inverse-border);
 }
@@ -192,44 +171,6 @@ a.btn-link.text-success:focus     { color: darken(@state-success-text, 10%); }
       background-color: @btn-default-border;
       color: @btn-default-color;
       border-color: @btn-default-border;
-    }
-  }
-}
-
-// Anchor modifier
-.btn-icon.btn-anchor {
-
-  .fa {
-    border-color: @btn-anchor-bg;
-  }
-
-  &:focus,
-  &:hover,
-  &:active,
-  &.active {
-    .fa {
-      background-color: @btn-anchor-bg;
-      color: @btn-anchor-color;
-      border-color: @btn-anchor-bg;
-    }
-  }
-}
-
-// Readspeak modifier
-.btn-icon.btn-readspeak {
-
-  .fa {
-    border-color: @btn-readspeak-bg;
-  }
-
-  &:focus,
-  &:hover,
-  &:active,
-  &.active {
-    .fa {
-      background-color: @btn-readspeak-bg;
-      color: @btn-readspeak-color;
-      border-color: @btn-readspeak-bg;
     }
   }
 }

@@ -32,7 +32,7 @@
     bottom: 40px;
     margin: auto;
     padding: 0px;
-    background-color: rgb(0,200,220);
+    background-color: white;
     transition-property: top;
     transition-duration: 0.3s;
     transition-timing-function: ease-in;
@@ -52,19 +52,6 @@
     min-width: 100%;
 }
 
-#NE-course-menu {
-    position: fixed;
-    top: 100px;
-    left: 100px;
-}
-
-.NE-chapter-content {
-background-color: yellowgreen;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-}
 
 #NE-chapter-0 {
     position: relative;
@@ -72,6 +59,8 @@ background-color: yellowgreen;
     width: 100%;
     height: 100%;
     min-height: 100%;
+        overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 #NE-chapter-1 {
@@ -80,7 +69,8 @@ background-color: yellowgreen;
     width: 100%;
     height: 100%;
     min-height: 100%;
-    background-color: silver;
+        overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 #NE-chapter-2 {
@@ -89,7 +79,8 @@ background-color: yellowgreen;
     width: 100%;
     height: 100%;
     min-height: 100%;
-    background-color: gray;
+        overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 

@@ -102,6 +102,35 @@
     width: (18em / 14); // Same as .fa-fw
   }
 
+  .accordion-toggle {
+    .toggle-label {
+      > .collapsed-indicator {
+        color: inherit;
+        width: (18em / 14); // Same as .fa-fw
+      }
+    }
+    .toggle-label-close {
+      color: inherit;
+      .inline-block;
+
+      &:hover {
+        color: inherit;
+      }
+    }
+    .toggle-label-open {
+      display: none;
+    }
+
+    &.collapsed {
+      .toggle-label-close {
+        display: none;
+      }
+      .toggle-label-open {
+        .inline-block;
+      }
+    }
+  }
+
   // Styling for search filters
   &.filters {
     .panel-heading {

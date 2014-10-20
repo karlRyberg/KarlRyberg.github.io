@@ -9,12 +9,12 @@
 
 .nav-tabs > li {
   > a {
-    color: @component-active-bg;
+    color: @link-color;
     border-width: 0 0 @padding-base-vertical 0;
     border-radius: 0;
     &:hover {
       background-color: transparent;
-      border-bottom-color: @anchor-color;
+      border-bottom-color: @link-hover-color;
     }
   }
 
@@ -89,6 +89,43 @@
     &:focus {
       color: @nav-pills-active-link-hover-color;
       background-color: darken(@nav-pills-active-link-hover-bg, 6.5%);
+    }
+  }
+}
+
+// Sub-navigation for nav-tabs
+// -------------------------
+.nav-subnavigation {
+  .fill-base07;
+  .keyline;
+  .keyline-bottom;
+
+  border-bottom-color: @page-border-color;
+
+  padding-bottom: @padding-small-horizontal;
+  padding-top: @padding-small-horizontal;
+
+  .nav-tabs {
+    .keyline; // Remove bottom border
+
+    > li {
+      > a {
+        color: @base02;
+        border-width: 0;
+
+        &:hover {
+          background-color: transparent;
+          color: @base02;
+        }
+      }
+      &.active > a {
+        &,
+        &:hover,
+        &:focus {
+          border-width: 0;
+          color: @base0D;
+        }
+      }
     }
   }
 }
