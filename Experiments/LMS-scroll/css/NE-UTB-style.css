@@ -43,7 +43,7 @@
     height: 100%;
     overflow: auto;
     overflow-y: scroll;
-    -webkit-overflow-scrolling: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 #NE-chapter-container {
