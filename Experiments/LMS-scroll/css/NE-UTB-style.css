@@ -31,14 +31,20 @@
     bottom: 40px;
     margin: auto;
     padding: 0px;
-    overflow: auto;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: auto;
+    background-color: rgb(0,200,220);
     transition-property: top;
     transition-duration: 0.2s;
     transition-timing-function: ease-out;
 }
 
+#scroller {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: auto;
+}
 
 #NE-chapter-container {
     position: absolute;
@@ -47,7 +53,7 @@
     min-width: 100%;
 }
 
-#NE-course-menu{
+#NE-course-menu {
     position: fixed;
     top: 100px;
     left: 100px;

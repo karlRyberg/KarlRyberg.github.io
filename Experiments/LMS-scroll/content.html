@@ -33,22 +33,21 @@
             </div>
         </nav>
         <article id="NE-main-container">
-
-            <div id="NE-chapter-container">
-                <div id="NE-chapter-0" class="NE-chapter NE-scroll-watched">
-                    <div id="NE-course-menu">
-                        asdasd
+            <div id="scroller">
+                <div id="NE-chapter-container">
+                    <div id="NE-chapter-0" class="NE-chapter NE-scroll-watched">
+                        <div id="NE-course-menu">
+                            asdasd
+                        </div>
+                    </div>
+                    <div id="NE-chapter-1" class="NE-chapter NE-scroll-watched">
+                        asdasd asdasd
+                    </div>
+                    <div id="NE-chapter-2" class="NE-chapter NE-scroll-watched">
+                        dfsdfsdfsdf
                     </div>
                 </div>
-                <div id="NE-chapter-1" class="NE-chapter NE-scroll-watched">
-                    asdasd asdasd
-                </div>
-                <div id="NE-chapter-2" class="NE-chapter NE-scroll-watched">
-                    dfsdfsdfsdf
-                </div>
             </div>
-
-
         </article>
 
         <footer id="NE-floating-footer">
@@ -73,14 +72,14 @@
                 currentChap++;
                 $('#NE-chapter-' + currentChap).css('display', 'block');
                 var scrollPos = $('#NE-chapter-' + currentChap).position().top;
-                $('#NE-main-container').animate({ 'scrollTop': scrollPos }, 500, 'swing');
+                $('#scroller').animate({ 'scrollTop': scrollPos }, 500, 'swing');
             });
 
 
             var mostVisibleChapter,
                 highestVisibility = 0;
 
-            $('#NE-main-container').on('sw-begin-scroll', function () {
+            $('#scroller').on('sw-begin-scroll', function () {
                 mostVisibleChapter = null;
                 highestVisibility = 0;
             })
@@ -96,7 +95,7 @@
 
             });
 
-            $('#NE-main-container').on('sw-end-scroll', function () {
+            $('#scroller').on('sw-end-scroll', function () {
                 if (mostVisibleChapter) {
                     var chapNum = mostVisibleChapter.attr('id');
                     chapNum = chapNum.substring(chapNum.lastIndexOf('-') + 1);
@@ -124,7 +123,7 @@
             scrollWatcher = $('.NE-scroll-watched').ScrollWatch({
                 axis: 'y',
                 prioritize: 'max', //'partofviewport'//'partofobject'
-                mainListener: $('#NE-main-container') // The element that is watched for scroll events and recives 'global' events such as start and stop. Defautls to window
+                mainListener: $('#scroller') // The element that is watched for scroll events and recives 'global' events such as start and stop. Defautls to window
             });
 
 
