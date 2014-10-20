@@ -47,6 +47,12 @@
     min-width: 100%;
 }
 
+#NE-course-menu{
+    position: fixed;
+    top: 100px;
+    left: 100px;
+}
+
 #NE-chapter-0 {
     position: relative;
     width: 100%;
