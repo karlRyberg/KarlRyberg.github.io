@@ -11,7 +11,6 @@
     z-index: 10;
 }
 
-
 #NE-main-container {
     position: absolute;
     width: 100%;
@@ -68,7 +67,6 @@
     display: none;
     background-color: gray;
 }
-
 
 
 #NE-page-indicator {
