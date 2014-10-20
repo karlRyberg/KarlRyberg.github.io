@@ -27,7 +27,7 @@
                             <a class="navbar-brand ne-logo" href="/" title="Gå till startsidan för NE.se">NE Nationalencyklopedin</a>
                             <a class="navbar-brand pl-xs hidden-xs" href="" id="NE-navbar-title" style="font-size: 1.6em; margin-top: -1px">Utbildning</a>
                         </div>
-                        <div id="NE-page-indicator">0</div>
+                        <div id="NE-page-indicator"></div>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,12 @@
         </article>
 
         <footer id="NE-floating-footer">
-            asdasdasd asd asd as
+            <div class="container">
+                <div class="row">
+                    <button type="button" id="NE-nav-back" class="btn btn-default">Back</button>
+                    <button type="button" id="NE-nav-forward" class="btn btn-default">Forward</button>
+                </div>
+            </div>
         </footer>
     </main>
 
@@ -65,14 +70,45 @@
 
         var currentChap = 0;
 
+        function nav(prog) {
+
+            currentChap += prog;
+
+            var navObj = $('#NE-floating-header');
+            var navHeight = navObj.outerHeight();
+
+            var scrollPadd = 0;
+
+
+            if (currentChap > 0 && navObj.hasClass('NE-offcanvas')) {
+                navObj.removeClass('NE-offcanvas');
+                $('#NE-main-container').css('top', navHeight + 'px');
+                scrollPadd = navHeight;
+            }
+            else if (currentChap < 1 && !navObj.hasClass('NE-offcanvas')) {
+                navObj.addClass('NE-offcanvas');
+                $('#NE-main-container').css('top', '0px');
+            }
+
+
+            $('#NE-chapter-' + currentChap).css('display', 'block');
+            var scrollPos = $('#NE-chapter-' + currentChap).position().top;
+            $('#scroller').animate({ 'scrollTop': scrollPos - scrollPadd }, 500, 'swing');
+
+
+
+        }
+
         $(document).ready(function () {
 
 
-            $('#NE-floating-footer').on('click', function () {
-                currentChap++;
-                $('#NE-chapter-' + currentChap).css('display', 'block');
-                var scrollPos = $('#NE-chapter-' + currentChap).position().top;
-                $('#scroller').animate({ 'scrollTop': scrollPos }, 500, 'swing');
+
+            $('#NE-nav-back').on('click', function () {
+                nav(-1);
+            });
+
+            $('#NE-nav-forward').on('click', function () {
+                nav(1);
             });
 
 
@@ -101,22 +137,6 @@
                     chapNum = chapNum.substring(chapNum.lastIndexOf('-') + 1);
                     $('#NE-page-indicator').html(parseInt(chapNum));
                 }
-
-                var navObj = $('#NE-floating-header');
-                var navHeight = navObj.outerHeight();
-                var scrollPos = $('#NE-chapter-container').offset().top;
-                var threshold = -$('#NE-main-container').innerHeight();
-
-                if (scrollPos < threshold - 100 && navObj.hasClass('NE-offcanvas')) {
-                    navObj.removeClass('NE-offcanvas');
-                    $('#NE-main-container').css('top', navHeight + 'px');
-                }
-                else if (scrollPos > threshold + 100 && !navObj.hasClass('NE-offcanvas')) {
-                    navObj.addClass('NE-offcanvas');
-                    $('#NE-main-container').css('top', '0px');
-                }
-
-
             });
 
 

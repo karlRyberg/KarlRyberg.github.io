@@ -19,7 +19,8 @@
     width: 100%;
     height: 40px;
     bottom: 0px;
-    background-color: #ffd800;
+    background-color: white;
+    border-top: 1px solid rgba(0,0,0,0.65);
     z-index: 10;
 }
 
@@ -41,9 +42,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
 }
 
 #NE-chapter-container {
@@ -61,19 +60,18 @@
 
 #NE-chapter-0 {
     position: relative;
+    background-color: white;
     width: 100%;
     height: 100%;
     min-height: 100%;
-    background-color: white;
 }
 
 #NE-chapter-1 {
     position: relative;
     background-color: white;
     width: 100%;
-    height: 300%;
+    height: 100%;
     min-height: 100%;
-    display: none;
     background-color: silver;
 }
 
@@ -81,9 +79,8 @@
     position: relative;
     background-color: white;
     width: 100%;
-    height: 300%;
+    height: 100%;
     min-height: 100%;
-    display: none;
     background-color: gray;
 }
 
