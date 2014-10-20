@@ -1,5 +1,5 @@
 ﻿body {
-    background-color: rgb(0, 200, 220);
+    background-color: #dedede;
 }
 
 #NE-floating-footer {
@@ -10,6 +10,7 @@
     background-color: #ffd800;
     z-index: 10;
 }
+
 
 #NE-main-container {
     position: absolute;
@@ -23,17 +24,9 @@
     -webkit-overflow-scrolling: touch;
 }
 
-#NE-intro-container {
-    position: fixed;
-    width: 100%;
-    min-height: 100%;
-    background-color: #808080;
-    z-index: -1;
-}
 
 #NE-chapter-container {
     position: absolute;
-    top: 100%;
     width: 100%;
     height: 100%;
     min-width: 100%;
@@ -44,7 +37,6 @@
     width: 100%;
     height: 100%;
     min-height: 100%;
-    display: none;
     background-color: white;
 }
 
@@ -67,6 +59,7 @@
     display: none;
     background-color: gray;
 }
+
 
 
 #NE-page-indicator {

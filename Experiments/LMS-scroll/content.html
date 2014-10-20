@@ -34,19 +34,6 @@
         </nav>
         <article id="NE-main-container">
 
-            <div id="NE-intro-container">
-                <p>
-                    <h1>asdasd</h1>
-                    asdasdasdsad
-                    asdasdasdasd
-                    asdas dasdasdas
-                </p>
-                <p>
-                    sadasdasd
-                    asd asdasd
-                    asd asd
-                </p>
-            </div>
             <div id="NE-chapter-container">
                 <div id="NE-chapter-0" class="NE-chapter NE-scroll-watched">
                     asdasd
@@ -82,11 +69,11 @@
 
             $('#NE-floating-footer').on('click', function () {
 
-          
+                currentChap++;
                 $('#NE-chapter-' + currentChap).css('display', 'block');
                 var scrollPos = $('#NE-chapter-' + currentChap).position().top;
                 $('#NE-main-container').animate({ 'scrollTop': scrollPos }, 500, 'swing');
-                currentChap++;
+
 
             });
 
@@ -106,7 +93,7 @@
                     mostVisibleChapter = $(this);
                     highestVisibility = scrollObj.visibility;
                 }
-                
+
             });
             
             $('#NE-main-container').on('sw-end-scroll', function () {
@@ -123,7 +110,7 @@
                 prioritize: 'max', //'partofviewport'//'partofobject'
                 mainListener: $('#NE-main-container') // The element that is watched for scroll events and recives 'global' events such as start and stop. Defautls to window
             });
-            
+
           
         });
 
