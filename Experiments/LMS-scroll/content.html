@@ -34,6 +34,19 @@
         </nav>
         <article id="NE-main-container">
 
+            <div id="NE-intro-container">
+                <p>
+                    <h1>asdasd</h1>
+                    asdasdasdsad
+                    asdasdasdasd
+                    asdas dasdasdas
+                </p>
+                <p>
+                    sadasdasd
+                    asd asdasd
+                    asd asd
+                </p>
+            </div>
             <div id="NE-chapter-container">
                 <div id="NE-chapter-0" class="NE-chapter NE-scroll-watched">
                     asdasd
@@ -69,11 +82,11 @@
 
             $('#NE-floating-footer').on('click', function () {
 
-                currentChap++;
+          
                 $('#NE-chapter-' + currentChap).css('display', 'block');
                 var scrollPos = $('#NE-chapter-' + currentChap).position().top;
                 $('#NE-main-container').animate({ 'scrollTop': scrollPos }, 500, 'swing');
-
+                currentChap++;
 
             });
 
@@ -86,15 +99,15 @@
             })
 
             
-            //$('.NE-chapter').on('sw-scrolled', function (e, scrollObj) {
-            ///*    var threshold = mostVisibleChapter ? 0.5 : highestVisibility;
+            $('.NE-chapter').on('sw-scrolled', function (e, scrollObj) {
+                var threshold = mostVisibleChapter ? 0.5 : highestVisibility;
 
-            //    if (scrollObj.visibility > threshold) {
-            //        mostVisibleChapter = $(this);
-            //        highestVisibility = scrollObj.visibility;
-            //    }
-            //    */
-            //});
+                if (scrollObj.visibility > threshold) {
+                    mostVisibleChapter = $(this);
+                    highestVisibility = scrollObj.visibility;
+                }
+                
+            });
             
             $('#NE-main-container').on('sw-end-scroll', function () {
                 if (mostVisibleChapter) {
