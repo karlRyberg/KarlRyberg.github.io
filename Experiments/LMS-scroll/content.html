@@ -15,7 +15,7 @@
 
 
     <main>
-        <nav id="NE-top-floating-header" class="navigation" aria-role="navigation">
+        <nav id="NE-floating-header" class="navigation NE-offcanvas" aria-role="navigation">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -68,14 +68,12 @@
 
 
             $('#NE-floating-footer').on('click', function () {
-
                 currentChap++;
                 $('#NE-chapter-' + currentChap).css('display', 'block');
                 var scrollPos = $('#NE-chapter-' + currentChap).position().top;
                 $('#NE-main-container').animate({ 'scrollTop': scrollPos }, 500, 'swing');
-
-
             });
+
 
             var mostVisibleChapter,
                 highestVisibility = 0;
@@ -85,7 +83,7 @@
                 highestVisibility = 0;
             })
 
-            
+
             $('.NE-chapter').on('sw-scrolled', function (e, scrollObj) {
                 var threshold = mostVisibleChapter ? 0.5 : highestVisibility;
 
@@ -95,23 +93,39 @@
                 }
 
             });
-            
+
             $('#NE-main-container').on('sw-end-scroll', function () {
                 if (mostVisibleChapter) {
                     var chapNum = mostVisibleChapter.attr('id');
                     chapNum = chapNum.substring(chapNum.lastIndexOf('-') + 1);
                     $('#NE-page-indicator').html(parseInt(chapNum) + 1);
                 }
+
+                var navObj = $('#NE-floating-header');
+                var navHeight = navObj.outerHeight();
+                var scrollPos = $('#NE-chapter-container').offset().top;
+                var threshold = -$('#NE-main-container').innerHeight() + navHeight * 2;
+
+                if (scrollPos < threshold && navObj.hasClass('NE-offcanvas')) {
+                    navObj.removeClass('NE-offcanvas');
+                    $('#NE-main-container').css('top', navHeight + 'px');
+                }
+                else if (scrollPos > threshold && !navObj.hasClass('NE-offcanvas')) {
+                    navObj.addClass('NE-offcanvas');
+                    $('#NE-main-container').css('top', '0px');
+                }
+
+
             });
 
-            
+
             scrollWatcher = $('.NE-scroll-watched').ScrollWatch({
                 axis: 'y',
                 prioritize: 'max', //'partofviewport'//'partofobject'
                 mainListener: $('#NE-main-container') // The element that is watched for scroll events and recives 'global' events such as start and stop. Defautls to window
             });
 
-          
+
         });
 
     </script>

@@ -2,6 +2,18 @@
     background-color: #dedede;
 }
 
+#NE-floating-header {
+    transition-property: top;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
+}
+
+
+    #NE-floating-header.NE-offcanvas {
+        top: -80px;
+    }
+
+
 #NE-floating-footer {
     position: fixed;
     width: 100%;
@@ -15,13 +27,16 @@
 #NE-main-container {
     position: absolute;
     width: 100%;
-    top: 80px;
+    top: 0px;
     bottom: 40px;
     margin: auto;
     padding: 0px;
     overflow: auto;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
+    transition-property: top;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
 }
 
 
