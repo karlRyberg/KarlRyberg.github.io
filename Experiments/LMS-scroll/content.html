@@ -126,8 +126,34 @@
 
     <script type="text/javascript">
 
-        var currentChap = 0;
+        function getScrollbarWidth() {
+            var outer = document.createElement("div");
+            outer.style.visibility = "hidden";
+            outer.style.width = "100px";
+            outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
 
+            document.body.appendChild(outer);
+
+            var widthNoScroll = outer.offsetWidth;
+            // force scrollbars
+            outer.style.overflow = "scroll";
+
+            // add innerdiv
+            var inner = document.createElement("div");
+            inner.style.width = "100%";
+            outer.appendChild(inner);
+
+            var widthWithScroll = inner.offsetWidth;
+
+            // remove divs
+            outer.parentNode.removeChild(outer);
+
+            return widthNoScroll - widthWithScroll;
+        }
+
+        var currentChap = 0;
+        var scrollBarWidth = getScrollbarWidth();
+        alert(scrollBarWidth);
         function nav(prog) {
 
             currentChap += prog;
@@ -152,7 +178,17 @@
             }
 
 
-            $('#NE-chapter-' + currentChap).css('display', 'block');
+            var nextChapter = $('#NE-chapter-' + currentChap);
+            nextChapter.css('display', 'block');
+         
+            if (nextChapter.find('.container').first().outerHeight() > nextChapter.innerHeight()) {
+                nextChapter.css({
+                    'overflow': 'auto',
+                    'padding-left': scrollBarWidth + 'px'
+                });
+            }
+
+
             var scrollPos = $('#NE-chapter-' + currentChap).position().top;
             $('#scroller').animate({ 'scrollTop': scrollPos - scrollPadd }, 500, 'swing');
 
@@ -162,7 +198,6 @@
         }
 
         $(document).ready(function () {
-
 
 
             $('#NE-nav-back').on('click', function () {
