@@ -110,7 +110,7 @@
                                     Nunc semper sapien non risus convallis vestibulum. Vestibulum ac auctor libero, at dignissim purus. Donec interdum metus lacus, at venenatis enim iaculis vel. Integer feugiat justo lorem, vitae volutpat massa pharetra quis. Maecenas a mauris blandit mauris auctor dignissim. Nam vel sapien maximus, laoreet purus et, lobortis velit. Curabitur massa risus, bibendum vel elementum et, sodales id arcu. Vestibulum vehicula gravida nisl ut mattis. Phasellus dictum, massa at viverra sollicitudin, lacus elit convallis augue, a porta purus lacus a nulla. Curabitur nunc orci, gravida nec auctor congue, imperdiet eu lacus. Integer sollicitudin lorem nec mi iaculis, molestie vehicula elit elementum. Quisque vulputate sem id hendrerit pretium. Proin facilisis congue suscipit. Fusce efficitur ipsum risus, in consectetur velit feugiat ac. Etiam convallis dapibus dui, at eleifend odio egestas nec.
                                 </p>
                                 <div class="row">
-                                    <div class="col-xs-12">
+                                    <div class="col-md-8 col-md-offset-2 col-xs-12">
                                         <div id="NE-DrillDown-1" class="NE-horizontal-panel mt-sm mb-sm hidden">
                                             <div class="NE-panel-page-holder">
 
@@ -123,6 +123,15 @@
                                                     <h3>Chapter 4-3</h3>
                                                     <p>
                                                         Nulla facilisi. Nullam eu leo pellentesque, feugiat felis tempor, varius libero. Sed vitae orci in tellus vestibulum consectetur. Phasellus luctus ultricies lacus eu tristique. Nulla finibus eros quis semper malesuada. Suspendisse nec dictum nisi, id tempor nulla. Cras a egestas tortor. Aenean erat quam, efficitur sit amet ipsum in, porta pretium justo. Mauris est nulla, molestie vel cursus quis, congue vel eros. Fusce a nisl sed odio tempor maximus. Nam commodo accumsan rhoncus. Fusce at consequat purus. Praesent ac massa vitae erat feugiat egestas a a dui. In congue quam in velit varius, in tincidunt sem condimentum. Quisque efficitur eros eget semper suscipit. Nulla sed rhoncus erat, sed sollicitudin nibh.
+                                                    </p>
+                                                    <p>
+                                                        Curabitur vel tellus non ipsum euismod molestie a in sem. Vivamus suscipit nibh ex, gravida ultricies neque facilisis ac. Quisque semper luctus condimentum. Maecenas vel sagittis sem. Donec at commodo augue. Morbi nec fermentum ligula, at vestibulum neque. Mauris vestibulum odio id lorem tincidunt lobortis nec vitae orci. Mauris lectus neque, vestibulum nec sodales quis, molestie ut dui. Fusce eget neque consectetur, congue neque sed, faucibus felis. Duis blandit ligula vitae metus volutpat mattis. Etiam eu ex eget purus vulputate mollis vel venenatis risus. Etiam venenatis laoreet vulputate.
+                                                    </p>
+                                                    <p>
+                                                        Nulla facilisi. Nullam eu leo pellentesque, feugiat felis tempor, varius libero. Sed vitae orci in tellus vestibulum consectetur. Phasellus luctus ultricies lacus eu tristique. Nulla finibus eros quis semper malesuada. Suspendisse nec dictum nisi, id tempor nulla. Cras a egestas tortor. Aenean erat quam, efficitur sit amet ipsum in, porta pretium justo. Mauris est nulla, molestie vel cursus quis, congue vel eros. Fusce a nisl sed odio tempor maximus. Nam commodo accumsan rhoncus. Fusce at consequat purus. Praesent ac massa vitae erat feugiat egestas a a dui. In congue quam in velit varius, in tincidunt sem condimentum. Quisque efficitur eros eget semper suscipit. Nulla sed rhoncus erat, sed sollicitudin nibh.
+                                                    </p>
+                                                    <p>
+                                                        Curabitur vel tellus non ipsum euismod molestie a in sem. Vivamus suscipit nibh ex, gravida ultricies neque facilisis ac. Quisque semper luctus condimentum. Maecenas vel sagittis sem. Donec at commodo augue. Morbi nec fermentum ligula, at vestibulum neque. Mauris vestibulum odio id lorem tincidunt lobortis nec vitae orci. Mauris lectus neque, vestibulum nec sodales quis, molestie ut dui. Fusce eget neque consectetur, congue neque sed, faucibus felis. Duis blandit ligula vitae metus volutpat mattis. Etiam eu ex eget purus vulputate mollis vel venenatis risus. Etiam venenatis laoreet vulputate.
                                                     </p>
                                                 </div>
                                             </div>
@@ -194,6 +203,26 @@
             return widthNoScroll - widthWithScroll;
         }
 
+        function setScrollBar(chapter) {
+
+            chapter.css('display', 'block');
+
+            var cssObj = {
+                'overflow': 'hidden',
+                'padding-left': '0px'
+            };
+
+            if (chapter.find('.container').first().outerHeight() > chapter.innerHeight()) {
+                cssObj = {
+                    'overflow': 'auto',
+                    'padding-left': scrollBarWidth + 'px'
+                };
+            }
+
+            chapter.css(cssObj);
+
+        }
+
         var currentChap = 0;
         var scrollBarWidth = getScrollbarWidth();
 
@@ -220,20 +249,13 @@
                 $('#NE-page-indicator').addClass('NE-offcanvas');
             }
 
+            var nextChatpter = $('#NE-chapter-' + currentChap);
 
-            var nextChapter = $('#NE-chapter-' + currentChap);
-            nextChapter.css('display', 'block');
+            setScrollBar(nextChatpter);
 
-            if (nextChapter.find('.container').first().outerHeight() > nextChapter.innerHeight()) {
-                nextChapter.css({
-                    'overflow': 'auto',
-                    'padding-left': scrollBarWidth + 'px'
-                });
-            }
-
-
-            var scrollPos = $('#NE-chapter-' + currentChap).position().top;
-            $('#scroller').animate({ 'scrollTop': scrollPos - scrollPadd }, 500, 'swing');
+            var scrollPos = nextChatpter.position().top;
+            nextChatpter.animate({ 'scrollTop': 0 }, 0);
+            $('#scroller').animate({ 'scrollTop': scrollPos - scrollPadd }, 500);
 
             var displayChap = currentChap == 0 ? ' ' : currentChap;
 
@@ -268,7 +290,7 @@
                 var id = $(this).parent().data('reveal');
                 var area = $('#' + id);
                 var that = $(this);
-                var parent = that.parent();
+                var chapter = $(this).parents('.NE-chapter').first();
 
                 if ($(this).hasClass('open')) {
                     $(this).addClass('active');
@@ -276,6 +298,10 @@
                         area.slideUp(500, function () {
                             area.addClass('hidden');
                             that.removeClass('active').removeClass('open');
+                            setTimeout(function () {
+                                scrollToElement(that, 'middle');
+                                setScrollBar(chapter);
+                            }, 300);
                         });
                     }, 100);
                 }
@@ -283,8 +309,9 @@
                     $(this).addClass('active');
                     setTimeout(function () {
                         area.removeClass('hidden').slideUp(0).slideDown(500, function () {
-                            scrollToElement(area, 'middle', function () {
+                            scrollToElement(area, 'top', function () {
                                 that.removeClass('active').addClass('open');
+                                setScrollBar(chapter);
                             });
                         });
                     }, 100);
@@ -304,7 +331,7 @@
             var parentChapter = jqElement.parents('.NE-chapter').first();
             var viewPort = $('#NE-main-container');
 
-            var viewTarget = viewPort.offset().top;
+            var viewTarget = viewPort.offset().top + 30;
             var scrollAnchor = jqElement.offset().top
 
             if (!anchor || (anchor && anchor.toString().toLowerCase() == 'middle')) {

@@ -164,12 +164,11 @@
     color: white;
     cursor: pointer;
     border-radius: 3px;
-    transition-property: width, height, margin-top;
+    transition-property: width, height;
     transition-duration: 0.3s;
 }
 
     .NE-revealer-button.active {
-        margin-top: 25px;
         width: 75%;
         height: 0px;
     }
