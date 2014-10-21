@@ -91,7 +91,7 @@
 
 .NE-horizontal-panel {
     overflow: hidden;
-    border-bottom: 10px solid #808080;
+    border-bottom: 10px solid #efefef;
 }
 
     .NE-horizontal-panel .NE-panel-page-holder {
@@ -103,7 +103,7 @@
             display: table-cell;
             width: 50%;
             background-color: white;
-            border: 10px solid #808080;
+            border: 10px solid #efefef;
             border-bottom-width: 0px;
             padding: 15px;
         }
@@ -153,7 +153,6 @@
 }
 
 .NE-revealer-button {
-    
     display: inline-block;
     width: 100px;
     height: 45px;
@@ -163,32 +162,32 @@
     font-family: FontAwesome;
     font-size: 40px;
     color: white;
-    cursor: pointer;    
+    cursor: pointer;
     border-radius: 3px;
     transition-property: width, height, margin-top;
-    transition-duration: 0.1s;
+    transition-duration: 0.3s;
 }
 
-.NE-revealer-button.active {
-    margin-top: 20px; 
-    width: 100%;
-    height: 5px;
-}
-
-    .NE-revealer-button.open .NE-revealer-icon {
-        -webkit-transform: rotateX(180deg);
-        -moz-transform: rotateX(180deg);
-        -o-transform: rotateX(180deg);
-        transform: rotateX(180deg);
+    .NE-revealer-button.active {
+        margin-top: 25px;
+        width: 75%;
+        height: 0px;
     }
+
+        .NE-revealer-button.active .NE-revealer-icon:after {
+            content: '';
+        }
+
 
 .NE-revealer-icon {
     display: inline-block;
-    transition-property: -webkit-transform, -moz-transform,-o-transform,transform;
-    transition-duration: 0.2s;
 }
 
     .NE-revealer-icon:after {
         content: '\f107';
         font-style: normal;
     }
+
+.NE-revealer-button.open .NE-revealer-icon:after {
+    content: '\f106';
+}
