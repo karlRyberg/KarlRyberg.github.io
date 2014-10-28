@@ -81,9 +81,9 @@ NE.Navigation = (function () {
 
         ToChapter: function (index) {
             this.CurrentChapterIndex = index;
-
-            _onNavigation({ index: this.CurrentChapterIndex });
-
+            _onNavigation({
+                index: this.CurrentChapterIndex
+            });
         },
 
         Next: function () {

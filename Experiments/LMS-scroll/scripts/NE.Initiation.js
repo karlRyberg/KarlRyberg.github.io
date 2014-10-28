@@ -1,10 +1,11 @@
 ﻿/// <reference path="NE.Navigation.js" />
 /// <reference path="NE.Events.js" />
 /// <reference path="NE.EventHandlers.js" />
+/// <reference path="NE.Constants.js" />
 
 
 $(window).load(function () {
-    
+
     $(window).on('resize', function () {
         NE.UI.ResizeScrollContainer();
     });
@@ -19,6 +20,18 @@ $(window).load(function () {
 
     $('#NE-nav-forward').on('click', function () {
         NE.Navigation.Next();
+    });
+
+    $('#NE-expand-chapter-menu-btn').on('click', function () {
+        var menuPanel = $('#' + NE.Constants.FLOATING_HEADER_ID),
+            heightIncrease = $('#NE-chapter-menu').outerHeight();
+
+        if (menuPanel.hasClass('open')) {
+            heightIncrease *= -1;
+
+        }
+        menuPanel.animate({ 'height': '+=' + heightIncrease + 'px' });
+        menuPanel.toggleClass('open');
     });
 
     $('.NE-btn-slider-next').on('click', function () {
