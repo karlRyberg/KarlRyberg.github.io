@@ -40,13 +40,13 @@ function toggleChapterMenu() {
     positionChapterMenu();
 
     if (menuPanel.hasClass('open')) {
-        menuDiv.fadeOut(0).fadeIn(100);
-        label.fadeOut(100);
+        menuDiv.fadeOut(0).fadeIn(200);
+        label.fadeOut(200);
 
     }
     else {
-        menuDiv.fadeOut(100);
-        label.fadeOut(0).fadeIn(100);
+        menuDiv.fadeOut(200);
+        label.fadeOut(0).fadeIn(200);
     }
 
 }
