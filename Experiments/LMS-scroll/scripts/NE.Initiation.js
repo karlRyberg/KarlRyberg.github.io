@@ -1,13 +1,50 @@
-﻿/// <reference path="NE.Navigation.js" />
+﻿/// <reference path="../libraries/masala-ux/dist/js/jquery.min.js" />
+/// <reference path="NE.Navigation.js" />
 /// <reference path="NE.Events.js" />
 /// <reference path="NE.EventHandlers.js" />
 /// <reference path="NE.Constants.js" />
+/// <reference path="NE.UI.js" />
 
+function positionChapterMenu() {
+
+    var menuPanel = $('#' + NE.Constants.FLOATING_HEADER_ID);
+    if (!menuPanel.hasClass('open')) return;
+
+    var menuDiv = $('#NE-chapter-menu'),
+        label = $('#NE-current-chapter-label'),
+        rightPos = $('#' + NE.Constants.FLOATING_HEADER_ID).outerWidth() - label.offset().left - label.outerWidth(),
+        topPos = parseInt(label.css('padding-top'), 10) - parseInt(menuDiv.find('a').first().css('padding-top'), 10);
+
+
+    menuDiv.css('right', (rightPos - 1) + 'px');
+    menuDiv.css('top', (topPos + 1) + 'px');
+}
+function toggleChapterMenu() {
+
+    var menuPanel = $('#' + NE.Constants.FLOATING_HEADER_ID),
+        menuDiv = $('#NE-chapter-menu'),
+        label = $('#NE-current-chapter-label'),
+        topPos = parseInt(label.css('padding-top'), 10) - parseInt(menuDiv.find('a').first().css('padding-top'), 10),
+        heightIncrease = (menuDiv.outerHeight() + topPos) - NE.UI.FloatingNavInnerSize.height;
+
+    if (menuPanel.hasClass('open')) {
+        heightIncrease *= -1;
+
+    }
+
+
+    menuPanel.animate({ 'height': '+=' + heightIncrease + 'px' }, 200);
+    menuPanel.toggleClass('open');
+
+    positionChapterMenu();
+
+}
 
 $(window).load(function () {
 
     $(window).on('resize', function () {
         NE.UI.ResizeScrollContainer();
+        positionChapterMenu();
     });
 
     new FastClick(document.body);
@@ -22,17 +59,21 @@ $(window).load(function () {
         NE.Navigation.Next();
     });
 
+
+
     $('.NE-expand-chapter-menu-btn').on('click', function () {
-        var menuPanel = $('#' + NE.Constants.FLOATING_HEADER_ID),
-            heightIncrease = $('#NE-chapter-menu').outerHeight();
 
-        if (menuPanel.hasClass('open')) {
-            heightIncrease *= -1;
+        toggleChapterMenu();
 
-        }
-        menuPanel.animate({ 'height': '+=' + heightIncrease + 'px' });
-        menuPanel.toggleClass('open');
     });
+
+    $('.NE-chapter-btn').on('click', function () {
+        $('.NE-chapter-btn').removeClass('active');
+        $(this).addClass('active');
+        $('#NE-current-chapter-label').text($(this).text());
+        toggleChapterMenu();
+    });
+
 
     $('.NE-btn-slider-next').on('click', function () {
         var slider = $(this).parents('.NE-slider').first();

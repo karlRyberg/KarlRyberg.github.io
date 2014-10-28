@@ -91,6 +91,10 @@ NE.UI = (function () {
         /////////////////////
 
         ScrollBarWidth: _getScrollbarWidth(),
+        FloatingNavInnerSize: {
+            height: $('#' + NE.Constants.FLOATING_HEADER_ID).innerHeight(),
+            width: $('#' + NE.Constants.FLOATING_HEADER_ID).innerWidth()
+        },
 
         //////////////////////
         //
