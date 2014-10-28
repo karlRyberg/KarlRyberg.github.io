@@ -22,13 +22,12 @@
                     </button>
                     <a class="navbar-brand ne-logo" href="/" title="Gå till startsidan för NE.se">NE Nationalencyklopedin</a>
                 </div>
-                <div id="NE-page-indicator" class="NE-offcanvas hidden-xs"></div>
             </div>
         </div>
     </nav>
 
     <article id="NE-main-container" class="container">
-        <div id="scroller">
+        <div id="NE-scroller">
 
             <div id="NE-chapter-container">
 
@@ -166,8 +165,9 @@
                         </div>
                     </div>
                 </div>
-
-    </article>
+            </div>
+        </div>
+</article>
 
     <footer id="NE-floating-footer">
         <div class="container">
@@ -181,231 +181,15 @@
     <script src="libraries/fastclick.js"></script>
     <script src="libraries/masala-ux/dist/js/jquery.min.js"></script>
     <script src="libraries/masala-ux/dist/js/masala-ux.min.js"></script>
-    <script src="scripts/ScrollWatch.js"></script>
 
-    <script type="text/javascript">
-
-        window.addEventListener('load', function () {
-            new FastClick(document.body);
-        }, false);
-
-        function getScrollbarWidth() {
-            var outer = document.createElement("div");
-            outer.style.visibility = "hidden";
-            outer.style.width = "100px";
-            outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
-
-            document.body.appendChild(outer);
-
-            var widthNoScroll = outer.offsetWidth;
-            // force scrollbars
-            outer.style.overflow = "scroll";
-
-            // add innerdiv
-            var inner = document.createElement("div");
-            inner.style.width = "100%";
-            outer.appendChild(inner);
-
-            var widthWithScroll = inner.offsetWidth;
-
-            // remove divs
-            outer.parentNode.removeChild(outer);
-
-            return widthNoScroll - widthWithScroll;
-        }
-
-        function setScrollBar(chapter) {
-
-            chapter.css('display', 'block');
-
-            var cssObj = {
-                'overflow': 'hidden',
-                'padding-left': '0px',
-                'transition-duration': '.2s'
-            };
-
-            if (chapter.find('.container').first().outerHeight() > chapter.innerHeight()) {
-                cssObj = {
-                    'overflow': 'auto',
-                    'padding-left': scrollBarWidth + 'px',
-                    'transition-duration': '0s'
-                };
-            }
-
-            chapter.css(cssObj);
-
-        }
-
-        var currentChap = 0;
-        var scrollBarWidth = getScrollbarWidth();
-
-        function navTo(prog) {
-
-            currentChap = prog;
-
-            var navObj = $('#NE-floating-header');
-            var navHeight = navObj.outerHeight();
-
-            var scrollPadd = 0;
-
-
-            if (currentChap > 0 && navObj.hasClass('NE-offcanvas')) {
-                navObj.removeClass('NE-offcanvas');
-                $('#NE-main-container').css('top', navHeight + 'px');
-                $('#NE-page-indicator').removeClass('NE-offcanvas');
-
-                scrollPadd = navHeight;
-            }
-            else if (currentChap < 1 && !navObj.hasClass('NE-offcanvas')) {
-                navObj.addClass('NE-offcanvas');
-                $('#NE-main-container').css('top', '0px');
-                $('#NE-page-indicator').addClass('NE-offcanvas');
-            }
-
-            var nextChatpter = $('#NE-chapter-' + currentChap);
-
-            setTimeout(function () {
-                setScrollBar(nextChatpter);
-            }, 300);
-
-
-            var scrollPos = nextChatpter.position().top;
-            nextChatpter.animate({ 'scrollTop': 0 }, 0);
-            $('#scroller').animate({ 'scrollTop': scrollPos - scrollPadd }, 500);
-
-            var displayChap = currentChap == 0 ? ' ' : currentChap;
-
-            $('#NE-page-indicator').html(displayChap);
-        }
-
-
-        function navNext() {
-            navTo(currentChap + 1);
-        }
-
-        function navPrev() {
-            navTo(currentChap - 1);
-        }
-
-
-        $(document).ready(function () {
-
-
-            $('#NE-nav-back').on('click', function () {
-                navPrev();
-            });
-
-            $('#NE-nav-forward').on('click', function () {
-                navNext();
-            });
-
-            $('.NE-btn-slider-next').on('click', function () {
-                var slider = $(this).parents('.NE-slider').first();
-                var pageHolder = slider.find('.NE-panel-page-holder').first();
-
-                if (pageHolder.outerWidth() + pageHolder.position().left <= slider.innerWidth()) {
-                    pageHolder.animate({ 'left': '-=30px' }, 100, 'swing', function () {
-                        pageHolder.animate({ 'left': '+=30px' }, 200);
-                    });
-                    return;
-                }
-
-
-                pageHolder.animate({ 'left': '-=' + slider.innerWidth() + 'px' });
-
-            });
-
-            $('.NE-btn-slider-back').on('click', function () {
-                var slider = $(this).parents('.NE-slider').first();
-                var pageHolder = slider.find('.NE-panel-page-holder').first();
-
-                if (pageHolder.position().left >= 0) {
-                    pageHolder.animate({ 'left': '+=30px' }, 100, 'swing', function () {
-                        pageHolder.animate({ 'left': '-=30px' }, 200);
-                    });
-                    return;
-                }
-
-
-                pageHolder.animate({ 'left': '+=' + slider.innerWidth() + 'px' });
-
-            });
-
-
-            $('.NE-revealer-button').click(function (e) {
-
-                var id = $(this).parent().data('reveal');
-                var area = $('#' + id);
-                var that = $(this);
-                var chapter = $(this).parents('.NE-chapter').first();
-                var row = $(this).parents('.NE-drilldown-row').first();
-
-                if ($(this).hasClass('open')) {
-                    $(this).addClass('active');
-                    setTimeout(function () {
-                        area.slideUp(500, function () {
-                            area.addClass('hidden');
-                            scrollToElement(that, 'middle', function () {
-                                that.removeClass('active').removeClass('open');
-                                setTimeout(function () {
-                                    setScrollBar(chapter);
-                                }, 300);
-                            });
-                        });
-                        row.removeClass('open');
-                    }, 100);
-                }
-                else {
-                    $(this).addClass('active');
-                    setTimeout(function () {
-                        area.removeClass('hidden').slideUp(0).slideDown(500, function () {
-                            scrollToElement(area, 'top', function () {
-                                that.removeClass('active').addClass('open');
-                                setScrollBar(chapter);
-                            });
-                        });
-                        row.addClass('open');
-                    }, 100);
-                }
-
-                e.preventDefault();
-                return false;
-
-            });
-
-
-        });
-
-
-        function scrollToElement(jqElement, anchor, callback) {
-
-            var parentChapter = jqElement.parents('.NE-chapter').first();
-            var viewPort = $('#NE-main-container');
-
-            var viewTarget = viewPort.offset().top + 30;
-            var scrollAnchor = jqElement.offset().top
-
-            if (!anchor || (anchor && anchor.toString().toLowerCase() == 'middle')) {
-                viewTarget += viewPort.innerHeight() / 2;
-                scrollAnchor += jqElement.outerHeight() / 2;
-            }
-            else if (anchor && anchor.toString().toLowerCase() == 'bottom') {
-                viewTarget += viewPort.innerHeight();
-                scrollAnchor += jqElement.outerHeight();
-            }
-
-
-            var diff = scrollAnchor - viewTarget;
-            var time = Math.abs(diff)
-            time = Math.min(Math.max(time, 100), 500);
-
-            parentChapter.animate({ 'scrollTop': '+=' + diff + 'px' }, time, function () {
-                if (callback) callback();
-            });
-
-        }
-
-    </script>
+    <script src="scripts/NE.Constants.js"></script>
+    <script src="scripts/NE.Events.js"></script>
+    <script src="scripts/NE.Scroll.js"></script>
+    <script src="scripts/NE.UI.js"></script>
+    <script src="scripts/NE.Navigation.js"></script>
+    <script src="scripts/NE.EventHandlers.js"></script>
+
+    <script src="scripts/NE.Initiation.js"></script>
 
 </body>
 </html>
