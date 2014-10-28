@@ -32,11 +32,12 @@
     bottom: 40px;
     margin: auto;
     padding: 0px;
-    background-color: white;
+    background-color: #f2f2f2;
     transition-property: top;
     transition-duration: 0.3s;
     transition-timing-function: ease-in-out;
 }
+
 
 #scroller {
     position: absolute;
@@ -72,13 +73,19 @@
 
 .NE-chapter {
     position: relative;
-    background-color: white;
     width: 100%;
     height: 100%;
     min-height: 100%;
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
+    transition-property: padding-left;
+    transition-duration: 0.3s;
 }
+
+    .NE-chapter > .container {
+        background-color: white;
+        min-height: 100%;
+    }
 
 #NE-chapter-0 {
 }
@@ -90,23 +97,54 @@
 }
 
 .NE-horizontal-panel {
+    position: relative;
     overflow: hidden;
-    border-bottom: 10px solid #efefef;
+    background-color: #f2f2f2;
+    padding-bottom: 50px;
 }
 
     .NE-horizontal-panel .NE-panel-page-holder {
+         position: relative;
         display: table;
         width: 200%;
     }
 
-        .NE-horizontal-panel .NE-panel-page-holder .NE-panel-page {
-            display: table-cell;
-            width: 50%;
-            background-color: white;
-            border: 10px solid #efefef;
-            border-bottom-width: 0px;
-            padding: 15px;
-        }
+    .NE-horizontal-panel .NE-panel-page {
+        display: table-cell;
+        width: 50%;
+        background-color: #f2f2f2;
+        padding: 15px;
+    }
+
+        .NE-horizontal-panel .NE-panel-page .NE-panel-content {
+        background-color: white;
+        padding: 20px;
+        margin: 15px;
+        border: 1px solid #bfbfbf;
+    }
+
+    .NE-horizontal-panel .NE-horizontal-panel-nav {
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        height: 50px;
+        opacity: 0.5;
+            transition-property: opacity;
+    transition-duration: .1s;
+    transition-timing-function: ease-in;
+    }
+
+        .NE-horizontal-panel .NE-horizontal-panel-nav:hover {
+        
+        opacity: 1;
+    }
+
+    .NE-horizontal-panel .NE-horizontal-panel-nav .NE-nav-bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+    }
 
 
 #NE-page-indicator {
@@ -144,6 +182,7 @@
     display: inline-block;
     font-size: 2em;
     width: 100%;
+    height: 45px;
     text-align: center;
 }
 
@@ -164,11 +203,13 @@
     color: white;
     cursor: pointer;
     border-radius: 3px;
-    transition-property: width, height;
+    overflow: hidden;
+    transition-property: margin-top, width, height;
     transition-duration: 0.3s;
 }
 
     .NE-revealer-button.active {
+        margin-top: 20px;
         width: 75%;
         height: 0px;
     }
