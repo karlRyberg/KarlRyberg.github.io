@@ -5,10 +5,11 @@
 #NE-floating-header {
     height: 80px;
     overflow: hidden;
-    transition-property: top, height;
+    transition-property: top;
     transition-duration: 0.3s;
     transition-timing-function: ease-in-out;
 }
+
 
     #NE-floating-header.NE-offcanvas {
         top: -100px;

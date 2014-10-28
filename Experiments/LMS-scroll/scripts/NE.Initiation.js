@@ -22,7 +22,7 @@ $(window).load(function () {
         NE.Navigation.Next();
     });
 
-    $('#NE-expand-chapter-menu-btn').on('click', function () {
+    $('.NE-expand-chapter-menu-btn').on('click', function () {
         var menuPanel = $('#' + NE.Constants.FLOATING_HEADER_ID),
             heightIncrease = $('#NE-chapter-menu').outerHeight();
 
