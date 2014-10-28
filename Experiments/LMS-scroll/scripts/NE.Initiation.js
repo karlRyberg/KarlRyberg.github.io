@@ -15,10 +15,11 @@ function positionChapterMenu() {
         rightPos = $('#' + NE.Constants.FLOATING_HEADER_ID).outerWidth() - label.offset().left - label.outerWidth(),
         topPos = parseInt(label.css('padding-top'), 10) - parseInt(menuDiv.find('a').first().css('padding-top'), 10);
 
+    menuDiv.css('right', (rightPos) + 'px');
+    menuDiv.css('top', (topPos) + 'px');
 
-    menuDiv.css('right', (rightPos - 1) + 'px');
-    menuDiv.css('top', (topPos + 1) + 'px');
 }
+
 function toggleChapterMenu() {
 
     var menuPanel = $('#' + NE.Constants.FLOATING_HEADER_ID),
@@ -37,6 +38,16 @@ function toggleChapterMenu() {
     menuPanel.toggleClass('open');
 
     positionChapterMenu();
+
+    if (menuPanel.hasClass('open')) {
+        menuDiv.fadeOut(0).fadeIn(100);
+        label.fadeOut(100);
+
+    }
+    else {
+        menuDiv.fadeOut(100);
+        label.fadeOut(0).fadeIn(100);
+    }
 
 }
 
