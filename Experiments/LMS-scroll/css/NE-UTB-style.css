@@ -239,54 +239,55 @@
     content: '\f106';
 }
 
+@media (min-width: 767px) {
 
-
-#NE-close-button {
-    position: relative;
-    top: 0px;
-    width: 40px;
-    height: 40px;
-    padding: 0px;
-    border-width: 0px;
-    border-radius: 20px;
-    overflow: hidden;
-    text-align: center;
-    line-height: 40px;
-    transition-property: width, margin-right;
-    transition-duration: 0.3s;
-    transition-timing-function: ease-out;
-}
-
-    #NE-close-button.NE-offcanvas {
-        margin-right: 20px;
-        width: 0px;
-    }
-
-        #NE-close-button.NE-offcanvas:before {
-            content: '';
-            color: #18bdd4;
-        }
-
-
-    #NE-close-button:before {
-        font-family: "FontAwesome";
-        content: '\f00d';
-        position: absolute;
-        left: 0px;
+    #NE-close-button {
+        position: relative;
         top: 0px;
         width: 40px;
         height: 40px;
-        line-height: 40px;
+        padding: 0px;
+        border-width: 0px;
         border-radius: 20px;
-        background-color: inherit;
-        transition: left 0.3s ease-out, color 0.3s ease-out;
-        color: white;
+        overflow: hidden;
+        text-align: center;
+        line-height: 40px;
+        transition-property: width, margin-right;
+        transition-duration: 0.3s;
+        transition-timing-function: ease-out;
     }
 
-    #NE-close-button:hover:before {
-        left: -40px;
-    }
+        #NE-close-button.NE-offcanvas {
+            margin-right: 20px;
+            width: 0px;
+        }
 
-    #NE-close-button:hover {
-        width: 120px;
-    }
+            #NE-close-button.NE-offcanvas:before {
+                content: '';
+                color: #18bdd4;
+            }
+
+
+        #NE-close-button:before {
+            font-family: "FontAwesome";
+            content: '\f00d';
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 20px;
+            background-color: inherit;
+            transition: left 0.3s ease-out, color 0.3s ease-out;
+            color: white;
+        }
+
+        #NE-close-button:hover:before {
+            left: -40px;
+        }
+
+        #NE-close-button:hover {
+            width: 120px;
+        }
+}
