@@ -3,12 +3,14 @@
 }
 
 #NE-floating-header {
+    overflow: hidden;
     transition-property: top;
     transition-duration: 0.3s;
     transition-timing-function: ease-in-out;
 }
 
     #NE-floating-header.NE-offcanvas {
+        height: 80px;
         top: -100px;
     }
 
@@ -32,15 +34,24 @@
     box-shadow: none;
     border: none;
     padding: 0px;
-
     transition-property: height;
-    transition-duration: 0.3s;
-    transition-timing-function: ease-in-out;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in;
 }
 
     #NE-chapter-menu.open {
-            margin-bottom: 10px;
     }
+
+
+    #NE-chapter-menu a {
+        padding: 20px 12px;
+        border-color: #d9d9d9;
+        border-bottom-width: 2px;
+    }
+
+        #NE-chapter-menu a:hover {
+            background-color: inherit;
+        }
 
 #NE-floating-footer {
     position: fixed;
@@ -227,3 +238,55 @@
 .NE-revealer-button.open .NE-revealer-icon:after {
     content: '\f106';
 }
+
+
+
+#NE-close-button {
+    position: relative;
+    top: 0px;
+    width: 40px;
+    height: 40px;
+    padding: 0px;
+    border-width: 0px;
+    border-radius: 20px;
+    overflow: hidden;
+    text-align: center;
+    line-height: 40px;
+    transition-property: width, margin-right;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+}
+
+    #NE-close-button.NE-offcanvas {
+        margin-right: 20px;
+        width: 0px;
+    }
+
+        #NE-close-button.NE-offcanvas:before {
+            content: '';
+            color: #18bdd4;
+        }
+
+
+    #NE-close-button:before {
+        font-family: "FontAwesome";
+        content: '\f00d';
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 20px;
+        background-color: inherit;
+        transition: left 0.3s ease-out, color 0.3s ease-out;
+        color: white;
+    }
+
+    #NE-close-button:hover:before {
+        left: -40px;
+    }
+
+    #NE-close-button:hover {
+        width: 120px;
+    }

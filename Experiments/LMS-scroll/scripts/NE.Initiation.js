@@ -32,6 +32,7 @@ $(window).load(function () {
                 menuHeight += $(this).outerHeight();
             });
         }
+        $(this).parent().toggleClass('active');
         chapterMenuDiv.css('height', menuHeight + 'px').toggleClass('open');
     });
 

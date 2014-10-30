@@ -78,11 +78,13 @@ NE.EventHandlers = (function () {
 
             if (e.index > 0 && navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
                 navObj.removeClass(NE.Constants.OF_CANVAS_TOP_CLASS);
+                $('#' + NE.Constants.CLOSE_BUTTON_ID).removeClass(NE.Constants.OF_CANVAS_TOP_CLASS);
                 mainContainer.css('top', navHeight + 'px');
                 offsetTop = navHeight;
             }
             else if (e.index < 1 && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
                 navObj.addClass(NE.Constants.OF_CANVAS_TOP_CLASS);
+                $('#' + NE.Constants.CLOSE_BUTTON_ID).addClass(NE.Constants.OF_CANVAS_TOP_CLASS);
                 mainContainer.css('top', '0px');
             }
 
