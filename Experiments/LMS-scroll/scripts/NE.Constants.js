@@ -73,6 +73,7 @@ NE.Constants = (function () {
         FLOATING_HEADER_ID: 'NE-floating-header',
         CLOSE_BUTTON_ID: 'NE-close-button',
         OF_CANVAS_TOP_CLASS: 'NE-offcanvas',
+        HEADER_CHAPTER_NAV_ICON: '<i class="fa fa-navicon ml-xs"></i>',
 
         //////////////////////
         //

@@ -9,7 +9,6 @@ $(window).load(function () {
 
     $(window).on('resize', function () {
         NE.UI.ResizeScrollContainer();
-        positionChapterMenu();
     });
 
     new FastClick(document.body);
@@ -36,8 +35,25 @@ $(window).load(function () {
         chapterMenuDiv.css('height', menuHeight + 'px').toggleClass('open');
     });
 
+    $('.NE-chapter-menu-link, .NE-chapter-menu-link-xs').on('click', function () {
+        
+        var clickedItem = $(this);
+        if(clickedItem.hasClass('disable')) return;
+
+        var chapterIndex = parseInt(clickedItem.data('chapter'), 10);
+        NE.Navigation.ToChapter(chapterIndex);
+
+        if (clickedItem.hasClass('NE-chapter-menu-link-xs')) {
+            $('#NE-chapter-label-xs').click();
+        }
+        else {
+            $('#NE-chapter-label').click();
+        }
+
+    });
 
 
+    
     $('.NE-btn-slider-next').on('click', function () {
         var slider = $(this).parents('.NE-slider').first();
         var pageHolder = slider.find('.NE-panel-page-holder').first();

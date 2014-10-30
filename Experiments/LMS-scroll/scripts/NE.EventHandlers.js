@@ -93,7 +93,18 @@ NE.EventHandlers = (function () {
 
             NE.UI.ResizeScrollContainer(offsetTop, true);
 
+            var chapterMenuItem = $('#NE-chapter-menu-link-' + e.index);
+            $('.NE-chapter-menu-link').removeClass('disable');
+            chapterMenuItem.addClass('disable');
+
+            $('#NE-chapter-label').html(chapterMenuItem.html() + NE.Constants.HEADER_CHAPTER_NAV_ICON)
+
+
+            var smallChapterMenuItem = $('#NE-chapter-menu-link-xs-' + e.index);
+            $('.NE-chapter-menu-link-xs').removeClass('disable');
+            smallChapterMenuItem.addClass('disable');
         },
+
 
         //////////////////////
         //

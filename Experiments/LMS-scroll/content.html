@@ -19,7 +19,7 @@
         <div class="container">
             <div class="row">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                    <button type="button" class="navbar-toggle collapsed"  id="NE-chapter-label-xs" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Visa navigation</span> <i class="fa fa-bars"></i>
                     </button>
                     <a class="navbar-brand ne-logo" href="/" title="Återgå till startsidan för NE.se">NE</a>
@@ -29,19 +29,20 @@
                 <div class="navbar-collapse collapse" style="height: 1px;">
                     <ul class="nav navbar-nav hidden-xs">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" id="NE-chapter-label" data-toggle="">Introduktion<i class="fa fa-navicon ml-xs"></i></a>
+                            <a href="#" class="dropdown-toggle" id="NE-chapter-label">Introduktion<i class="fa fa-navicon ml-xs"></i></a>
                             <ul class="dropdown-menu" id="NE-chapter-menu" role="menu">
-                                <li><a href="#" class="navbar-link">Kapitel nummer 1</a></li>
-                                <li><a href="#" class="navbar-link">Kapitel nummer 2</a></li>
-                                <li><a href="#" class="navbar-link">Kapitel nummer 3</a></li>
+                                <li><a href="#" class="navbar-link NE-chapter-menu-link disable" id="NE-chapter-menu-link-0" data-chapter="0">Introduktion</a></li>
+                                <li><a href="#" class="navbar-link NE-chapter-menu-link" id="NE-chapter-menu-link-1" data-chapter="1">Kapitel nummer 1</a></li>
+                                <li><a href="#" class="navbar-link NE-chapter-menu-link" id="NE-chapter-menu-link-2" data-chapter="2">Kapitel nummer 2</a></li>
+                                <li><a href="#" class="navbar-link NE-chapter-menu-link" id="NE-chapter-menu-link-3" data-chapter="3">Kapitel nummer 3</a></li>
                             </ul>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav visible-xs">
-                        <li><a href="#">Introduktion</a></li>
-                        <li><a href="#">Kapitel nummer 1</a></li>
-                        <li><a href="#">Kapitel nummer 2</a></li>
-                        <li><a href="#">Kapitel nummer 3</a></li>
+                    <ul class="nav navbar-nav visible-xs" id="NE-chapter-menu-xs" role="menu">
+                        <li><a href="#" class="navbar-link NE-chapter-menu-link-xs disable" id="NE-chapter-menu-link-xs-0" data-chapter="0">Introduktion</a></li>
+                        <li><a href="#" class="navbar-link NE-chapter-menu-link-xs" id="NE-chapter-menu-link-xs-1" data-chapter="1">Kapitel nummer 1</a></li>
+                        <li><a href="#" class="navbar-link NE-chapter-menu-link-xs" id="NE-chapter-menu-link-xs-2" data-chapter="2">Kapitel nummer 2</a></li>
+                        <li><a href="#" class="navbar-link NE-chapter-menu-link-xs" id="NE-chapter-menu-link-xs-3" data-chapter="3">Kapitel nummer 3</a></li>
                     </ul>
                     <a href="#" class="btn btn-primary navbar-btn navbar-right NE-offcanvas" id="NE-close-button">Avsluta&nbsp;&nbsp;<i class="fa fa-times"></i></a>
                 </div>
