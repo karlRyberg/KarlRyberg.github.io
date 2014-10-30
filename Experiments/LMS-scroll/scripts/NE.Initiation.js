@@ -5,52 +5,6 @@
 /// <reference path="NE.Constants.js" />
 /// <reference path="NE.UI.js" />
 
-function positionChapterMenu() {
-
-    var menuPanel = $('#' + NE.Constants.FLOATING_HEADER_ID);
-    if (!menuPanel.hasClass('open')) return;
-
-    var menuDiv = $('#NE-chapter-menu'),
-        label = $('#NE-current-chapter-label'),
-        rightPos = $('#' + NE.Constants.FLOATING_HEADER_ID).outerWidth() - label.offset().left - label.outerWidth(),
-        topPos = parseInt(label.css('padding-top'), 10) - parseInt(menuDiv.find('a').first().css('padding-top'), 10);
-
-    menuDiv.css('right', (rightPos) + 'px');
-    menuDiv.css('top', (topPos) + 'px');
-
-}
-
-function toggleChapterMenu() {
-
-    var menuPanel = $('#' + NE.Constants.FLOATING_HEADER_ID),
-        menuDiv = $('#NE-chapter-menu'),
-        label = $('#NE-current-chapter-label'),
-        topPos = parseInt(label.css('padding-top'), 10) - parseInt(menuDiv.find('a').first().css('padding-top'), 10),
-        heightIncrease = (menuDiv.outerHeight() + topPos) - NE.UI.FloatingNavInnerSize.height;
-
-    if (menuPanel.hasClass('open')) {
-        heightIncrease *= -1;
-
-    }
-
-
-    menuPanel.animate({ 'height': '+=' + heightIncrease + 'px' }, 200);
-    menuPanel.toggleClass('open');
-
-    positionChapterMenu();
-
-    if (menuPanel.hasClass('open')) {
-        menuDiv.fadeOut(0).fadeIn(200);
-        label.fadeOut(200);
-
-    }
-    else {
-        menuDiv.fadeOut(200);
-        label.fadeOut(0).fadeIn(200);
-    }
-
-}
-
 $(window).load(function () {
 
     $(window).on('resize', function () {
@@ -70,20 +24,17 @@ $(window).load(function () {
         NE.Navigation.Next();
     });
 
-
-
-    $('.NE-expand-chapter-menu-btn').on('click', function () {
-
-        toggleChapterMenu();
-
+    $('#NE-chapter-label').on('click', function () {
+        var chapterMenuDiv =  $('#NE-chapter-menu');
+        var menuHeight = 0;
+        if (!chapterMenuDiv.hasClass('open')) {
+            chapterMenuDiv.find('li').each(function () {
+                menuHeight += $(this).outerHeight();
+            });
+        }
+        chapterMenuDiv.css('height', menuHeight + 'px').toggleClass('open');
     });
 
-    $('.NE-chapter-btn').on('click', function () {
-        $('.NE-chapter-btn').removeClass('active');
-        $(this).addClass('active');
-        $('#NE-current-chapter-label').text($(this).text());
-        toggleChapterMenu();
-    });
 
 
     $('.NE-btn-slider-next').on('click', function () {
@@ -96,7 +47,6 @@ $(window).load(function () {
             });
             return;
         }
-
 
         pageHolder.animate({ 'left': '-=' + slider.innerWidth() + 'px' });
 
