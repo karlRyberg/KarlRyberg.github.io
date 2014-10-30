@@ -19,7 +19,7 @@
         <div class="container">
             <div class="row">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed"  id="NE-chapter-label-xs" data-toggle="collapse" data-target=".navbar-collapse">
+                    <button type="button" class="navbar-toggle collapsed" id="NE-chapter-label-xs" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Visa navigation</span> <i class="fa fa-bars"></i>
                     </button>
                     <a class="navbar-brand ne-logo" href="/" title="Återgå till startsidan för NE.se">NE</a>
@@ -31,18 +31,18 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" id="NE-chapter-label">Introduktion<i class="fa fa-navicon ml-xs"></i></a>
                             <ul class="dropdown-menu" id="NE-chapter-menu" role="menu">
-                                <li><a href="#" class="navbar-link NE-chapter-menu-link disable" id="NE-chapter-menu-link-0" data-chapter="0">Introduktion</a></li>
-                                <li><a href="#" class="navbar-link NE-chapter-menu-link" id="NE-chapter-menu-link-1" data-chapter="1">Kapitel nummer 1</a></li>
-                                <li><a href="#" class="navbar-link NE-chapter-menu-link" id="NE-chapter-menu-link-2" data-chapter="2">Kapitel nummer 2</a></li>
-                                <li><a href="#" class="navbar-link NE-chapter-menu-link" id="NE-chapter-menu-link-3" data-chapter="3">Kapitel nummer 3</a></li>
+                                <li><a href="#" class="navbar-link NE-chapter-menu-link NE-chapter-navigation-link disable" id="NE-chapter-menu-link-0" data-chapter="0">Introduktion</a></li>
+                                <li><a href="#" class="navbar-link NE-chapter-menu-link NE-chapter-navigation-link" id="NE-chapter-menu-link-1" data-chapter="1">Kapitel nummer 1</a></li>
+                                <li><a href="#" class="navbar-link NE-chapter-menu-link NE-chapter-navigation-link" id="NE-chapter-menu-link-2" data-chapter="2">Kapitel nummer 2</a></li>
+                                <li><a href="#" class="navbar-link NE-chapter-menu-link NE-chapter-navigation-link" id="NE-chapter-menu-link-3" data-chapter="3">Kapitel nummer 3</a></li>
                             </ul>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav visible-xs" id="NE-chapter-menu-xs" role="menu">
-                        <li><a href="#" class="navbar-link NE-chapter-menu-link-xs disable" id="NE-chapter-menu-link-xs-0" data-chapter="0">Introduktion</a></li>
-                        <li><a href="#" class="navbar-link NE-chapter-menu-link-xs" id="NE-chapter-menu-link-xs-1" data-chapter="1">Kapitel nummer 1</a></li>
-                        <li><a href="#" class="navbar-link NE-chapter-menu-link-xs" id="NE-chapter-menu-link-xs-2" data-chapter="2">Kapitel nummer 2</a></li>
-                        <li><a href="#" class="navbar-link NE-chapter-menu-link-xs" id="NE-chapter-menu-link-xs-3" data-chapter="3">Kapitel nummer 3</a></li>
+                        <li><a href="#" class="navbar-link NE-chapter-menu-link-xs NE-chapter-navigation-link disable" id="NE-chapter-menu-link-xs-0" data-chapter="0">Introduktion</a></li>
+                        <li><a href="#" class="navbar-link NE-chapter-menu-link-xs NE-chapter-navigation-link" id="NE-chapter-menu-link-xs-1" data-chapter="1">Kapitel nummer 1</a></li>
+                        <li><a href="#" class="navbar-link NE-chapter-menu-link-xs NE-chapter-navigation-link" id="NE-chapter-menu-link-xs-2" data-chapter="2">Kapitel nummer 2</a></li>
+                        <li><a href="#" class="navbar-link NE-chapter-menu-link-xs NE-chapter-navigation-link" id="NE-chapter-menu-link-xs-3" data-chapter="3">Kapitel nummer 3</a></li>
                     </ul>
                     <a href="#" class="btn btn-primary navbar-btn navbar-right NE-offcanvas" id="NE-close-button">Avsluta&nbsp;&nbsp;<i class="fa fa-times"></i></a>
                 </div>
@@ -58,22 +58,30 @@
 
                 <div id="NE-chapter-0" class="NE-chapter NE-scroll-watched">
 
-                    <div class="container">
-                        <div id="NE-course-menu" class="row mt-lg">
-                            <div class="col-xs-12">
-
-                                <h1 class="page-header h1 font-weight-narrow keyline keyline-3x keyline-base0D keyline-bottom inline-block">Main heading</h1>
-                                <ul>
-                                    <li>Lorem Ipsum</li>
-                                    <li>Condimentum facilisis</li>
-                                    <li>Donec interdum metus</li>
-                                    <li>Nulla facilisi</li>
-                                </ul>
+                    <div style="background-color:#F2F2F2;">
+                        <div class="container">
+                            <div class="row pt-lg pb-lg">
+                                <div class="col-xs-12">
+                       
+                                </div>
                             </div>
                         </div>
                     </div>
-
+                    <div class="container">
+                        <div id="NE-course-menu" class="row mt-md">
+                            <div class="col-xs-12">
+                                <h1 class="page-header h1 font-weight-narrow keyline keyline-3x keyline-base0D keyline-bottom inline-block">Main heading</h1>
+                                <ul>
+                                    <li class="NE-chapter-navigation-link" data-chapter="0">Lorem Ipsum</li>
+                                    <li class="NE-chapter-navigation-link" data-chapter="1">Condimentum facilisis</li>
+                                    <li class="NE-chapter-navigation-link" data-chapter="2">Donec interdum metus</li>
+                                    <li class="NE-chapter-navigation-link" data-chapter="3">Nulla facilisi</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>  
                 </div>
+
 
                 <div id="NE-chapter-1" class="NE-chapter NE-scroll-watched">
 
@@ -190,6 +198,38 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div id="NE-chapter-3" class="NE-chapter NE-scroll-watched">
+
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h2>Last chapter</h2>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris interdum suscipit tempor. Nulla lacinia, nibh et imperdiet fringilla, eros ipsum mattis mi, ac luctus est nisl ac sapien. Nam at tempus neque, non tincidunt mauris. Sed et massa vulputate, convallis nisl at, ornare ligula. Sed interdum dictum quam laoreet tincidunt. Morbi ut venenatis urna. Integer vulputate mi at massa efficitur facilisis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam facilisis tristique erat, tincidunt cursus eros. Nam aliquam, nunc sed posuere ornare, mauris tortor molestie est, eu bibendum dui justo sed mauris.
+                                </p>
+                                <p>
+                                    Maecenas pulvinar nisl ut condimentum facilisis. Nulla pulvinar arcu at aliquam ultricies. Sed venenatis lobortis metus et tempor. Aenean tempus accumsan egestas. Morbi at dui non massa tempor condimentum ac sit amet purus. Ut imperdiet gravida porta. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis mattis pulvinar massa sed ultricies.
+
+                                    Nunc semper sapien non risus convallis vestibulum. Vestibulum ac auctor libero, at dignissim purus. Donec interdum metus lacus, at venenatis enim iaculis vel. Integer feugiat justo lorem, vitae volutpat massa pharetra quis. Maecenas a mauris blandit mauris auctor dignissim. Nam vel sapien maximus, laoreet purus et, lobortis velit. Curabitur massa risus, bibendum vel elementum et, sodales id arcu. Vestibulum vehicula gravida nisl ut mattis. Phasellus dictum, massa at viverra sollicitudin, lacus elit convallis augue, a porta purus lacus a nulla. Curabitur nunc orci, gravida nec auctor congue, imperdiet eu lacus. Integer sollicitudin lorem nec mi iaculis, molestie vehicula elit elementum. Quisque vulputate sem id hendrerit pretium. Proin facilisis congue suscipit. Fusce efficitur ipsum risus, in consectetur velit feugiat ac. Etiam convallis dapibus dui, at eleifend odio egestas nec.
+                                </p>
+                                <p>
+                                    Nulla facilisi. Nullam eu leo pellentesque, feugiat felis tempor, varius libero. Sed vitae orci in tellus vestibulum consectetur. Phasellus luctus ultricies lacus eu tristique. Nulla finibus eros quis semper malesuada. Suspendisse nec dictum nisi, id tempor nulla. Cras a egestas tortor. Aenean erat quam, efficitur sit amet ipsum in, porta pretium justo. Mauris est nulla, molestie vel cursus quis, congue vel eros. Fusce a nisl sed odio tempor maximus. Nam commodo accumsan rhoncus. Fusce at consequat purus. Praesent ac massa vitae erat feugiat egestas a a dui. In congue quam in velit varius, in tincidunt sem condimentum. Quisque efficitur eros eget semper suscipit. Nulla sed rhoncus erat, sed sollicitudin nibh.
+                                </p>
+                                <p>
+                                    Curabitur vel tellus non ipsum euismod molestie a in sem. Vivamus suscipit nibh ex, gravida ultricies neque facilisis ac. Quisque semper luctus condimentum. Maecenas vel sagittis sem. Donec at commodo augue. Morbi nec fermentum ligula, at vestibulum neque. Mauris vestibulum odio id lorem tincidunt lobortis nec vitae orci. Mauris lectus neque, vestibulum nec sodales quis, molestie ut dui. Fusce eget neque consectetur, congue neque sed, faucibus felis. Duis blandit ligula vitae metus volutpat mattis. Etiam eu ex eget purus vulputate mollis vel venenatis risus. Etiam venenatis laoreet vulputate.
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
             </div>
         </div>
     </article>

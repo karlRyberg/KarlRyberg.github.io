@@ -128,8 +128,13 @@ NE.UI = (function () {
             var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex),
                 animTime = i_animate ? 500 : 0;
 
-            NE.UI.ApplyVerticalScrollbar(currentChapter);
-            $('#' + NE.Constants.SCROLL_CONTAINER_ID).animate({ 'scrollTop': currentChapter.position().top - i_offsetTop }, animTime);
+        
+
+            $('#' + NE.Constants.SCROLL_CONTAINER_ID).animate({ 'scrollTop': currentChapter.position().top - (i_offsetTop * NE.Navigation.CurrentChapterIndex) }, animTime, function () {
+                    NE.UI.ApplyVerticalScrollbar(currentChapter);
+                });
+
+
         },
 
         eof: null

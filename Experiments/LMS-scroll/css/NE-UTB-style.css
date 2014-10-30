@@ -43,20 +43,20 @@
     padding-bottom: 15px;
 }
 
-#NE-chapter-menu a, #NE-chapter-menu-xs a {
-    padding: 20px 12px;
-    border-color: #d9d9d9;
-    border-bottom-width: 2px;
-}
-
-    #NE-chapter-menu a.disable, #NE-chapter-menu-xs a.disable {
-        color: #d9d9d9;
-        cursor: default;
+    #NE-chapter-menu a, #NE-chapter-menu-xs a {
+        padding: 20px 12px;
+        border-color: #d9d9d9;
+        border-bottom-width: 2px;
     }
 
-    #NE-chapter-menu a:hover {
-        background-color: inherit;
-    }
+        #NE-chapter-menu a.disable, #NE-chapter-menu-xs a.disable {
+            color: #d9d9d9;
+            cursor: default;
+        }
+
+        #NE-chapter-menu a:hover {
+            background-color: inherit;
+        }
 
 #NE-floating-footer {
     position: fixed;
@@ -76,7 +76,7 @@
     bottom: 40px;
     margin: auto;
     padding: 0px;
-    background-color: #f2f2f2;
+    background-color: white;
     transition-property: top;
     transition-duration: 0.3s;
     transition-timing-function: ease-in-out;

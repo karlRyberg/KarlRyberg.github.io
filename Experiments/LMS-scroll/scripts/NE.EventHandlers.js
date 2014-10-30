@@ -90,7 +90,7 @@ NE.EventHandlers = (function () {
 
             var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
             currentChapter.animate({ 'scrollTop': 0 }, 0);
-
+       
             NE.UI.ResizeScrollContainer(offsetTop, true);
 
             var chapterMenuItem = $('#NE-chapter-menu-link-' + e.index);

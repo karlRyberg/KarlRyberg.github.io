@@ -24,7 +24,7 @@ $(window).load(function () {
     });
 
     $('#NE-chapter-label').on('click', function () {
-        var chapterMenuDiv =  $('#NE-chapter-menu');
+        var chapterMenuDiv = $('#NE-chapter-menu');
         var menuHeight = 0;
         if (!chapterMenuDiv.hasClass('open')) {
             chapterMenuDiv.find('li').each(function () {
@@ -35,10 +35,10 @@ $(window).load(function () {
         chapterMenuDiv.css('height', menuHeight + 'px').toggleClass('open');
     });
 
-    $('.NE-chapter-menu-link, .NE-chapter-menu-link-xs').on('click', function () {
-        
+    $('.NE-chapter-navigation-link').on('click', function () {
+
         var clickedItem = $(this);
-        if(clickedItem.hasClass('disable')) return;
+        if (clickedItem.hasClass('disable')) return;
 
         var chapterIndex = parseInt(clickedItem.data('chapter'), 10);
         NE.Navigation.ToChapter(chapterIndex);
@@ -46,14 +46,14 @@ $(window).load(function () {
         if (clickedItem.hasClass('NE-chapter-menu-link-xs')) {
             $('#NE-chapter-label-xs').click();
         }
-        else {
+        else if (clickedItem.hasClass('NE-chapter-menu-link')) {
             $('#NE-chapter-label').click();
         }
 
     });
 
 
-    
+
     $('.NE-btn-slider-next').on('click', function () {
         var slider = $(this).parents('.NE-slider').first();
         var pageHolder = slider.find('.NE-panel-page-holder').first();
