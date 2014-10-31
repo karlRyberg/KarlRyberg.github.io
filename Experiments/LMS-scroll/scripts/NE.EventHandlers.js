@@ -80,7 +80,14 @@ NE.EventHandlers = (function () {
                 navObj.removeClass(NE.Constants.OF_CANVAS_TOP_CLASS);
                 $('#' + NE.Constants.CLOSE_BUTTON_ID).removeClass(NE.Constants.OF_CANVAS_TOP_CLASS);
                 mainContainer.css('top', navHeight + 'px');
-                offsetTop = e.index > 1 && $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).position().top == 0 ? navHeight * 2 : navHeight;
+
+                var topPadding = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).position().top;
+
+                if (topPadding < navHeight) {
+                    offsetTop = navHeight;
+                }
+                
+    
             }
             else if (e.index < 1 && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
                 navObj.addClass(NE.Constants.OF_CANVAS_TOP_CLASS);
