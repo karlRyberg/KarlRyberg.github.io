@@ -129,7 +129,7 @@ NE.UI = (function () {
                 animTime = i_animate ? 500 : 0;
 
             NE.UI.ApplyVerticalScrollbar(currentChapter);
-            console.log('MAIN_CONTENT_CONTAINER_ID top: ' + ($('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).position().top));
+
             $('#' + NE.Constants.SCROLL_CONTAINER_ID).animate({ 'scrollTop': currentChapter.position().top - (i_offsetTop) }, animTime, function () {
 
             });
