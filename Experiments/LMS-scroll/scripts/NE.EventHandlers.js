@@ -85,8 +85,9 @@ NE.EventHandlers = (function () {
 
                 if (topPadding < navHeight) {
                     offsetTop = navHeight;
+                    if (e.index > 1) offsetTop += navHeight;
                 }
-                
+                console.log(topPadding + ' < ' + navHeight + '  ' + offsetTop);
     
             }
             else if (e.index < 1 && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
