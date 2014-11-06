@@ -31,6 +31,26 @@ NE.UI = (function () {
     //
     /////////////////////
 
+    var _lastChapterIndex;
+
+    //////////////////////
+    //
+    //  Initiation
+    //
+    /////////////////////
+
+    (function () {
+
+
+
+    })();
+
+    //////////////////////
+    //
+    //  Private functions 
+    //
+    /////////////////////
+
     function _getScrollbarWidth() {
         var outer = document.createElement("div");
         outer.style.visibility = "hidden";
@@ -55,26 +75,6 @@ NE.UI = (function () {
 
         return widthNoScroll - widthWithScroll;
     }
-
-    //////////////////////
-    //
-    //  Initiation
-    //
-    /////////////////////
-
-    (function () {
-
-
-
-    })();
-
-    //////////////////////
-    //
-    //  Private functions 
-    //
-    /////////////////////
-
-
 
     //////////////////////
     //
@@ -104,10 +104,10 @@ NE.UI = (function () {
 
         ApplyVerticalScrollbar: function (jqObj) {
 
+            jqObj.addClass('NE-scroll-padding-left-anim');
             var cssObj = {
                 'overflow': 'hidden',
-                'padding-left': '0px',
-                'transition-duration': '.2s'
+                'padding-left': '0px'
             };
 
             var totalHeight = 0;
@@ -116,10 +116,11 @@ NE.UI = (function () {
             });
 
             if (totalHeight > jqObj.innerHeight()) {
+
+                jqObj.removeClass('NE-scroll-padding-left-anim');
                 cssObj = {
                     'overflow': 'auto',
-                    'padding-left': this.ScrollBarWidth + 'px',
-                    'transition-duration': '0s'
+                    'padding-left': this.ScrollBarWidth + 'px'
                 };
 
                 jqObj.find('.NE-full-width').each(function () {
@@ -127,6 +128,8 @@ NE.UI = (function () {
                         'margin-left': (NE.UI.ScrollBarWidth * -1) + 'px',
                     });
                 });
+
+
             }
 
             jqObj.css(cssObj);
@@ -134,18 +137,25 @@ NE.UI = (function () {
         },
 
         ResizeScrollContainer: function (i_offsetTop, i_animate) {
+
             i_offsetTop = i_offsetTop || 0;
 
-            var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex),
-                animTime = i_animate ? 500 : 0;
+            var prevChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + (_lastChapterIndex));
+            var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
+            var animTime = i_animate ? 500 : 0;
 
-            NE.UI.ApplyVerticalScrollbar(currentChapter);
+            prevChapter.addClass('NE-page-room-for-next');
+            setTimeout(function () {
+                prevChapter.addClass('go');
+            }, 0);
 
             $('#' + NE.Constants.SCROLL_CONTAINER_ID).animate({ 'scrollTop': currentChapter.position().top - (i_offsetTop) }, animTime, function () {
-
+                prevChapter.removeClass('NE-page-room-for-next').removeClass('go');
+                NE.UI.ApplyVerticalScrollbar(currentChapter);
             });
 
 
+            _lastChapterIndex = NE.Navigation.CurrentChapterIndex;
 
         },
 
