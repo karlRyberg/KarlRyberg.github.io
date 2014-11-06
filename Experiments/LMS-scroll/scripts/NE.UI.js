@@ -110,12 +110,23 @@ NE.UI = (function () {
                 'transition-duration': '.2s'
             };
 
-            if (jqObj.find('.container').first().outerHeight() > jqObj.innerHeight()) {
+            var totalHeight = 0;
+            jqObj.find('.container').each(function () {
+                totalHeight += $(this).outerHeight();
+            });
+
+            if (totalHeight > jqObj.innerHeight()) {
                 cssObj = {
                     'overflow': 'auto',
                     'padding-left': this.ScrollBarWidth + 'px',
                     'transition-duration': '0s'
                 };
+
+                jqObj.find('.NE-full-width').each(function () {
+                    $(this).css({
+                        'margin-left': (NE.UI.ScrollBarWidth * -1) + 'px',
+                    });
+                });
             }
 
             jqObj.css(cssObj);

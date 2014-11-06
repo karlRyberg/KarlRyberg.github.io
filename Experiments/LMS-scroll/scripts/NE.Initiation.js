@@ -127,6 +127,7 @@ $(window).load(function () {
 
     });
 
+    NE.UI.ResizeScrollContainer();
 
 });
 
