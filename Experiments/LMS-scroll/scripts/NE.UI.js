@@ -110,6 +110,21 @@ NE.UI = (function () {
             NE.UI.ResizeScrollContainer();
         },
 
+        SetNavigationButtons: function (i_chapterIndex) {
+            if (i_chapterIndex == 0) {
+                $('#NE-nav-back').addClass('disable');
+            }
+            else {
+                $('#NE-nav-back').removeClass('disable');
+            }
+            if (i_chapterIndex == 3) {
+                $('#NE-nav-forward').addClass('disable');
+            }
+            else {
+                $('#NE-nav-forward').removeClass('disable');
+            }
+        },
+
         ApplyVerticalScrollbar: function (jqObj) {
 
             var cssObj = {

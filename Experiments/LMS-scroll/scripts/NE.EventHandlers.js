@@ -71,24 +71,12 @@ NE.EventHandlers = (function () {
 
         Navigation: function (e) {
 
-            if (e.index == 0) {
-                $('#NE-nav-back').addClass('disable');
-            }
-            else {
-                $('#NE-nav-back').removeClass('disable');
-            }
-            if (e.index == 3) {
-                $('#NE-nav-forward').addClass('disable');
-            }
-            else {
-                $('#NE-nav-forward').removeClass('disable');
-            }
+            NE.UI.SetNavigationButtons(e.index);
 
-
-            var navObj = $('#' + NE.Constants.FLOATING_HEADER_ID),
-                mainContainer = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID),
-                navHeight = navObj.outerHeight(),
-                offsetTop = 0;
+            var navObj = $('#' + NE.Constants.FLOATING_HEADER_ID);
+            var mainContainer = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID);
+            var navHeight = navObj.outerHeight();
+            var offsetTop = 0;
 
             if (e.index > 0 && navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
                 navObj.removeClass(NE.Constants.OF_CANVAS_TOP_CLASS);
@@ -101,8 +89,6 @@ NE.EventHandlers = (function () {
                     offsetTop = navHeight;
                     if (e.index > 1) offsetTop += navHeight;
                 }
-                console.log(topPadding + ' < ' + navHeight + '  ' + offsetTop);
-    
             }
             else if (e.index < 1 && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
                 navObj.addClass(NE.Constants.OF_CANVAS_TOP_CLASS);
