@@ -26,7 +26,7 @@
                     <p class="navbar-text h4 ml-xs mr-xs">Name of course</p>
                 </div>
 
-                <div class="navbar-collapse collapse" style="height: 1px;">
+                <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav hidden-xs">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" id="NE-chapter-label">Introduktion<i class="fa fa-navicon ml-xs"></i></a>
@@ -79,9 +79,9 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>  
+                    </div>
                 </div>
-
+                <div class="NE-chapter-divider"></div>
 
                 <div id="NE-chapter-1" class="NE-chapter NE-scroll-watched">
 
@@ -126,6 +126,7 @@
 
 
                 </div>
+                <div class="NE-chapter-divider"></div>
                 <div id="NE-chapter-2" class="NE-chapter NE-scroll-watched">
 
                     <div class="container">
@@ -199,6 +200,7 @@
                     </div>
                 </div>
 
+                <div class="NE-chapter-divider"></div>
 
                 <div id="NE-chapter-3" class="NE-chapter NE-scroll-watched">
 
@@ -234,14 +236,21 @@
         </div>
     </article>
 
-    <footer id="NE-floating-footer">
+    <footer id="NE-floating-footer" class="nav navbar">
+
         <div class="container">
             <div class="row">
-                <button type="button" id="NE-nav-back" class="btn btn-default">Back</button>
-                <button type="button" id="NE-nav-forward" class="btn btn-default">Forward</button>
+                <div class="nav navbar navbar-collapse">
+                    <div class="nav navbar navbar-right">
+                        <button type="button" id="NE-nav-back" class="btn navbar-btn btn-primary NE-navigation-button disable mr-sm"><i class="fa fa-arrow-left"></i></button>
+                        <button type="button" id="NE-nav-forward" class="btn navbar-btn btn-primary NE-navigation-button"><i class="fa fa-arrow-right"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
+
     </footer>
+
 
     <script src="libraries/fastclick.js"></script>
     <script src="libraries/masala-ux/dist/js/jquery.min.js"></script>

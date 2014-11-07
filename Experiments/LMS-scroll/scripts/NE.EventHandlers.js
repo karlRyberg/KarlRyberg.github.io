@@ -71,6 +71,20 @@ NE.EventHandlers = (function () {
 
         Navigation: function (e) {
 
+            if (e.index == 0) {
+                $('#NE-nav-back').addClass('disable');
+            }
+            else {
+                $('#NE-nav-back').removeClass('disable');
+            }
+            if (e.index == 3) {
+                $('#NE-nav-forward').addClass('disable');
+            }
+            else {
+                $('#NE-nav-forward').removeClass('disable');
+            }
+
+
             var navObj = $('#' + NE.Constants.FLOATING_HEADER_ID),
                 mainContainer = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID),
                 navHeight = navObj.outerHeight(),
@@ -88,7 +102,7 @@ NE.EventHandlers = (function () {
                     if (e.index > 1) offsetTop += navHeight;
                 }
                 console.log(topPadding + ' < ' + navHeight + '  ' + offsetTop);
-
+    
             }
             else if (e.index < 1 && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
                 navObj.addClass(NE.Constants.OF_CANVAS_TOP_CLASS);
@@ -97,7 +111,6 @@ NE.EventHandlers = (function () {
             }
 
             var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
-            currentChapter.removeClass('NE-page-room-for-next');
             currentChapter.animate({ 'scrollTop': 0 }, 0);
 
             NE.UI.ResizeScrollContainer(offsetTop, true);

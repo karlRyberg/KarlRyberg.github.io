@@ -7,6 +7,8 @@
 
 $(window).load(function () {
 
+    NE.UI.Setup();
+
     $(window).on('resize', function () {
         NE.UI.ResizeScrollContainer();
     });
