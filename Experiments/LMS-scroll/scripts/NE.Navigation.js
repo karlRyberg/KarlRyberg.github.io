@@ -80,6 +80,7 @@ NE.Navigation = (function () {
         /////////////////////
 
         ToChapter: function (index) {
+            if (index < 0 || index > 3) return;
             this.CurrentChapterIndex = index;
             _onNavigation({
                 index: this.CurrentChapterIndex

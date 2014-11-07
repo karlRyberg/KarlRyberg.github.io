@@ -19,10 +19,12 @@ $(window).load(function () {
 
     $('#NE-nav-back').on('click', function () {
         NE.Navigation.Previous();
+        $(this).blur();
     });
 
     $('#NE-nav-forward').on('click', function () {
         NE.Navigation.Next();
+        $(this).blur();
     });
 
     $('#NE-chapter-label').on('click', function () {

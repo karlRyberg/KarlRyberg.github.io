@@ -297,8 +297,15 @@ button:active {
 }
 
     .NE-navigation-button.disable {
+        cursor: default;
         background-color: #d9d9d9;
     }
+
+        .NE-navigation-button.disable:active {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
 
 @media (min-width: 767px) {
 
