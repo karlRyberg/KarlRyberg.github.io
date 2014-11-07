@@ -105,7 +105,7 @@ NE.UI = (function () {
 
         Setup: function () {
             $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).css({
-                'bottom' : $('#' + NE.Constants.FLOATING_FOOTER_ID).outerHeight()
+                'bottom': $('#' + NE.Constants.FLOATING_FOOTER_ID).outerHeight()
             });
             NE.UI.ResizeScrollContainer();
         },
@@ -130,7 +130,8 @@ NE.UI = (function () {
             var cssObj = {
                 'overflow': 'hidden',
                 'padding-left': '0px',
-                'transition': 'padding-left 0.2s;'
+                '-webkit-transition': 'padding-left 0.3s',
+                'transition': 'padding-left 0.3s'
             };
 
             var totalHeight = 0;
@@ -142,7 +143,8 @@ NE.UI = (function () {
                 cssObj = {
                     'overflow': 'auto',
                     'padding-left': this.ScrollBarWidth + 'px',
-                    'transition': 'padding-left 0.2s;'
+                    '-webkit-transition': 'none',
+                    'transition': 'none'
                 };
 
                 jqObj.find('.NE-full-width').each(function () {
@@ -165,9 +167,7 @@ NE.UI = (function () {
 
             NE.UI.ApplyVerticalScrollbar(currentChapter);
 
-            $('#' + NE.Constants.SCROLL_CONTAINER_ID).animate({ 'scrollTop': currentChapter.position().top - (i_offsetTop) }, animTime, function () {
-
-            });
+            $('#' + NE.Constants.SCROLL_CONTAINER_ID).animate({ 'scrollTop': currentChapter.position().top - (i_offsetTop) }, animTime);
 
         },
 
