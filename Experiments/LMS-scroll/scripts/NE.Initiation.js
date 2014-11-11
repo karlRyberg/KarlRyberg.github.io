@@ -29,10 +29,6 @@ $(window).load(function () {
         NE.EventHandlers.ChapterLabelClick($(this));
     });
 
-    $('#NE-chapter-label-xs').on('click', function () {
-        NE.EventHandlers.ChapterLabelXsClick($(this));
-    });
-
     $('.NE-chapter-navigation-link, .NE-chapter-navigation-link-xs').on('click', function () {
         NE.EventHandlers.ChapterLinkClick($(this));
     });
