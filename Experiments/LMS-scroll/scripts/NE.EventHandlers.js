@@ -69,46 +69,54 @@ NE.EventHandlers = (function () {
         //
         /////////////////////
 
+        WindowResize: function () {
+            NE.UI.ResizeScrollContainer();
+            NE.UI.ScrollToChapter(true);
+        },
+
+        NavBackBtnClick: function (i_item) {
+            NE.Navigation.Previous();
+            i_item.blur();
+        },
+
+        NavForwardBtnClick: function (i_item) {
+            NE.Navigation.Next();
+            i_item.blur();
+        },
+
+        ChapterLabelClick: function (i_item) {
+            var chapterMenuDiv = $('#NE-chapter-menu');
+            var menuHeight = 0;
+            if (!chapterMenuDiv.hasClass('open')) {
+                chapterMenuDiv.find('li').each(function () {
+                    menuHeight += i_item.outerHeight();
+                });
+            }
+            i_item.parent().toggleClass('active');
+            chapterMenuDiv.css('height', menuHeight + 'px').toggleClass('open');
+        },
+
+        ChapterLinkClick: function (i_item) {
+            if (i_item.hasClass('disable')) return;
+
+            var chapterIndex = parseInt(i_item.data('chapter'), 10);
+            NE.Navigation.ToChapter(chapterIndex);
+
+            if (i_item.hasClass('NE-chapter-menu-link-xs')) {
+                $('#NE-chapter-label-xs').click();
+            }
+            else if (i_item.hasClass('NE-chapter-menu-link')) {
+                $('#NE-chapter-label').click();
+            }
+        },
+
         Navigation: function (e) {
 
-            NE.UI.SetNavigationButtons(e.index);
+            NE.UI.SetNavigationButtons();
+            NE.UI.ResizeScrollContainer();
+            NE.UI.ScrollToChapter();
+            NE.UI.UpdateChapterMenu();
 
-            var navObj = $('#' + NE.Constants.FLOATING_HEADER_ID);
-            var mainContainer = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID);
-            var navHeight = navObj.outerHeight();
-            var offsetTop = 0;
-
-            if (e.index > 0 && navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
-                navObj.removeClass(NE.Constants.OF_CANVAS_TOP_CLASS);
-                mainContainer.css('top', navHeight + 'px');
-
-                var topPadding = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).position().top;
-
-                if (topPadding < navHeight) {
-                    offsetTop = navHeight;
-                    if (e.index > 1) offsetTop += navHeight;
-                }
-            }
-            else if (e.index < 1 && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
-                navObj.addClass(NE.Constants.OF_CANVAS_TOP_CLASS);
-                mainContainer.css('top', '0px');
-            }
-
-            var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
-            currentChapter.animate({ 'scrollTop': 0 }, 0);
-
-            NE.UI.ResizeScrollContainer(offsetTop, true);
-
-            var chapterMenuItem = $('#NE-chapter-menu-link-' + e.index);
-            $('.NE-chapter-menu-link').removeClass('disable');
-            chapterMenuItem.addClass('disable');
-
-            $('#NE-chapter-label').html(chapterMenuItem.html() + NE.Constants.HEADER_CHAPTER_NAV_ICON)
-
-
-            var smallChapterMenuItem = $('#NE-chapter-menu-link-xs-' + e.index);
-            $('.NE-chapter-menu-link-xs').removeClass('disable');
-            smallChapterMenuItem.addClass('disable');
         },
 
 
