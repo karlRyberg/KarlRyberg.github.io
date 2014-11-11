@@ -27,6 +27,10 @@ button:active {
         top: -100px;
     }
 
+    #NE-floating-header .main-navbar {
+        -webkit-overflow-scrolling: touch;
+    }
+
     #NE-floating-header .h4 {
         color: rgb(51, 51, 51);
         font-weight: normal;
@@ -66,7 +70,6 @@ button:active {
 
 #NE-chapter-menu-xs {
     padding-bottom: 15px;
-    -webkit-overflow-scrolling: touch;
 }
 
     #NE-chapter-menu a.disable, #NE-chapter-menu-xs a.disable {
