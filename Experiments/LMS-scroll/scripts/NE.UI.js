@@ -92,18 +92,19 @@ NE.UI = (function () {
 
         if (NE.Navigation.CurrentChapterIndex > 0 && navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
             navObj.removeClass(NE.Constants.OF_CANVAS_TOP_CLASS);
+            mainContainer.css('top', navHeight + 'px');
+
             var topPadding = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).position().top;
+
             if (topPadding < navHeight) {
                 _topNavBarHeight = navHeight;
                 if (NE.Navigation.CurrentChapterIndex > 1) _topNavBarHeight += navHeight;
             }
         }
-        else if (NE.Navigation.CurrentChapterIndex < 1) {
+        else if (NE.Navigation.CurrentChapterIndex < 1 && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
             navObj.addClass(NE.Constants.OF_CANVAS_TOP_CLASS);
-            navHeight = 0;
+            mainContainer.css('top', '0px');
         }
-
-        mainContainer.css('top', navHeight + 'px');
 
     }
 
@@ -121,7 +122,7 @@ NE.UI = (function () {
         //
         /////////////////////
 
-
+    
 
         //////////////////////
         //
