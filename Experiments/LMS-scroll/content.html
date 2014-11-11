@@ -23,7 +23,7 @@
                         <span class="sr-only">Visa navigation</span> <i class="fa fa-bars"></i>
                     </button>
                     <a class="navbar-brand ne-logo" href="/" title="Återgå till startsidan för NE.se">NE</a>
-                    <p class="navbar-text h4 ml-xs mr-xs">Name of course</p>
+                    <p class="navbar-text h4 ml-xs mr-xs">Klarspråk</p>
                 </div>
 
                 <div class="main-navbar navbar-collapse collapse">
@@ -41,15 +41,16 @@
                         <li><a href="#" data-chapter="0" id="NE-chapter-menu-link-xs-0" class="navbar-link NE-floating-header-link-xs NE-chapter-navigation-link-xs">Var varsam med orden</a></li>
                         <li><a href="#" data-chapter="0" id="NE-chapter-menu-link-xs-0" class="navbar-link NE-floating-header-link-xs NE-chapter-navigation-link-xs">Kontrollera texten</a></li>
                         <li><a href="#" data-chapter="0" id="NE-chapter-menu-link-xs-0" class="navbar-link NE-floating-header-link-xs NE-chapter-navigation-link-xs">Din egen checklista</a></li>
+                        <li><a href="#" data-chapter="0" id="NE-close-button-xs" class="navbar-link">Avsluta <i class="fa fa-times"></i></a></li>
                     </ul>
-                    <a href="#" class="btn btn-primary navbar-btn navbar-right NE-offcanvas NE-close-button" id="NE-close-button"><i class="fa fa-times"></i></a>
+                    <a href="#" class="btn btn-primary navbar-btn navbar-right NE-offcanvas NE-close-button hidden-xs" id="NE-close-button"><i class="fa fa-times"></i></a>
                 </div>
             </div>
 
 
             <div class="row hidden-xs" id="NE-chapter-top-menu">
                 <div class="col-sm-6">
-                    <div class="NE-chapter-menu panel">
+                    <div class="NE-chapter-menu panel pb-sm">
                         <nav class="list-group">
                             <a href="#" data-chapter="1" id="NE-chapter-menu-link-1" class="NE-chapter-navigation-link NE-floating-header-link list-group-item">Klarspråk är att skriva för läsaren</a>
                             <a href="#" data-chapter="2" id="NE-chapter-menu-link-2" class="NE-chapter-navigation-link NE-floating-header-link list-group-item">Tänk på varför du skriver och till vem</a>
@@ -59,7 +60,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="NE-chapter-menu panel">
+                    <div class="NE-chapter-menu panel pb-sm">
                         <nav class="list-group">
                             <a href="#" data-chapter="0" id="NE-chapter-menu-link-0" class="NE-chapter-navigation-link NE-floating-header-link list-group-item">Skriv enklare meningar</a>
                             <a href="#" data-chapter="0" id="NE-chapter-menu-link-0" class="NE-chapter-navigation-link NE-floating-header-link list-group-item">Var varsam med orden</a>
@@ -268,6 +269,7 @@
 
     </footer>
 
+    <div id="NE-overlay"></div>
 
     <script src="libraries/fastclick.js"></script>
     <script src="libraries/masala-ux/dist/js/jquery.min.js"></script>

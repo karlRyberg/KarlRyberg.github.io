@@ -93,13 +93,29 @@ NE.EventHandlers = (function () {
                     var itemHeight = $(this).outerHeight();
                     menuHeight = itemHeight > menuHeight ? itemHeight : menuHeight;
                 });
+                $('#NE-overlay').fadeTo(0,0).fadeTo(300, 0.65);
             }
+            else {
+                $('#NE-overlay').fadeTo(300, 0, function () {
+                    $(this).hide();
+                });
+            }
+
             i_item.parent().toggleClass('active');
-      
             chapterMenuDiv.css('height', menuHeight + 'px').toggleClass('open');
         },
 
-
+        ChapterLabelXsClick: function (i_item) {
+            if (i_item.hasClass('collapsed')){
+                $('#NE-overlay').fadeTo(0, 0).fadeTo(300, 0.65);
+            }
+            else {
+                $('#NE-overlay').fadeTo(300, 0, function () {
+                    $(this).hide();
+                });
+            }
+            i_item.blur();
+        },
 
         ChapterLinkClick: function (i_item) {
             if (i_item.hasClass('disable')) return;
@@ -112,6 +128,15 @@ NE.EventHandlers = (function () {
             }
             else if (i_item.hasClass('NE-floating-header-link')) {
                 $('#NE-chapter-label').click();
+            }
+        },
+
+        OverlayClick: function(){
+            if ($('#NE-chapter-label').is(':visible')) {
+                $('#NE-chapter-label').click();
+            }
+            else {
+                $('#NE-chapter-label-xs').click();
             }
         },
 
