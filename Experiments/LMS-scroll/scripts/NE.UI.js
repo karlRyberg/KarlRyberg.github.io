@@ -192,8 +192,8 @@ NE.UI = (function () {
 
         UpdateChapterMenu: function () {
             var menuIitem = $('#NE-chapter-menu-link-' + NE.Navigation.CurrentChapterIndex);
-            _updateChapterButton(menuIitem, 'NE-chapter-menu-link');
-            _updateChapterButton($('#NE-chapter-menu-link-xs-' + NE.Navigation.CurrentChapterIndex), 'NE-chapter-menu-link-xs');
+            _updateChapterButton(menuIitem, 'NE-chapter-navigation-link');
+            _updateChapterButton($('#NE-chapter-menu-link-xs-' + NE.Navigation.CurrentChapterIndex), 'NE-chapter-navigation-link-xs');
             $('#NE-chapter-label').html(menuIitem.html() + NE.Constants.HEADER_CHAPTER_NAV_ICON)
         },
 

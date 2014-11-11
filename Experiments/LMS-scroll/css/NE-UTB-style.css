@@ -3,7 +3,7 @@
 }
 
 .offering-header-text {
-margin-top: 0px;
+    margin-top: 0px;
 }
 
 button:focus {
@@ -38,37 +38,49 @@ button:active {
     outline: none;
 }
 
-#NE-chapter-menu {
+#NE-chapter-top-menu {
     position: relative;
+    top: 1px;
     display: block;
     height: 0px;
     overflow: hidden;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    border: none;
-    padding: 0px;
-    -webkit-transition: height 0.2s ease-in;
-    transition: height 0.2s ease-in;
+    -webkit-transition: height 0.2s ease-in, top 0.2s;
+    transition: height 0.2s ease-in, top 0.2s;
+    border-top: 1px solid #d9d9d9;
+}
+
+    #NE-chapter-top-menu.open {
+        top: -1px;
+    }
+
+.NE-chapter-navigation-link.disable {
+    color: #c0c0c0 !important;
+}
+
+.NE-chapter-navigation-link:hover.disable {
+    border-left: none !important;
+    padding-left: 0px !important;
+    background-color: transparent !important;
+    cursor: default;
 }
 
 #NE-chapter-menu-xs {
     padding-bottom: 15px;
+    -webkit-overflow-scrolling: touch;
 }
 
-    #NE-chapter-menu a, #NE-chapter-menu-xs a {
-        padding: 20px 12px;
-        border-color: #d9d9d9;
-        border-bottom-width: 2px;
+    #NE-chapter-menu a.disable, #NE-chapter-menu-xs a.disable {
+        color: #d9d9d9;
+        cursor: default;
     }
 
-        #NE-chapter-menu a.disable, #NE-chapter-menu-xs a.disable {
-            color: #d9d9d9;
-            cursor: default;
-        }
+#NE-chapter-menu a:hover {
+    background-color: inherit;
+}
 
-        #NE-chapter-menu a:hover {
-            background-color: inherit;
-        }
+.NE-size-wrapper {
+    overflow: hidden;
+}
 
 #NE-floating-footer {
     position: fixed;
@@ -102,7 +114,7 @@ button:active {
     overflow: hidden;
 }
 
-.NE-course-menu {
+.NE-chapter-menu {
 }
 
 
@@ -178,7 +190,7 @@ button:active {
 
     .NE-revealer-button:after {
         font-family: FontAwesome;
-        font-weight:bold;
+        font-weight: bold;
         content: '\f107';
         margin-left: 15px;
     }
