@@ -1,5 +1,4 @@
-﻿/// <reference path="NE.Events.js" />
-
+﻿
 /////////////////////////////////////////////////////////////////////
 //
 //  TYPE: 
@@ -23,7 +22,7 @@
 // Ensure that the LOUISE namespace is avaiable
 if (NE === null || NE === undefined) { var NE = {}; }
 
-NE.Navigation = (function () {
+NE.Constants = (function () {
 
     //////////////////////
     //
@@ -31,8 +30,7 @@ NE.Navigation = (function () {
     //
     /////////////////////
 
-    var _onNavigationKey = '69133ac8-a5ec-4d67-a137-2916e629a0b1';
-    var _eventOwnerKey = Math.random() + '' + Math.random();
+    
 
     //////////////////////
     //
@@ -42,7 +40,7 @@ NE.Navigation = (function () {
 
     (function () {
 
-        NE.Events.Register(_eventOwnerKey, _onNavigationKey);
+        
 
     })();
 
@@ -52,9 +50,7 @@ NE.Navigation = (function () {
     //
     /////////////////////
 
-    function _onNavigation(e) {
-        NE.Events.Execute(_eventOwnerKey, _onNavigationKey, e);
-    }
+    
 
     //////////////////////
     //
@@ -70,8 +66,17 @@ NE.Navigation = (function () {
         //
         /////////////////////
 
-        ON_NAVIGATION: _onNavigationKey,
-        CurrentChapterIndex: 0,
+        APPLICATION_BASE_PATH: window.location.href.split('/').slice(0, -1).join('/'),
+        MAIN_CONTENT_CONTAINER_ID: 'NE-main-container',
+        SCROLL_CONTAINER_ID: 'NE-scroller',
+        CHAPTER_CLASS: 'NE-chapter',
+        PAGE_ID_PREFIX: 'NE-page-',
+        CHAPTER_ID_PREFIX: 'NE-chapter-',
+        FLOATING_HEADER_ID: 'NE-top',
+        FLOATING_FOOTER_ID: 'NE-floating-footer',
+        CLOSE_BUTTON_ID: 'NE-top-close-btn',
+        OF_CANVAS_TOP_CLASS: 'NE-offcanvas',
+        HEADER_CHAPTER_NAV_ICON: '<i class="fa fa-navicon ml-xs"></i>',
 
         //////////////////////
         //
@@ -79,26 +84,9 @@ NE.Navigation = (function () {
         //
         /////////////////////
 
-        ToChapter: function (index) {
-            if (index < 0 || index > 3) return;
-            this.CurrentChapterIndex = index;
-            _onNavigation({
-                index: this.CurrentChapterIndex
-            });
-        },
 
-        Next: function () {
-            this.ToChapter(this.CurrentChapterIndex + 1);
-        },
 
-        Previous: function () {
-            this.ToChapter(this.CurrentChapterIndex - 1);
-        },
-
-        eof: null
-    };
+        eof: null};
 
 })();
-
-
 

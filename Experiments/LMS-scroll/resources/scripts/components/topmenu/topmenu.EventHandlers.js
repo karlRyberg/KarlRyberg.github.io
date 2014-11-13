@@ -1,7 +1,4 @@
-﻿/// <reference path="NE.Constants.js" />
-/// <reference path="NE.Navigation.js" />
-/// <reference path="NE.UI.js" />
-
+﻿
 /////////////////////////////////////////////////////////////////////
 //
 //  TYPE: 
@@ -24,8 +21,10 @@
 
 // Ensure that the LOUISE namespace is avaiable
 if (NE === null || NE === undefined) { var NE = {}; }
+if (NE.Plugin === null || NE.Plugin === undefined) { NE.Plugin = {}; }
+if (NE.Plugin.topmenu.EventHandlers === null || NE.Plugin.topmenu.EventHandlers === undefined) { NE.Plugin.topmenu.EventHandlers = {}; }
 
-NE.EventHandlers = (function () {
+NE.Plugin.topmenu.EventHandlers = (function () {
 
     //////////////////////
     //
@@ -53,7 +52,10 @@ NE.EventHandlers = (function () {
     //
     /////////////////////
 
-
+    function _updateChapterButton(jqItem, jqItemClass) {
+        $('.' + jqItemClass).removeClass('disable');
+        jqItem.addClass('disable');
+    }
 
     //////////////////////
     //
@@ -69,34 +71,26 @@ NE.EventHandlers = (function () {
         //
         /////////////////////
 
-        WindowResize: function () {
-            NE.UI.ResizeScrollContainer();
-            NE.UI.ScrollToChapter(true);
-        },
 
-        NavBackBtnClick: function (i_item) {
-            NE.Navigation.Previous();
-            i_item.blur();
-        },
 
-        NavForwardBtnClick: function (i_item) {
-            NE.Navigation.Next();
-            i_item.blur();
-        },
+        //////////////////////
+        //
+        //  Public functions 
+        //
+        /////////////////////
 
         ChapterLabelClick: function (i_item) {
-            var chapterMenuDiv = $('#NE-chapter-top-menu');
+            var chapterMenuDiv = $('#NE-top-chapters');
             var menuHeight = 0;
-
             if (!chapterMenuDiv.hasClass('open')) {
-                chapterMenuDiv.find('.NE-chapter-menu').each(function () {
+                chapterMenuDiv.find('.NE-top-chapterlinks').each(function () {
                     var itemHeight = $(this).outerHeight();
                     menuHeight = itemHeight > menuHeight ? itemHeight : menuHeight;
                 });
-                $('#NE-overlay').fadeTo(0,0).fadeTo(300, 0.65);
+                $('#NE-top-backdrop').fadeTo(0, 0).fadeTo(300, 0.65);
             }
             else {
-                $('#NE-overlay').fadeTo(300, 0, function () {
+                $('#NE-top-backdrop').fadeTo(300, 0, function () {
                     $(this).hide();
                 });
             }
@@ -106,11 +100,11 @@ NE.EventHandlers = (function () {
         },
 
         ChapterLabelXsClick: function (i_item) {
-            if (i_item.hasClass('collapsed')){
-                $('#NE-overlay').fadeTo(0, 0).fadeTo(300, 0.65);
+            if (i_item.hasClass('collapsed')) {
+                $('#NE-top-backdrop').fadeTo(0, 0).fadeTo(300, 0.65);
             }
             else {
-                $('#NE-overlay').fadeTo(300, 0, function () {
+                $('#NE-top-backdrop').fadeTo(300, 0, function () {
                     $(this).hide();
                 });
             }
@@ -121,17 +115,17 @@ NE.EventHandlers = (function () {
             if (i_item.hasClass('disable')) return;
 
             var chapterIndex = parseInt(i_item.data('chapter'), 10);
-            NE.Navigation.ToChapter(chapterIndex);
+            NE.Navigation.ToPage(chapterIndex);
 
-            if (i_item.hasClass('NE-floating-header-link-xs')) {
+            if (i_item.hasClass('NE-top-chapterlink-xs')) {
                 $('#NE-chapter-label-xs').click();
             }
-            else if (i_item.hasClass('NE-floating-header-link')) {
+            else if (i_item.hasClass('NE-top-chapterlink')) {
                 $('#NE-chapter-label').click();
             }
         },
 
-        OverlayClick: function(){
+        OverlayClick: function () {
             if ($('#NE-chapter-label').is(':visible')) {
                 $('#NE-chapter-label').click();
             }
@@ -140,23 +134,12 @@ NE.EventHandlers = (function () {
             }
         },
 
-        Navigation: function (e) {
-
-            NE.UI.SetNavigationButtons();
-            NE.UI.ResizeScrollContainer();
-            NE.UI.ScrollToChapter();
-            NE.UI.UpdateChapterMenu();
-
+        UpdateChapterMenu: function () {
+            var menuIitem = $('#NE-top-chapterlink-' + NE.Navigation.CurrentPageIndex);
+            _updateChapterButton(menuIitem, 'NE-top-chapterlink');
+            _updateChapterButton($('#NE-top-chapterlink-xs-' + NE.Navigation.CurrentPageIndex), 'NE-top-chapterlink-xs');
+            if (menuIitem.length) $('#NE-chapter-label').html(menuIitem.html() + NE.Constants.HEADER_CHAPTER_NAV_ICON)
         },
-
-
-        //////////////////////
-        //
-        //  Public functions 
-        //
-        /////////////////////
-
-
 
         eof: null
     };

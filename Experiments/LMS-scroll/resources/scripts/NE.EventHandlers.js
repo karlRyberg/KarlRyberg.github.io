@@ -1,4 +1,7 @@
-﻿
+﻿/// <reference path="NE.Constants.js" />
+/// <reference path="NE.Navigation.js" />
+/// <reference path="NE.UI.js" />
+
 /////////////////////////////////////////////////////////////////////
 //
 //  TYPE: 
@@ -22,7 +25,7 @@
 // Ensure that the LOUISE namespace is avaiable
 if (NE === null || NE === undefined) { var NE = {}; }
 
-NE.Constants = (function () {
+NE.EventHandlers = (function () {
 
     //////////////////////
     //
@@ -30,7 +33,7 @@ NE.Constants = (function () {
     //
     /////////////////////
 
-    
+
 
     //////////////////////
     //
@@ -40,7 +43,7 @@ NE.Constants = (function () {
 
     (function () {
 
-        
+
 
     })();
 
@@ -50,7 +53,7 @@ NE.Constants = (function () {
     //
     /////////////////////
 
-    
+
 
     //////////////////////
     //
@@ -66,15 +69,29 @@ NE.Constants = (function () {
         //
         /////////////////////
 
-        MAIN_CONTENT_CONTAINER_ID: 'NE-main-container',
-        SCROLL_CONTAINER_ID: 'NE-scroller',
-        CHAPTER_CLASS: 'NE-chapter',
-        CHAPTER_ID_PREFIX: 'NE-chapter-',
-        FLOATING_HEADER_ID: 'NE-floating-header',
-        FLOATING_FOOTER_ID: 'NE-floating-footer',
-        CLOSE_BUTTON_ID: 'NE-close-button',
-        OF_CANVAS_TOP_CLASS: 'NE-offcanvas',
-        HEADER_CHAPTER_NAV_ICON: '<i class="fa fa-navicon ml-xs"></i>',
+        WindowResize: function () {
+            NE.UI.ResizeScrollContainer();
+            NE.UI.ScrollToPage(true);
+        },
+
+        NavBackBtnClick: function (i_item) {
+            NE.Navigation.Previous();
+            i_item.blur();
+        },
+
+        NavForwardBtnClick: function (i_item) {
+            NE.Navigation.Next();
+            i_item.blur();
+        },
+
+        Navigation: function (e) {
+
+            NE.UI.SetNavigationButtons();
+            NE.UI.ResizeScrollContainer();
+            NE.UI.ScrollToPage();
+
+        },
+
 
         //////////////////////
         //
@@ -84,7 +101,8 @@ NE.Constants = (function () {
 
 
 
-        eof: null};
+        eof: null
+    };
 
 })();
 

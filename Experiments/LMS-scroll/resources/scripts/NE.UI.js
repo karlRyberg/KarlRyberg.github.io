@@ -77,11 +77,6 @@ NE.UI = (function () {
         return widthNoScroll - widthWithScroll;
     }
 
-    function _updateChapterButton(jqItem, jqItemClass) {
-        $('.' + jqItemClass).removeClass('disable');
-        jqItem.addClass('disable');
-    }
-
     function _switchTopMenu() {
 
         var navObj = $('#' + NE.Constants.FLOATING_HEADER_ID);
@@ -90,7 +85,7 @@ NE.UI = (function () {
 
         _topNavBarHeight = 0;
 
-        if (NE.Navigation.CurrentChapterIndex > 0 && navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
+        if (NE.Navigation.CurrentPageIndex > 0 && navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
             navObj.removeClass(NE.Constants.OF_CANVAS_TOP_CLASS);
             mainContainer.css('top', navHeight + 'px');
 
@@ -98,10 +93,10 @@ NE.UI = (function () {
 
             if (topPadding < navHeight) {
                 _topNavBarHeight = navHeight;
-                if (NE.Navigation.CurrentChapterIndex > 1) _topNavBarHeight += navHeight;
+                if (NE.Navigation.CurrentPageIndex > 1) _topNavBarHeight += navHeight;
             }
         }
-        else if (NE.Navigation.CurrentChapterIndex < 1 && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
+        else if (NE.Navigation.CurrentPageIndex < 1 && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
             navObj.addClass(NE.Constants.OF_CANVAS_TOP_CLASS);
             mainContainer.css('top', '0px');
         }
@@ -138,13 +133,13 @@ NE.UI = (function () {
         },
 
         SetNavigationButtons: function () {
-            if (NE.Navigation.CurrentChapterIndex == 0) {
+            if (NE.Navigation.CurrentPageIndex == 0) {
                 $('#NE-nav-back').addClass('disable');
             }
             else {
                 $('#NE-nav-back').removeClass('disable');
             }
-            if (NE.Navigation.CurrentChapterIndex == 3) {
+            if (NE.Navigation.CurrentPageIndex == 3) {
                 $('#NE-nav-forward').addClass('disable');
             }
             else {
@@ -153,7 +148,7 @@ NE.UI = (function () {
         },
 
         ApplyVerticalScrollbar: function () {
-            var jqObj = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
+            var jqObj = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentPageIndex);
             var cssObj = {
                 'overflow': 'hidden',
                 'padding-left': '0px',
@@ -190,18 +185,13 @@ NE.UI = (function () {
             NE.UI.ApplyVerticalScrollbar();
         },
 
-        UpdateChapterMenu: function () {
-            var menuIitem = $('#NE-chapter-menu-link-' + NE.Navigation.CurrentChapterIndex);
-            _updateChapterButton(menuIitem, 'NE-chapter-navigation-link');
-            _updateChapterButton($('#NE-chapter-menu-link-xs-' + NE.Navigation.CurrentChapterIndex), 'NE-chapter-navigation-link-xs');
-            $('#NE-chapter-label').html(menuIitem.html() + NE.Constants.HEADER_CHAPTER_NAV_ICON)
-        },
 
-        ScrollToChapter: function (i_skipAnimation) {
+
+        ScrollToPage: function (i_skipAnimation) {
             var animTime = i_skipAnimation ? 0 : 500;
-            var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
-            currentChapter.animate({ 'scrollTop': 0 }, 0);
-            $('#' + NE.Constants.SCROLL_CONTAINER_ID).animate({ 'scrollTop': currentChapter.position().top - (_topNavBarHeight) }, animTime, function () {
+            var currentPage = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentPageIndex);
+            currentPage.animate({ 'scrollTop': 0 }, 0);
+            $('#' + NE.Constants.SCROLL_CONTAINER_ID).animate({ 'scrollTop': currentPage.position().top - (_topNavBarHeight) }, animTime, function () {
                 NE.UI.ApplyVerticalScrollbar();
             });
         },

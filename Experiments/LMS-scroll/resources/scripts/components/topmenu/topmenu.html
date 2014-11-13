@@ -1,0 +1,56 @@
+﻿<nav id="NE-top" class="navigation NE-offcanvas" aria-role="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" id="NE-chapter-label-xs" data-toggle="collapse" data-target=".main-navbar">
+                    <span class="sr-only">Visa navigation</span> <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand ne-logo" href="/" title="Återgå till startsidan för NE.se">NE</a>
+                {function:SetTitle}
+                {param}
+                <p class="navbar-text h4 ml-xs mr-xs">{courseTitle}</p>
+                {/param}
+                {/function}
+            </div>
+
+            <div class="main-navbar navbar-collapse collapse">
+                <ul class="nav navbar-nav hidden-xs">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" id="NE-chapter-label">CHAPTER_LABEL<i class="fa fa-navicon ml-xs"></i></a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav visible-xs" id="NE-top-chapterlinks-xs" role="menu">
+                    {function:MenuXs}
+                    {param:menuItemXs}
+                    <li><a href="#" data-chapter="{cahpterIndex}" id="NE-top-chapterlink-xs-{cahpterIndex}" class="navbar-link NE-top-chapterlink-xs">{chapterTitle}</a></li>
+                    {/param}
+                    {/function}
+                    <li><a href="#" id="NE-top-close-btn-xs" class="navbar-link">Avsluta <i class="fa fa-times"></i></a></li>
+                </ul>
+                <a href="#" class="btn btn-primary navbar-btn navbar-right NE-top-close-btn hidden-xs" id="NE-top-close-btn"><i class="fa fa-times"></i></a>
+            </div>
+        </div>
+
+        <div class="row hidden-xs" id="NE-top-chapters">
+            {function:HeaderMenu}
+            {param}
+            <div class="col-sm-12">
+                <div class="NE-top-chapterlinks panel pb-sm">
+                    <nav class="list-group">
+                        {/param}
+                        {param}
+                        <a href="#" data-chapter="{cahpterIndex}" id="NE-top-chapterlink-{cahpterIndex}" class="NE-top-chapterlink list-group-item">{chapterTitle}</a>
+                        {/param}
+                        {param}
+                    </nav>
+                </div>
+            </div>
+            {/param}
+            {/function}
+        </div>
+
+    </div>
+
+</nav>
+
+<div id="NE-top-backdrop"></div>

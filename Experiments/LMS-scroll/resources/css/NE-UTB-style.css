@@ -20,74 +20,6 @@ button:active {
     outline: none !important;
 }
 
-#NE-floating-header {
-    overflow: hidden;
-    -webkit-transition: top .3s ease-in-out;
-    transition: top .3s ease-in-out;
-}
-
-    #NE-floating-header.NE-offcanvas {
-        height: 80px;
-        top: -100px;
-    }
-
-    #NE-floating-header .main-navbar {
-        -webkit-overflow-scrolling: touch;
-    }
-
-    #NE-floating-header .h4 {
-        color: rgb(51, 51, 51);
-        font-weight: normal;
-        padding-top: 1px;
-    }
-
-
-.navigation a:focus {
-    outline: none;
-}
-
-#NE-chapter-top-menu {
-    position: relative;
-    top: 1px;
-    display: block;
-    height: 0px;
-    overflow: hidden;
-    -webkit-transition: height 0.2s ease-in, top 0.2s;
-    transition: height 0.2s ease-in, top 0.2s;
-    border-top: 1px solid #d9d9d9;
-}
-
-    #NE-chapter-top-menu.open {
-        top: -1px;
-    }
-
-.NE-chapter-navigation-link.disable {
-    color: #c0c0c0 !important;
-}
-
-.NE-chapter-navigation-link:hover.disable {
-    border-left: none !important;
-    padding-left: 0px !important;
-    background-color: transparent !important;
-    cursor: default;
-}
-
-#NE-chapter-menu-xs {
-    padding-bottom: 15px;
-}
-
-    #NE-chapter-menu a.disable, #NE-chapter-menu-xs a.disable {
-        color: #d9d9d9;
-        cursor: default;
-    }
-
-#NE-chapter-menu a:hover {
-    background-color: inherit;
-}
-
-.NE-size-wrapper {
-    overflow: hidden;
-}
 
 #NE-floating-footer {
     position: fixed;
@@ -121,7 +53,7 @@ button:active {
     overflow: hidden;
 }
 
-.NE-chapter-menu {
+.NE-top-chapterlinks {
 }
 
 
@@ -132,7 +64,7 @@ button:active {
     min-width: 100%;
 }
 
-.NE-chapter {
+.NE-page {
     position: relative;
     width: 100%;
     height: 100%;
@@ -144,7 +76,7 @@ button:active {
     padding-bottom: 30px;
 }
 
-    .NE-chapter > .container {
+    .NE-page > .container {
         background-color: white;
     }
 
@@ -172,15 +104,6 @@ button:active {
         background-color: white;
         border-top: 1px solid #bfbfbf;
     }
-
-#NE-chapter-0 {
-}
-
-#NE-chapter-1 {
-}
-
-#NE-chapter-2 {
-}
 
 .NE-revealer-button {
     background-color: rgb(0,200,220);
@@ -241,35 +164,6 @@ button:active {
             box-shadow: none;
         }
 
-.NE-close-button {
-    position: relative;
-    top: 0px;
-    width: 40px;
-    height: 40px;
-    padding: 0px;
-    border-width: 1px;
-    border-color: #c0c0c0;
-    border-radius: 20px;
-    overflow: hidden;
-    text-align: center;
-    line-height: 38px;
-    color: #808080;
-    background-color: transparent;
-    -webkit-transition: background-color .2s ease-out, border-color .2s ease-out, color .2s ease-out !important;
-    transition: background-color .2s ease-out, border-color .2s ease-out, color .2s ease-out !important;
-}
-
-    .NE-close-button:hover {
-        background-color: #FF3631;
-        border-color: #FF3631;
-    }
 
 
-#NE-overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    z-index: 1029;
-    display: none;
-}
+
