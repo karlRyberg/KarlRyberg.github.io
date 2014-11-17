@@ -89,7 +89,7 @@ NE.Plugin.page = (function () {
                 var newContent = $(tmpData);
                 var pageDiv = newContent.first();
                 i_initObj.node.replaceWith(newContent);
-                alert(_settings.datafile)
+
                 NE.Net.LoadTxtFile(_settings.datafile, function (htmlData) {
 
                     $('#' + NE.Constants.PAGE_ID_PREFIX + _settings.chapterIndex + '-' + _settings.pageIndex).html(htmlData);
