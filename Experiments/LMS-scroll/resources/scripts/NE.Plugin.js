@@ -32,7 +32,7 @@ NE.Plugin = (function () {
     //
     /////////////////////
 
-    var _basePath = '//' + NE.Constants.APPLICATION_BASE_PATH + '/resources/scripts/components';
+    var _basePath = NE.Constants.APPLICATION_BASE_PATH + '/resources/scripts/components';
 
     //////////////////////
     //

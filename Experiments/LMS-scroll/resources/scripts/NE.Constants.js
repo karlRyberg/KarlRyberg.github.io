@@ -30,7 +30,7 @@ NE.Constants = (function () {
     //
     /////////////////////
 
-    
+    var _basePath;
 
     //////////////////////
     //
@@ -40,7 +40,8 @@ NE.Constants = (function () {
 
     (function () {
 
-        
+        _basePath = window.parent ? window.parent.location.href : window.location.href;
+        _basePath = _basePath.split('/').slice(0, -1).join('/');
 
     })();
 
@@ -66,7 +67,7 @@ NE.Constants = (function () {
         //
         /////////////////////
 
-        APPLICATION_BASE_PATH: window.location.host.toString(),//window.location.href.split('/').slice(0, -1).join('/'),
+        APPLICATION_BASE_PATH: _basePath,
         MAIN_CONTENT_CONTAINER_ID: 'NE-main-container',
         SCROLL_CONTAINER_ID: 'NE-scroller',
         CHAPTER_CLASS: 'NE-chapter',
