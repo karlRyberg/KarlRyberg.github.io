@@ -36,6 +36,7 @@ NE.UI = (function () {
 
     var _topNavBarHeight = 0;
     var _lastChapter = 0;
+    var _scrollbarWidth = null;
 
     //////////////////////
     //
@@ -56,6 +57,8 @@ NE.UI = (function () {
     /////////////////////
 
     function _getScrollbarWidth() {
+        if (_scrollbarWidth !== null) return _scrollbarWidth;
+
         var outer = document.createElement("div");
         outer.style.visibility = "hidden";
         outer.style.width = "100px";
@@ -77,7 +80,8 @@ NE.UI = (function () {
         // remove divs
         outer.parentNode.removeChild(outer);
 
-        return widthNoScroll - widthWithScroll;
+        _scrollbarWidth = widthNoScroll - widthWithScroll;
+        return _scrollbarWidth;
     }
 
     function _switchTopMenu(_callback) {
@@ -85,7 +89,7 @@ NE.UI = (function () {
         var mainContainer = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID);
         var navHeight = navObj.outerHeight();
         var animtime = 100;
-        
+
         _topNavBarHeight = 0;
 
         if ((NE.Navigation.CurrentPageIndex > 0 || NE.Navigation.CurrentChapterIndex > 0) && navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
@@ -97,7 +101,7 @@ NE.UI = (function () {
             navObj.addClass(NE.Constants.OF_CANVAS_TOP_CLASS);
             mainContainer.css('top', '0px');
         }
-        console.log(_topNavBarHeight);
+
     }
 
     //////////////////////
@@ -168,20 +172,20 @@ NE.UI = (function () {
             if (totalHeight > jqObj.innerHeight()) {
                 cssObj = {
                     'overflow': 'auto',
-                    'padding-left': this.ScrollBarWidth + 'px',
+                    'padding-left': _getScrollbarWidth() + 'px',
                     '-webkit-transition': 'none',
                     'transition': 'none'
                 };
 
                 jqObj.find('.NE-full-width').each(function () {
                     $(this).css({
-                        'margin-left': (NE.UI.ScrollBarWidth * -1) + 'px',
+                        'margin-left': (_getScrollbarWidth() * -1) + 'px',
                     });
                 });
             }
 
             jqObj.css(cssObj);
-
+            console.log(cssObj);
         },
 
         ResizeScrollContainer: function () {

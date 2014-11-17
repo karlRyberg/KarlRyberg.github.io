@@ -71,9 +71,8 @@ $(window).load(function () {
 
             that.addClass('active');
             area.removeClass('hidden').slideUp(0).slideDown(500, function () {
-                NE.Scroll.ToElementY(area, 'top', function () {
-                    NE.UI.ApplyVerticalScrollbar();
-                });
+                NE.Scroll.ToElementY(area, 'top');
+                NE.UI.ApplyVerticalScrollbar();
                 that.removeClass('active').addClass('open');
             });
 
@@ -82,9 +81,8 @@ $(window).load(function () {
 
             that.addClass('active');
             area.removeClass('hidden').slideUp(500, function () {
-                NE.Scroll.ToElementY(that, 'middle', function () {
-                    NE.UI.ApplyVerticalScrollbar();
-                });
+                NE.Scroll.ToElementY(that, 'top');
+                NE.UI.ApplyVerticalScrollbar();
                 that.removeClass('active').removeClass('open');
             });
 

@@ -77,7 +77,7 @@ NE.Scroll = (function () {
 
         ToElementY: function (jqElement, anchor, callback) {
 
-            var parentChapter = jqElement.parents('.NE-page').first();
+            var parentPage = jqElement.parents('.NE-page').first();
             var viewPort = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID);
 
             var viewTarget = viewPort.offset().top + 30;
@@ -97,7 +97,7 @@ NE.Scroll = (function () {
             var time = Math.abs(diff)
             time = Math.min(Math.max(time, 100), 500);
 
-            parentChapter.animate({ 'scrollTop': '+=' + diff + 'px' }, time, function () {
+            parentPage.animate({ 'scrollTop': '+=' + diff + 'px' }, time, function () {
                 if (callback) callback();
             })
 
