@@ -33,9 +33,6 @@ $(window).load(function () {
 
     NE.UI.Setup();
 
-    $('#NE-focus-grabber').on('blur', function () {
-        $(this).focus();
-    }).focus()
 
     $(window).on('resize', function () {
         NE.EventHandlers.WindowResize();
