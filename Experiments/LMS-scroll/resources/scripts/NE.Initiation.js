@@ -5,6 +5,7 @@
 /// <reference path="NE.EventHandlers.js" />
 /// <reference path="NE.Constants.js" />
 /// <reference path="NE.UI.js" />
+/// <reference path="../../content/structure/courseTree.js" />
 
 $(window).load(function () {
 
@@ -18,47 +19,23 @@ $(window).load(function () {
         });
     });
 
-    NE.Plugin.Load({
-        name: 'chapter',
-        node: $('<div></div>').appendTo('#NE-chapter-container'),
-        settings: {
-            index: 0
-        }
-    });
 
-    NE.Plugin.Load({
-        name: 'chapter',
-        node: $('<div></div>').appendTo('#NE-chapter-container'),
-        settings: {
-            index: 1
-        }
-    });
-
-    NE.Plugin.Load({
-        name: 'chapter',
-        node: $('<div></div>').appendTo('#NE-chapter-container'),
-        settings: {
-            index: 2
-        }
-    });
-
-    NE.Plugin.Load({
-        name: 'chapter',
-        node: $('<div></div>').appendTo('#NE-chapter-container'),
-        settings: {
-            index: 3
-        }
-    });
-
-    NE.Plugin.Load({
-        name: 'chapter',
-        node: $('<div></div>').appendTo('#NE-chapter-container'),
-        settings: {
-            index: 4
-        }
-    });
+    for (var i = 0; i < NE.CourseTree.chapters.length; i++) {
+        NE.Plugin.Load({
+            name: 'chapter',
+            node: $('<div></div>').appendTo('#' + NE.Constants.SCROLL_CONTAINER_ID),
+            settings: {
+                index: i,
+                chapter: NE.CourseTree.chapters[i]
+            }
+        });
+    }
 
     NE.UI.Setup();
+
+    $('#NE-focus-grabber').on('blur', function () {
+        $(this).focus();
+    }).focus()
 
     $(window).on('resize', function () {
         NE.EventHandlers.WindowResize();
@@ -84,32 +61,36 @@ $(window).load(function () {
         NE.EventHandlers.ChapterLabelXsClick($(this));
     });
 
+    $(document).on('keyup', NE.EventHandlers.KeyUp);
 
-
-    $('.NE-revealer-button').click(function (e) {
+    $('#NE-scroller').on('click', '.NE-revealer-button', function (e) {
 
         var id = $(this).data('reveal');
         var area = $('#' + id);
         var that = $(this);
-        var chapter = $(this).parents('.NE-chapter').first();
-        var row = $(this).parents('.row').first();
 
+        if (!that.hasClass('open')) {
 
-        that.addClass('active');
-
-
-        area.removeClass('hidden').slideUp(0).slideDown(500, function () {
-            NE.Scroll.ToElementY(area, 'top', function () {
-                NE.UI.ApplyVerticalScrollbar(chapter);
+            that.addClass('active');
+            area.removeClass('hidden').slideUp(0).slideDown(500, function () {
+                NE.Scroll.ToElementY(area, 'top', function () {
+                    NE.UI.ApplyVerticalScrollbar();
+                });
+                that.removeClass('active').addClass('open');
             });
-        });
 
-        setTimeout(function () {
-            row.hide(0);
-        }, 300);
+        }
+        else {
 
+            that.addClass('active');
+            area.removeClass('hidden').slideUp(500, function () {
+                NE.Scroll.ToElementY(that, 'middle', function () {
+                    NE.UI.ApplyVerticalScrollbar();
+                });
+                that.removeClass('active').removeClass('open');
+            });
 
-
+        }
 
         e.preventDefault();
         return false;

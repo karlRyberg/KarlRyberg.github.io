@@ -77,7 +77,7 @@ NE.Scroll = (function () {
 
         ToElementY: function (jqElement, anchor, callback) {
 
-            var parentChapter = jqElement.parents('.' + NE.Constants.CHAPTER_CLASS).first();
+            var parentChapter = jqElement.parents('.NE-page').first();
             var viewPort = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID);
 
             var viewTarget = viewPort.offset().top + 30;

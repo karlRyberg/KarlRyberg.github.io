@@ -1,4 +1,5 @@
-﻿
+﻿/// <reference path="../../NE.Navigation.js" />
+
 /////////////////////////////////////////////////////////////////////
 //
 //  TYPE: 
@@ -115,7 +116,7 @@ NE.Plugin.topmenu.EventHandlers = (function () {
             if (i_item.hasClass('disable')) return;
 
             var chapterIndex = parseInt(i_item.data('chapter'), 10);
-            NE.Navigation.ToPage(chapterIndex);
+            NE.Navigation.ToChapter(chapterIndex);
 
             if (i_item.hasClass('NE-top-chapterlink-xs')) {
                 $('#NE-chapter-label-xs').click();
@@ -135,9 +136,9 @@ NE.Plugin.topmenu.EventHandlers = (function () {
         },
 
         UpdateChapterMenu: function () {
-            var menuIitem = $('#NE-top-chapterlink-' + NE.Navigation.CurrentPageIndex);
+            var menuIitem = $('#NE-top-chapterlink-' + NE.Navigation.CurrentChapterIndex);
             _updateChapterButton(menuIitem, 'NE-top-chapterlink');
-            _updateChapterButton($('#NE-top-chapterlink-xs-' + NE.Navigation.CurrentPageIndex), 'NE-top-chapterlink-xs');
+            _updateChapterButton($('#NE-top-chapterlink-xs-' + NE.Navigation.CurrentChapterIndex), 'NE-top-chapterlink-xs');
             if (menuIitem.length) $('#NE-chapter-label').html(menuIitem.html() + NE.Constants.HEADER_CHAPTER_NAV_ICON)
         },
 

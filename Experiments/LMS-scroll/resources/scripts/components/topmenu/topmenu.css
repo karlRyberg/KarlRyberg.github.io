@@ -1,7 +1,7 @@
 ﻿#NE-top {
     overflow: hidden;
-    -webkit-transition: top .3s ease-in-out;
-    transition: top .3s ease-in-out;
+    -webkit-transition: top 0.3s ease-in-out;
+    transition: top 0.3s ease-in-out;
 }
 
     #NE-top.NE-offcanvas {

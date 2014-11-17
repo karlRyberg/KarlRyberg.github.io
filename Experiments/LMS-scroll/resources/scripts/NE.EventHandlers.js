@@ -86,12 +86,23 @@ NE.EventHandlers = (function () {
 
         Navigation: function (e) {
 
-            NE.UI.SetNavigationButtons();
             NE.UI.ResizeScrollContainer();
+            NE.UI.SetNavigationButtons();
             NE.UI.ScrollToPage();
 
         },
 
+        KeyUp: function (e) {
+            var k = e.which;
+            if (k == 13 || k == 32 || k == 34 || k == 39) {
+                NE.Navigation.Next();
+            }
+            else if (k == 8 || k == 33 || k == 37) {
+                NE.Navigation.Previous();
+            }
+            e.preventDefault();
+            return false;
+        },
 
         //////////////////////
         //

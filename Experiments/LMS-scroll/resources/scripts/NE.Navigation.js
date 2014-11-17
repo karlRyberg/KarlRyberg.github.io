@@ -80,20 +80,39 @@ NE.Navigation = (function () {
         //
         /////////////////////
 
+        ToChapter: function (index) {
+            if (index < 0 || index >= NE.CourseTree.chapters.length) return;
+            this.CurrentChapterIndex = index;
+            this.ToPage(0);
+        },
+
         ToPage: function (index) {
-            if (index < 0 || index > 3) return;
+            if (index < 0 || index >= NE.CourseTree.chapters[this.CurrentChapterIndex].pages.length) return;
             this.CurrentPageIndex = index;
             _onNavigation({
-                index: this.CurrentPageIndex
+                page: this.CurrentPageIndex,
+                chapter: this.CurrentChapterIndex
             });
         },
 
         Next: function () {
-            this.ToPage(this.CurrentPageIndex + 1);
+            var page = this.CurrentPageIndex + 1;
+            if (page >= NE.CourseTree.chapters[this.CurrentChapterIndex].pages.length) {
+                if (this.CurrentChapterIndex >= NE.CourseTree.chapters.length - 1) return;
+                this.CurrentChapterIndex += 1;
+                page = 0;
+            }
+            this.ToPage(page);
         },
 
         Previous: function () {
-            this.ToPage(this.CurrentPageIndex - 1);
+            var page = this.CurrentPageIndex - 1;
+            if (page < 0) {
+                if (this.CurrentChapterIndex < 1) return;
+                this.CurrentChapterIndex -= 1;
+                page = NE.CourseTree.chapters[this.CurrentChapterIndex].pages.length-1;
+            }
+            this.ToPage(page);
         },
 
         eof: null

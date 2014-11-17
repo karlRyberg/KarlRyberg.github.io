@@ -26,7 +26,7 @@
 if (NE === null || NE === undefined) { var NE = {}; }
 if (NE.Plugin === null || NE.Plugin === undefined) { NE.Plugin = {}; }
 
-NE.Plugin.chapter = (function () {
+NE.Plugin.page = (function () {
 
     //////////////////////
     //
@@ -71,7 +71,7 @@ NE.Plugin.chapter = (function () {
         /////////////////////
 
         Dependencies: [
-            'chapter.css'
+
         ],
 
         //////////////////////
@@ -83,49 +83,32 @@ NE.Plugin.chapter = (function () {
         Init: function (i_initObj) {
 
             _settings = i_initObj.settings;
-            console.log(_settings);
-            NE.Plugin.ApplyTemplate(i_initObj.name, function (data) {
 
-                var newContent = $(data);
-                var chapterDiv = newContent.first();
+            NE.Plugin.ApplyTemplate(i_initObj.name, function (tmpData) {
 
+                var newContent = $(tmpData);
+                var pageDiv = newContent.first();
                 i_initObj.node.replaceWith(newContent);
 
-                chapterDiv.attr('id', NE.Constants.CHAPTER_ID_PREFIX + _settings.index);
+                NE.Net.LoadTxtFile(_settings.datafile, function (htmlData) {
 
-                $('.NE-plugin-container', chapterDiv).each(function () {
-                    NE.Plugin.Load({
-                        name: $(this).data('plugin'),
-                        node: $(this),
-                        settings: JSON.parse(unescape($(this).data('settings')))
-                    });
+                    $('#' + NE.Constants.PAGE_ID_PREFIX + _settings.chapterIndex + '-' + _settings.pageIndex).html(htmlData);
+
                 });
 
             });
 
         },
 
-        AddPages: function (params) {
+
+        RenderPage: function (params) {
+
             var returnVal = '';
 
-            for (var i = 0; i < _settings.chapter.pages.length; i++) {
-
-                var pageID = NE.Constants.PAGE_ID_PREFIX + _settings.index + '-' + i;
-                var page = NE.CourseTree.chapters[_settings.index].pages[i];
-                var contentFile = '/content/data/' + page.datafile + '.html';
-
-                var pageSettings = {
-                    chapterIndex: _settings.index,
-                    pageIndex: i,
-                    datafile: contentFile
-                }
-
-                returnVal += '<div class="NE-plugin-container" data-plugin="page" data-settings="' + escape(JSON.stringify(pageSettings)) + '"></div>';
-
-            }
+            returnVal += params[0].data.replace(/{pageID}/g, NE.Constants.PAGE_ID_PREFIX + _settings.chapterIndex + '-' + _settings.pageIndex);
+            returnVal += '<hr style="border:2px solid #f2f2f2;"/>'
 
             return returnVal;
-
         },
 
         eof: null

@@ -53,8 +53,6 @@ NE.Net = (function () {
 
     function _getFile(i_file, i_callback) {
 
-  
-
         var fileReq = $.get(i_file)
             .done(function (i_data) {
                 if (i_callback) i_callback(i_data);

@@ -1,5 +1,7 @@
 ﻿/// <reference path="NE.Navigation.js" />
 /// <reference path="NE.Constants.js" />
+/// <reference path="../../content/structure/courseTree.js" />
+/// <reference path="libraries/masala-ux/dist/js/jquery.min.js" />
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -33,6 +35,7 @@ NE.UI = (function () {
     /////////////////////
 
     var _topNavBarHeight = 0;
+    var _lastChapter = 0;
 
     //////////////////////
     //
@@ -77,30 +80,24 @@ NE.UI = (function () {
         return widthNoScroll - widthWithScroll;
     }
 
-    function _switchTopMenu() {
-
+    function _switchTopMenu(_callback) {
         var navObj = $('#' + NE.Constants.FLOATING_HEADER_ID);
         var mainContainer = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID);
         var navHeight = navObj.outerHeight();
-
+        var animtime = 100;
+        
         _topNavBarHeight = 0;
 
-        if (NE.Navigation.CurrentPageIndex > 0 && navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
+        if ((NE.Navigation.CurrentPageIndex > 0 || NE.Navigation.CurrentChapterIndex > 0) && navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
             navObj.removeClass(NE.Constants.OF_CANVAS_TOP_CLASS);
             mainContainer.css('top', navHeight + 'px');
-
-            var topPadding = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).position().top;
-
-            if (topPadding < navHeight) {
-                _topNavBarHeight = navHeight;
-                if (NE.Navigation.CurrentPageIndex > 1) _topNavBarHeight += navHeight;
-            }
+            _topNavBarHeight = navHeight;
         }
-        else if (NE.Navigation.CurrentPageIndex < 1 && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
+        else if (NE.Navigation.CurrentPageIndex == 0 && NE.Navigation.CurrentChapterIndex == 0 && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
             navObj.addClass(NE.Constants.OF_CANVAS_TOP_CLASS);
             mainContainer.css('top', '0px');
         }
-
+        console.log(_topNavBarHeight);
     }
 
     //////////////////////
@@ -117,7 +114,7 @@ NE.UI = (function () {
         //
         /////////////////////
 
-    
+
 
         //////////////////////
         //
@@ -126,20 +123,27 @@ NE.UI = (function () {
         /////////////////////
 
         Setup: function () {
+
             $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).css({
                 'bottom': $('#' + NE.Constants.FLOATING_FOOTER_ID).outerHeight()
             });
+
             NE.UI.ResizeScrollContainer();
+
         },
 
         SetNavigationButtons: function () {
-            if (NE.Navigation.CurrentPageIndex == 0) {
+            if (NE.Navigation.CurrentPageIndex == 0 && NE.Navigation.CurrentChapterIndex == 0) {
                 $('#NE-nav-back').addClass('disable');
             }
             else {
                 $('#NE-nav-back').removeClass('disable');
             }
-            if (NE.Navigation.CurrentPageIndex == 3) {
+
+            var isLastChapter = NE.Navigation.CurrentChapterIndex == NE.CourseTree.chapters.length - 1;
+            var isLastPage = NE.Navigation.CurrentPageIndex == NE.CourseTree.chapters[NE.Navigation.CurrentChapterIndex].pages.length - 1;
+
+            if (isLastChapter && isLastPage) {
                 $('#NE-nav-forward').addClass('disable');
             }
             else {
@@ -148,7 +152,7 @@ NE.UI = (function () {
         },
 
         ApplyVerticalScrollbar: function () {
-            var jqObj = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentPageIndex);
+            var jqObj = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
             var cssObj = {
                 'overflow': 'hidden',
                 'padding-left': '0px',
@@ -181,19 +185,28 @@ NE.UI = (function () {
         },
 
         ResizeScrollContainer: function () {
-            _switchTopMenu();
             NE.UI.ApplyVerticalScrollbar();
         },
 
 
-
         ScrollToPage: function (i_skipAnimation) {
+
+            _switchTopMenu();
+
             var animTime = i_skipAnimation ? 0 : 500;
-            var currentPage = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentPageIndex);
-            currentPage.animate({ 'scrollTop': 0 }, 0);
-            $('#' + NE.Constants.SCROLL_CONTAINER_ID).animate({ 'scrollTop': currentPage.position().top - (_topNavBarHeight) }, animTime, function () {
-                NE.UI.ApplyVerticalScrollbar();
-            });
+            var currentPage = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
+            var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
+            var scroller = $('#' + NE.Constants.SCROLL_CONTAINER_ID);
+
+
+            currentPage.scrollTop(0);
+            currentChapter.animate({ 'scrollTop': '+=' + (currentPage.position().top) }, animTime);
+            scroller.animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
+
+            if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
+                _lastChapter = NE.Navigation.CurrentChapterIndex;
+            }
+
         },
 
         eof: null
