@@ -117,7 +117,7 @@ NE.Plugin.chapter = (function () {
                 var pageSettings = {
                     chapterIndex: _settings.index,
                     pageIndex: i,
-                    datafile: contentFile
+                    datafile: NE.Constants.APPLICATION_BASE_PATH + contentFile
                 }
 
                 returnVal += '<div class="NE-plugin-container" data-plugin="page" data-settings="' + escape(JSON.stringify(pageSettings)) + '"></div>';
