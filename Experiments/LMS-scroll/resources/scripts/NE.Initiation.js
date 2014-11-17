@@ -33,6 +33,9 @@ $(window).load(function () {
 
     NE.UI.Setup();
 
+    $('#NE-focus-grabber').on('blur', function () {
+        $(this).focus();
+    }).focus()
 
     $(window).on('resize', function () {
         NE.EventHandlers.WindowResize();
@@ -57,6 +60,12 @@ $(window).load(function () {
 
 
     $(document).on('keyup', NE.EventHandlers.KeyUp);
+
+
+
+    $('#NE-scroller').on('blur', '.NE-page', function (e) {
+        $(this).click();
+    });
 
     $('#NE-scroller').on('click', '.NE-revealer-button', function (e) {
 
