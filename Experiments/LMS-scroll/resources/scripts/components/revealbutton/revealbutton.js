@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../libraries/masala-ux/dist/js/jquery.min.js" />
 /// <reference path="../../NE.Plugin.js" />
 /// <reference path="../../../../content/structure/courseTree.js" />
-/// <reference path="../../NE.Events.js" />
+/// <reference path="revealbutton.EventHandlers.js" />
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -27,7 +27,7 @@
 if (NE === null || NE === undefined) { var NE = {}; }
 if (NE.Plugin === null || NE.Plugin === undefined) { NE.Plugin = {}; }
 
-NE.Plugin.chapter = function (i_params) {
+NE.Plugin.revealbutton = function (i_params) {
 
     //////////////////////
     //
@@ -37,7 +37,7 @@ NE.Plugin.chapter = function (i_params) {
 
     var _params = i_params;
     var _settings = {};
-    var _myDOMContent;
+    var _MyDOMContent;
 
     //////////////////////
     //
@@ -59,21 +59,6 @@ NE.Plugin.chapter = function (i_params) {
 
     function _addToDOM(i_content) {
         _params.node.replaceWith(i_content);
-        i_content.first().attr('id', NE.Constants.CHAPTER_ID_PREFIX + _settings.index);
-    }
-
-    function _pageOnLoad(e) {
-        if (e.chapter == _settings.index) {
-            me.LoadedPages++;
-
-            if (me.LoadedPages == _settings.chapter.pages.length) {
-                me.OnLoaded({
-                    guid: NE.CourseTree.chapters[_settings.index].guid,
-                    index: _settings.index
-                });
-            }
-
-        }
     }
 
     //////////////////////
@@ -90,10 +75,10 @@ NE.Plugin.chapter = function (i_params) {
         //
         /////////////////////
 
-        Name: 'chapter',
-        LoadedPages: 0,
+        Name: 'revealbutton',
         Dependencies: [
-            'chapter.css'
+            'revealbutton.css',
+            'revealbutton.EventHandlers.js'
         ],
 
         //////////////////////
@@ -107,36 +92,25 @@ NE.Plugin.chapter = function (i_params) {
             _settings = _params.settings;
 
             NE.Plugin.ApplyTemplate(this, function (data) {
-
-                _myDOMContent = $(data);
-                _addToDOM(_myDOMContent);
-                NE.Plugin.LoadAll(_myDOMContent.first(), _pageOnLoad);
-
+                _MyDOMContent = $(data);
+                _addToDOM(_MyDOMContent);
+                _MyDOMContent.find('.NE-revealer-button').first().on('click', function (e) {
+                    NE.Plugin.revealbutton.EventHandlers.OnClick($(this), e);
+                });
+                me.OnLoaded();
             });
 
         },
 
-        AddPages: function (params) {
-            
-            var returnVal = '';
-            for (var i = 0; i < _settings.chapter.pages.length; i++) {
+        Render: function (params) {
 
-                var pageID = NE.Constants.PAGE_ID_PREFIX + _settings.index + '-' + i;
-                var page = NE.CourseTree.chapters[_settings.index].pages[i];
-                var contentFile = NE.Constants.APPLICATION_BASE_PATH + '/content/data/' + page.datafile + '.html';
+            var returnVal = params[0].data;
 
-                var pageSettings = {
-                    guid: page.guid,
-                    chapterIndex: _settings.index,
-                    pageIndex: i,
-                    datafile: contentFile
-                }
+            returnVal = returnVal.replace(/{revealItemID}/g, _settings.revealItemID);
+            returnVal = returnVal.replace(/{initText}/g, _settings.initText);
+            if (_settings.openText) returnVal = returnVal.replace(/{openText}/g, _settings.openText);
 
-                returnVal += '<div class="NE-plugin-container" data-plugin="page" data-settings="' + escape(JSON.stringify(pageSettings)) + '"></div>';
-
-            }
             return returnVal;
-
         },
 
         OnLoaded: function (e) { },

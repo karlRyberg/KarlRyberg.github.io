@@ -37,6 +37,7 @@ NE.UI = (function () {
     var _topNavBarHeight = 0;
     var _lastChapter = 0;
     var _scrollbarWidth = null;
+    var _scrollerTarget = 0;
 
     //////////////////////
     //
@@ -84,22 +85,27 @@ NE.UI = (function () {
         return _scrollbarWidth;
     }
 
-    function _switchTopMenu(_callback) {
+    function _switchTopMenu() {
         var navObj = $('#' + NE.Constants.FLOATING_HEADER_ID);
         var mainContainer = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID);
         var navHeight = navObj.outerHeight();
-        var animtime = 100;
-
+        var animtime = 300;
         _topNavBarHeight = 0;
 
+        navObj.stop(true, true);
+        mainContainer.stop(true, true);
+
         if ((NE.Navigation.CurrentPageIndex > 0 || NE.Navigation.CurrentChapterIndex > 0) && navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
+            var h = mainContainer.innerHeight() - navHeight;
             navObj.removeClass(NE.Constants.OF_CANVAS_TOP_CLASS);
-            mainContainer.css('top', navHeight + 'px');
+            navObj.animate({ 'top': 0 + 'px' }, animtime);
+            mainContainer.animate({ 'top': navHeight + 'px' }, animtime);
             _topNavBarHeight = navHeight;
         }
         else if (NE.Navigation.CurrentPageIndex == 0 && NE.Navigation.CurrentChapterIndex == 0 && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
             navObj.addClass(NE.Constants.OF_CANVAS_TOP_CLASS);
-            mainContainer.css('top', '0px');
+            navObj.animate({ 'top': -navHeight + 'px' }, animtime);
+            mainContainer.animate({ 'top': '0px' }, animtime);
         }
 
     }
@@ -185,7 +191,6 @@ NE.UI = (function () {
             }
 
             jqObj.css(cssObj);
-            console.log(cssObj);
         },
 
         ResizeScrollContainer: function () {
@@ -202,10 +207,8 @@ NE.UI = (function () {
             var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
             var scroller = $('#' + NE.Constants.SCROLL_CONTAINER_ID);
 
-
-            currentPage.scrollTop(0);
-            currentChapter.animate({ 'scrollTop': '+=' + (currentPage.position().top) }, animTime);
-            scroller.animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
+            currentChapter.stop(true, true).animate({ 'scrollTop': '+=' + (currentPage.position().top - _topNavBarHeight) }, animTime);
+            scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
                 _lastChapter = NE.Navigation.CurrentChapterIndex;
@@ -215,6 +218,7 @@ NE.UI = (function () {
 
         eof: null
     };
+
 
 })();
 

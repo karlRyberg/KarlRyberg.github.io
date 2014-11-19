@@ -23,7 +23,7 @@
 // Ensure that the LOUISE namespace is avaiable
 if (NE === null || NE === undefined) { var NE = {}; }
 if (NE.Plugin === null || NE.Plugin === undefined) { NE.Plugin = {}; }
-if (NE.Plugin.topmenu.EventHandlers === null || NE.Plugin.topmenu.EventHandlers === undefined) { NE.Plugin.topmenu.EventHandlers = {}; }
+if (NE.Plugin.topmenu === null || NE.Plugin.topmenu === undefined) { NE.Plugin.topmenu = {}; }
 
 NE.Plugin.topmenu.EventHandlers = (function () {
 
@@ -81,7 +81,7 @@ NE.Plugin.topmenu.EventHandlers = (function () {
         /////////////////////
 
         ChapterLabelClick: function (i_item) {
-            var chapterMenuDiv = $('#NE-top-chapters');
+            var chapterMenuDiv = $('#NE-top-chapter-navigation');
             var menuHeight = 0;
             if (!chapterMenuDiv.hasClass('open')) {
                 chapterMenuDiv.find('.NE-top-chapterlinks').each(function () {

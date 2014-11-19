@@ -16,12 +16,12 @@ $(window).load(function () {
             name: $(this).data('plugin'),
             node: $(this),
             settings: {}
-        });
+        }).Init();
     });
 
 
     for (var i = 0; i < NE.CourseTree.chapters.length; i++) {
-        NE.Plugin.Load({
+        var chapter = NE.Plugin.Load({
             name: 'chapter',
             node: $('<div></div>').appendTo('#' + NE.Constants.SCROLL_CONTAINER_ID),
             settings: {
@@ -29,6 +29,12 @@ $(window).load(function () {
                 chapter: NE.CourseTree.chapters[i]
             }
         });
+        chapter.OnLoaded = function (e) {
+            if (e.index == NE.Navigation.CurrentChapterIndex) {
+                NE.EventHandlers.WindowResize();
+            }
+        }
+        chapter.Init();
     }
 
     NE.UI.Setup();
@@ -54,46 +60,8 @@ $(window).load(function () {
     });
 
 
-
     $(document).on('keyup', NE.EventHandlers.KeyUp);
 
-
-
-    $('#NE-scroller').on('blur', '.NE-page', function (e) {
-        $(this).click();
-    });
-
-    $('#NE-scroller').on('click', '.NE-revealer-button', function (e) {
-
-        var id = $(this).data('reveal');
-        var area = $('#' + id);
-        var that = $(this);
-
-        if (!that.hasClass('open')) {
-
-            that.addClass('active');
-            area.removeClass('hidden').slideUp(0).slideDown(500, function () {
-                NE.Scroll.ToElementY(area, 'top');
-                NE.UI.ApplyVerticalScrollbar();
-                that.removeClass('active').addClass('open');
-            });
-
-        }
-        else {
-
-            that.addClass('active');
-            area.removeClass('hidden').slideUp(500, function () {
-                NE.Scroll.ToElementY(that, 'top');
-                NE.UI.ApplyVerticalScrollbar();
-                that.removeClass('active').removeClass('open');
-            });
-
-        }
-
-        e.preventDefault();
-        return false;
-
-    });
 
 
 

@@ -26,7 +26,7 @@
 if (NE === null || NE === undefined) { var NE = {}; }
 if (NE.Plugin === null || NE.Plugin === undefined) { NE.Plugin = {}; }
 
-NE.Plugin.page = (function () {
+NE.Plugin.page = function (i_params) {
 
     //////////////////////
     //
@@ -34,7 +34,11 @@ NE.Plugin.page = (function () {
     //
     /////////////////////
 
+    var _params = i_params;
     var _settings = {};
+    var _myDOMContent;
+    var _numComponents = 0;
+    var _componentsLoaded = 0;
 
     //////////////////////
     //
@@ -54,7 +58,23 @@ NE.Plugin.page = (function () {
     //
     /////////////////////
 
+    function _addToDOM(i_content) {
+        _params.node.replaceWith(i_content);
+    }
 
+    function _onCompnentsLoad(e) {
+
+        _componentsLoaded++;
+
+        if (_componentsLoaded == _numComponents) {
+            me.OnLoaded({
+                chapter: _settings.chapterIndex,
+                index: _settings.index,
+                gui: _settings.guid,
+            });
+        }
+
+    }
 
     //////////////////////
     //
@@ -62,7 +82,7 @@ NE.Plugin.page = (function () {
     //
     /////////////////////
 
-    return {
+    var me = {
 
         //////////////////////
         //
@@ -70,8 +90,9 @@ NE.Plugin.page = (function () {
         //
         /////////////////////
 
+        Name: 'page',
         Dependencies: [
-
+            'page.css'
         ],
 
         //////////////////////
@@ -80,39 +101,38 @@ NE.Plugin.page = (function () {
         //
         /////////////////////
 
-        Init: function (i_initObj) {
+        Init: function () {
 
-            _settings = i_initObj.settings;
+            _settings = _params.settings;
+         
+            NE.Plugin.ApplyTemplate(this, function (data) {
 
-            NE.Plugin.ApplyTemplate(i_initObj.name, function (tmpData) {
-
-                var newContent = $(tmpData);
-                var pageDiv = newContent.first();
-                i_initObj.node.replaceWith(newContent);
+                _myDOMContent = $(data);
+                _addToDOM(_myDOMContent);
 
                 NE.Net.LoadTxtFile(_settings.datafile, function (htmlData) {
-
                     $('#' + NE.Constants.PAGE_ID_PREFIX + _settings.chapterIndex + '-' + _settings.pageIndex).html(htmlData);
-
+                    _numComponents = $('.NE-plugin-container', _myDOMContent.first()).length;
+                    NE.Plugin.LoadAll(_myDOMContent.first(), _onCompnentsLoad);
                 });
 
             });
 
         },
 
-
         RenderPage: function (params) {
-
             var returnVal = '';
-
             returnVal += params[0].data.replace(/{pageID}/g, NE.Constants.PAGE_ID_PREFIX + _settings.chapterIndex + '-' + _settings.pageIndex);
-            returnVal += '<hr style="border:2px solid #f2f2f2;"/>'
-
+            returnVal += params[1].data;
             return returnVal;
         },
+
+        OnLoaded: function (e) { },
 
         eof: null
     };
 
-})();
+    return me;
+
+};
 

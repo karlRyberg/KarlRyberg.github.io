@@ -122,11 +122,12 @@ NE.Plugin = (function () {
         Load: function (i_initObj) {
 
             var pn = _resolvePath(i_initObj.name);
-            
-            NE.Net.AddScriptFile(pn.path + '/' + pn.name + '.js');
-         
 
-            var depends = NE.Plugin[pn.name].Dependencies;
+            NE.Net.AddScriptFile(pn.path + '/' + pn.name + '.js');
+
+            var instance = new NE.Plugin[pn.name](i_initObj);
+
+            var depends = instance.Dependencies;
             if (depends) {
                 for (var i = 0; i < depends.length; i++) {
                     var ext = NE.Net.GetExtension(depends[i]);
@@ -141,20 +142,36 @@ NE.Plugin = (function () {
                 }
             }
 
-   
-            NE.Plugin[pn.name].Init(i_initObj);
-         
+            return instance;
 
         },
 
+        LoadAll: function (i_parentElem, i_onLoadCallback) {
 
-        
-        ApplyTemplate: function(i_name, i_callback) {
+            $('.NE-plugin-container', i_parentElem).each(function () {
+
+                var component = NE.Plugin.Load({
+                    name: $(this).data('plugin'),
+                    node: $(this),
+                    settings: NE.Plugin.ParseSettings($(this).data('settings'))
+                });
+
+                component.OnLoaded = i_onLoadCallback;
+                component.Init();
+
+            });
+        },
+
+        ParseSettings: function (i_data) {
+            return JSON.parse(unescape(i_data.replace(/'/g, "\"")))
+        },
+
+        ApplyTemplate: function (i_instance, i_callback) {
 
             var templateData = '';
-            var crntPlugin = NE.Plugin[i_name];
-            var pn = _resolvePath(i_name);
-     
+            var crntPlugin = i_instance;
+            var pn = _resolvePath(i_instance.Name);
+
 
             NE.Net.LoadTxtFile(pn.path + '/' + pn.name + '.html', function (data) {
 
@@ -187,7 +204,7 @@ NE.Plugin = (function () {
 
 
         eof: null
-};
+    };
 
 })();
 

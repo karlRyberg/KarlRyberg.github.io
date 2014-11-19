@@ -1,11 +1,12 @@
 ﻿#NE-top {
     overflow: hidden;
-    -webkit-transition: top 0.3s ease-in-out;
-    transition: top 0.3s ease-in-out;
+      top: -100px;
+    /*-webkit-transition: top 0.3s ease-in-out;
+    transition: top 0.3s ease-in-out;*/
 }
 
     #NE-top.NE-offcanvas {
-        top: -100px;
+      
     }
 
     #NE-top .main-navbar {
@@ -22,7 +23,7 @@
     outline: none;
 }
 
-#NE-top-chapters {
+#NE-top-chapter-navigation {
     position: relative;
     display: block;
     height: 0px;
@@ -33,7 +34,7 @@
     overflow: hidden;
 }
 
-    #NE-top-chapters.open {
+    #NE-top-chapter-navigation.open {
         border-top: 1px outset #d9d9d9;
     }
 
@@ -60,6 +61,7 @@
 #NE-top-chapterlinks a:hover {
     background-color: inherit;
 }
+
 
 .NE-top-close-btn {
     position: relative;

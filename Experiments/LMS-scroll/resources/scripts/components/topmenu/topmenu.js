@@ -25,7 +25,7 @@
 if (NE === null || NE === undefined) { var NE = {}; }
 if (NE.Plugin === null || NE.Plugin === undefined) { NE.Plugin = {}; }
 
-NE.Plugin.topmenu = (function () {
+NE.Plugin.topmenu = function (i_params) {
 
     //////////////////////
     //
@@ -33,7 +33,8 @@ NE.Plugin.topmenu = (function () {
     //
     /////////////////////
 
-
+    var _params = i_params;
+    var _settings = {};
 
     //////////////////////
     //
@@ -69,6 +70,8 @@ NE.Plugin.topmenu = (function () {
         //
         /////////////////////
 
+        Name: 'topmenu',
+
         Dependencies: [
             'topmenu.css',
             'topmenu.EventHandlers.js'
@@ -80,11 +83,11 @@ NE.Plugin.topmenu = (function () {
         //
         /////////////////////
 
-        Init: function (i_initObj) {
+        Init: function () {
 
-            NE.Plugin.ApplyTemplate(i_initObj.name, function (data) {
+            NE.Plugin.ApplyTemplate(this, function (data) {
 
-                i_initObj.node.replaceWith(data);
+                _params.node.replaceWith(data);
 
                 $('#NE-chapter-label').on('click', function () {
                     NE.Plugin.topmenu.EventHandlers.ChapterLabelClick($(this));
@@ -143,5 +146,5 @@ NE.Plugin.topmenu = (function () {
         eof: null
     };
 
-})();
+};
 

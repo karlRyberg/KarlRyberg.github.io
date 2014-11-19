@@ -1,1 +1,19 @@
-﻿
+﻿.NE-page {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    -webkit-transition: padding-left 0.3s;
+    transition: padding-left 0.3s;
+    padding-bottom: 30px;
+}
+
+    .NE-page > .container {
+        background-color: white;
+    }
+
+.NE-page-divider {
+border-bottom: 30px solid lime;
+}
