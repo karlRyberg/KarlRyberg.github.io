@@ -9,8 +9,6 @@
 
 $(window).load(function () {
 
-
-
     $('.NE-plugin-container').each(function () {
         NE.Plugin.Load({
             name: $(this).data('plugin'),
@@ -57,6 +55,10 @@ $(window).load(function () {
 
     $('#NE-chapter-label').on('click', function () {
         NE.EventHandlers.ChapterLabelClick($(this));
+    });
+
+    $('#NE-scroller').on('click', '.NE-chapterlink', function (e) {
+        NE.EventHandlers.ChapterLinkCLick($(this), e);
     });
 
 

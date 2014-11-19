@@ -92,6 +92,13 @@ NE.EventHandlers = (function () {
 
         },
 
+        ChapterLinkCLick: function (i_item, e) {
+            if (i_item.hasClass('disable')) return;
+
+            var chapterIndex = parseInt(i_item.data('chapter'), 10);
+            NE.Navigation.ToChapter(chapterIndex);
+        },
+
         KeyUp: function (e) {
             var k = e.which;
             if (k == 13 || k == 32 || k == 34 || k == 39) {
