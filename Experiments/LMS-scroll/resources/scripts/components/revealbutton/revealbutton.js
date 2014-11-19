@@ -94,7 +94,7 @@ NE.Plugin.revealbutton = function (i_params) {
             NE.Plugin.ApplyTemplate(this, function (data) {
                 _MyDOMContent = $(data);
                 _addToDOM(_MyDOMContent);
-                _MyDOMContent.find('.NE-revealer-button').first().on('click', function (e) {
+                _MyDOMContent.first().on('click', function (e) {
                     NE.Plugin.revealbutton.EventHandlers.OnClick($(this), e);
                 });
                 me.OnLoaded();

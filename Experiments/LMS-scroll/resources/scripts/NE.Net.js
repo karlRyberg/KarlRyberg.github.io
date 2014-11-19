@@ -31,7 +31,7 @@ NE.Net = (function () {
     //
     /////////////////////
 
-
+    var _loadedFiles = {};
 
     //////////////////////
     //
@@ -52,15 +52,13 @@ NE.Net = (function () {
     /////////////////////
 
     function _getFile(i_file, i_callback) {
-
-        var fileReq = $.get(i_file)
+        $.get(i_file)
             .done(function (i_data) {
                 if (i_callback) i_callback(i_data);
             })
             .fail(function () {
                 if (i_callback) i_callback("failed to load " + i_file);
-            })
-
+            });
     }
 
     //////////////////////
@@ -86,17 +84,25 @@ NE.Net = (function () {
         },
 
         AddScriptFile: function (i_file) {
+            if (_loadedFiles[i_file]) return;
+
             var tag = document.createElement("script");
             tag.type = "text/javascript";
             tag.src = i_file;
             $("body").append(tag);
+
+            _loadedFiles[i_file] = true;
         },
 
         AddCssFile: function (i_file) {
+            if (_loadedFiles[i_file]) return;
+
             var tag = document.createElement("link");
             tag.rel = "stylesheet";
             tag.href = i_file;
             $("head").append(tag);
+
+            _loadedFiles[i_file] = true;
         },
 
         GetExtension: function(i_file){

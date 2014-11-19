@@ -83,26 +83,31 @@ NE.Plugin.revealbutton.EventHandlers = (function () {
             var id = sender.data('reveal');
             var area = $('#' + id);
             var that = sender;
-     
+
             if (!that.hasClass('open')) {
 
                 that.addClass('active');
                 area.removeClass('hidden').slideUp(0).slideDown(500, function () {
                     NE.Scroll.ToElementY(area, 'top');
-                    NE.UI.ApplyVerticalScrollbar();
                     if (sender.data('opentext')) that.html(sender.data('opentext'));
                     that.removeClass('active').addClass('open');
+                    setTimeout(function () {
+                        NE.UI.ApplyVerticalScrollbar();
+                    }, 300);
                 });
 
             }
             else {
 
                 that.addClass('active');
-                area.removeClass('hidden').slideUp(500, function () {
+                area.slideUp(500, function () {
                     NE.Scroll.ToElementY(that, 'top');
-                    NE.UI.ApplyVerticalScrollbar();
                     that.html(sender.data('inittext'));
                     that.removeClass('active').removeClass('open');
+                    area.addClass('hidden');
+                    setTimeout(function () {
+                        NE.UI.ApplyVerticalScrollbar();
+                    }, 300);
                 });
 
             }

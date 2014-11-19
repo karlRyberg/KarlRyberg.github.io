@@ -15,5 +15,6 @@
     }
 
 .NE-page-divider {
-border-bottom: 30px solid lime;
+    border-top: 2px solid #ccc;
+    border-bottom: 10px solid #f2f2f2;
 }
