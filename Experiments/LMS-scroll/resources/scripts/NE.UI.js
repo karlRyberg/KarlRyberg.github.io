@@ -135,10 +135,6 @@ NE.UI = (function () {
 
         Setup: function () {
 
-            $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).css({
-                'bottom': $('#' + NE.Constants.FLOATING_FOOTER_ID).outerHeight()
-            });
-
             NE.UI.ResizeScrollContainer();
 
         },
@@ -194,6 +190,9 @@ NE.UI = (function () {
         },
 
         ResizeScrollContainer: function () {
+            $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).css({
+                'bottom': $('#' + NE.Constants.FLOATING_FOOTER_ID).outerHeight()
+            });
             NE.UI.ApplyVerticalScrollbar();
         },
 
@@ -209,7 +208,7 @@ NE.UI = (function () {
 
             currentChapter.stop(true, true).animate({ 'scrollTop': '+=' + (currentPage.position().top - _topNavBarHeight) }, animTime);
             scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
- 
+
             setTimeout(NE.UI.ApplyVerticalScrollbar, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {

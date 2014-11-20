@@ -89,6 +89,10 @@ NE.Plugin.topmenu = function (i_params) {
 
                 _params.node.replaceWith(data);
 
+                $(window).on('resize', function () {
+                    NE.Plugin.topmenu.EventHandlers.WindowResize();
+                });
+
                 $('.NE-chapter-label').on('click', function () {
                     NE.Plugin.topmenu.EventHandlers.ChapterLabelClick($(this));
                 });

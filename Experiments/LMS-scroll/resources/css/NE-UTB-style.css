@@ -15,6 +15,10 @@
         border-bottom: 1px solid #ccc;
     }
 
+    #NE-top .panel > .list-group {
+        border-bottom: 0px;
+    }
+
     .panel.NE-course-menu {
         margin-bottom: 0px;
     }

@@ -77,24 +77,40 @@ NE.Plugin.topmenu.EventHandlers = (function () {
         //
         /////////////////////
 
+        WindowResize: function(){
+            var chapterMenuDiv = $('#NE-top-chapter-navigation');
+            if (chapterMenuDiv.hasClass('open')) {
+                $('.NE-chapter-label').click();
+            }
+        },
+
         ChapterLabelClick: function (i_item) {
 
-            i_item.parent().toggleClass('active');
+           
+
             if (!i_item.is(':visible')) return;
 
             var chapterMenuDiv = $('#NE-top-chapter-navigation');
             var menuHeight = 0;
+
             if (!chapterMenuDiv.hasClass('open')) {
+
                 chapterMenuDiv.find('.NE-top-chapterlinks').each(function () {
                     var itemHeight = $(this).outerHeight();
                     menuHeight = itemHeight > menuHeight ? itemHeight : menuHeight;
                 });
+
                 $('#NE-top-backdrop').fadeTo(0, 0).fadeTo(300, 0.65);
+                i_item.parent().addClass('active');
+
             }
             else {
+
                 $('#NE-top-backdrop').fadeTo(300, 0, function () {
                     $(this).hide();
+                    i_item.parent().removeClass('active');
                 });
+
             }
 
             chapterMenuDiv.css('height', menuHeight + 'px').toggleClass('open');

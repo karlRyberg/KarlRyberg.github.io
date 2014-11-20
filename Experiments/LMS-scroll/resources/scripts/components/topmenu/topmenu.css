@@ -18,18 +18,24 @@
     margin-top: 21.5px;
     margin-bottom: 21.5px;
     margin-left: 0px;
-    margin-right: 15px;
+    margin-right: 6px;
+}
+
+.NE-navbar-distance {
+    border: 6px solid transparent;
+    height: 60px;
 }
 
 #NE-top-chapter-navigation {
     position: relative;
     display: block;
     height: 0px;
+    max-height: 400px;
+    -webkit-overflow-scrolling: touch;
     overflow: hidden;
     -webkit-transition: height 0.2s ease-in, border-top 0.2s ease-in;
     transition: height 0.2s ease-in, border-top 0.2s ease-in;
     border-top: 1px outset #fff;
-    overflow: hidden;
 }
 
     #NE-top-chapter-navigation.open {
@@ -47,10 +53,10 @@
     cursor: default;
 }
 
-    #NE-top-chapterlinks a.disable {
-        color: #d9d9d9;
-        cursor: default;
-    }
+#NE-top-chapterlinks a.disable {
+    color: #d9d9d9;
+    cursor: default;
+}
 
 #NE-top-chapterlinks a:hover {
     background-color: inherit;
