@@ -189,7 +189,6 @@ NE.UI = (function () {
                     });
                 });
             }
-
             jqObj.css(cssObj);
         },
 
@@ -210,7 +209,7 @@ NE.UI = (function () {
             currentChapter.stop(true, true).animate({ 'scrollTop': '+=' + (currentPage.position().top - _topNavBarHeight) }, animTime);
             scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
  
-            setTimeout(NE.UI.ApplyVerticalScrollbar, animTime);
+           // setTimeout(NE.UI.ApplyVerticalScrollbar, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
                 _lastChapter = NE.Navigation.CurrentChapterIndex;

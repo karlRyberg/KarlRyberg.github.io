@@ -1,6 +1,9 @@
 ﻿<nav id="NE-top" class="navigation NE-offcanvas" aria-role="navigation">
-    <div class="container">
+
+    <div class="container hidden-xs">
+
         <div class="row">
+
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" id="NE-chapter-label-xs" data-toggle="collapse" data-target=".main-navbar">
                     <span class="sr-only">Visa navigation</span> <i class="fa fa-bars"></i>
@@ -14,24 +17,16 @@
             </div>
 
             <div class="main-navbar navbar-collapse collapse">
-                <ul class="nav navbar-nav hidden-xs">
+                <ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" id="NE-chapter-label">CHAPTER_LABEL<i class="fa fa-navicon ml-xs"></i></a>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav visible-xs" id="NE-top-chapterlinks-xs" role="menu">
-                    {function:MenuXs}
-                    {param:menuItemXs}
-                    <li><a href="#" data-chapter="{cahpterIndex}" id="NE-top-chapterlink-xs-{cahpterIndex}" class="navbar-link NE-top-chapterlink-xs">{chapterTitle}</a></li>
-                    {/param}
-                    {/function}
-                    <li><a href="#" id="NE-top-close-btn-xs" class="navbar-link">Avsluta <i class="fa fa-times"></i></a></li>
-                </ul>
-                <a href="#" class="btn btn-primary navbar-btn navbar-right NE-top-close-btn hidden-xs" id="NE-top-close-btn"><i class="fa fa-times"></i></a>
+                <a href="#" class="btn btn-primary navbar-btn navbar-right NE-top-close-btn" id="NE-top-close-btn"><i class="fa fa-times"></i></a>
             </div>
         </div>
 
-        <div class="row hidden-xs" id="NE-top-chapter-navigation">
+        <div class="row" id="NE-top-chapter-navigation">
             {function:HeaderMenu}
             {param}
             <div class="col-xs-6">
@@ -51,6 +46,28 @@
 
     </div>
 
+
+
+    <div class="container visible-xs">
+
+        <div class="row">
+
+            <div class="col-xs-12 navbar  navbar-right">
+                <a href="#" class="btn btn-primary navbar-btn navbar-right NE-top-close-btn mr-sm" id="NE-top-close-btn"><i class="fa fa-times"></i></a>
+            </div>
+
+        </div>
+
+    </div>
+
 </nav>
 
+                <!--<ul class="nav navbar-nav visible-xs" id="NE-top-chapterlinks-xs" role="menu">
+                    {function:MenuXs}
+                    {param:menuItemXs}
+                    <li><a href="#" data-chapter="{cahpterIndex}" id="NE-top-chapterlink-xs-{cahpterIndex}" class="navbar-link NE-top-chapterlink-xs">{chapterTitle}</a></li>
+                    {/param}
+                    {/function}
+                    <li><a href="#" id="NE-top-close-btn-xs" class="navbar-link">Avsluta <i class="fa fa-times"></i></a></li>
+                </ul>-->
 <div id="NE-top-backdrop"></div>

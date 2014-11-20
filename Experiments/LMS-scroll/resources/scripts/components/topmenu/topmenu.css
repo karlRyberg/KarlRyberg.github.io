@@ -5,10 +5,6 @@
     transition: top 0.3s ease-in-out;*/
 }
 
-    #NE-top.NE-offcanvas {
-      
-    }
-
     #NE-top .main-navbar {
         -webkit-overflow-scrolling: touch;
     }
