@@ -54,7 +54,9 @@ NE.Plugin.topmenu = function (i_params) {
     //
     /////////////////////
 
-
+    function _addToDOM(i_content) {
+        _params.node.replaceWith(i_content);
+    }
 
     //////////////////////
     //
@@ -87,28 +89,35 @@ NE.Plugin.topmenu = function (i_params) {
 
             NE.Plugin.ApplyTemplate(this, function (data) {
 
-                _params.node.replaceWith(data);
+                _myDOMContent = $(data);
+                _addToDOM(_myDOMContent);
 
-                $(window).on('resize', function () {
-                    NE.Plugin.topmenu.EventHandlers.WindowResize();
+
+                NE.Plugin.LoadAll(_myDOMContent, function () {
+
+                    $(window).on('resize', function () {
+                        NE.Plugin.topmenu.EventHandlers.WindowResize();
+                    });
+
+                    $('.NE-chapter-label').on('click', function () {
+                        NE.Plugin.topmenu.EventHandlers.ChapterLabelClick($(this));
+                    });
+
+
+                    $('.NE-chapterlink').on('click', function () {
+                        NE.Plugin.topmenu.EventHandlers.ChapterLinkClick($(this));
+                    });
+
+                    $('#NE-top-backdrop').on('click', function () {
+                        NE.Plugin.topmenu.EventHandlers.OverlayClick($(this));
+                    });
+
+                    NE.Events.Add(NE.Navigation.ON_NAVIGATION, NE.Plugin.topmenu.EventHandlers.UpdateChapterMenu);
+
                 });
-
-                $('.NE-chapter-label').on('click', function () {
-                    NE.Plugin.topmenu.EventHandlers.ChapterLabelClick($(this));
-                });
-
-
-                $('.NE-top-chapterlink').on('click', function () {
-                    NE.Plugin.topmenu.EventHandlers.ChapterLinkClick($(this));
-                });
-
-                $('#NE-top-backdrop').on('click', function () {
-                    NE.Plugin.topmenu.EventHandlers.OverlayClick($(this));
-                });
-
-                NE.Events.Add(NE.Navigation.ON_NAVIGATION, NE.Plugin.topmenu.EventHandlers.UpdateChapterMenu);
 
             });
+
 
         },
 

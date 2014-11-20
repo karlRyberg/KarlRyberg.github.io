@@ -10,9 +10,9 @@
         padding-top: 1px;
     }
 
-.navigation a:focus {
-    outline: none;
-}
+    #NE-top a:focus {
+        outline: none;
+    }
 
 .navigation .navbar-btn {
     margin-top: 21.5px;
@@ -30,7 +30,7 @@
     position: relative;
     display: block;
     height: 0px;
-    max-height: 400px;
+    max-height: 500px;
     -webkit-overflow-scrolling: touch;
     overflow: hidden;
     -webkit-transition: height 0.2s ease-in, border-top 0.2s ease-in;
@@ -38,29 +38,47 @@
     border-top: 1px outset #fff;
 }
 
-    #NE-top-chapter-navigation.open {
-        border-top: 1px outset #d9d9d9;
+    #NE-top-chapter-navigation .NE-chapterlink-collection {
+        padding-bottom: 30px;
     }
 
-.NE-top-chapterlink.disable {
+
+@media (max-width: 768px) {
+
+    #NE-top-chapter-navigation .NE-chapterlink-collection {
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
+
+        #NE-top-chapter-navigation .NE-chapterlink-collection .list-group-item:last-child {
+            border-bottom: 1px solid #ccc !important;
+        }
+
+        #NE-top-chapter-navigation .NE-chapterlink-collection .list-group-item.last-item {
+            border-bottom-width: 0px !important;
+        }
+
+        #NE-top-chapter-navigation .NE-chapterlink-collection.last-item {
+            padding-bottom: 30px;
+        }
+}
+
+
+#NE-top-chapter-navigation.open {
+    border-top: 1px outset #d9d9d9;
+}
+
+.NE-chapterlink.disable {
     color: #c0c0c0 !important;
 }
 
-.NE-top-chapterlink:hover.disable {
+.NE-chapterlink:hover.disable {
     border-left: none !important;
     padding-left: 0px !important;
     background-color: transparent !important;
     cursor: default;
 }
 
-#NE-top-chapterlinks a.disable {
-    color: #d9d9d9;
-    cursor: default;
-}
-
-#NE-top-chapterlinks a:hover {
-    background-color: inherit;
-}
 
 #NE-top-backdrop {
     position: absolute;

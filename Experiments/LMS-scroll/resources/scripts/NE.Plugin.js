@@ -163,6 +163,7 @@ NE.Plugin = (function () {
         },
 
         ParseSettings: function (i_data) {
+            if (!i_data) return {};
             return JSON.parse(unescape(i_data.replace(/'/g, "\"")))
         },
 

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 pr-xs">
-                <img class="mb-md mt-sm" src="scripts/libraries/masala-ux/dist/images/NE_logo_positiv.svg" style="max-height:80px;min-height:80px;" />
+                <img class="mb-md mt-sm" src="scripts/libraries/masala-ux/dist/images/NE_logo_positiv.svg" style="max-height:80px;min-height:80px;max-width:112px;min-width:112px;" />
                 <a href="#" class="btn btn-primary navbar-btn navbar-right NE-top-close-btn hidden-xs mr-sm" id="NE-top-close-btn"><i class="fa fa-times"></i></a>
             </div>
         </div>
@@ -41,28 +41,11 @@
                     </div>
                 </div>
 
-                <div class="row mt-sm hidden" id="NE-intro-page-menu">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="NE-course-menu panel">
-                            <nav class="list-group">
-                                <a href="#" data-chapter="1" class="NE-chapterlink list-group-item">Klarspråk är att skriva för läsaren</a>
-                                <a href="#" data-chapter="2" class="NE-chapterlink list-group-item">Tänk på varför du skriver och till vem</a>
-                                <a href="#" data-chapter="3" class="NE-chapterlink list-group-item">Var direkt i ditt tilltal</a>
-                                <a href="#" data-chapter="4" class="NE-chapterlink list-group-item">Underlätta med en bra struktur</a>
-                            </nav>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="NE-course-menu panel">
-                            <nav class="list-group">
-                                <a href="#" data-chapter="0" class="NE-chapterlink list-group-item">Skriv enklare meningar</a>
-                                <a href="#" data-chapter="0" class="NE-chapterlink list-group-item">Var varsam med orden</a>
-                                <a href="#" data-chapter="0" class="NE-chapterlink list-group-item">Kontrollera texten</a>
-                                <a href="#" data-chapter="0" class="NE-chapterlink list-group-item">Din egen checklista</a>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
+                <div class="NE-plugin-container" data-plugin="chapterlist" data-settings="{
+                    'panelID': 'NE-intro-page-menu',
+                    'linkPrefix': 'NE-chapterlink',
+                    'panelClasses': 'hidden'
+                    }"></div>
 
                 <div class="row mt-md mb-sm text-center">
                     <div class="col-xs-12">

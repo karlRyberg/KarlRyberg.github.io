@@ -10,20 +10,6 @@
     max-height: 500px;
 }
 
-@media (max-width: 768px) {
-    .panel > .list-group {
-        border-bottom: 1px solid #ccc;
-    }
-
-    #NE-top .panel > .list-group {
-        border-bottom: 0px;
-    }
-
-    .panel.NE-course-menu {
-        margin-bottom: 0px;
-    }
-}
-
 button:focus {
     border: none;
     outline: none !important;

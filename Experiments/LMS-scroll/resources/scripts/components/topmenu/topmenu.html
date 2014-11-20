@@ -32,23 +32,10 @@
 
         </div>
 
-        <div class="row" id="NE-top-chapter-navigation">
-            {function:HeaderMenu}
-            {param}
-            <div class="col-xs-12">
-                <div class="NE-top-chapterlinks panel pb-sm">
-                    <nav class="list-group">
-                        {/param}
-                        {param}
-                        <a href="#" data-chapter="{cahpterIndex}" id="NE-top-chapterlink-{cahpterIndex}" class="NE-top-chapterlink list-group-item">{chapterTitle}</a>
-                        {/param}
-                        {param}
-                    </nav>
-                </div>
-            </div>
-            {/param}
-            {/function}
-        </div>
+        <div class="NE-plugin-container" data-plugin="chapterlist" data-settings="{
+             'panelID': 'NE-top-chapter-navigation',
+             'linkPrefix': 'NE-chapterlink'
+             }"></div>
 
     </div>
 </nav>

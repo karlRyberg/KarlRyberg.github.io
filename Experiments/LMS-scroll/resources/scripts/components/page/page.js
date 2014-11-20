@@ -65,7 +65,7 @@ NE.Plugin.page = function (i_params) {
     function _onCompnentsLoad(e) {
 
         _componentsLoaded++;
-
+        alert(_componentsLoaded)
         if (_componentsLoaded == _numComponents) {
             me.OnLoaded({
                 chapter: _settings.chapterIndex,
