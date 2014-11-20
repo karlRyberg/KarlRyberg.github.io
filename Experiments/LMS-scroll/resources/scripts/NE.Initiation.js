@@ -29,7 +29,7 @@ $(window).load(function () {
         });
         chapter.OnLoaded = function (e) {
             if (e.index == NE.Navigation.CurrentChapterIndex) {
-                NE.EventHandlers.WindowResize();
+                NE.Navigation.ToPage(0);
             }
         }
         chapter.Init();

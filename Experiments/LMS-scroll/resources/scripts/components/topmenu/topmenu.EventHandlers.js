@@ -86,8 +86,6 @@ NE.Plugin.topmenu.EventHandlers = (function () {
 
         ChapterLabelClick: function (i_item) {
 
-           
-
             if (!i_item.is(':visible')) return;
 
             var chapterMenuDiv = $('#NE-top-chapter-navigation');
