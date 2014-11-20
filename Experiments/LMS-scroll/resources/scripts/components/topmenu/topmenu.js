@@ -89,15 +89,12 @@ NE.Plugin.topmenu = function (i_params) {
 
                 _params.node.replaceWith(data);
 
-                $('#NE-chapter-label').on('click', function () {
+                $('.NE-chapter-label').on('click', function () {
                     NE.Plugin.topmenu.EventHandlers.ChapterLabelClick($(this));
                 });
 
-                $('#NE-chapter-label-xs').on('click', function () {
-                    NE.Plugin.topmenu.EventHandlers.ChapterLabelXsClick($(this));
-                });
 
-                $('.NE-top-chapterlink, .NE-top-chapterlink-xs').on('click', function () {
+                $('.NE-top-chapterlink').on('click', function () {
                     NE.Plugin.topmenu.EventHandlers.ChapterLinkClick($(this));
                 });
 

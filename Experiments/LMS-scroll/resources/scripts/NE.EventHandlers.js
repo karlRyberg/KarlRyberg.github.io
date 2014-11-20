@@ -86,7 +86,6 @@ NE.EventHandlers = (function () {
 
         Navigation: function (e) {
 
-            NE.UI.ResizeScrollContainer();
             NE.UI.SetNavigationButtons();
             NE.UI.ScrollToPage();
 

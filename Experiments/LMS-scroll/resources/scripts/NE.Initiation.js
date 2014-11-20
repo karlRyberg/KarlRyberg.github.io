@@ -45,11 +45,11 @@ $(window).load(function () {
 
     NE.Events.Add(NE.Navigation.ON_NAVIGATION, NE.EventHandlers.Navigation);
 
-    $('#NE-nav-back').on('click', function () {
+    $('body').on('click', '.NE-nav-back', function () {
         NE.EventHandlers.NavBackBtnClick($(this));
     });
 
-    $('#NE-nav-forward').on('click', function () {
+    $('body').on('click', '.NE-nav-forward', function () {
         NE.EventHandlers.NavForwardBtnClick($(this));
     });
 

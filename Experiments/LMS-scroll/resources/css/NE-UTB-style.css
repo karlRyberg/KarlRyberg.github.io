@@ -69,27 +69,59 @@ button:active {
 
 
 .NE-navigation-button {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     padding: 0px;
     border-width: 0px;
-    border-radius: 20px;
-    overflow: hidden;
+    border-radius: 19px;
     text-align: center;
-    line-height: 40px;
-    -webkit-transition: background-color .3s ease-out;
-    transition: background-color .3s ease-out;
+    line-height: 38px;
+    color: white;
+    background-color: #18bdd4;
+    border-color: #15a9bd;
+    overflow: hidden;
+    -webkit-transition: background-color .2s ease-out, border-color .2s ease-out, color .2s ease-out !important;
+    transition: background-color .2s ease-out, border-color .2s ease-out, color .2s ease-out !important;
 }
+
+    .NE-navigation-button:hover {
+        background-color: #15a9bd;
+        border-color: #15a9bd;
+    }
+
+    .NE-navigation-button:active {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
 
     .NE-navigation-button.disable {
         cursor: default;
         background-color: #d9d9d9;
+        border-color: #808080;
     }
 
-        .NE-navigation-button.disable:active {
-            -webkit-box-shadow: none;
-            box-shadow: none;
-        }
+    .NE-navigation-button.no-bg {
+        background-color: transparent;
+        border-color: #c0c0c0;
+        color: #808080;
+        border-width: 1px;
+        line-height: 36px;
+    }
+
+
+    .NE-navigation-button.hover-red:hover {
+        background-color: #FF3631;
+        border-color: #FF3631;
+        color: white;
+    }
+
+    .NE-navigation-button.hover-blue:hover {
+        background-color: #18bdd4;
+        border-color: #15a9bd;
+        color: white;
+    }
+
+
 
 
 .NE-top-close-btn {
@@ -106,8 +138,6 @@ button:active {
     line-height: 36px;
     color: #808080;
     background-color: transparent;
-    -webkit-transition: background-color .2s ease-out, border-color .2s ease-out, color .2s ease-out !important;
-    transition: background-color .2s ease-out, border-color .2s ease-out, color .2s ease-out !important;
 }
 
     .NE-top-close-btn:hover {

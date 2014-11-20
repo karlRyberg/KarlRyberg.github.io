@@ -1,13 +1,8 @@
 ﻿#NE-top {
-    overflow: hidden;
-      top: -100px;
-    /*-webkit-transition: top 0.3s ease-in-out;
-    transition: top 0.3s ease-in-out;*/
+    position: absolute;
+    top: -83px;
+    width: 100%;
 }
-
-    #NE-top .main-navbar {
-        -webkit-overflow-scrolling: touch;
-    }
 
     #NE-top .h4 {
         color: #808080;
@@ -17,6 +12,13 @@
 
 .navigation a:focus {
     outline: none;
+}
+
+.navigation .navbar-btn {
+    margin-top: 21.5px;
+    margin-bottom: 21.5px;
+    margin-left: 0px;
+    margin-right: 15px;
 }
 
 #NE-top-chapter-navigation {
@@ -45,11 +47,7 @@
     cursor: default;
 }
 
-#NE-top-chapterlinks-xs {
-    padding-bottom: 15px;
-}
-
-    #NE-top-chapterlinks a.disable, #NE-top-chapterlinks-xs a.disable {
+    #NE-top-chapterlinks a.disable {
         color: #d9d9d9;
         cursor: default;
     }

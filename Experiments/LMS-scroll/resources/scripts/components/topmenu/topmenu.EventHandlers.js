@@ -53,10 +53,7 @@ NE.Plugin.topmenu.EventHandlers = (function () {
     //
     /////////////////////
 
-    function _updateChapterButton(jqItem, jqItemClass) {
-        $('.' + jqItemClass).removeClass('disable');
-        jqItem.addClass('disable');
-    }
+
 
     //////////////////////
     //
@@ -81,6 +78,10 @@ NE.Plugin.topmenu.EventHandlers = (function () {
         /////////////////////
 
         ChapterLabelClick: function (i_item) {
+
+            i_item.parent().toggleClass('active');
+            if (!i_item.is(':visible')) return;
+
             var chapterMenuDiv = $('#NE-top-chapter-navigation');
             var menuHeight = 0;
             if (!chapterMenuDiv.hasClass('open')) {
@@ -96,50 +97,26 @@ NE.Plugin.topmenu.EventHandlers = (function () {
                 });
             }
 
-            i_item.parent().toggleClass('active');
             chapterMenuDiv.css('height', menuHeight + 'px').toggleClass('open');
         },
 
-        ChapterLabelXsClick: function (i_item) {
-            if (i_item.hasClass('collapsed')) {
-                $('#NE-top-backdrop').fadeTo(0, 0).fadeTo(300, 0.65);
-            }
-            else {
-                $('#NE-top-backdrop').fadeTo(300, 0, function () {
-                    $(this).hide();
-                });
-            }
-            i_item.blur();
-        },
 
         ChapterLinkClick: function (i_item) {
             if (i_item.hasClass('disable')) return;
-
             var chapterIndex = parseInt(i_item.data('chapter'), 10);
             NE.Navigation.ToChapter(chapterIndex);
-
-            if (i_item.hasClass('NE-top-chapterlink-xs')) {
-                $('#NE-chapter-label-xs').click();
-            }
-            else if (i_item.hasClass('NE-top-chapterlink')) {
-                $('#NE-chapter-label').click();
-            }
+            $('.NE-chapter-label').click();
         },
 
         OverlayClick: function () {
-            if ($('#NE-chapter-label').is(':visible')) {
-                $('#NE-chapter-label').click();
-            }
-            else {
-                $('#NE-chapter-label-xs').click();
-            }
+            $('.NE-chapter-label').click();
         },
 
         UpdateChapterMenu: function () {
             var menuIitem = $('#NE-top-chapterlink-' + NE.Navigation.CurrentChapterIndex);
-            _updateChapterButton(menuIitem, 'NE-top-chapterlink');
-            _updateChapterButton($('#NE-top-chapterlink-xs-' + NE.Navigation.CurrentChapterIndex), 'NE-top-chapterlink-xs');
-            if (menuIitem.length) $('#NE-chapter-label').html(menuIitem.html() + NE.Constants.HEADER_CHAPTER_NAV_ICON)
+            $('.NE-top-chapterlink').removeClass('disable');
+            menuIitem.addClass('disable');
+            if (menuIitem.length) $('#NE-chapter-label-big').html(menuIitem.html() + NE.Constants.HEADER_CHAPTER_NAV_ICON)
         },
 
         eof: null

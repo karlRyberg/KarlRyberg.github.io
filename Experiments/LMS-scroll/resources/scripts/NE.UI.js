@@ -90,19 +90,20 @@ NE.UI = (function () {
         var mainContainer = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID);
         var navHeight = navObj.outerHeight();
         var animtime = 300;
+        var isXs = $('#isXS').is(':visible');
         _topNavBarHeight = 0;
 
         navObj.stop(true, true);
         mainContainer.stop(true, true);
 
-        if ((NE.Navigation.CurrentPageIndex > 0 || NE.Navigation.CurrentChapterIndex > 0) && navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
+        if ((NE.Navigation.CurrentPageIndex > 0 || NE.Navigation.CurrentChapterIndex > 0 || isXs) && navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
             var h = mainContainer.innerHeight() - navHeight;
             navObj.removeClass(NE.Constants.OF_CANVAS_TOP_CLASS);
             navObj.animate({ 'top': 0 + 'px' }, animtime);
             mainContainer.animate({ 'top': navHeight + 'px' }, animtime);
             _topNavBarHeight = navHeight;
         }
-        else if (NE.Navigation.CurrentPageIndex == 0 && NE.Navigation.CurrentChapterIndex == 0 && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
+        else if (NE.Navigation.CurrentPageIndex == 0 && NE.Navigation.CurrentChapterIndex == 0 && !isXs && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
             navObj.addClass(NE.Constants.OF_CANVAS_TOP_CLASS);
             navObj.animate({ 'top': -navHeight + 'px' }, animtime);
             mainContainer.animate({ 'top': '0px' }, animtime);
@@ -144,20 +145,20 @@ NE.UI = (function () {
 
         SetNavigationButtons: function () {
             if (NE.Navigation.CurrentPageIndex == 0 && NE.Navigation.CurrentChapterIndex == 0) {
-                $('#NE-nav-back').addClass('disable');
+                $('.NE-nav-back').addClass('disable');
             }
             else {
-                $('#NE-nav-back').removeClass('disable');
+                $('.NE-nav-back').removeClass('disable');
             }
 
             var isLastChapter = NE.Navigation.CurrentChapterIndex == NE.CourseTree.chapters.length - 1;
             var isLastPage = NE.Navigation.CurrentPageIndex == NE.CourseTree.chapters[NE.Navigation.CurrentChapterIndex].pages.length - 1;
 
             if (isLastChapter && isLastPage) {
-                $('#NE-nav-forward').addClass('disable');
+                $('.NE-nav-forward').addClass('disable');
             }
             else {
-                $('#NE-nav-forward').removeClass('disable');
+                $('.NE-nav-forward').removeClass('disable');
             }
         },
 
@@ -174,7 +175,7 @@ NE.UI = (function () {
             jqObj.find('.container').each(function () {
                 totalHeight += $(this).outerHeight();
             });
-
+            console.log(totalHeight + ' > ' + jqObj.innerHeight());
             if (totalHeight > jqObj.innerHeight()) {
                 cssObj = {
                     'overflow': 'auto',
@@ -209,7 +210,7 @@ NE.UI = (function () {
             currentChapter.stop(true, true).animate({ 'scrollTop': '+=' + (currentPage.position().top - _topNavBarHeight) }, animTime);
             scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
  
-           // setTimeout(NE.UI.ApplyVerticalScrollbar, animTime);
+            setTimeout(NE.UI.ApplyVerticalScrollbar, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
                 _lastChapter = NE.Navigation.CurrentChapterIndex;
