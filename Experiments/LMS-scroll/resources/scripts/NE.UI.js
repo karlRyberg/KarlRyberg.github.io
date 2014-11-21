@@ -139,6 +139,24 @@ NE.UI = (function () {
 
         },
 
+        ToggleForwardNavButtons: function (onoff) {
+            if (!onoff) {
+                $('.NE-nav-forward').addClass('disable');
+            } else {
+                $('.NE-nav-forward').removeClass('disable');
+                NE.UI.SetNavigationButtons();
+            }
+        },
+
+        ToggleBackNavButtons: function (onoff) {
+            if (!onoff) {
+                $('.NE-nav-back').addClass('disable');
+            } else {
+                $('.NE-nav-back').removeClass('disable');
+                NE.UI.SetNavigationButtons();
+            }
+        },
+
         SetNavigationButtons: function () {
             if (NE.Navigation.CurrentPageIndex == 0 && NE.Navigation.CurrentChapterIndex == 0) {
                 $('.NE-nav-back').addClass('disable');

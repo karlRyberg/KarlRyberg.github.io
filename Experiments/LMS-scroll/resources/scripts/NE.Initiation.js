@@ -46,10 +46,12 @@ $(window).load(function () {
     NE.Events.Add(NE.Navigation.ON_NAVIGATION, NE.EventHandlers.Navigation);
 
     $('body').on('click', '.NE-nav-back', function () {
+        if ($(this).hasClass('disable')) return;
         NE.EventHandlers.NavBackBtnClick($(this));
     });
 
     $('body').on('click', '.NE-nav-forward', function () {
+        if ($(this).hasClass('disable')) return;
         NE.EventHandlers.NavForwardBtnClick($(this));
     });
 

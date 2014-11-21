@@ -14,7 +14,11 @@
         outline: none;
     }
 
-.navigation .navbar-btn {
+    #NE-top .ne-logo {
+        margin-left: 0px;
+    }
+
+#NE-top.navigation .navbar-btn {
     margin-top: 21.5px;
     margin-bottom: 21.5px;
     margin-left: 0px;

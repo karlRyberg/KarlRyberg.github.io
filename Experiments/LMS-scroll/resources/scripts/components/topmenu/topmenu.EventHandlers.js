@@ -1,4 +1,5 @@
 ﻿/// <reference path="../../NE.Navigation.js" />
+/// <reference path="../../NE.UI.js" />
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -86,6 +87,9 @@ NE.Plugin.topmenu.EventHandlers = (function () {
             'overflow': isScroll
         }).toggleClass('open');
 
+        NE.UI.ToggleBackNavButtons(false);
+        NE.UI.ToggleForwardNavButtons(false);
+
     }
 
     function _closeChapterPanel(i_item) {
@@ -95,7 +99,8 @@ NE.Plugin.topmenu.EventHandlers = (function () {
         });
         var chapterMenuDiv = $('#NE-top-chapter-navigation');
         chapterMenuDiv.css('height', '0px').toggleClass('open');
-
+        NE.UI.ToggleBackNavButtons(true);
+        NE.UI.ToggleForwardNavButtons(true);
     }
 
     //////////////////////
