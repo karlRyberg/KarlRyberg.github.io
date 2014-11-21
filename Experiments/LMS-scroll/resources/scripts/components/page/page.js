@@ -70,7 +70,7 @@ NE.Plugin.page = function (i_params) {
             me.OnLoaded({
                 chapter: _settings.chapterIndex,
                 index: _settings.index,
-                gui: _settings.guid,
+                guid: _settings.guid,
             });
         }
 
@@ -110,11 +110,29 @@ NE.Plugin.page = function (i_params) {
                 _myDOMContent = $(data);
                 _addToDOM(_myDOMContent);
 
-                NE.Net.LoadTxtFile(_settings.datafile, function (htmlData) {
-                    $('#' + NE.Constants.PAGE_ID_PREFIX + _settings.chapterIndex + '-' + _settings.pageIndex).html(htmlData);
-                    _numComponents = $('.NE-plugin-container', _myDOMContent.first()).length;
-                    NE.Plugin.LoadAll(_myDOMContent.first(), _onCompnentsLoad);
-                });
+                if (_settings.datafile) {
+                    NE.Net.LoadTxtFile(_settings.datafile, function (htmlData) {
+                        $('#' + NE.Constants.PAGE_ID_PREFIX + _settings.chapterIndex + '-' + _settings.index).html(htmlData);
+                        _numComponents = $('.NE-plugin-container', _myDOMContent.first()).length;
+                        if (_numComponents > 0) {
+                            NE.Plugin.LoadAll(_myDOMContent.first(), _onCompnentsLoad);
+                        }
+                        else {
+                            me.OnLoaded({
+                                chapter: _settings.chapterIndex,
+                                index: _settings.index,
+                                guid: _settings.guid,
+                            });
+                        }
+                    });
+                }
+                else {
+                    me.OnLoaded({
+                        chapter: _settings.chapterIndex,
+                        index: _settings.index,
+                        guid: _settings.guid,
+                    });
+                }
 
             });
 
@@ -122,7 +140,7 @@ NE.Plugin.page = function (i_params) {
 
         RenderPage: function (params) {
             var returnVal = '';
-            returnVal += params[0].data.replace(/{pageID}/g, NE.Constants.PAGE_ID_PREFIX + _settings.chapterIndex + '-' + _settings.pageIndex);
+            returnVal += params[0].data.replace(/{pageID}/g, NE.Constants.PAGE_ID_PREFIX + _settings.chapterIndex + '-' + _settings.index);
             returnVal += params[1].data;
             return returnVal;
         },

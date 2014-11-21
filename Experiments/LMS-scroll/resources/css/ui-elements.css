@@ -1,0 +1,86 @@
+﻿.NE-button {
+    display: inline-block;
+    color: white;
+    background-color: #18bdd4;
+    border-color: #15a9bd;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 7px 15px;
+    border-radius: 4px;
+}
+
+    .NE-button:hover {
+        background-color: #15a9bd;
+        border-color: #15a9bd;
+        color: white;
+    }
+
+    .NE-button:active, .NE-button:focus {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        color: white;
+    }
+
+
+    .NE-button.disable {
+        cursor: default;
+        background-color: #d9d9d9;
+        border-color: #808080;
+    }
+
+    .NE-button.red {
+        background-color: #FF3631;
+    }
+
+        .NE-button.red:hover {
+            background-color: #bf2724;
+        }
+
+
+    .NE-button.green {
+        background-color: #4AAF57;
+    }
+
+        .NE-button.green:hover {
+            background-color: #307339;
+        }
+
+
+    .NE-button.no-bg {
+        background-color: transparent;
+        color: #808080;
+        border: 1px solid #c0c0c0;
+        line-height: 36px;
+    }
+
+
+    .NE-button.hover-red:hover {
+        background-color: #FF3631;
+        border-color: #FF3631;
+        color: white;
+    }
+
+    .NE-button.hover-blue:hover {
+        background-color: #18bdd4;
+        border-color: #15a9bd;
+        color: white;
+    }
+
+.NE-big-button {
+    padding: 0px 40px;
+    height: 50px;
+    font-size: 1.3em;
+    line-height: 50px;
+}
+
+.NE-navigation-button {
+    width: 38px;
+    height: 38px;
+    padding: 0px;
+    border-width: 0px;
+    border-radius: 19px;
+    text-align: center;
+    line-height: 38px;
+    -webkit-transition: background-color .2s ease-out, border-color .2s ease-out, color .2s ease-out !important;
+    transition: background-color .2s ease-out, border-color .2s ease-out, color .2s ease-out !important;
+}

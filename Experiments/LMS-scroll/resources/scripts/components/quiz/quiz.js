@@ -1,7 +1,6 @@
 ﻿/// <reference path="../../libraries/masala-ux/dist/js/jquery.min.js" />
 /// <reference path="../../NE.Plugin.js" />
 /// <reference path="../../../../content/structure/courseTree.js" />
-/// <reference path="../../NE.Events.js" />
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -27,7 +26,7 @@
 if (NE === null || NE === undefined) { var NE = {}; }
 if (NE.Plugin === null || NE.Plugin === undefined) { NE.Plugin = {}; }
 
-NE.Plugin.chapter = function (i_params) {
+NE.Plugin.quiz = function (i_params) {
 
     //////////////////////
     //
@@ -38,6 +37,8 @@ NE.Plugin.chapter = function (i_params) {
     var _params = i_params;
     var _settings = {};
     var _myDOMContent;
+    var _numComponents = 0;
+    var _componentsLoaded = 0;
 
     //////////////////////
     //
@@ -59,21 +60,20 @@ NE.Plugin.chapter = function (i_params) {
 
     function _addToDOM(i_content) {
         _params.node.replaceWith(i_content);
-        i_content.first().attr('id', NE.Constants.CHAPTER_ID_PREFIX + _settings.index);
     }
 
-    function _pageOnLoad(e) {
-        if (e.chapter == _settings.index) {
-            me.LoadedPages++;
-            console.log(NE.Constants.PAGE_ID_PREFIX + e.chapter + '-' + e.index + ' Loaded!');
-            if (me.LoadedPages == _settings.chapter.pages.length) {
-                me.OnLoaded({
-                    guid: NE.CourseTree.chapters[_settings.index].guid,
-                    index: _settings.index
-                });
-            }
+    function _onCompnentsLoad(e) {
 
+        _componentsLoaded++;
+
+        if (_componentsLoaded == _numComponents) {
+            me.OnLoaded({
+                chapter: _settings.chapterIndex,
+                index: _settings.index,
+                gui: _settings.guid,
+            });
         }
+
     }
 
     //////////////////////
@@ -90,10 +90,9 @@ NE.Plugin.chapter = function (i_params) {
         //
         /////////////////////
 
-        Name: 'chapter',
-        LoadedPages: 0,
+        Name: 'quiz',
         Dependencies: [
-            'chapter.css'
+            'quiz.css'
         ],
 
         //////////////////////
@@ -105,38 +104,34 @@ NE.Plugin.chapter = function (i_params) {
         Init: function () {
 
             _settings = _params.settings;
-
+         
             NE.Plugin.ApplyTemplate(this, function (data) {
 
                 _myDOMContent = $(data);
                 _addToDOM(_myDOMContent);
-                NE.Plugin.LoadAll(_myDOMContent.first(), _pageOnLoad);
+               
+                if (_settings.datafile) {
+                    NE.Net.LoadTxtFile(_settings.datafile, function (htmlData) {
+
+                        _myDOMContent.first('.NE-Quiz-container').html(htmlData);
+
+                        _numComponents = $('.NE-plugin-container', _myDOMContent.first()).length;
+                        NE.Plugin.LoadAll(_myDOMContent.first(), _onCompnentsLoad);
+
+                    });
+                }
+                else {
+                    me.OnLoaded();
+                }
 
             });
 
         },
 
-        AddPages: function (params) {
-            
+        Render: function (params) {
             var returnVal = '';
-            for (var i = 0; i < _settings.chapter.pages.length; i++) {
-
-                var pageID = NE.Constants.PAGE_ID_PREFIX + _settings.index + '-' + i;
-                var page = NE.CourseTree.chapters[_settings.index].pages[i];
-                var contentFile = NE.Constants.APPLICATION_BASE_PATH + '/content/data/' + page.datafile + '.html';
-
-                var pageSettings = {
-                    guid: page.guid,
-                    chapterIndex: _settings.index,
-                    index: i,
-                    datafile: contentFile
-                }
-
-                returnVal += '<div class="NE-plugin-container" data-plugin="page" data-settings="' + escape(JSON.stringify(pageSettings)) + '"></div>';
-
-            }
+            returnVal += params[0].data.replace(/{quizID}/g, _settings.ID);
             return returnVal;
-
         },
 
         OnLoaded: function (e) { },

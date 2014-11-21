@@ -38,6 +38,7 @@ NE.UI = (function () {
     var _lastChapter = 0;
     var _scrollbarWidth = null;
     var _scrollerTarget = 0;
+    var _scrollHintDismissed = false;
 
     //////////////////////
     //
@@ -108,6 +109,22 @@ NE.UI = (function () {
             navObj.animate({ 'top': -navHeight + 'px' }, animtime);
             mainContainer.animate({ 'top': '0px' }, animtime);
         }
+
+    }
+
+    function _scrollHintAnimate(i_scrollElem, i_scrollTop) {
+
+        if (i_scrollElem.scrollTop() != i_scrollTop || _scrollHintDismissed) {
+            _scrollHintDismissed = true;
+            return;
+        }
+
+        $('#NE-scroll-hint').addClass('fadeIn animBottom');
+        setTimeout(function () { $('#NE-scroll-hint').addClass('fadeOut'); }, 1200);
+        setTimeout(function () { $('#NE-scroll-hint').removeClass('fadeIn animBottom fadeOut'); }, 2000);
+
+
+        setTimeout(function () { _scrollHintAnimate(i_scrollElem, i_scrollTop) }, 3000);
 
     }
 
@@ -189,10 +206,10 @@ NE.UI = (function () {
             jqObj.find('.container').each(function () {
                 totalHeight += $(this).outerHeight();
             });
-            console.log(totalHeight + ' > ' + jqObj.innerHeight());
+
             if (totalHeight > jqObj.innerHeight()) {
                 cssObj = {
-                    'overflow': 'auto',
+                    'overflow-y': 'auto',
                     'padding-left': _getScrollbarWidth() + 'px',
                     '-webkit-transition': 'none',
                     'transition': 'none'
@@ -204,6 +221,11 @@ NE.UI = (function () {
                     });
                 });
             }
+
+            if (!_scrollHintDismissed) {
+                setTimeout(NE.UI.ScrollHint, 5000);
+            }
+
             jqObj.css(cssObj);
         },
 
@@ -233,6 +255,12 @@ NE.UI = (function () {
                 _lastChapter = NE.Navigation.CurrentChapterIndex;
             }
 
+        },
+
+        ScrollHint: function () {
+            var currentPage = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
+            if (currentPage.css('overflow-y').toLowerCase() === 'hidden' || currentPage.scrollTop() > 0) return;
+            _scrollHintAnimate(currentPage, currentPage.scrollTop());
         },
 
         eof: null
