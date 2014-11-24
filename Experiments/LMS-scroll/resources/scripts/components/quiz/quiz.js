@@ -111,9 +111,10 @@ NE.Plugin.quiz = function (i_params) {
                 _addToDOM(_myDOMContent);
                
                 if (_settings.datafile) {
-                    NE.Net.LoadTxtFile(_settings.datafile, function (htmlData) {
+                    NE.Net.LoadJsonFile(_settings.datafile, function (jsonData) {
 
-                        _myDOMContent.first('.NE-Quiz-container').html(htmlData);
+                        
+                        console.log(jsonData);
 
                         _numComponents = $('.NE-plugin-container', _myDOMContent.first()).length;
                         NE.Plugin.LoadAll(_myDOMContent.first(), _onCompnentsLoad);

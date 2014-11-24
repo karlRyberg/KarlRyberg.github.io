@@ -1,0 +1,17 @@
+﻿{
+    "questionType": "singleChoice",
+    "autoSubmit" : true,
+    "introContent": "Brukar du fundera på syftet med dina texter?",
+    "options": [
+        {
+            "content": "",
+            "answerContent": "Ja",
+            "answerData": "answerYes"
+        },
+        {
+            "content": "",
+            "answerContent": "Nej",
+            "answerData": "answerNo"
+        }
+    ]
+}

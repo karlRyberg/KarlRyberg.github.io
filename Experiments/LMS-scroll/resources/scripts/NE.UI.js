@@ -39,6 +39,7 @@ NE.UI = (function () {
     var _scrollbarWidth = null;
     var _scrollerTarget = 0;
     var _scrollHintDismissed = false;
+    var _hintTImer = null;
 
     //////////////////////
     //
@@ -114,15 +115,16 @@ NE.UI = (function () {
 
     function _scrollHintAnimate(i_scrollElem, i_scrollTop) {
 
+        clearTimeout(_hintTImer);
 
-        if (i_scrollElem.scrollTop() != i_scrollTop || _scrollHintDismissed) {
+        if (i_scrollElem.scrollTop() != i_scrollTop || _scrollHintDismissed || (NE.Navigation.CurrentChapterIndex > 0 || NE.Navigation.CurrentPageIndex > 0)) {
             console.log('stop hinting!');
-            $('#NE-scroll-hint').removeClass('active');
+            $('#NE-scroll-hint').removeClass('active').addClass('hidden');
             _scrollHintDismissed = true;
             return;
         }
     
-        setTimeout(function () {
+        _hintTImer = setTimeout(function () {
             _scrollHintAnimate(i_scrollElem, i_scrollTop);
         }, 100);
 

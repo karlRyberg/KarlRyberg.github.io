@@ -56,7 +56,8 @@ NE.Net = (function () {
             .done(function (i_data) {
                 if (i_callback) i_callback(i_data);
             })
-            .fail(function () {
+            .fail(function (ida) {
+                console.log(ida);
                 if (i_callback) i_callback("failed to load " + i_file);
             });
     }
@@ -79,8 +80,8 @@ NE.Net = (function () {
             _getFile(i_file, i_callback);
         },
 
-        LoadJsonFile: function (i_file) {
-
+        LoadJsonFile: function (i_file, i_callback) {
+            _getFile(i_file, i_callback);
         },
 
         AddScriptFile: function (i_file) {

@@ -1,6 +1,6 @@
 ﻿.NE-revealer-button {
-    -webkit-transition: margin-top 0.3s, padding 0.3s, height 0.3s, background-color 0.2s;
-    transition: margin-top 0.3s, padding 0.3s, height 0.3s, background-color 0.2s;
+    -webkit-transition: margin-top 0.3s, padding 0.3s, height 0.3s, background-color 0.2s !important;
+    transition: margin-top 0.3s, padding 0.3s, height 0.3s, background-color 0.2s !important;
 }
 
     .NE-revealer-button:after {
