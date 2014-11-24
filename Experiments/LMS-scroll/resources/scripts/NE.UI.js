@@ -114,17 +114,17 @@ NE.UI = (function () {
 
     function _scrollHintAnimate(i_scrollElem, i_scrollTop) {
 
+
         if (i_scrollElem.scrollTop() != i_scrollTop || _scrollHintDismissed) {
+            console.log('stop hinting!');
+            $('#NE-scroll-hint').removeClass('active');
             _scrollHintDismissed = true;
             return;
         }
-
-        $('#NE-scroll-hint').addClass('fadeIn animBottom');
-        setTimeout(function () { $('#NE-scroll-hint').addClass('fadeOut'); }, 1200);
-        setTimeout(function () { $('#NE-scroll-hint').removeClass('fadeIn animBottom fadeOut'); }, 2000);
-
-
-        setTimeout(function () { _scrollHintAnimate(i_scrollElem, i_scrollTop) }, 3000);
+    
+        setTimeout(function () {
+            _scrollHintAnimate(i_scrollElem, i_scrollTop);
+        }, 100);
 
     }
 
@@ -260,6 +260,7 @@ NE.UI = (function () {
         ScrollHint: function () {
             var currentPage = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
             if (currentPage.css('overflow-y').toLowerCase() === 'hidden' || currentPage.scrollTop() > 0) return;
+            $('#NE-scroll-hint').addClass('active');
             _scrollHintAnimate(currentPage, currentPage.scrollTop());
         },
 

@@ -72,19 +72,48 @@ button:active {
     font-size: 60px;
     color: white;
     opacity: 0;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
 }
 
 
-    #NE-scroll-hint.animBottom {
-        -webkit-transition: bottom 2s ease-in-out, opacity 0.8s ease-in-out;
-        transition: bottom 2s ease-in-out, opacity 0.8s ease-in-out;
+@-webkit-keyframes scrollHintAnim {
+    0% {
+        opacity: 0;
+        bottom: 20px;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
         bottom: 100px;
-    }
-
-    #NE-scroll-hint.fadeIn {
-        opacity: 0.8;
-    }
-
-    #NE-scroll-hint.fadeOut {
         opacity: 0;
     }
+}
+
+@keyframes kalle {
+    0% {
+        opacity: 0;
+        bottom: 20px;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        bottom: 100px;
+        opacity: 0;
+    }
+}
+
+#NE-scroll-hint.active{
+    -webkit-animation-name: scrollHintAnim;
+    animation-name: scrollHintAnim;
+}
