@@ -118,7 +118,6 @@ NE.UI = (function () {
         clearTimeout(_hintTImer);
 
         if (i_scrollElem.scrollTop() != i_scrollTop || _scrollHintDismissed || (NE.Navigation.CurrentChapterIndex > 0 || NE.Navigation.CurrentPageIndex > 0)) {
-            console.log('stop hinting!');
             $('#NE-scroll-hint').removeClass('active').addClass('hidden');
             _scrollHintDismissed = true;
             return;
@@ -225,7 +224,7 @@ NE.UI = (function () {
             }
 
             if (!_scrollHintDismissed) {
-                setTimeout(NE.UI.ScrollHint, 5000);
+               _hintTImer = setTimeout(NE.UI.ScrollHint, 5000);
             }
 
             jqObj.css(cssObj);
@@ -262,7 +261,7 @@ NE.UI = (function () {
         ScrollHint: function () {
             var currentPage = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
             if (currentPage.css('overflow-y').toLowerCase() === 'hidden' || currentPage.scrollTop() > 0) return;
-            $('#NE-scroll-hint').addClass('active');
+            $('#NE-scroll-hint').removeClass('hidden').addClass('active');
             _scrollHintAnimate(currentPage, currentPage.scrollTop());
         },
 

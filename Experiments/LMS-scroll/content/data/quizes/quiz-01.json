@@ -1,17 +1,22 @@
 ﻿{
     "questionType": "singleChoice",
-    "autoSubmit" : true,
-    "introContent": "Brukar du fundera på syftet med dina texter?",
-    "options": [
+    "autoSubmit": true,
+    "title": "Brukar du fundera på syftet med dina texter?",
+    "introContent": "Lorem ipsum dolor sit amet.",
+    "questions": [
         {
-            "content": "",
-            "answerContent": "Ja",
-            "answerData": "answerYes"
-        },
-        {
-            "content": "",
-            "answerContent": "Nej",
-            "answerData": "answerNo"
+            "title": "Fråga 1",
+            "introContent": "Lorem ipsum fråga eller",
+            "options": [
+                {
+                    "answerContent": "Ja",
+                    "answerData": "answerYes"
+                },
+                {
+                    "answerContent": "Nej",
+                    "answerData": "answerNo"
+                }
+            ]
         }
     ]
 }

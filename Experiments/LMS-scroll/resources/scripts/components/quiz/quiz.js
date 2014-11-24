@@ -39,6 +39,7 @@ NE.Plugin.quiz = function (i_params) {
     var _myDOMContent;
     var _numComponents = 0;
     var _componentsLoaded = 0;
+    var _quizdata = null;
 
     //////////////////////
     //
@@ -76,6 +77,25 @@ NE.Plugin.quiz = function (i_params) {
 
     }
 
+    function _renderQuestion(i_question, i_node) {
+        var quizContainer = $('#' + _settings.ID);
+        var q = $('<div></div>').addClass('col-xs-12').appendTo(i_node);
+        $('<h2></h2>').addClass('h2').html(i_question.title).appendTo(q);
+        $('<p></p>').addClass('lead').html(i_question.introContent).appendTo(q);
+    }
+
+    function _renderQuestions(i_callback) {
+        var quizContainer = $('#' + _settings.ID);
+        $('<h1></h1>').addClass('offering-header-text').html(_quizdata.title).appendTo(quizContainer);
+        $('<p></p>').addClass('lead').html(_quizdata.introContent).appendTo(quizContainer);
+        var qustionsContainer = $('<div></div>').addClass('row').appendTo(quizContainer);
+        for (var i = 0; i < _quizdata.questions.length; i++) {
+            _renderQuestion(_quizdata.questions[i], qustionsContainer);
+        }
+
+        if (i_callback) i_callback();
+    }
+
     //////////////////////
     //
     //  Return object
@@ -104,20 +124,21 @@ NE.Plugin.quiz = function (i_params) {
         Init: function () {
 
             _settings = _params.settings;
-         
+
             NE.Plugin.ApplyTemplate(this, function (data) {
 
                 _myDOMContent = $(data);
                 _addToDOM(_myDOMContent);
-               
+
                 if (_settings.datafile) {
                     NE.Net.LoadJsonFile(_settings.datafile, function (jsonData) {
 
-                        
-                        console.log(jsonData);
 
-                        _numComponents = $('.NE-plugin-container', _myDOMContent.first()).length;
-                        NE.Plugin.LoadAll(_myDOMContent.first(), _onCompnentsLoad);
+                        _quizdata = jsonData;
+                        _renderQuestions(function () {
+                            _numComponents = $('.NE-plugin-container', _myDOMContent.first()).length;
+                            NE.Plugin.LoadAll(_myDOMContent.first(), _onCompnentsLoad);
+                        });
 
                     });
                 }
@@ -134,6 +155,7 @@ NE.Plugin.quiz = function (i_params) {
             returnVal += params[0].data.replace(/{quizID}/g, _settings.ID);
             return returnVal;
         },
+
 
         OnLoaded: function (e) { },
 
