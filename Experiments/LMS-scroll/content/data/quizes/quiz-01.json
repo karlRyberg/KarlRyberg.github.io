@@ -9,11 +9,11 @@
             "introContent": "Lorem ipsum fråga eller",
             "options": [
                 {
-                    "answerContent": "Ja",
+                    "content": "Ja",
                     "answerData": "answerYes"
                 },
                 {
-                    "answerContent": "Nej",
+                    "content": "Nej Eller hur det här är en grej sonm <br/>man kan skriva lite saker i mom man behöver",
                     "answerData": "answerNo"
                 }
             ]

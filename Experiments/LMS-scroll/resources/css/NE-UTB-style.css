@@ -20,6 +20,24 @@ button:active {
     outline: none !important;
 }
 
+.NE-center-float {
+    float: none;
+    display: inline-block;
+}
+
+.NE-equal-height-row {
+    overflow: hidden;
+}
+
+.NE-equal-height-col {
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+.NE-full-width {
+    margin-left: auto;
+    margin-right: auto;
+}
 
 #NE-floating-footer {
     position: fixed;
@@ -113,7 +131,7 @@ button:active {
     }
 }
 
-#NE-scroll-hint.active{
+#NE-scroll-hint.active {
     -webkit-animation-name: scrollHintAnim;
     animation-name: scrollHintAnim;
 }

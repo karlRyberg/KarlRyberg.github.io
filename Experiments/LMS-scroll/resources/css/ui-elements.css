@@ -52,7 +52,12 @@
         background-color: transparent;
         color: #808080;
         border: 1px solid #c0c0c0;
-        line-height: 36px;
+    }
+
+    .NE-button.white {
+        background-color: white;
+        color: #808080;
+        border: 1px solid #c0c0c0;
     }
 
     .NE-button.grey {
@@ -101,3 +106,7 @@
     text-align: center;
     line-height: 38px;
 }
+
+    .NE-navigation-button.no-bg, .NE-navigation-button.white, .NE-navigation-button.grey {
+        line-height: 36px;
+    }

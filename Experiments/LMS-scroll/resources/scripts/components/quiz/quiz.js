@@ -79,16 +79,26 @@ NE.Plugin.quiz = function (i_params) {
 
     function _renderQuestion(i_question, i_node) {
         var quizContainer = $('#' + _settings.ID);
-        var q = $('<div></div>').addClass('col-xs-12').appendTo(i_node);
-        $('<h2></h2>').addClass('h2').html(i_question.title).appendTo(q);
-        $('<p></p>').addClass('lead').html(i_question.introContent).appendTo(q);
+
+        $('<h2></h2>').addClass('h2 font-weight-normal').html(i_question.title).appendTo(quizContainer);
+        $('<p></p>').addClass('lead').html(i_question.introContent).appendTo(quizContainer);
+  
+        var optHolder = $('<div></div>').addClass('col-xs-12').appendTo(quizContainer);
+
+        for (var i = 0; i < i_question.options.length; i++) {
+
+            $('<div></div>').addClass('NE-button no-bg hover-blue pull-left mr-sm NE-option-button').html(i_question.options[i].content).appendTo(optHolder);
+        }
+
     }
 
     function _renderQuestions(i_callback) {
         var quizContainer = $('#' + _settings.ID);
+
         $('<h1></h1>').addClass('offering-header-text').html(_quizdata.title).appendTo(quizContainer);
         $('<p></p>').addClass('lead').html(_quizdata.introContent).appendTo(quizContainer);
-        var qustionsContainer = $('<div></div>').addClass('row').appendTo(quizContainer);
+
+        var qustionsContainer = $('<div></div>').appendTo(quizContainer);
         for (var i = 0; i < _quizdata.questions.length; i++) {
             _renderQuestion(_quizdata.questions[i], qustionsContainer);
         }
@@ -135,10 +145,10 @@ NE.Plugin.quiz = function (i_params) {
 
 
                         _quizdata = jsonData;
-                        _renderQuestions(function () {
-                            _numComponents = $('.NE-plugin-container', _myDOMContent.first()).length;
-                            NE.Plugin.LoadAll(_myDOMContent.first(), _onCompnentsLoad);
-                        });
+                        //_renderQuestions(function () {
+                        //    _numComponents = $('.NE-plugin-container', _myDOMContent.first()).length;
+                        //    NE.Plugin.LoadAll(_myDOMContent.first(), _onCompnentsLoad);
+                        //});
 
                     });
                 }

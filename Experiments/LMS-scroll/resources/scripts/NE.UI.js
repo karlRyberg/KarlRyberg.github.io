@@ -208,6 +208,10 @@ NE.UI = (function () {
                 totalHeight += $(this).outerHeight();
             });
 
+            jqObj.find('.NE-full-width').each(function () {
+                totalHeight += $(this).outerHeight();
+            });
+
             if (totalHeight > jqObj.innerHeight()) {
                 cssObj = {
                     'overflow-y': 'auto',
@@ -215,12 +219,6 @@ NE.UI = (function () {
                     '-webkit-transition': 'none',
                     'transition': 'none'
                 };
-
-                jqObj.find('.NE-full-width').each(function () {
-                    $(this).css({
-                        'margin-left': (_getScrollbarWidth() * -1) + 'px',
-                    });
-                });
             }
 
             if (!_scrollHintDismissed) {
