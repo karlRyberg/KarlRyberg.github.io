@@ -190,14 +190,21 @@ NE.Plugin.quiz = function (i_params) {
 
             console.log(_quizdata);
 
-            returnVal += params[0].data.replace(/{title}/g, _quizdata.title).replace(/{introContent}/g, _quizdata.introContent);
-
+            if (_quizdata.title != '' || _quizdata.introContent != '') {
+                returnVal += params[0].data.replace(/{title}/g, _quizdata.title).replace(/{introContent}/g, _quizdata.introContent);
+            }
 
             for (var i = 0; i < _quizdata.questions.length; i++) {
                 var question = _quizdata.questions[i];
 
                 if (question.title != '' || question.introContent != '') {
-                    returnVal += params[1].data.replace(/{title}/g, question.title).replace(/{introContent}/g, question.introContent);
+
+                    if (_quizdata.title == '' && _quizdata.introContent == '') {
+                        returnVal += params[0].data.replace(/{title}/g, question.title).replace(/{introContent}/g, question.introContent);
+                    }
+                    else{
+                        returnVal += params[1].data.replace(/{title}/g, question.title).replace(/{introContent}/g, question.introContent);
+                    }
                 }
 
                 returnVal += params[2].data;
