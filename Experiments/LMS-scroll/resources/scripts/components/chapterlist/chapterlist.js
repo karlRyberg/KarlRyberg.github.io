@@ -107,7 +107,8 @@ NE.Plugin.chapterlist = function (i_params) {
 
             NE.Plugin.ApplyTemplate(this, function (data) {
 
-                data = data.replace(/{panelID}/g, _settings.panelID).replace(/{panelClasses}/g, _settings.panelClasses)
+                var panelClasses = _settings.panelClasses || '';
+                data = data.replace(/{panelID}/g, _settings.panelID).replace(/{panelClasses}/g, panelClasses)
 
                 _myDOMContent = $(data);
                 _addToDOM(_myDOMContent);

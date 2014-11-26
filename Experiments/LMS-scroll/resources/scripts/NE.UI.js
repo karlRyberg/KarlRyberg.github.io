@@ -122,7 +122,7 @@ NE.UI = (function () {
             _scrollHintDismissed = true;
             return;
         }
-    
+
         _hintTImer = setTimeout(function () {
             _scrollHintAnimate(i_scrollElem, i_scrollTop);
         }, 100);
@@ -203,12 +203,17 @@ NE.UI = (function () {
                 'transition': 'padding-left 0.3s'
             };
 
+            jqObj.find('.NE-full-width').css({
+                'margin-left': '',
+                'padding-left': ''
+            });
+
             var totalHeight = 0;
-            jqObj.find('.container').each(function () {
+            jqObj.children('.container').each(function () {
                 totalHeight += $(this).outerHeight();
             });
 
-            jqObj.find('.NE-full-width').each(function () {
+            jqObj.children('.NE-full-width').each(function () {
                 totalHeight += $(this).outerHeight();
             });
 
@@ -219,10 +224,18 @@ NE.UI = (function () {
                     '-webkit-transition': 'none',
                     'transition': 'none'
                 };
+
+                if ($('#isXS').is(':visible')) {
+                    jqObj.find('.NE-full-width').css({
+                        'margin-left': (-_getScrollbarWidth()) + 'px',
+                        'padding-left': _getScrollbarWidth() + 'px'
+                    });
+                }
+
             }
 
             if (!_scrollHintDismissed) {
-               _hintTImer = setTimeout(NE.UI.ScrollHint, 5000);
+                _hintTImer = setTimeout(NE.UI.ScrollHint, 5000);
             }
 
             jqObj.css(cssObj);

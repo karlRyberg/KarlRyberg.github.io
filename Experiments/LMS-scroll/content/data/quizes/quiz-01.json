@@ -1,19 +1,19 @@
 ﻿{
     "questionType": "singleChoice",
     "autoSubmit": true,
-    "title": "Brukar du fundera på syftet med dina texter?",
-    "introContent": "Lorem ipsum dolor sit amet.",
+    "title": "",
+    "introContent": "",
     "questions": [
         {
-            "title": "Fråga 1",
-            "introContent": "Lorem ipsum fråga eller",
+            "title": "Brukar du fundera på syftet med dina texter?",
+            "introContent": "",
             "options": [
                 {
                     "content": "Ja",
                     "answerData": "answerYes"
                 },
                 {
-                    "content": "Nej Eller hur det här är en grej sonm <br/>man kan skriva lite saker i mom man behöver",
+                    "content": "Nej",
                     "answerData": "answerNo"
                 }
             ]

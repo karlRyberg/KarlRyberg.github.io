@@ -17,7 +17,7 @@ NE.CourseTree = {
                 {
                     "guid": "19CEAB46-9E1A-430E-9325-9EBA8D397075",
                     "title": "Page 1",
-                    "datafile": "chapter2_page_2"//"chapter1_page_1"
+                    "datafile": "chapter1_page_1"
                 }
             ]
         },

@@ -35,8 +35,15 @@ button:active {
 }
 
 .NE-full-width {
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: -50%;
+    margin-right: -50%;
+}
+
+@media (max-width: 768px) {
+    .NE-full-width {
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 #NE-floating-footer {

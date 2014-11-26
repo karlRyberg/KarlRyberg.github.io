@@ -77,33 +77,56 @@ NE.Plugin.quiz = function (i_params) {
 
     }
 
-    function _renderQuestion(i_question, i_node) {
-        var quizContainer = $('#' + _settings.ID);
+    function _padRow(i_row, i_height, i_rowCount) {
 
-        $('<h2></h2>').addClass('h2 font-weight-normal').html(i_question.title).appendTo(quizContainer);
-        $('<p></p>').addClass('lead').html(i_question.introContent).appendTo(quizContainer);
-  
-        var optHolder = $('<div></div>').addClass('col-xs-12').appendTo(quizContainer);
+        for (var i = 0; i < i_row.length; i++) {
 
-        for (var i = 0; i < i_question.options.length; i++) {
+            var item = i_row[i];
+            var diff = i_height - item.outerHeight();
 
-            $('<div></div>').addClass('NE-button no-bg hover-blue pull-left mr-sm NE-option-button').html(i_question.options[i].content).appendTo(optHolder);
+            if (diff > 0) {
+                diff = 15 + (diff / 2);
+                item.css({
+                    'padding-top': diff + 'px',
+                    'padding-bottom': diff + 'px'
+                });
+            }
+
+            if (i_rowCount > 0) item.parent().addClass('mt-xs');
+
         }
-
     }
 
-    function _renderQuestions(i_callback) {
-        var quizContainer = $('#' + _settings.ID);
+    function _adjustButtons() {
 
-        $('<h1></h1>').addClass('offering-header-text').html(_quizdata.title).appendTo(quizContainer);
-        $('<p></p>').addClass('lead').html(_quizdata.introContent).appendTo(quizContainer);
+        var cnt = 0;
+        var highst = 0;
+        var limit = 3;
+        var row = [];
+        var rowCount = 0;
 
-        var qustionsContainer = $('<div></div>').appendTo(quizContainer);
-        for (var i = 0; i < _quizdata.questions.length; i++) {
-            _renderQuestion(_quizdata.questions[i], qustionsContainer);
-        }
+        $('.NE-quiz-option-button').each(function (i) {
 
-        if (i_callback) i_callback();
+            var h = $(this).outerHeight()
+            highst = h > highst ? h : highst;
+
+            row.push($(this));
+
+            if (cnt++ == limit-1) {
+
+                _padRow(row, highst, rowCount);
+
+                rowCount++;
+                highst = null;
+                cnt = 0;
+                row = [];
+
+            }
+
+        });
+
+        _padRow(row, highst, rowCount);
+
     }
 
     //////////////////////
@@ -135,34 +158,59 @@ NE.Plugin.quiz = function (i_params) {
 
             _settings = _params.settings;
 
-            NE.Plugin.ApplyTemplate(this, function (data) {
-
-                _myDOMContent = $(data);
-                _addToDOM(_myDOMContent);
-
-                if (_settings.datafile) {
-                    NE.Net.LoadJsonFile(_settings.datafile, function (jsonData) {
 
 
-                        _quizdata = jsonData;
-                        //_renderQuestions(function () {
-                        //    _numComponents = $('.NE-plugin-container', _myDOMContent.first()).length;
-                        //    NE.Plugin.LoadAll(_myDOMContent.first(), _onCompnentsLoad);
-                        //});
+            if (_settings.datafile) {
+
+                NE.Net.LoadJsonFile(_settings.datafile, function (jsonData) {
+
+                    _quizdata = jsonData;
+
+                    NE.Plugin.ApplyTemplate(me, function (data) {
+
+                        _myDOMContent = $(data.replace(/{quizID}/g, _settings.ID));
+                        _addToDOM(_myDOMContent);
+
+                        _adjustButtons();
 
                     });
-                }
-                else {
-                    me.OnLoaded();
-                }
 
-            });
+                });
+            }
+            else {
+                me.OnLoaded();
+            }
+
+
 
         },
 
         Render: function (params) {
             var returnVal = '';
-            returnVal += params[0].data.replace(/{quizID}/g, _settings.ID);
+
+            console.log(_quizdata);
+
+            returnVal += params[0].data.replace(/{title}/g, _quizdata.title).replace(/{introContent}/g, _quizdata.introContent);
+
+
+            for (var i = 0; i < _quizdata.questions.length; i++) {
+                var question = _quizdata.questions[i];
+
+                if (question.title != '' || question.introContent != '') {
+                    returnVal += params[1].data.replace(/{title}/g, question.title).replace(/{introContent}/g, question.introContent);
+                }
+
+                returnVal += params[2].data;
+
+                for (var j = 0; j < question.options.length; j++) {
+                    var option = question.options[j];
+                    returnVal += params[3].data.replace(/{content}/g, option.content).replace(/{answerData}/g, option.answerData);
+                }
+
+                returnVal += params[4].data;
+            }
+
+
             return returnVal;
         },
 
