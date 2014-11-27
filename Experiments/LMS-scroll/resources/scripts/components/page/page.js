@@ -42,6 +42,7 @@ NE.Plugin.page = function (i_params) {
     var _scrollTimer;
     var _scrollPadd = 0;
     var _maxScrollPadd = 100;
+    var _navTimer;
 
     //////////////////////
     //
@@ -103,21 +104,35 @@ NE.Plugin.page = function (i_params) {
   
         _myDOMContent.first().on('scroll touchmove', function () {
          
+
             clearTimeout(_scrollTimer);
 
-            if ($(this).scrollTop() <= 0) {
+            var mp = $(this)
+
+            if (mp.scrollTop() <= 0) {
 
                 _scrollPadd += (_maxScrollPadd - _scrollPadd) * 0.25
           
-                $('#' + NE.Constants.CHAPTER_ID_PREFIX + _settings.chapterIndex).css('padding-top', _scrollPadd + 'px');
-             
+                mp.css('padding-top', _scrollPadd + 'px');
+          
+                if (_scrollPadd > _maxScrollPadd * 0.75 && !_navTimer) {
+                    console.log(_scrollPadd + ' > ' + _maxScrollPadd)
+                    _navTimer = setTimeout(function () {
+                        _scrollPadd = 0;
+                         NE.Navigation.Next();
+                    }, 500);
+                }
+
+
                 $(this).scrollTop(1)
             }
 
             _scrollTimer = setTimeout(function () {
+                clearTimeout(_navTimer);
+                _navTimer = null;
                 _scrollPadd = 0;
-                $('#' + NE.Constants.CHAPTER_ID_PREFIX + _settings.chapterIndex).animate({ 'padding-top': '0px' },200);
-            }, 500);
+                mp.animate({ 'padding-top': '0px' }, 200);
+            }, 350);
 
 
         });
