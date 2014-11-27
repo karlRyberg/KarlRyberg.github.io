@@ -114,18 +114,20 @@ NE.Plugin.page = function (i_params) {
                 _scrollPadd += (_maxScrollPadd - _scrollPadd) * 0.25
           
                 mp.css('padding-top', _scrollPadd + 'px');
-          
+                console.log(_scrollPadd + ' > ' + _maxScrollPadd)
                 if (_scrollPadd > _maxScrollPadd * 0.8) {
-                    console.log(_scrollPadd + ' > ' + _maxScrollPadd)
+         
                     if (!_navTimer) {
                         _navTimer = setTimeout(function () {
                             _scrollPadd = 0;
                             NE.Navigation.Previous();
-                        }, 700);
+                        }, 1700);
                     }
                 }
                 else {
+                    console.log('STOP!!');
                     clearTimeout(_navTimer);
+                    _navTimer = null;
                 }
 
 
