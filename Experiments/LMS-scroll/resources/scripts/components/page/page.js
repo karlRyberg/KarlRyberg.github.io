@@ -77,10 +77,10 @@ NE.Plugin.page = function (i_params) {
     }
 
     function _buildPage(i_html) {
- 
+
         $('#' + NE.Constants.PAGE_ID_PREFIX + _settings.chapterIndex + '-' + _settings.index).html(i_html);
         _numComponents = $('.NE-plugin-container', _myDOMContent.first()).length;
-   
+
         if (_numComponents > 0) {
             NE.Plugin.LoadAll(_myDOMContent.first(), _onCompnentsLoad);
         }
@@ -101,9 +101,8 @@ NE.Plugin.page = function (i_params) {
     }
 
     function _addScrollWatch() {
-  
+
         _myDOMContent.first().on('scroll', function () {
-         
 
             clearTimeout(_scrollTimer);
 
@@ -111,12 +110,12 @@ NE.Plugin.page = function (i_params) {
 
             if (mp.scrollTop() <= 0) {
 
-                _scrollPadd += (_maxScrollPadd - _scrollPadd) * 0.25
-          
+                _scrollPadd += (_maxScrollPadd - _scrollPadd) * 0.1
+
                 mp.css('padding-top', _scrollPadd + 'px');
                 console.log(_scrollPadd + ' > ' + _maxScrollPadd)
                 if (_scrollPadd > _maxScrollPadd * 0.8) {
-         
+
                     if (!_navTimer) {
                         _navTimer = setTimeout(function () {
                             _scrollPadd = 0;
