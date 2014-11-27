@@ -100,9 +100,16 @@ NE.Plugin.page = function (i_params) {
         });
     }
 
+    var _time;
+
     function _addScrollWatch() {
 
         _myDOMContent.first().on('scroll', function () {
+
+            var elapsed = new Date().getTime() - _time;
+            if(elapsed < 10) return;
+
+            _time = new Date().getTime();
 
             clearTimeout(_scrollTimer);
 
@@ -110,21 +117,22 @@ NE.Plugin.page = function (i_params) {
 
             if (mp.scrollTop() <= 0) {
 
-                _scrollPadd += (_maxScrollPadd - _scrollPadd) * 0.1
+         
+
+                _scrollPadd += (_maxScrollPadd - _scrollPadd) * 0.25
 
                 mp.css('padding-top', _scrollPadd + 'px');
-                console.log(_scrollPadd + ' > ' + _maxScrollPadd)
-                if (_scrollPadd > _maxScrollPadd * 0.8) {
+
+                if (_scrollPadd > _maxScrollPadd * 0.7) {
 
                     if (!_navTimer) {
                         _navTimer = setTimeout(function () {
                             _scrollPadd = 0;
                             NE.Navigation.Previous();
-                        }, 1700);
+                        }, 700);
                     }
                 }
                 else {
-                    console.log('STOP!!');
                     clearTimeout(_navTimer);
                     _navTimer = null;
                 }
