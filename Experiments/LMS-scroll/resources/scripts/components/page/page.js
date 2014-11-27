@@ -117,9 +117,7 @@ NE.Plugin.page = function (i_params) {
 
             if (mp.scrollTop() <= 0) {
 
-         
-
-                _scrollPadd += (_maxScrollPadd - _scrollPadd) * 0.15
+                _scrollPadd += (_maxScrollPadd - _scrollPadd) * 0.20
 
                 mp.css('padding-top', _scrollPadd + 'px');
 
@@ -139,6 +137,10 @@ NE.Plugin.page = function (i_params) {
 
 
                 $(this).scrollTop(1)
+            }
+            else if (mp.scrollTop() > 1) {
+                clearTimeout(_navTimer);
+                _navTimer = null;
             }
 
             _scrollTimer = setTimeout(function () {
