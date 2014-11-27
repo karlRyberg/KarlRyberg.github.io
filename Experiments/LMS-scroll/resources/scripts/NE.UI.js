@@ -197,7 +197,7 @@ NE.UI = (function () {
         ApplyVerticalScrollbar: function () {
             var jqObj = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
             var cssObj = {
-                'overflow': 'hidden',
+                'overflow': 'auto',
                 'padding-left': '0px',
                 '-webkit-transition': 'padding-left 0.3s',
                 'transition': 'padding-left 0.3s'

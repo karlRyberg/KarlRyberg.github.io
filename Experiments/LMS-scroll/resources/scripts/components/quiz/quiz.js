@@ -173,6 +173,12 @@ NE.Plugin.quiz = function (i_params) {
 
                         _adjustButtons();
 
+                        $('#' + _settings.ID).on('click', '.NE-quiz-option-button', function () {
+
+                        });
+
+                        me.OnLoaded();
+
                     });
 
                 });

@@ -10,7 +10,7 @@
 
 
     <div class="row">
-        
+
         <div class="col-xs-12">
             <h1 class="offering-header-text">
                 <span class="font-weight-normal">Klarspråk är att skriva för mottagaren</span>
@@ -30,12 +30,25 @@
             </p>
 
         </div>
+    </div>
 
-        <div class="row pb-md">
-            <div class="col-xs-12 text-center">
-                <div class="NE-button NE-big-button" onclick="NE.Navigation.Next()">Gå vidare</div>
+    <div id="quiz01-hider" class="row hidden mb-md">
+        <div class="NE-plugin-container" data-plugin="quiz" data-settings="{
+                'datafile': '../content/data/quizes/quiz-01.json',
+                'ID':'quiz-01'
+                }">
+        </div>
+    </div>
+
+    <div class="row pb-md">
+        <div class="col-xs-12 text-center">
+            <div class="NE-plugin-container" data-plugin="revealbutton" data-settings="{
+                         'revealItemID': 'quiz01-hider',
+                         'initText':'Gå vidare'
+                         }">
             </div>
         </div>
-
     </div>
+
+</div>
 </div>

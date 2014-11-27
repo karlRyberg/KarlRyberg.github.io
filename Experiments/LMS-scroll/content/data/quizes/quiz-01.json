@@ -1,12 +1,13 @@
 ﻿{
     "questionType": "singleChoice",
     "autoSubmit": true,
-    "title": "",
-    "introContent": "",
+    "title": "Quiz",
+    "introContent": "Lorem ipsum",
     "questions": [
         {
             "title": "Brukar du fundera på syftet med dina texter?",
-            "introContent": "",
+            "introContent": "Lorem  ipsum dolor sit amet",
+            "correctAnswer" : "answerYes",
             "options": [
                 {
                     "content": "Ja",
