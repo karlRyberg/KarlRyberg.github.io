@@ -119,7 +119,7 @@ NE.Plugin.page = function (i_params) {
 
          
 
-                _scrollPadd += (_maxScrollPadd - _scrollPadd) * 0.25
+                _scrollPadd += (_maxScrollPadd - _scrollPadd) * 0.15
 
                 mp.css('padding-top', _scrollPadd + 'px');
 
