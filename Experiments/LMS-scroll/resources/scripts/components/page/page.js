@@ -107,7 +107,7 @@ NE.Plugin.page = function (i_params) {
 
             if ($(this).scrollTop() <= 0) {
 
-                _scrollPadd += (_maxScrollPadd - _scrollPadd) * 0.5
+                _scrollPadd += (_maxScrollPadd - _scrollPadd) * 0.25
           
                 $('#' + NE.Constants.CHAPTER_ID_PREFIX + _settings.chapterIndex).css('padding-top', _scrollPadd + 'px');
              
