@@ -119,7 +119,7 @@ NE.Plugin.page = function (i_params) {
                     console.log(_scrollPadd + ' > ' + _maxScrollPadd)
                     _navTimer = setTimeout(function () {
                         _scrollPadd = 0;
-                         NE.Navigation.Next();
+                        NE.Navigation.Previous();
                     }, 500);
                 }
 
