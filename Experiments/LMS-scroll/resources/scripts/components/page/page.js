@@ -102,7 +102,7 @@ NE.Plugin.page = function (i_params) {
 
     function _addScrollWatch() {
   
-        _myDOMContent.first().on('scroll touchmove', function () {
+        _myDOMContent.first().on('scroll', function () {
          
 
             clearTimeout(_scrollTimer);
