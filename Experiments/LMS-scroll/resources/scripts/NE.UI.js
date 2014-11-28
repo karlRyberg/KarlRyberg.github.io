@@ -47,6 +47,7 @@ NE.UI = (function () {
     var _negScroll = 0;
     var _navTimer;
     var _beenNegative = false;
+    var _firstScroll = true;
 
     //////////////////////
     //
@@ -136,6 +137,15 @@ NE.UI = (function () {
 
     }
 
+    function _hideScrollNavHinter(i_obj) {
+        i_obj.animate({
+            'top': (-i_obj.outerHeight()) + 'px',
+            'border-bottom-left-radius': '100%',
+            'border-bottom-right-radius': '100%',
+            'opacity': 0
+        }, 200);
+    }
+
     //////////////////////
     //
     //  Return object
@@ -202,50 +212,26 @@ NE.UI = (function () {
         },
 
         ApplyVerticalScrollbar: function () {
-            var jqObj = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
-            var cssObj = {
-                'overflow': 'hidden',
-                'padding-left': '0px',
-                '-webkit-transition': 'padding-left 0.3s',
-                'transition': 'padding-left 0.3s'
-            };
-
-            jqObj.find('.NE-full-width').css({
-                'margin-left': '',
-                'padding-left': ''
-            });
 
             var totalHeight = 0;
-            jqObj.children('.container').each(function () {
-                totalHeight += $(this).outerHeight();
+            var jqObj = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
+
+            jqObj.css({
+                'padding-bottom': '0px',
+                'padding-left' : _getScrollbarWidth() + 'px'
             });
 
-            jqObj.children('.NE-full-width').each(function () {
-                totalHeight += $(this).outerHeight();
+            jqObj.children('.container, .NE-full-width').each(function () {
+                totalHeight += $(this).outerHeight(true);
             });
 
-            if (totalHeight > jqObj.innerHeight()) {
-                cssObj = {
-                    'overflow-y': 'auto',
-                    'padding-left': _getScrollbarWidth() + 'px',
-                    '-webkit-transition': 'none',
-                    'transition': 'none'
-                };
 
-                if ($('#isXS').is(':visible')) {
-                    jqObj.find('.NE-full-width').css({
-                        'margin-left': (-_getScrollbarWidth()) + 'px',
-                        'padding-left': _getScrollbarWidth() + 'px'
-                    });
-                }
-
+            if (totalHeight < jqObj.innerHeight()) {
+                var pad = (jqObj.innerHeight() - totalHeight) + 10;
+                jqObj.css('padding-bottom', pad + 'px');
             }
 
-            if (!_scrollHintDismissed) {
-                _hintTImer = setTimeout(NE.UI.ScrollHint, 5000);
-            }
 
-            jqObj.css(cssObj);
         },
 
         ResizeScrollContainer: function () {
@@ -268,7 +254,10 @@ NE.UI = (function () {
             currentChapter.stop(true, true).animate({ 'scrollTop': '+=' + (currentPage.position().top - _topNavBarHeight) }, animTime);
             scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
 
-            setTimeout(NE.UI.ApplyVerticalScrollbar, animTime);
+            setTimeout(function () {
+                NE.UI.ApplyVerticalScrollbar();
+                NE.UI.AttachScrollNav();
+            }, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
                 _lastChapter = NE.Navigation.CurrentChapterIndex;
@@ -278,7 +267,6 @@ NE.UI = (function () {
 
         ScrollHint: function () {
             var currentPage = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
-            if (currentPage.css('overflow-y').toLowerCase() === 'hidden' || currentPage.scrollTop() > 0) return;
             $('#NE-scroll-hint').removeClass('hidden').addClass('active');
             _scrollHintAnimate(currentPage, currentPage.scrollTop());
         },
@@ -292,6 +280,8 @@ NE.UI = (function () {
                 _lastPage.off('scroll');
             }
             _lastPage = currentPage;
+            _beenNegative = false;
+            _firstScroll = true;
 
             currentPage.on('scroll', function () {
 
@@ -305,7 +295,7 @@ NE.UI = (function () {
                     sh.stop().css('top', newPos + 'px');
 
                 }
-                else if (mp.scrollTop() === 0 && !_beenNegative) {
+                else if (mp.scrollTop() === 0 && !_beenNegative && !_firstScroll) {
 
                     clearTimeout(_scrollExitTImer);
 
@@ -317,24 +307,14 @@ NE.UI = (function () {
 
                 else if ((mp.scrollTop() === 1 && !_beenNegative) || (mp.scrollTop() === 0 && _beenNegative)) {
                     _scrollExitTImer = setTimeout(function () {
-                        sh.animate({
-                            'top': (-sh.outerHeight()) + 'px',
-                            'border-bottom-left-radius': '100%',
-                            'border-bottom-right-radius': '100%',
-                            'opacity': 0
-                        }, 200);
+                        _hideScrollNavHinter(sh);
                         _negScroll = 0;
                     }, 250);
                 }
 
                 else if ((mp.scrollTop() > 1 && sh.position().top > -sh.outerHeight())) {
                     clearTimeout(_scrollExitTImer);
-                    sh.animate({
-                        'top': (-sh.outerHeight()) + 'px',
-                        'border-bottom-left-radius': '100%',
-                        'border-bottom-right-radius': '100%',
-                        'opacity': 0
-                    }, 200);
+                    _hideScrollNavHinter(sh);
                 }
 
                 if (sh.position().top > -20) {
@@ -342,9 +322,10 @@ NE.UI = (function () {
                         _navTimer = setTimeout(function () {
                             if (sh.position().top > -10) {
                                 NE.Navigation.Previous();
+                                _hideScrollNavHinter(sh);
                             }
                             _navTimer = null;
-                        }, 500);
+                        }, 400);
                     }
                 }
 
@@ -356,7 +337,11 @@ NE.UI = (function () {
                     'opacity': ((sh.outerHeight() + sh.position().top) / 100)
                 });
 
+                _firstScroll = false;
+
             });
+
+            if(currentPage.scrollTop() < 1)  currentPage.scrollTop(1);
 
         },
 

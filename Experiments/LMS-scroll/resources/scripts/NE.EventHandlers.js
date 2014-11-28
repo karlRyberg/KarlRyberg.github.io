@@ -92,7 +92,7 @@ NE.EventHandlers = (function () {
 
             NE.UI.SetNavigationButtons();
             NE.UI.ScrollToPage();
-            NE.UI.AttachScrollNav();
+
         },
 
         ChapterLinkCLick: function (i_item, e) {
