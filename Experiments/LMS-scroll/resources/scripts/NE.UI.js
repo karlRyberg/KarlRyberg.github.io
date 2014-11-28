@@ -255,7 +255,6 @@ NE.UI = (function () {
 
             setTimeout(function () {
                 NE.UI.ApplyVerticalScrollbar();
-                NE.UI.AttachScrollNav();
             }, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
@@ -271,17 +270,9 @@ NE.UI = (function () {
         },
 
 
-        AttachScrollNav: function () {
+        AttachScrollNav: function (i_sender) {
 
-            var currentPage = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
-
-            if (_lastPage) {
-                _lastPage.off('scroll');
-            }
-            _lastPage = currentPage;
-            _beenNegative = false;
-
-            currentPage.on('scroll', function () {
+            i_sender.on('scroll', function () {
 
                 var mp = $(this);
                 var sh = $('#NE-scroll-nav-hint');
@@ -294,7 +285,7 @@ NE.UI = (function () {
 
                 }
                 else if (mp.scrollTop() === 0 && !_beenNegative) {
-                    newPos = Math.min(sh.position().top - (sh.position().top * .45), 0);
+                    newPos = Math.min(sh.position().top - (sh.position().top * .60), 0);
                     sh.stop().css('top', newPos + 'px');
                     $(this).scrollTop(1);
 
@@ -311,7 +302,7 @@ NE.UI = (function () {
                     _hideScrollNavHinter(sh);
                 }
 
-                if (sh.position().top > -20) {
+                if (sh.position().top > -40) {
                     if (!_navTimer) {
                         _navTimer = setTimeout(function () {
                             if (sh.position().top > -20) {
@@ -322,7 +313,7 @@ NE.UI = (function () {
                         }, 400);
                     }
                 }
-
+                console.log('scroll');
                 var rad = Math.max((-sh.position().top), 10);
 
                 sh.css({
@@ -334,7 +325,7 @@ NE.UI = (function () {
 
             });
 
-            if(currentPage.scrollTop() < 1)  currentPage.scrollTop(2);
+            if (i_sender.scrollTop() < 1) i_sender.scrollTop(2);
 
         },
 

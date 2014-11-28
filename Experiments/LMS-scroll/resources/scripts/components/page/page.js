@@ -87,6 +87,7 @@ NE.Plugin.page = function (i_params) {
     }
 
     function _pageComplete() {
+        NE.UI.AttachScrollNav(_myDOMContent.first());
         me.OnLoaded({
             chapter: _settings.chapterIndex,
             index: _settings.index,
