@@ -126,24 +126,27 @@ NE.Plugin.page = function (i_params) {
                 $(this).scrollTop(1);
 
             }
+
             else if ((mp.scrollTop() === 1 && !_beenNegative) || (mp.scrollTop() === 0 && _beenNegative)) {
-                clearTimeout(_navTimer);
                 _scrollExitTImer = setTimeout(function () {
                     tr.animate({ 'top': (-tr.outerHeight()) + 'px' }, 200);
                     _negScroll = 0;
-                }, 400);
+                }, 350);
             }
+
             else if ((mp.scrollTop() > 1 && tr.position().top > -tr.outerHeight())) {
-                clearTimeout(_navTimer);
                 clearTimeout(_scrollExitTImer);
                 tr.animate({ 'top': (-tr.outerHeight()) + 'px' }, 200);
             }
 
             if (tr.position().top > -10) {
                 _navTimer = setTimeout(function () {
-                    NE.Navigation.Previous();
-                }, 1000);
+                    if (tr.position().top > -10) {
+                        NE.Navigation.Previous();
+                    }
+                }, 700);
             }
+
 
 
         });
