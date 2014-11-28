@@ -250,11 +250,13 @@ NE.UI = (function () {
             var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
             var scroller = $('#' + NE.Constants.SCROLL_CONTAINER_ID);
 
+
             currentChapter.stop(true, true).animate({ 'scrollTop': '+=' + (currentPage.position().top - _topNavBarHeight) }, animTime);
             scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
 
             setTimeout(function () {
                 NE.UI.ApplyVerticalScrollbar();
+                if (currentPage.scrollTop() < 1 && !_beenNegative) currentPage.scrollTop(2);
             }, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
@@ -281,12 +283,12 @@ NE.UI = (function () {
                 if (mp.scrollTop() < 0) {
                     _beenNegative = true;
                     newPos = Math.min(-sh.outerHeight() - (mp.scrollTop() * 1), 0);
-                    sh.stop().css('top', newPos + 'px');
+                    sh.stop(true,true).css('top', newPos + 'px');
 
                 }
                 else if (mp.scrollTop() === 0 && !_beenNegative) {
                     newPos = Math.min(sh.position().top - (sh.position().top * .60), 0);
-                    sh.stop().css('top', newPos + 'px');
+                    sh.stop(true, true).css('top', newPos + 'px');
                     $(this).scrollTop(1);
 
                 }
@@ -306,14 +308,16 @@ NE.UI = (function () {
                     if (!_navTimer) {
                         _navTimer = setTimeout(function () {
                             if (sh.position().top > -20) {
-                                NE.Navigation.Previous();
                                 _hideScrollNavHinter(sh);
+                                setTimeout(function () { 
+                                    NE.Navigation.Previous();
+                                }, 0);
                             }
                             _navTimer = null;
                         }, 400);
                     }
                 }
-                console.log('scroll');
+
                 var rad = Math.max((-sh.position().top), 10);
 
                 sh.css({
@@ -325,7 +329,6 @@ NE.UI = (function () {
 
             });
 
-            if (i_sender.scrollTop() < 1 && !_beenNegative) i_sender.scrollTop(2);
 
         },
 
