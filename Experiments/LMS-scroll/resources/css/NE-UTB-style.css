@@ -111,10 +111,11 @@ button:active {
     left: 0px;
     right: 0px;
     width: 100px;
-    height: 100px;
+    height: 80px;
     margin: auto;
     z-index: 1060;
-    font-size: 60px;
+    font-size: 50px;
+    line-height: 80px;
     background-color: #808080;
     color: white;
     text-align: center;

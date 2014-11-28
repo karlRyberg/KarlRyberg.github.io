@@ -47,7 +47,6 @@ NE.UI = (function () {
     var _negScroll = 0;
     var _navTimer;
     var _beenNegative = false;
-    var _firstScroll = true;
 
     //////////////////////
     //
@@ -281,7 +280,6 @@ NE.UI = (function () {
             }
             _lastPage = currentPage;
             _beenNegative = false;
-            _firstScroll = true;
 
             currentPage.on('scroll', function () {
 
@@ -295,11 +293,8 @@ NE.UI = (function () {
                     sh.stop().css('top', newPos + 'px');
 
                 }
-                else if (mp.scrollTop() === 0 && !_beenNegative && !_firstScroll) {
-
-                    clearTimeout(_scrollExitTImer);
-
-                    newPos = Math.min(sh.position().top - (sh.position().top * .4), 0);
+                else if (mp.scrollTop() === 0 && !_beenNegative) {
+                    newPos = Math.min(sh.position().top - (sh.position().top * .45), 0);
                     sh.stop().css('top', newPos + 'px');
                     $(this).scrollTop(1);
 
@@ -313,7 +308,6 @@ NE.UI = (function () {
                 }
 
                 else if ((mp.scrollTop() > 1 && sh.position().top > -sh.outerHeight())) {
-                    clearTimeout(_scrollExitTImer);
                     _hideScrollNavHinter(sh);
                 }
 
@@ -334,14 +328,13 @@ NE.UI = (function () {
                 sh.css({
                     'border-bottom-left-radius': rad + '%',
                     'border-bottom-right-radius': rad + '%',
-                    'opacity': ((sh.outerHeight() + sh.position().top) / 100)
+                    'opacity': ((sh.outerHeight() + sh.position().top) / 80)
                 });
 
-                _firstScroll = false;
 
             });
 
-            if(currentPage.scrollTop() < 1)  currentPage.scrollTop(1);
+            if(currentPage.scrollTop() < 1)  currentPage.scrollTop(2);
 
         },
 
