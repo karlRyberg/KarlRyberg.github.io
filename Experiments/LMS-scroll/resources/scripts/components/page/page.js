@@ -133,7 +133,7 @@ NE.Plugin.page = function (i_params) {
                     _negScroll = 0;
                 }, 400);
             }
-            else if (mp.scrollTop() > 1 && tr.position().top > -tr.outerHeight()) {
+            else if ((mp.scrollTop() > 1 && tr.position().top > -tr.outerHeight())) {
                 clearTimeout(_navTimer);
                 clearTimeout(_scrollExitTImer);
                 tr.animate({ 'top': (-tr.outerHeight()) + 'px' }, 200);
@@ -142,7 +142,7 @@ NE.Plugin.page = function (i_params) {
             if (tr.position().top > -10) {
                 _navTimer = setTimeout(function () {
                     NE.Navigation.Previous();
-                }, 500);
+                }, 1000);
             }
 
 
