@@ -105,6 +105,21 @@ button:active {
     animation-timing-function: ease-in-out;
 }
 
+#NE-scroll-nav-hint {
+    position: absolute;
+    top: -100px;
+    left: 0px;
+    right: 0px;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    z-index: 1060;
+    font-size: 60px;
+    background-color: #808080;
+    color: white;
+    text-align: center;
+    opacity: 0;
+}
 
 @-webkit-keyframes scrollHintAnim {
     0% {
