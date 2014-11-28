@@ -139,7 +139,7 @@ NE.Plugin.page = function (i_params) {
                 tr.animate({ 'top': (-tr.outerHeight()) + 'px' }, 200);
             }
 
-            if (tr.position().top > -10) {
+            if (tr.position().top > -25) {
                 _navTimer = setTimeout(function () {
                     if (tr.position().top > -10) {
                         NE.Navigation.Previous();
