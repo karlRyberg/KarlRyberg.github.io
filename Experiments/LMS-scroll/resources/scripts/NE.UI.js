@@ -246,9 +246,6 @@ NE.UI = (function () {
             currentChapter.stop(true, true).animate({ 'scrollTop': '+=' + (currentPage.position().top - _topNavBarHeight) }, animTime);
             scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
 
-            setTimeout(function () {
-   
-            }, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
                 _lastChapter = NE.Navigation.CurrentChapterIndex;

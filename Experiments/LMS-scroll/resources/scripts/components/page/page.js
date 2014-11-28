@@ -122,12 +122,12 @@ NE.Plugin.page = function (i_params) {
             if (mp.scrollTop() < 0) {
                 _beenNegative = true;
                 newPos = Math.min(-sh.outerHeight() - (mp.scrollTop() * 1), 0);
-                sh.stop(true,true).css('top', newPos + 'px');
+                sh.stop().css('top', newPos + 'px');
 
             }
             else if (mp.scrollTop() === 0 && !_beenNegative) {
                 newPos = Math.min(sh.position().top - (sh.position().top * .60), 0);
-                sh.stop(true, true).css('top', newPos + 'px');
+                sh.stop().css('top', newPos + 'px');
                 $(this).scrollTop(1);
 
             }
@@ -147,9 +147,9 @@ NE.Plugin.page = function (i_params) {
                     _navTimer = setTimeout(function () {
                         if (sh.position().top > -20) {
                             _hideScrollNavHinter(sh);
-                            setTimeout(function () { 
+
                                 NE.Navigation.Previous();
-                            }, 0);
+             
                         }
                         _navTimer = null;
                     }, 400);
