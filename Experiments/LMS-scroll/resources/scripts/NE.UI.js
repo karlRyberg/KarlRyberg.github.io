@@ -320,7 +320,7 @@ NE.UI = (function () {
                 if (sh.position().top > -20) {
                     if (!_navTimer) {
                         _navTimer = setTimeout(function () {
-                            if (sh.position().top > -10) {
+                            if (sh.position().top > -20) {
                                 NE.Navigation.Previous();
                                 _hideScrollNavHinter(sh);
                             }
