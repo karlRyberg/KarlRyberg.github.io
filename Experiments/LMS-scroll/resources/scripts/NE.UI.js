@@ -325,7 +325,7 @@ NE.UI = (function () {
 
             });
 
-            if (i_sender.scrollTop() < 1) i_sender.scrollTop(2);
+            if (i_sender.scrollTop() < 1 && !_beenNegative) i_sender.scrollTop(2);
 
         },
 
