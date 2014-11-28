@@ -241,13 +241,13 @@ NE.UI = (function () {
             var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
             var scroller = $('#' + NE.Constants.SCROLL_CONTAINER_ID);
 
+            NE.UI.ApplyVerticalScrollbar();
 
             currentChapter.stop(true, true).animate({ 'scrollTop': '+=' + (currentPage.position().top - _topNavBarHeight) }, animTime);
             scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
 
             setTimeout(function () {
-                NE.UI.ApplyVerticalScrollbar();
-                if (currentPage.scrollTop() < 1 && !_beenNegative) currentPage.scrollTop(2);
+   
             }, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
