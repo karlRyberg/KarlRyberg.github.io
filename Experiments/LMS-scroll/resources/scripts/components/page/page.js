@@ -39,10 +39,7 @@ NE.Plugin.page = function (i_params) {
     var _myDOMContent;
     var _numComponents = 0;
     var _componentsLoaded = 0;
-    var _scrollTimer;
-    var _scrollPadd = 0;
-    var _maxScrollPadd = 100;
-    var _navTimer;
+
 
     //////////////////////
     //
@@ -101,54 +98,27 @@ NE.Plugin.page = function (i_params) {
     }
 
     var _time;
-
+    var _fnScroll = false;
     function _addScrollWatch() {
 
         _myDOMContent.first().on('scroll', function () {
 
-            var elapsed = new Date().getTime() - _time;
-            if(elapsed < 10) return;
-
-            _time = new Date().getTime();
-
-            clearTimeout(_scrollTimer);
-
             var mp = $(this)
+            var tr = $('#tracer');
 
-            if (mp.scrollTop() <= 0) {
-
-                _scrollPadd += (_maxScrollPadd - _scrollPadd) * 0.20
-
-                mp.css('padding-top', _scrollPadd + 'px');
-
-                if (_scrollPadd > _maxScrollPadd * 0.7) {
-
-                    if (!_navTimer) {
-                        _navTimer = setTimeout(function () {
-                            _scrollPadd = 0;
-                            NE.Navigation.Previous();
-                        }, 700);
-                    }
-                }
-                else {
-                    clearTimeout(_navTimer);
-                    _navTimer = null;
-                }
-
-
+            if (mp.scrollTop() < 0) {
+                tr.html(tr.html() + 'Less ' + mp.scrollTop() + '<br/>');
+            }
+            else if (mp.scrollTop() === 0) {
+                tr.html(tr.html() + 'Zero ' + mp.scrollTop() + '<br/>');
                 $(this).scrollTop(1)
+                _fnScroll = true;
             }
-            else if (mp.scrollTop() > 1) {
-                clearTimeout(_navTimer);
-                _navTimer = null;
+            else if (!_fnScroll) {
+                tr.html(tr.html() + 'Not top ' + mp.scrollTop() + '<br/>');
+                _fnScroll = false;
             }
 
-            _scrollTimer = setTimeout(function () {
-                clearTimeout(_navTimer);
-                _navTimer = null;
-                _scrollPadd = 0;
-                mp.animate({ 'padding-top': '0px' }, 200);
-            }, 350);
 
 
         });
