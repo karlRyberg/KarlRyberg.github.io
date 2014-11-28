@@ -107,7 +107,7 @@ NE.Plugin.page = function (i_params) {
             var tr = $('#tracer');
 
             if (mp.scrollTop() < 0) {
-                tr.html(tr.html() + 'Less ' + mp.scrollTop() + '<br/>');
+                tr.html('Less ' + mp.scrollTop() + '<br/>');
             }
             else if (mp.scrollTop() === 0) {
                 tr.html(tr.html() + 'Zero ' + mp.scrollTop() + '<br/>');
