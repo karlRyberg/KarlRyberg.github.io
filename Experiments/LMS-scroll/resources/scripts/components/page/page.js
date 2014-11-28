@@ -126,7 +126,7 @@ NE.Plugin.page = function (i_params) {
                 $(this).scrollTop(1);
 
             }
-            else if (mp.scrollTop() === 1) {
+            else if ((mp.scrollTop() === 1 && !_beenNegative) || (mp.scrollTop() === 0 && _beenNegative)) {
                 clearTimeout(_navTimer);
                 _scrollExitTImer = setTimeout(function () {
                     tr.animate({ 'top': (-tr.outerHeight()) + 'px' }, 200);
@@ -144,7 +144,7 @@ NE.Plugin.page = function (i_params) {
                     NE.Navigation.Previous();
                 }, 500);
             }
-       
+
 
         });
 
