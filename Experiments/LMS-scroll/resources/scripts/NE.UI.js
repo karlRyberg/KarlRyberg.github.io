@@ -36,10 +36,17 @@ NE.UI = (function () {
 
     var _topNavBarHeight = 0;
     var _lastChapter = 0;
+    var _lastPage = 0;
     var _scrollbarWidth = null;
     var _scrollerTarget = 0;
     var _scrollHintDismissed = false;
     var _hintTImer = null;
+
+    // Scroll nav vars
+    var _scrollExitTImer;
+    var _negScroll = 0;
+    var _navTimer;
+    var _beenNegative = false;
 
     //////////////////////
     //
@@ -197,7 +204,7 @@ NE.UI = (function () {
         ApplyVerticalScrollbar: function () {
             var jqObj = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
             var cssObj = {
-                'overflow': 'auto',
+                'overflow': 'hidden',
                 'padding-left': '0px',
                 '-webkit-transition': 'padding-left 0.3s',
                 'transition': 'padding-left 0.3s'
@@ -274,6 +281,83 @@ NE.UI = (function () {
             if (currentPage.css('overflow-y').toLowerCase() === 'hidden' || currentPage.scrollTop() > 0) return;
             $('#NE-scroll-hint').removeClass('hidden').addClass('active');
             _scrollHintAnimate(currentPage, currentPage.scrollTop());
+        },
+
+
+        AttachScrollNav: function () {
+
+            var currentPage = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
+
+            if (_lastPage) {
+                _lastPage.off('scroll');
+            }
+            _lastPage = currentPage;
+
+            currentPage.on('scroll', function () {
+
+                var mp = $(this);
+                var sh = $('#NE-scroll-nav-hint');
+                var newPos;
+
+                if (mp.scrollTop() < 0) {
+                    _beenNegative = true;
+                    newPos = Math.min(-sh.outerHeight() - (mp.scrollTop() * 1), 0);
+                    sh.stop().css('top', newPos + 'px');
+
+                }
+                else if (mp.scrollTop() === 0 && !_beenNegative) {
+
+                    clearTimeout(_scrollExitTImer);
+
+                    newPos = Math.min(sh.position().top - (sh.position().top * .4), 0);
+                    sh.stop().css('top', newPos + 'px');
+                    $(this).scrollTop(1);
+
+                }
+
+                else if ((mp.scrollTop() === 1 && !_beenNegative) || (mp.scrollTop() === 0 && _beenNegative)) {
+                    _scrollExitTImer = setTimeout(function () {
+                        sh.animate({
+                            'top': (-sh.outerHeight()) + 'px',
+                            'border-bottom-left-radius': '100%',
+                            'border-bottom-right-radius': '100%',
+                            'opacity': 0
+                        }, 200);
+                        _negScroll = 0;
+                    }, 250);
+                }
+
+                else if ((mp.scrollTop() > 1 && sh.position().top > -sh.outerHeight())) {
+                    clearTimeout(_scrollExitTImer);
+                    sh.animate({
+                        'top': (-sh.outerHeight()) + 'px',
+                        'border-bottom-left-radius': '100%',
+                        'border-bottom-right-radius': '100%',
+                        'opacity': 0
+                    }, 200);
+                }
+
+                if (sh.position().top > -20) {
+                    if (!_navTimer) {
+                        _navTimer = setTimeout(function () {
+                            if (sh.position().top > -10) {
+                                NE.Navigation.Previous();
+                            }
+                            _navTimer = null;
+                        }, 500);
+                    }
+                }
+
+                var rad = Math.max((-sh.position().top), 10);
+
+                sh.css({
+                    'border-bottom-left-radius': rad + '%',
+                    'border-bottom-right-radius': rad + '%',
+                    'opacity': ((sh.outerHeight() + sh.position().top) / 100)
+                });
+
+            });
+
         },
 
         eof: null

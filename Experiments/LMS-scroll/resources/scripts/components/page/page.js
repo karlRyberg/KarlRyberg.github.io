@@ -87,86 +87,11 @@ NE.Plugin.page = function (i_params) {
     }
 
     function _pageComplete() {
-
-        _addScrollWatch();
-
         me.OnLoaded({
             chapter: _settings.chapterIndex,
             index: _settings.index,
             guid: _settings.guid,
         });
-    }
-
-    var _time;
-    var _scrollExitTImer;
-    var _negScroll = 0;
-    var _navTimer;
-    var _beenNegative = false;
-
-    function _addScrollWatch() {
-
-        _myDOMContent.first().on('scroll', function () {
-
-            var mp = $(this)
-            var sh = $('#NE-scroll-nav-hint');
-            var newPos;
-
-            if (mp.scrollTop() < 0) {
-                _beenNegative = true;
-                newPos = Math.min(-sh.outerHeight() - (mp.scrollTop() * 1.2), 0);
-                sh.stop().css('top', newPos + 'px');
-
-            }
-            else if (mp.scrollTop() === 0 && !_beenNegative) {
-
-                clearTimeout(_scrollExitTImer);
-
-                newPos = Math.min(sh.position().top - (sh.position().top * .4), 0);
-                sh.stop().css('top', newPos + 'px');
-                $(this).scrollTop(1);
-
-            }
-
-            else if ((mp.scrollTop() === 1 && !_beenNegative) || (mp.scrollTop() === 0 && _beenNegative)) {
-                _scrollExitTImer = setTimeout(function () {
-                    sh.animate({
-                        'top': (-sh.outerHeight()) + 'px',
-                        'border-bottom-left-radius': '100%',
-                        'border-bottom-right-radius': '100%',
-                        'opacity': 0
-                    }, 200);
-                    _negScroll = 0;
-                }, 350);
-            }
-
-            else if ((mp.scrollTop() > 1 && sh.position().top > -sh.outerHeight())) {
-                clearTimeout(_scrollExitTImer);
-                sh.animate({
-                    'top': (-sh.outerHeight()) + 'px',
-                    'border-bottom-left-radius': '100%',
-                    'border-bottom-right-radius': '100%',
-                    'opacity': 0
-                }, 200);
-            }
-
-            if (sh.position().top > -20) {
-                _navTimer = setTimeout(function () {
-                    if (sh.position().top > -10) {
-                        NE.Navigation.Previous();
-                    }
-                }, 700);
-            }
-
-            var rad = Math.max((-sh.position().top), 10);
-
-            sh.css({
-                'border-bottom-left-radius': rad + '%',
-                'border-bottom-right-radius': rad + '%',
-                'opacity': ((sh.outerHeight() + sh.position().top) / 100)
-            });
-
-        });
-
     }
 
     //////////////////////

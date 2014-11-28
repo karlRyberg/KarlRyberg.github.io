@@ -33,7 +33,11 @@ NE.EventHandlers = (function () {
     //
     /////////////////////
 
-
+    var _time;
+    var _scrollExitTImer;
+    var _negScroll = 0;
+    var _navTimer;
+    var _beenNegative = false;
 
     //////////////////////
     //
@@ -88,7 +92,7 @@ NE.EventHandlers = (function () {
 
             NE.UI.SetNavigationButtons();
             NE.UI.ScrollToPage();
-     
+            NE.UI.AttachScrollNav();
         },
 
         ChapterLinkCLick: function (i_item, e) {
@@ -109,6 +113,7 @@ NE.EventHandlers = (function () {
             e.preventDefault();
             return false;
         },
+
 
         //////////////////////
         //
