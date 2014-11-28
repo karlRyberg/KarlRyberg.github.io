@@ -98,7 +98,8 @@ NE.Plugin.page = function (i_params) {
     }
 
     var _time;
-    var _fnScroll = false;
+    var _scrollExitTImer;
+    var _negScroll = 0;
     function _addScrollWatch() {
 
         _myDOMContent.first().on('scroll', function () {
@@ -107,19 +108,23 @@ NE.Plugin.page = function (i_params) {
             var tr = $('#tracer');
 
             if (mp.scrollTop() < 0) {
-                tr.html('Less ' + mp.scrollTop() + '<br/>');
+                tr.css('top', (100 + tr.scrollTop()) + 'px')
             }
             else if (mp.scrollTop() === 0) {
-                tr.html(tr.html() + 'Zero ' + mp.scrollTop() + '<br/>');
+                clearTimeout(_scrollExitTImer);
+                _negScroll++;
+                tr.css('top', (-tr.outerHeight() + _negScroll) + 'px')
                 $(this).scrollTop(1)
-                _fnScroll = true;
             }
-            else if (!_fnScroll) {
-                tr.html(tr.html() + 'Not top ' + mp.scrollTop() + '<br/>');
-                _fnScroll = false;
+            else if (mp.scrollTop() === 1) {
+                _scrollExitTImer = setTimeout(function () {
+                    tr.css('top', (-tr.outerHeight()) + 'px')
+                    _negScroll = 0;
+                }, 400);
             }
-
-
+            else {
+                //tr.html(tr.html() + 'Not top ' + mp.scrollTop() + '<br/>');
+            }
 
         });
 
