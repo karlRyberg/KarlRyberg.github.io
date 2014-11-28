@@ -101,6 +101,8 @@ NE.Plugin.page = function (i_params) {
     var _scrollExitTImer;
     var _negScroll = 0;
     var _navTimer;
+    var _beenNegative = false;
+
     function _addScrollWatch() {
 
         _myDOMContent.first().on('scroll', function () {
@@ -110,12 +112,12 @@ NE.Plugin.page = function (i_params) {
             var newPos;
 
             if (mp.scrollTop() < 0) {
-
+                _beenNegative = true;
                 newPos = Math.min(-tr.outerHeight() - mp.scrollTop(), 0);
                 tr.stop().css('top', newPos + 'px');
 
             }
-            else if (mp.scrollTop() === 0) {
+            else if (mp.scrollTop() === 0 && !_beenNegative) {
 
                 clearTimeout(_scrollExitTImer);
 
