@@ -108,7 +108,7 @@ NE.Plugin.page = function (i_params) {
             var tr = $('#tracer');
 
             if (mp.scrollTop() < 0) {
-                tr.css('top', (-tr.outerHeight() + mp.scrollTop()) + 'px')
+                tr.css('top', (-tr.outerHeight() - mp.scrollTop()) + 'px')
             }
             else if (mp.scrollTop() === 0) {
                 clearTimeout(_scrollExitTImer);
