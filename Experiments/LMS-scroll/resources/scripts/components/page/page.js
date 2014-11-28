@@ -100,31 +100,49 @@ NE.Plugin.page = function (i_params) {
     var _time;
     var _scrollExitTImer;
     var _negScroll = 0;
+    var _navTimer;
     function _addScrollWatch() {
 
         _myDOMContent.first().on('scroll', function () {
 
             var mp = $(this)
             var tr = $('#tracer');
+            var newPos;
 
             if (mp.scrollTop() < 0) {
-                tr.css('top', (-tr.outerHeight() - mp.scrollTop()) + 'px')
+
+                newPos = Math.min(-tr.outerHeight() - mp.scrollTop(), 0);
+                tr.stop().css('top', newPos + 'px');
+
             }
             else if (mp.scrollTop() === 0) {
+
                 clearTimeout(_scrollExitTImer);
-                _negScroll++;
-                tr.css('top', (-tr.outerHeight() + _negScroll) + 'px')
-                $(this).scrollTop(1)
+
+                newPos = tr.position().top - (tr.position().top * .4);
+                tr.stop().css('top', newPos + 'px');
+                $(this).scrollTop(1);
+
             }
             else if (mp.scrollTop() === 1) {
+                clearTimeout(_navTimer);
                 _scrollExitTImer = setTimeout(function () {
-                    tr.css('top', (-tr.outerHeight()) + 'px')
+                    tr.animate({ 'top': (-tr.outerHeight()) + 'px' }, 200);
                     _negScroll = 0;
                 }, 400);
             }
-            else {
-                //tr.html(tr.html() + 'Not top ' + mp.scrollTop() + '<br/>');
+            else if (mp.scrollTop() > 1 && tr.position().top > -tr.outerHeight()) {
+                clearTimeout(_navTimer);
+                clearTimeout(_scrollExitTImer);
+                tr.animate({ 'top': (-tr.outerHeight()) + 'px' }, 200);
             }
+
+            if (tr.position().top > -10) {
+                _navTimer = setTimeout(function () {
+                    NE.Navigation.Previous();
+                }, 500);
+            }
+       
 
         });
 
