@@ -113,7 +113,7 @@ NE.Plugin.page = function (i_params) {
 
             if (mp.scrollTop() < 0) {
                 _beenNegative = true;
-                newPos = Math.min(-sh.outerHeight() - mp.scrollTop(), 0);
+                newPos = Math.min(-sh.outerHeight() - (mp.scrollTop() * 1.2), 0);
                 sh.stop().css('top', newPos + 'px');
 
             }
