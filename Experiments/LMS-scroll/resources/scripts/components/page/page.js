@@ -130,7 +130,7 @@ NE.Plugin.page = function (i_params) {
             else if (mp.scrollTop() === 0 && !_beenNegative) {
                 newPos = Math.min(sh.position().top - (sh.position().top * .60), 0);
                 sh.stop().css('top', newPos + 'px');
-                $(this).scrollTop(1);
+                mp.scrollTop(1);
 
             }
 
@@ -150,6 +150,7 @@ NE.Plugin.page = function (i_params) {
                         if (sh.position().top > -20) {
                             _hideScrollNavHinter(sh);
                             $('#tracer').html('');
+                            mp.scrollTop(0);
                                 NE.Navigation.Previous();
              
                         }
