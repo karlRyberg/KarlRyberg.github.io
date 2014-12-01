@@ -247,6 +247,7 @@ NE.UI = (function () {
 
             setTimeout(function () {
                 NE.UI.ApplyVerticalScrollbar();
+                currentPage.focus();
             }, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
