@@ -169,8 +169,7 @@ NE.Plugin.page = function (i_params) {
 
     function _scrollNavBottom(i_pageDiv, i_hinter) {
 
-        if (
-            _settings.chapterIndex != NE.Navigation.CurrentChapterIndex
+        if (_settings.chapterIndex != NE.Navigation.CurrentChapterIndex
             ||
             _settings.index != NE.Navigation.CurrentPageIndex
             ) return;
@@ -179,19 +178,28 @@ NE.Plugin.page = function (i_params) {
 
         var overFlowHeight = i_pageDiv[0].scrollHeight - $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).innerHeight();
         var bott = parseInt(i_hinter.css('bottom'), 10);
+        var scrollBottomReset = overFlowHeight - 1;
 
         if (i_pageDiv.scrollTop() > overFlowHeight) {
             _beenOverscrolledBottom = true;
             newPos = Math.min(-i_hinter.outerHeight() + (i_pageDiv.scrollTop() - overFlowHeight), 0);
-            $('#tracer').html( $('#tracer').html() + ' ' + newPos);
             i_hinter.stop().css('bottom', newPos + 'px');
         }
         else if (i_pageDiv.scrollTop() === overFlowHeight && !_beenOverscrolledBottom) {
-       
             newPos = Math.min(bott - (bott * .50), 0);
-            console.log(bott);
             i_hinter.stop().css('bottom', newPos + 'px');
-            i_pageDiv.scrollTop(overFlowHeight-1);
+            i_pageDiv.scrollTop(scrollBottomReset);
+        }
+
+        else if ((i_pageDiv.scrollTop() === scrollBottomReset && !_beenOverscrolledBottom) || (i_pageDiv.scrollTop() === overFlowHeight && _beenOverscrolledBottom)) {
+            setTimeout(function () {
+                i_hinter.animate({
+                    'bottom': (-i_hinter.outerHeight()) + 'px',
+                    'border-top-left-radius': '100%',
+                    'border-top-right-radius': '100%',
+                    'opacity': 0
+                }, 200);
+            }, 250);
         }
 
         var rad = Math.max((-bott), 10);
