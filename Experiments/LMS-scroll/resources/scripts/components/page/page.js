@@ -119,6 +119,8 @@ NE.Plugin.page = function (i_params) {
             var sh = $('#NE-scroll-nav-hint');
             var newPos;
 
+            $('#tracer').html($('#tracer').html() + ' ' + mp.scrollTop());
+
             if (mp.scrollTop() < 0) {
                 _beenNegative = true;
                 newPos = Math.min(-sh.outerHeight() - (mp.scrollTop() * 1), 0);
