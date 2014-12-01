@@ -116,11 +116,13 @@ button:active {
     z-index: 1060;
     font-size: 50px;
     line-height: 80px;
+    border: 1px solid #c0c0c0;
+    border-top: none;
     background-color: #808080;
-    color: white;
+    color: #fff;
     text-align: center;
     opacity: 0;
-    padding-top: 20px;
+    padding-top: 15px;
 }
 
 @-webkit-keyframes scrollHintAnim {

@@ -163,11 +163,11 @@ NE.Plugin.page = function (i_params) {
             }
 
             var rad = Math.max((-sh.position().top), 10);
-
+          
             sh.css({
                 'border-bottom-left-radius': rad + '%',
                 'border-bottom-right-radius': rad + '%',
-                'opacity': ((sh.outerHeight() + sh.position().top) / 80)
+                'opacity': ((sh.outerHeight() + sh.position().top) / 100)
             });
 
 
