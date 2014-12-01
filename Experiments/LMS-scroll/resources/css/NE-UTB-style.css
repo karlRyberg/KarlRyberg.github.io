@@ -115,9 +115,9 @@ button:active {
     z-index: 1061;
     font-size: 50px;
     line-height: 80px;
-    border: 1px solid #c0c0c0;
-    background-color: #808080;
-    color: #fff;
+    /*border: 1px solid #fff;*/
+    /*background-color: rgba(255,255,255,0.5);*/
+    color: #c0c0c0;
     text-align: center;
     opacity: 0;
 }
@@ -125,7 +125,7 @@ button:active {
 #NE-scroll-nav-hint-top {
     top: -100px;
     border-top: none;
-    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 
@@ -133,7 +133,7 @@ button:active {
     position: fixed;
     bottom: -100px;
     border-bottom: none;
-    padding-bottom: 15px;
+    padding-top: 15px;
 }
 
 @-webkit-keyframes scrollHintAnim {
