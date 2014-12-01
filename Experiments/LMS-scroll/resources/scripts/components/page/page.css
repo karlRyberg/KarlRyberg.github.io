@@ -9,9 +9,11 @@
     padding-bottom: 0px;
 }
 
-.NE-page:focus{
+    .NE-page:focus {
         outline: none;
-}
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
 
     .NE-page > .container {
         background-color: white;

@@ -208,7 +208,9 @@ NE.UI = (function () {
 
             jqObj.css({
                 'padding-bottom': '0px',
-                'padding-left' : _getScrollbarWidth() + 'px'
+                'padding-left': _getScrollbarWidth() + 'px',
+                'overflow-y': 'scroll',
+                '-webkit-overflow-scrolling': 'touch'
             });
 
             jqObj.children('.container, .NE-full-width').each(function () {
