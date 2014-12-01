@@ -158,7 +158,7 @@ NE.Plugin.page = function (i_params) {
                             NE.Navigation.Previous();
                         }
                         _navTimer = null;
-                    }, 400);
+                    }, 600);
                 }
             }
 

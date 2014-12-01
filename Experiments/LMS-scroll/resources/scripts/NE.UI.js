@@ -208,9 +208,7 @@ NE.UI = (function () {
 
             jqObj.css({
                 'padding-bottom': '0px',
-                'padding-left': _getScrollbarWidth() + 'px',
-                'overflow-y': 'scroll',
-                '-webkit-overflow-scrolling': 'touch'
+                'padding-left': _getScrollbarWidth() + 'px'
             });
 
             jqObj.children('.container, .NE-full-width').each(function () {
@@ -224,6 +222,12 @@ NE.UI = (function () {
             }
 
 
+            jqObj.css({
+                'overflow-y': 'scroll',
+                '-webkit-overflow-scrolling': 'touch'
+            });
+
+            jqObj.focus();
         },
 
         ResizeScrollContainer: function () {
@@ -249,7 +253,6 @@ NE.UI = (function () {
 
             setTimeout(function () {
                 NE.UI.ApplyVerticalScrollbar();
-                currentPage.focus();
             }, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
