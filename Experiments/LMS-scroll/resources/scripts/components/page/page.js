@@ -179,7 +179,7 @@ NE.Plugin.page = function (i_params) {
 
         var overFlowHeight = i_pageDiv[0].scrollHeight - $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).innerHeight();
         var bott = parseInt(i_hinter.css('bottom'), 10);
-
+        $('#tracer').html(i_pageDiv.scrollTop() + ' > ' + overFlowHeight);
         if (i_pageDiv.scrollTop() > overFlowHeight) {
             _beenOverscrolledBottom = true;
             newPos = Math.min(-i_hinter.outerHeight() - (i_pageDiv.scrollTop() - $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).innerHeight()), 0);
