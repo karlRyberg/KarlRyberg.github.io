@@ -149,7 +149,7 @@ NE.Plugin.page = function (i_params) {
                     _navTimer = setTimeout(function () {
                         if (sh.position().top > -20) {
                             _hideScrollNavHinter(sh);
-
+                            $('#tracer').html('');
                                 NE.Navigation.Previous();
              
                         }
