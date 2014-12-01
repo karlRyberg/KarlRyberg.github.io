@@ -241,7 +241,7 @@ NE.UI = (function () {
             var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
             var scroller = $('#' + NE.Constants.SCROLL_CONTAINER_ID);
 
-            currentPage.scrollTop(0);
+
             currentChapter.stop(true, true).animate({ 'scrollTop': '+=' + (currentPage.position().top - _topNavBarHeight) }, animTime);
             scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
 

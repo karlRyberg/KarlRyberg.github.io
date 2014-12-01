@@ -120,9 +120,12 @@ NE.Plugin.page = function (i_params) {
             var sh = $('#NE-scroll-nav-hint');
             var newPos;
 
-            if (_settings.chapterIndex != NE.Navigation.CurrentChapterIndex || _settings.index != NE.Navigation.CurrentPageIndex) {
-                return;
-            }
+            if (
+                _settings.chapterIndex != NE.Navigation.CurrentChapterIndex
+                ||
+                _settings.index != NE.Navigation.CurrentPageIndex
+                ) return;
+
 
             if (mp.scrollTop() < 0) {
                 _beenNegative = true;
