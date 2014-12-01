@@ -84,6 +84,8 @@ NE.Plugin.revealbutton.EventHandlers = (function () {
             var area = $('#' + id);
             var that = sender;
 
+            NE.UI.AcceptScrollEvent = false;
+
             if (!that.hasClass('open')) {
 
                 that.addClass('active');
@@ -93,7 +95,8 @@ NE.Plugin.revealbutton.EventHandlers = (function () {
                     that.removeClass('active').addClass('open');
                     setTimeout(function () {
                         NE.UI.ApplyVerticalScrollbar();
-                    }, 300);
+                        NE.UI.AcceptScrollEvent = true;
+                    }, 400);
                 });
 
             }
@@ -107,7 +110,8 @@ NE.Plugin.revealbutton.EventHandlers = (function () {
                     area.addClass('hidden');
                     setTimeout(function () {
                         NE.UI.ApplyVerticalScrollbar();
-                    }, 300);
+                        NE.UI.AcceptScrollEvent = true;
+                    }, 400);
                 });
 
             }

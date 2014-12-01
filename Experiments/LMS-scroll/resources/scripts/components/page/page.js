@@ -234,7 +234,9 @@ NE.Plugin.page = function (i_params) {
 
     function _addScrollWatch() {
 
-        _myDOMContent.first().on('scroll', function () {
+        _myDOMContent.first().on('scroll', function (e) {
+            console.log(NE.UI.AcceptScrollEvent);
+            if (!NE.UI.AcceptScrollEvent) return;
 
             var mp = $(this);
             var sht = $('#NE-scroll-nav-hint-top');
@@ -265,6 +267,7 @@ NE.Plugin.page = function (i_params) {
         Dependencies: [
             'page.css'
         ],
+
 
         //////////////////////
         //

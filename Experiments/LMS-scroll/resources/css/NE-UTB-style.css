@@ -120,7 +120,6 @@ button:active {
     color: #fff;
     text-align: center;
     opacity: 0;
-    visibility: hidden;
 }
 
 #NE-scroll-nav-hint-top {

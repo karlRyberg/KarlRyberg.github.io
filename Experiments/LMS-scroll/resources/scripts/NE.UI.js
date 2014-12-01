@@ -150,7 +150,7 @@ NE.UI = (function () {
         //
         /////////////////////
 
-
+        AcceptScrollEvent: true,
 
         //////////////////////
         //
