@@ -42,6 +42,11 @@ NE.Plugin.page = function (i_params) {
     var _componentsLoaded = 0;
 
 
+    var _scrollExitTImer;
+    var _navTimer;
+    var _beenNegative = false;
+    var _beenOverscrolledBottom
+
     //////////////////////
     //
     //  Initiation
@@ -107,69 +112,106 @@ NE.Plugin.page = function (i_params) {
         }, 200);
     }
 
-    var _time;
-    var _scrollExitTImer;
-    var _navTimer;
-    var _beenNegative = false;
+    function _scrollNavTop(i_pageDiv, i_hinter) {
+        var newPos;
+
+        if (
+            _settings.chapterIndex != NE.Navigation.CurrentChapterIndex
+            ||
+            _settings.index != NE.Navigation.CurrentPageIndex
+            ) return;
+
+
+        if (i_pageDiv.scrollTop() < 0) {
+            _beenNegative = true;
+            newPos = Math.min(-i_hinter.outerHeight() - (i_pageDiv.scrollTop() * 1), 0);
+            i_hinter.stop().css('top', newPos + 'px');
+
+        }
+        else if (i_pageDiv.scrollTop() === 0 && !_beenNegative) {
+            newPos = Math.min(i_hinter.position().top - (i_hinter.position().top * .50), 0);
+            i_hinter.stop().css('top', newPos + 'px');
+            i_pageDiv.scrollTop(1);
+
+        }
+
+        else if ((i_pageDiv.scrollTop() === 1 && !_beenNegative) || (i_pageDiv.scrollTop() === 0 && _beenNegative)) {
+            _scrollExitTImer = setTimeout(function () {
+                _hideScrollNavHinter(i_hinter);
+            }, 250);
+        }
+
+        else if ((i_pageDiv.scrollTop() > 1 && i_hinter.position().top > -i_hinter.outerHeight())) {
+            _hideScrollNavHinter(i_hinter);
+        }
+
+        if (i_hinter.position().top > -40) {
+            if (!_navTimer) {
+                _navTimer = setTimeout(function () {
+                    if (i_hinter.position().top > -30) {
+                        _hideScrollNavHinter(i_hinter);
+                        NE.Navigation.Previous();
+                    }
+                    _navTimer = null;
+                }, 600);
+            }
+        }
+
+        var rad = Math.max((-i_hinter.position().top), 10);
+        i_hinter.css({
+            'border-bottom-left-radius': rad + '%',
+            'border-bottom-right-radius': rad + '%',
+            'opacity': ((i_hinter.outerHeight() + i_hinter.position().top) / 100)
+        });
+
+    }
+
+
+    function _scrollNavBottom(i_pageDiv, i_hinter) {
+
+        if (
+            _settings.chapterIndex != NE.Navigation.CurrentChapterIndex
+            ||
+            _settings.index != NE.Navigation.CurrentPageIndex
+            ) return;
+
+        var newPos;
+
+        var overFlowHeight = i_pageDiv[0].scrollHeight - $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).innerHeight();
+        var bott = parseInt(i_hinter.css('bottom'), 10);
+
+        if (i_pageDiv.scrollTop() > overFlowHeight) {
+            _beenOverscrolledBottom = true;
+            newPos = Math.min(-i_hinter.outerHeight() - (overFlowHeight * 1), 0);
+            i_hinter.stop().css('top', newPos + 'px');
+        }
+        else if (i_pageDiv.scrollTop() === overFlowHeight && !_beenNegative) {
+       
+            newPos = Math.min(bott - (bott * .50), 0);
+            console.log(bott);
+            i_hinter.stop().css('bottom', newPos + 'px');
+            i_pageDiv.scrollTop(overFlowHeight-1);
+        }
+
+        var rad = Math.max((-bott), 10);
+        i_hinter.css({
+            'border-top-left-radius': rad + '%',
+            'border-top-right-radius': rad + '%',
+            'opacity': ((i_hinter.outerHeight() + i_hinter.position().top) / 100)
+        });
+
+
+    }
 
     function _addScrollWatch() {
 
         _myDOMContent.first().on('scroll', function () {
 
             var mp = $(this);
-            var sh = $('#NE-scroll-nav-hint');
-            var newPos;
-
-            if (
-                _settings.chapterIndex != NE.Navigation.CurrentChapterIndex
-                ||
-                _settings.index != NE.Navigation.CurrentPageIndex
-                ) return;
-
-
-            if (mp.scrollTop() < 0) {
-                _beenNegative = true;
-                newPos = Math.min(-sh.outerHeight() - (mp.scrollTop() * 1), 0);
-                sh.stop().css('top', newPos + 'px');
-
-            }
-            else if (mp.scrollTop() === 0 && !_beenNegative) {
-                newPos = Math.min(sh.position().top - (sh.position().top * .50), 0);
-                sh.stop().css('top', newPos + 'px');
-                mp.scrollTop(1);
-
-            }
-
-            else if ((mp.scrollTop() === 1 && !_beenNegative) || (mp.scrollTop() === 0 && _beenNegative)) {
-                _scrollExitTImer = setTimeout(function () {
-                    _hideScrollNavHinter(sh);
-                }, 250);
-            }
-
-            else if ((mp.scrollTop() > 1 && sh.position().top > -sh.outerHeight())) {
-                _hideScrollNavHinter(sh);
-            }
-
-            if (sh.position().top > -40) {
-                if (!_navTimer) {
-                    _navTimer = setTimeout(function () {
-                        if (sh.position().top > -30) {
-                            _hideScrollNavHinter(sh);
-                            NE.Navigation.Previous();
-                        }
-                        _navTimer = null;
-                    }, 600);
-                }
-            }
-
-            var rad = Math.max((-sh.position().top), 10);
-          
-            sh.css({
-                'border-bottom-left-radius': rad + '%',
-                'border-bottom-right-radius': rad + '%',
-                'opacity': ((sh.outerHeight() + sh.position().top) / 100)
-            });
-
+            var sht = $('#NE-scroll-nav-hint-top');
+            var shb = $('#NE-scroll-nav-hint-bottom');
+            _scrollNavTop(mp, sht);
+            _scrollNavBottom(mp, shb);
 
         });
 
