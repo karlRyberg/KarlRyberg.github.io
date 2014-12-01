@@ -42,10 +42,10 @@ NE.Plugin.page = function (i_params) {
     var _componentsLoaded = 0;
 
 
-    var _scrollExitTImer;
-    var _navTimer;
-    var _beenNegative = false;
-    var _beenOverscrolledBottom
+    var _navTopTimer;
+    var _navBottomTimer;
+    var _beenOverscrolledTop = false;
+    var _beenOverscrolledBottom = false;
 
     //////////////////////
     //
@@ -103,11 +103,20 @@ NE.Plugin.page = function (i_params) {
         });
     }
 
-    function _hideScrollNavHinter(i_obj) {
+    function _hideTopScrollNavHinter(i_obj) {
         i_obj.animate({
             'top': (-i_obj.outerHeight()) + 'px',
             'border-bottom-left-radius': '100%',
             'border-bottom-right-radius': '100%',
+            'opacity': 0
+        }, 200);
+    }
+
+    function _hideBottomScrollNavHinter(i_obj) {
+        i_obj.animate({
+            'bottom': (-i_obj.outerHeight()) + 'px',
+            'border-top-left-radius': '100%',
+            'border-top-right-radius': '100%',
             'opacity': 0
         }, 200);
     }
@@ -123,36 +132,36 @@ NE.Plugin.page = function (i_params) {
 
 
         if (i_pageDiv.scrollTop() < 0) {
-            _beenNegative = true;
+            _beenOverscrolledTop = true;
             newPos = Math.min(-i_hinter.outerHeight() - i_pageDiv.scrollTop(), 0);
             i_hinter.stop().css('top', newPos + 'px');
 
         }
-        else if (i_pageDiv.scrollTop() === 0 && !_beenNegative) {
+        else if (i_pageDiv.scrollTop() === 0 && !_beenOverscrolledTop) {
             newPos = Math.min(i_hinter.position().top - (i_hinter.position().top * .50), 0);
             i_hinter.stop().css('top', newPos + 'px');
             i_pageDiv.scrollTop(1);
 
         }
 
-        else if ((i_pageDiv.scrollTop() === 1 && !_beenNegative) || (i_pageDiv.scrollTop() === 0 && _beenNegative)) {
-            _scrollExitTImer = setTimeout(function () {
-                _hideScrollNavHinter(i_hinter);
+        else if ((i_pageDiv.scrollTop() === 1 && !_beenOverscrolledTop) || (i_pageDiv.scrollTop() === 0 && _beenOverscrolledTop)) {
+        setTimeout(function () {
+                _hideTopScrollNavHinter(i_hinter);
             }, 250);
         }
 
         else if ((i_pageDiv.scrollTop() > 1 && i_hinter.position().top > -i_hinter.outerHeight())) {
-            _hideScrollNavHinter(i_hinter);
+            _hideTopScrollNavHinter(i_hinter);
         }
 
         if (i_hinter.position().top > -40) {
-            if (!_navTimer) {
-                _navTimer = setTimeout(function () {
+            if (!_navTopTimer) {
+                _navTopTimer = setTimeout(function () {
                     if (i_hinter.position().top > -30) {
-                        _hideScrollNavHinter(i_hinter);
+                        _hideTopScrollNavHinter(i_hinter);
                         NE.Navigation.Previous();
                     }
-                    _navTimer = null;
+                    _navTopTimer = null;
                 }, 600);
             }
         }
@@ -193,13 +202,24 @@ NE.Plugin.page = function (i_params) {
 
         else if ((i_pageDiv.scrollTop() === scrollBottomReset && !_beenOverscrolledBottom) || (i_pageDiv.scrollTop() === overFlowHeight && _beenOverscrolledBottom)) {
             setTimeout(function () {
-                i_hinter.animate({
-                    'bottom': (-i_hinter.outerHeight()) + 'px',
-                    'border-top-left-radius': '100%',
-                    'border-top-right-radius': '100%',
-                    'opacity': 0
-                }, 200);
+                _hideBottomScrollNavHinter(i_hinter);
             }, 250);
+        }
+
+        else if ((i_pageDiv.scrollTop() < scrollBottomReset && bott > -i_hinter.outerHeight())) {
+            _hideBottomScrollNavHinter(i_hinter);
+        }
+
+        if (bott > -40) {
+            if (!_navBottomTimer) {
+                _navBottomTimer = setTimeout(function () {
+                    if (parseInt(i_hinter.css('bottom'), 10) > -30) {
+                        _hideBottomScrollNavHinter(i_hinter);
+                        NE.Navigation.Next();
+                    }
+                    _navBottomTimer = null;
+                }, 600);
+            }
         }
 
         var rad = Math.max((-bott), 10);
