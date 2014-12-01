@@ -183,8 +183,8 @@ NE.Plugin.page = function (i_params) {
         if (i_pageDiv.scrollTop() > overFlowHeight) {
             _beenOverscrolledBottom = true;
             newPos = Math.min(-i_hinter.outerHeight() + (i_pageDiv.scrollTop() - overFlowHeight), 0);
-      
-            i_hinter.stop().css('top', newPos + 'px');
+            $('#tracer').html( $('#tracer').html() + ' ' + newPos);
+            i_hinter.stop().css('bottom', newPos + 'px');
         }
         else if (i_pageDiv.scrollTop() === overFlowHeight && !_beenOverscrolledBottom) {
        
