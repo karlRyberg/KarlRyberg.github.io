@@ -9,6 +9,10 @@
     padding-bottom: 0px;
 }
 
+.NE-page > * {
+    -webkit-transform: translateZ(0px);
+}
+
     .NE-page > .container {
         background-color: white;
     }

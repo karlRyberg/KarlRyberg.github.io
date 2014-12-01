@@ -120,11 +120,10 @@ NE.Plugin.page = function (i_params) {
             var sh = $('#NE-scroll-nav-hint');
             var newPos;
 
-            $('#tracer').html($('#tracer').html() + ' ' + (_settings.chapterIndex + '_' + _settings.index + ' ==' + NE.Navigation.CurrentChapterIndex + '_' + NE.Navigation.CurrentPageIndex));
             if (_settings.chapterIndex != NE.Navigation.CurrentChapterIndex || _settings.index != NE.Navigation.CurrentPageIndex) {
                 return;
             }
-                
+
             if (mp.scrollTop() < 0) {
                 _beenNegative = true;
                 newPos = Math.min(-sh.outerHeight() - (mp.scrollTop() * 1), 0);
@@ -153,8 +152,6 @@ NE.Plugin.page = function (i_params) {
                     _navTimer = setTimeout(function () {
                         if (sh.position().top > -20) {
                             _hideScrollNavHinter(sh);
-                            $('#tracer').html('');
-                            mp.scrollTop(0);
                             NE.Navigation.Previous();
                         }
                         _navTimer = null;
