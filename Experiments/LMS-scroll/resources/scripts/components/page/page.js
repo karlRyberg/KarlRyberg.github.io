@@ -124,7 +124,7 @@ NE.Plugin.page = function (i_params) {
 
         if (i_pageDiv.scrollTop() < 0) {
             _beenNegative = true;
-            newPos = Math.min(-i_hinter.outerHeight() - (i_pageDiv.scrollTop() * 1), 0);
+            newPos = Math.min(-i_hinter.outerHeight() - i_pageDiv.scrollTop(), 0);
             i_hinter.stop().css('top', newPos + 'px');
 
         }
@@ -182,7 +182,8 @@ NE.Plugin.page = function (i_params) {
 
         if (i_pageDiv.scrollTop() > overFlowHeight) {
             _beenOverscrolledBottom = true;
-            newPos = Math.min(-i_hinter.outerHeight() - (overFlowHeight * 1), 0);
+            newPos = Math.min(-i_hinter.outerHeight() - (i_pageDiv.scrollTop() - $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).innerHeight()), 0);
+            $('#tracer').html(newPos);
             i_hinter.stop().css('top', newPos + 'px');
         }
         else if (i_pageDiv.scrollTop() === overFlowHeight && !_beenNegative) {
@@ -197,7 +198,7 @@ NE.Plugin.page = function (i_params) {
         i_hinter.css({
             'border-top-left-radius': rad + '%',
             'border-top-right-radius': rad + '%',
-            'opacity': ((i_hinter.outerHeight() + i_hinter.position().top) / 100)
+            'opacity': ((i_hinter.outerHeight() + bott) / 100)
         });
 
 
