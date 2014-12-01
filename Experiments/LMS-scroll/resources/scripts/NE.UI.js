@@ -216,9 +216,9 @@ NE.UI = (function () {
             });
 
 
-            if (totalHeight < jqObj.innerHeight()) {
-                var pad = (jqObj.innerHeight() - totalHeight) + 20;
-                jqObj.css('padding-bottom', pad + 'px').scrollTop(2);
+            if (totalHeight < jqObj.outerHeight(true)) {
+                var pad = (jqObj.outerHeight(true) - totalHeight) + 10;
+                jqObj.css( 'padding-bottom', pad + 'px').scrollTop(2);
             }
 
 

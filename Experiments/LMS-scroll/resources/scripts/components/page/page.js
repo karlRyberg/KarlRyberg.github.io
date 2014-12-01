@@ -145,7 +145,7 @@ NE.Plugin.page = function (i_params) {
         }
 
         else if ((i_pageDiv.scrollTop() === 1 && !_beenOverscrolledTop) || (i_pageDiv.scrollTop() === 0 && _beenOverscrolledTop)) {
-        setTimeout(function () {
+            setTimeout(function () {
                 _hideTopScrollNavHinter(i_hinter);
             }, 250);
         }
@@ -185,16 +185,16 @@ NE.Plugin.page = function (i_params) {
 
         var newPos;
 
-        var overFlowHeight = i_pageDiv[0].scrollHeight - $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).innerHeight();
+        var overFlowHeight = i_pageDiv[0].scrollHeight - i_pageDiv.innerHeight();
         var bott = parseInt(i_hinter.css('bottom'), 10);
         var scrollBottomReset = overFlowHeight - 1;
 
-        if (i_pageDiv.scrollTop() > overFlowHeight) {
+        if (i_pageDiv.scrollTop() > overFlowHeight + 1) {
             _beenOverscrolledBottom = true;
             newPos = Math.min(-i_hinter.outerHeight() + (i_pageDiv.scrollTop() - overFlowHeight), 0);
             i_hinter.stop().css('bottom', newPos + 'px');
         }
-        else if (i_pageDiv.scrollTop() === overFlowHeight && !_beenOverscrolledBottom) {
+        else if (i_pageDiv.scrollTop() >= overFlowHeight && !_beenOverscrolledBottom) {
             newPos = Math.min(bott - (bott * .50), 0);
             i_hinter.stop().css('bottom', newPos + 'px');
             i_pageDiv.scrollTop(scrollBottomReset);
