@@ -134,7 +134,7 @@ NE.Plugin.page = function (i_params) {
 
             }
             else if (mp.scrollTop() === 0 && !_beenNegative) {
-                newPos = Math.min(sh.position().top - (sh.position().top * .60), 0);
+                newPos = Math.min(sh.position().top - (sh.position().top * .50), 0);
                 sh.stop().css('top', newPos + 'px');
                 mp.scrollTop(1);
 
@@ -153,7 +153,7 @@ NE.Plugin.page = function (i_params) {
             if (sh.position().top > -40) {
                 if (!_navTimer) {
                     _navTimer = setTimeout(function () {
-                        if (sh.position().top > -20) {
+                        if (sh.position().top > -30) {
                             _hideScrollNavHinter(sh);
                             NE.Navigation.Previous();
                         }
