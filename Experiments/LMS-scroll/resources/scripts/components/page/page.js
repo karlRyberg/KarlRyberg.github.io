@@ -180,7 +180,7 @@ NE.Plugin.page = function (i_params) {
 
     function _scrollNavBottom(i_pageDiv, i_hinter) {
 
-  
+
 
         if (_settings.chapterIndex != NE.Navigation.CurrentChapterIndex
             ||
@@ -236,7 +236,8 @@ NE.Plugin.page = function (i_params) {
 
     var _scrollOverflowTop = 0;
     var _scrollOverflowBottom = 0;
-
+    var _scrollTopInterval;
+    var _scrollTopIntervalDelay;
     function _addScrollWatch() {
 
         _myDOMContent.first().on('scroll', function (e) {
@@ -250,14 +251,28 @@ NE.Plugin.page = function (i_params) {
 
             var scrollPos = mp.scrollTop();
 
-            var docOverflow = mp[0].scrollHeight - mp.innerHeight();
-
             if (scrollPos < 0) {
                 _scrollOverflowTop = scrollPos;
             }
             else if (scrollPos == 0) {
-                _scrollOverflowTop += 1;
+                clearInterval(_scrollTopInterval);
+                clearTimeout(_scrollTopIntervalDelay);
+                _scrollTopIntervalDelay = setTimeout(function () {
+                    _scrollTopInterval = setInterval(function () {
+                        if (_scrollOverflowTop < 0) {
+                            _scrollOverflowTop = Math.round(_scrollOverflowTop/2);
+                        }
+                        else {
+                            clearInterval(_scrollTopInterval);
+                        }
+                        $('#tracer').html(_scrollOverflowTop);
+                    }, 100);
+                }, 300);
+                _scrollOverflowTop -= 6;
                 mp.scrollTop(1);
+            }
+            else if (scrollPos == 1) {
+
             }
             else if (scrollPos > 1) {
                 _scrollOverflowTop = 0;
@@ -266,9 +281,11 @@ NE.Plugin.page = function (i_params) {
             $('#tracer').html(_scrollOverflowTop);
 
 
+            var docOverflow = mp[0].scrollHeight - mp.innerHeight();
+
 
             // _scrollNavTop(mp, sht);
-           // _scrollNavBottom(mp, shb);
+            // _scrollNavBottom(mp, shb);
 
         });
 
