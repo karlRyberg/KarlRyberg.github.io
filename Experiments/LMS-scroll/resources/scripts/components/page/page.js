@@ -150,6 +150,7 @@ NE.Plugin.page = function (i_params) {
     var _scrollBottomInterval;
     var _scrollBottomIntervalDelay;
     var _scrollNavLimit = 100;
+    var _inertScroll = false;
     function _addScrollWatch() {
 
         _myDOMContent.first().on('scroll', function (e) {
@@ -164,9 +165,10 @@ NE.Plugin.page = function (i_params) {
             var scrollPos = mp.scrollTop();
 
             if (scrollPos < 0) {
+                _inertScroll = true;
                 _scrollOverflowTop = scrollPos;
             }
-            else if (scrollPos == 0) {
+            else if (scrollPos == 0 && !_inertScroll) {
 
                 _scrollTopCountDown();
 
@@ -178,14 +180,13 @@ NE.Plugin.page = function (i_params) {
             }
 
 
-
-
             var docOverflow = mp[0].scrollHeight - mp.innerHeight();
 
             if (scrollPos > docOverflow + 1) {
+                _inertScroll = true;
                 _scrollOverflowBottom = docOverflow;
             }
-            else if (scrollPos == docOverflow || scrollPos == docOverflow + 1) {
+            else if ((scrollPos == docOverflow || scrollPos == docOverflow + 1) && !_inertScroll) {
                 _scrollBottomCountDown();
                 _scrollOverflowBottom += (_scrollNavLimit - _scrollOverflowBottom) * .4;
                 mp.scrollTop(docOverflow - 1);
