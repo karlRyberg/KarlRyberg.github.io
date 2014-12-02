@@ -166,7 +166,7 @@ NE.Plugin.page = function (i_params) {
 
             if (scrollPos < 0) {
                 _inertScroll = true;
-                _scrollOverflowTop = scrollPos;
+                _scrollOverflowTop = Math.abs(scrollPos);
             }
             else if (scrollPos == 0 && !_inertScroll) {
                 _scrollOverflowTop += (_scrollNavLimit - _scrollOverflowTop) * .4;
@@ -181,7 +181,7 @@ NE.Plugin.page = function (i_params) {
 
             if (scrollPos > docOverflow + 1) {
                 _inertScroll = true;
-                _scrollOverflowBottom = docOverflow;
+                _scrollOverflowBottom = scrollPos - docOverflow;
             }
             else if ((scrollPos == docOverflow || scrollPos == docOverflow + 1) && !_inertScroll) {
                 _scrollOverflowBottom += (_scrollNavLimit - _scrollOverflowBottom) * .4;
