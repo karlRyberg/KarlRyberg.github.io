@@ -234,6 +234,9 @@ NE.Plugin.page = function (i_params) {
 
     }
 
+    var _scrollOverflowTop = 0;
+    var _scrollOverflowBottom = 0;
+
     function _addScrollWatch() {
 
         _myDOMContent.first().on('scroll', function (e) {
@@ -245,13 +248,22 @@ NE.Plugin.page = function (i_params) {
             var shb = $('#NE-scroll-nav-hint-bottom');
 
 
+            var scrollPos = mp.scrollTop();
 
-            var scrollOverflow = mp[0].scrollHeight - mp.innerHeight();
+            var docOverflow = mp[0].scrollHeight - mp.innerHeight();
 
-            console.log(scrollOverflow);
+            if (scrollPos < 0) {
+                _scrollOverflowTop = scrollPos;
+            }
+            else if (scrollPos == 0) {
+                _scrollOverflowTop += 1;
+                mp.scrollTop(1);
+            }
+            else if (scrollPos > 1) {
+                _scrollOverflowTop = 0;
+            }
 
-
-
+            $('#tracer').html(_scrollOverflowTop);
 
 
 
