@@ -109,15 +109,15 @@ NE.Plugin.page = function (i_params) {
         var header = $('#' + NE.Constants.FLOATING_HEADER_ID);
         var headerPush = header.outerHeight() + header.position().top;
         $('#NE-scroll-nav-hint-top').css({
-            'top': i_overrideTop || ((headerPush - _scrollNavLimit) + _scrollOverflow.top) + 'px',
-            'opacity': i_overrideTop || Math.min(Math.max(_scrollOverflow.top / 120, 0), 1)
+            'top': i_overrideTop || Math.max((headerPush - _scrollNavLimit) + _scrollOverflow.top, 0) + 'px',
+            'opacity': i_overrideTop || Math.min(Math.max(_scrollOverflow.top / 100, 0), 1)
         });
 
         var footer = $('#' + NE.Constants.FLOATING_FOOTER_ID);
         var footerPush = footer.outerHeight();
         $('#NE-scroll-nav-hint-bottom').css({
-            'bottom': i_overrideBottom || ((footerPush - _scrollNavLimit) + _scrollOverflow.bottom) + 'px',
-            'opacity': i_overrideBottom || Math.min(Math.max(_scrollOverflow.bottom / 120, 0), 1)
+            'bottom': i_overrideBottom || Math.max((footerPush - _scrollNavLimit) + _scrollOverflow.bottom, 0) + 'px',
+            'opacity': i_overrideBottom || Math.min(Math.max(_scrollOverflow.bottom / 100, 0), 1)
         });
     }
 
