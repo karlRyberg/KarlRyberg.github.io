@@ -110,13 +110,13 @@ button:active {
     left: 0px;
     right: 0px;
     width: 80px;
-    height: 100px;
+    height: 80px;
     margin: auto;
     font-size: 50px;
     line-height: 80px;
     /*border: 1px solid #fff;*/
-    /*background-color: rgba(255,255,255,0.5);*/
-    color: #808080;
+    background-color: rgb(0,200,220);
+    color: #fff;
     text-align: center;
     opacity: 0;
     -webkit-transform: translate3d(0px,0px,0px);
@@ -125,7 +125,8 @@ button:active {
 #NE-scroll-nav-hint-top {
     top: -100px;
     border-top: none;
-    padding-bottom: 15px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
 }
 
 
@@ -133,7 +134,8 @@ button:active {
     position: fixed;
     bottom: -100px;
     border-bottom: none;
-    padding-top: 15px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
 }
 
 @-webkit-keyframes scrollHintAnim {

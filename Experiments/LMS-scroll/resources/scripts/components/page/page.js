@@ -128,7 +128,6 @@ NE.Plugin.page = function (i_params) {
             if (NE.Navigation.CurrentChapterIndex == _settings.chapterIndex && NE.Navigation.CurrentPageIndex == _settings.index && !_scrollNavTimer[i_value]) {
                 _scrollNavTimer[i_value] = setTimeout(function () {
                     if (_scrollOverflow[i_value] > _scrollNavLimit * .9) {
-
                         _scrollOverflow.top = -_scrollNavLimit;
                         _scrollOverflow.bottom = -_scrollNavLimit;
                         _renderScrollNav(0, 0);
