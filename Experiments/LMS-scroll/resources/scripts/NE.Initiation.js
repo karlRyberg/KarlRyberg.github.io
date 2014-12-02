@@ -41,7 +41,7 @@ $(window).load(function () {
         NE.EventHandlers.WindowResize();
     });
 
-    new FastClick(document.body);
+    //new FastClick(document.body);
 
     NE.Events.Add(NE.Navigation.ON_NAVIGATION, NE.EventHandlers.Navigation);
 
