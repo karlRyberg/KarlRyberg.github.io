@@ -42,7 +42,7 @@ NE.Plugin.page = function (i_params) {
     var _componentsLoaded = 0;
 
 
-    var _scrollOverflow = { top: 0, bottom: 0 };
+    var _scrollOverflow = { top: -100, bottom: -100 };
     var _scrollInterval = { top: null, bottom: null };
     var _scrollIntervalDelay = { top: null, bottom: null };
     var _scrollNavTimer = { top: null, bottom: null };

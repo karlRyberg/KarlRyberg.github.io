@@ -214,7 +214,7 @@ NE.UI = (function () {
             totalHeight += parseInt(jqObj.css('padding-bottom'), 10);
 
             if (totalHeight < jqObj.outerHeight(true) + 20) {
-                var pad = (jqObj.outerHeight(true) - totalHeight) + 20;
+                var pad = (jqObj.outerHeight(true) - totalHeight) + 40;
                 jqObj.children('.container, .NE-full-width').last().css('margin-bottom', pad + 'px').scrollTop(2);
                 console.log('Adding padding');
             }
