@@ -217,7 +217,7 @@ NE.UI = (function () {
 
 
             if (totalHeight < jqObj.outerHeight(true)) {
-                var pad = (jqObj.outerHeight(true) - totalHeight) + 10;
+                var pad = (jqObj.outerHeight(true) - totalHeight) + 50;
                 jqObj.css( 'padding-bottom', pad + 'px').scrollTop(2);
             }
 
