@@ -42,9 +42,10 @@ NE.Plugin.page = function (i_params) {
     var _componentsLoaded = 0;
 
 
-    var _scrollOverflow = {top:0,bottom:0};
+    var _scrollOverflow = { top: 0, bottom: 0 };
     var _scrollInterval = { top: null, bottom: null };
     var _scrollIntervalDelay = { top: null, bottom: null };
+    var _scrollNavTimer = { top: null, bottom: null };
     var _scrollNavLimit = 100;
     var _inertScroll = false;
 
@@ -109,18 +110,37 @@ NE.Plugin.page = function (i_params) {
         var headerPush = header.outerHeight() + header.position().top;
         $('#NE-scroll-nav-hint-top').css({
             'top': ((headerPush - _scrollNavLimit) + _scrollOverflow.top) + 'px',
-            'opacity': _scrollOverflow.top / 100
+            'opacity': _scrollOverflow.top / 120
         });
 
         var footer = $('#' + NE.Constants.FLOATING_FOOTER_ID);
         var footerPush = footer.outerHeight();
         $('#NE-scroll-nav-hint-bottom').css({
             'bottom': ((footerPush - _scrollNavLimit) + _scrollOverflow.bottom) + 'px',
-            'opacity': _scrollOverflow.bottom / 100
+            'opacity': _scrollOverflow.bottom / 120
         });
     }
 
 
+    function _scrollNavigate(i_value) {
+
+        if (_scrollOverflow[i_value] > _scrollNavLimit * .9) {
+            if (NE.Navigation.CurrentChapterIndex == _settings.chapterIndex && NE.Navigation.CurrentPageIndex == _settings.index && !_scrollNavTimer[i_value]) {
+                _scrollNavTimer[i_value] = setTimeout(function () {
+                    if (_scrollOverflow[i_value] > _scrollNavLimit * .9) {
+                        _scrollOverflow.top = 0;
+                        _scrollOverflow.bottom = 0;
+
+                        i_value == 'top' ? NE.Navigation.Previous() : NE.Navigation.Next();
+                    }
+                    _scrollNavTimer[i_value] = null;
+                }, 700);
+            }
+        }
+
+        _scrollCountDown(i_value);
+
+    }
 
     function _scrollCountDown(i_value) {
 
@@ -137,7 +157,7 @@ NE.Plugin.page = function (i_params) {
                 }
                 _renderScrollNav();
             }, 30);
-        }, 600);
+        }, 500);
     }
 
     function _calcScrollNavTop(i_page, i_scrollTop) {
@@ -152,7 +172,8 @@ NE.Plugin.page = function (i_params) {
         else if (i_scrollTop > 1) {
             _scrollOverflow.top = 0;
         }
-        _scrollCountDown('top');
+
+        _scrollNavigate('top');
     }
 
     function _calcScrollNavBottom(i_page, i_scrollTop) {
@@ -168,7 +189,8 @@ NE.Plugin.page = function (i_params) {
         else if (i_scrollTop < docOverflow - 1) {
             _scrollOverflow.bottom = 0;
         }
-        _scrollCountDown('bottom');
+
+        _scrollNavigate('bottom');
     }
 
     function _addScrollWatch() {
