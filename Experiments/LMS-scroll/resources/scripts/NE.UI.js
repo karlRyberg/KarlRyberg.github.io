@@ -216,7 +216,7 @@ NE.UI = (function () {
 
             totalHeight += parseInt(jqObj.css('padding-bottom'), 10);
 
-            if (totalHeight < jqObj.outerHeight(true)) {
+            if (totalHeight < jqObj.outerHeight(true) + 50) {
                 var pad = (jqObj.outerHeight(true) - totalHeight) + 50;
                 jqObj.css('padding-bottom', pad + 'px').scrollTop(2);
                 console.log('Adding padding');
@@ -247,13 +247,14 @@ NE.UI = (function () {
             var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
             var scroller = $('#' + NE.Constants.SCROLL_CONTAINER_ID);
 
-     
+
             currentChapter.stop(true, true).animate({ 'scrollTop': '+=' + (currentPage.position().top - _topNavBarHeight) }, animTime);
             scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
 
             setTimeout(function () {
                 NE.UI.ApplyVerticalScrollbar();
-                currentPage.stop(true, true).animate({ 'scrollTop': '+=0px' }, 0);
+                var scrollDir = currentPage.scrollTop() < 2 ? 1 : -1
+                currentPage.stop(true, true).animate({ 'scrollTop': '+=' + scrollDir + 'px' }, 0);
             }, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
