@@ -157,7 +157,7 @@ NE.Plugin.page = function (i_params) {
         _scrollIntervalDelay[i_value] = setTimeout(function () {
             _scrollInterval[i_value] = setInterval(function () {
                 if (_scrollOverflow[i_value] > 0) {
-                    _scrollOverflow[i_value] = Math.floor(_scrollOverflow[i_value] * .9);
+                    _scrollOverflow[i_value] = Math.floor(_scrollOverflow[i_value] * 1.2);
                 }
                 else {
                     clearInterval(_scrollInterval[i_value]);
