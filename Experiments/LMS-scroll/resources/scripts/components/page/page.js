@@ -140,6 +140,36 @@ NE.Plugin.page = function (i_params) {
         }, 600);
     }
 
+    function _calcScrollNavTop(i_page, i_scrollTop) {
+        if (i_scrollTop < 0) {
+            _inertScroll = true;
+            _scrollOverflow.top = Math.abs(i_scrollTop);
+        }
+        else if (i_scrollTop == 0 && !_inertScroll) {
+            _scrollOverflow.top += (_scrollNavLimit - _scrollOverflow.top) * .4;
+            i_page.scrollTop(1);
+        }
+        else if (i_scrollTop > 1) {
+            _scrollOverflow.top = 0;
+        }
+        _scrollCountDown('top');
+    }
+
+    function _calcScrollNavBottom(i_page, i_scrollTop) {
+        var docOverflow = i_page[0].scrollHeight - i_page.innerHeight();
+        if (i_scrollTop > docOverflow + 1) {
+            _inertScroll = true;
+            _scrollOverflow.bottom = i_scrollTop - docOverflow;
+        }
+        else if ((i_scrollTop == docOverflow || i_scrollTop == docOverflow + 1) && !_inertScroll) {
+            _scrollOverflow.bottom += (_scrollNavLimit - _scrollOverflow.bottom) * .4;
+            i_page.scrollTop(docOverflow - 1);
+        }
+        else if (i_scrollTop < docOverflow - 1) {
+            _scrollOverflow.bottom = 0;
+        }
+        _scrollCountDown('bottom');
+    }
 
     function _addScrollWatch() {
 
@@ -148,38 +178,17 @@ NE.Plugin.page = function (i_params) {
             if (!NE.UI.AcceptScrollEvent) return;
 
             var mp = $(this);
-
-
             var scrollPos = mp.scrollTop();
 
-            if (scrollPos < 0) {
-                _inertScroll = true;
-                _scrollOverflow.top = Math.abs(scrollPos);
-            }
-            else if (scrollPos == 0 && !_inertScroll) {
-                _scrollOverflow.top += (_scrollNavLimit - _scrollOverflow.top) * .4;
-                mp.scrollTop(1);
-            }
-            else if (scrollPos > 1) {
-                _scrollOverflow.top = 0;
-            }
-            _scrollCountDown('top');
-
-            var docOverflow = mp[0].scrollHeight - mp.innerHeight();
-
-            if (scrollPos > docOverflow + 1) {
-                _inertScroll = true;
-                _scrollOverflow.bottom = scrollPos - docOverflow;
-            }
-            else if ((scrollPos == docOverflow || scrollPos == docOverflow + 1) && !_inertScroll) {
-                _scrollOverflow.bottom += (_scrollNavLimit - _scrollOverflow.bottom) * .4;
-                mp.scrollTop(docOverflow - 1);
-            }
-            else if (scrollPos < docOverflow - 1) {
-                _scrollOverflow.bottom = 0;
+            if (NE.Navigation.CurrentChapterIndex != 0 || NE.Navigation.CurrentPageIndex !== 0) {
+                _calcScrollNavTop(mp, scrollPos);
             }
 
-            _scrollCountDown('bottom');
+            var isLastChapter = NE.Navigation.CurrentChapterIndex == NE.CourseTree.chapters.length - 1;
+            var isLastPage = NE.Navigation.CurrentPageIndex == NE.CourseTree.chapters[NE.Navigation.CurrentChapterIndex].pages.length - 1;
+            if (!isLastChapter || !isLastPage) {
+                _calcScrollNavBottom(mp, scrollPos);
+            }
 
             _renderScrollNav();
 
