@@ -112,8 +112,8 @@ NE.Plugin.page = function (i_params) {
         var topPos = Math.max((headerPush - _scrollNavLimit) + _scrollOverflow.top, 0);
         topPos = topPos + -navHintTop.outerHeight() + headerPush;
         navHintTop.css({
-            'top': i_overrideTop || topPos + 'px',
-            'opacity': i_overrideTop || Math.min(Math.max(_scrollOverflow.top / 100, 0), 1)
+            'top': i_overrideTop || topPos + 'px'//,
+           // 'opacity': i_overrideTop || Math.min(Math.max(_scrollOverflow.top / 100, 0), 1)
         });
 
         var navHintBottom = $('#NE-scroll-nav-hint-bottom');
@@ -122,8 +122,8 @@ NE.Plugin.page = function (i_params) {
         var bottomPos = Math.max((footerPush - _scrollNavLimit) + _scrollOverflow.bottom, 0);
         bottomPos = bottomPos + -navHintBottom.outerHeight() + footerPush;
         navHintBottom.css({
-            'bottom': i_overrideBottom || bottomPos + 'px',
-            'opacity': i_overrideBottom || Math.min(Math.max(_scrollOverflow.bottom / 100, 0), 1)
+            'bottom': i_overrideBottom || bottomPos + 'px'//,
+           // 'opacity': i_overrideBottom || Math.min(Math.max(_scrollOverflow.bottom / 100, 0), 1)
         });
     }
 

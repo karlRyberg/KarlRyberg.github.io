@@ -118,7 +118,7 @@ button:active {
     background-color: rgb(0,200,220);
     color: #fff;
     text-align: center;
-    opacity: 0;
+    opacity: 1;
     -webkit-transform: translate3d(0px,0px,0px);
 }
 
