@@ -106,17 +106,23 @@ NE.Plugin.page = function (i_params) {
     }
 
     function _renderScrollNav(i_overrideTop, i_overrideBottom) {
+        var navHintTop = $('#NE-scroll-nav-hint-top');
         var header = $('#' + NE.Constants.FLOATING_HEADER_ID);
         var headerPush = header.outerHeight() + header.position().top;
-        $('#NE-scroll-nav-hint-top').css({
-            'top': i_overrideTop || Math.max((headerPush - _scrollNavLimit) + _scrollOverflow.top, 0) + 'px',
+        var topPos = Math.max((headerPush - _scrollNavLimit) + _scrollOverflow.top, 0);
+        topPos = topPos + -navHintTop.outerHeight() + headerPush;
+        navHintTop.css({
+            'top': i_overrideTop || topPos + 'px',
             'opacity': i_overrideTop || Math.min(Math.max(_scrollOverflow.top / 100, 0), 1)
         });
 
+        var navHintBottom = $('#NE-scroll-nav-hint-bottom');
         var footer = $('#' + NE.Constants.FLOATING_FOOTER_ID);
         var footerPush = footer.outerHeight();
-        $('#NE-scroll-nav-hint-bottom').css({
-            'bottom': i_overrideBottom || Math.max((footerPush - _scrollNavLimit) + _scrollOverflow.bottom, 0) + 'px',
+        var bottomPos = Math.max((footerPush - _scrollNavLimit) + _scrollOverflow.bottom, 0);
+        bottomPos = bottomPos + -navHintBottom.outerHeight() + footerPush;
+        navHintBottom.css({
+            'bottom': i_overrideBottom || bottomPos + 'px',
             'opacity': i_overrideBottom || Math.min(Math.max(_scrollOverflow.bottom / 100, 0), 1)
         });
     }
@@ -167,7 +173,7 @@ NE.Plugin.page = function (i_params) {
             _scrollOverflow.top = Math.abs(i_scrollTop) * 1.2;
         }
         else if (i_scrollTop == 0 && !_inertScroll) {
-            _scrollOverflow.top += (_scrollNavLimit - _scrollOverflow.top) * .6;
+            _scrollOverflow.top += (_scrollNavLimit - _scrollOverflow.top) * .45;
             i_page.scrollTop(1);
         }
         else if (i_scrollTop > 2) {
@@ -184,7 +190,7 @@ NE.Plugin.page = function (i_params) {
             _scrollOverflow.bottom = (i_scrollTop - docOverflow) * 1.2;
         }
         else if ((i_scrollTop == docOverflow || i_scrollTop == docOverflow + 1) && !_inertScroll) {
-            _scrollOverflow.bottom += (_scrollNavLimit - _scrollOverflow.bottom) * .6;
+            _scrollOverflow.bottom += (_scrollNavLimit - _scrollOverflow.bottom) * .45;
             i_page.scrollTop(docOverflow - 1);
         }
         else if (i_scrollTop < docOverflow - 2) {

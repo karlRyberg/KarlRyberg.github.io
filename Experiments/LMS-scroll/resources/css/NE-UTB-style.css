@@ -110,7 +110,7 @@ button:active {
     left: 0px;
     right: 0px;
     width: 80px;
-    height: 80px;
+    height: 300px;
     margin: auto;
     font-size: 50px;
     line-height: 80px;
@@ -123,8 +123,9 @@ button:active {
 }
 
 #NE-scroll-nav-hint-top {
-    top: -100px;
+    top: -300px;
     border-top: none;
+    padding-top: 220px;
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
 }
@@ -132,7 +133,7 @@ button:active {
 
 #NE-scroll-nav-hint-bottom {
     position: fixed;
-    bottom: -100px;
+    bottom: -300px;
     border-bottom: none;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
