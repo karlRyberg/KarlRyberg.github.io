@@ -127,6 +127,7 @@ NE.Plugin.page = function (i_params) {
     function _scrollNavTop(i_pageDiv, i_hinter) {
         var newPos;
 
+        if (NE.Navigation.CurrentChapterIndex == 0 && NE.Navigation.CurrentPageIndex == 0) return;
         if (
             _settings.chapterIndex != NE.Navigation.CurrentChapterIndex
             ||
@@ -178,6 +179,8 @@ NE.Plugin.page = function (i_params) {
 
 
     function _scrollNavBottom(i_pageDiv, i_hinter) {
+
+  
 
         if (_settings.chapterIndex != NE.Navigation.CurrentChapterIndex
             ||
@@ -240,8 +243,20 @@ NE.Plugin.page = function (i_params) {
             var mp = $(this);
             var sht = $('#NE-scroll-nav-hint-top');
             var shb = $('#NE-scroll-nav-hint-bottom');
-            _scrollNavTop(mp, sht);
-            _scrollNavBottom(mp, shb);
+
+
+
+            var scrollOverflow = mp[0].scrollHeight - mp.innerHeight();
+
+            console.log(scrollOverflow);
+
+
+
+
+
+
+            // _scrollNavTop(mp, sht);
+           // _scrollNavBottom(mp, shb);
 
         });
 
