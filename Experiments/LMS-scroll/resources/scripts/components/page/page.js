@@ -42,12 +42,14 @@ NE.Plugin.page = function (i_params) {
     var _componentsLoaded = 0;
 
 
-    var _navTopTimer;
-    var _navBottomTimer;
-    var _exitTop;
-    var _exitBottom
-    var _beenOverscrolledTop = false;
-    var _beenOverscrolledBottom = false;
+    var _scrollOverflowTop = 0;
+    var _scrollOverflowBottom = 0;
+    var _scrollTopInterval;
+    var _scrollTopIntervalDelay;
+    var _scrollBottomInterval;
+    var _scrollBottomIntervalDelay;
+    var _scrollNavLimit = 100;
+    var _inertScroll = false;
 
     //////////////////////
     //
@@ -119,7 +121,6 @@ NE.Plugin.page = function (i_params) {
                 else {
                     clearInterval(_scrollTopInterval);
                 }
-                $('#tracer').html(_scrollOverflowTop + '<br/>' + _scrollOverflowBottom);
             }, 100);
         }, 300);
     }
@@ -138,19 +139,11 @@ NE.Plugin.page = function (i_params) {
                 else {
                     clearInterval(_scrollBottomInterval);
                 }
-                $('#tracer').html(_scrollOverflowTop + '<br/>' + _scrollOverflowBottom);
             }, 100);
         }, 300);
     }
 
-    var _scrollOverflowTop = 0;
-    var _scrollOverflowBottom = 0;
-    var _scrollTopInterval;
-    var _scrollTopIntervalDelay;
-    var _scrollBottomInterval;
-    var _scrollBottomIntervalDelay;
-    var _scrollNavLimit = 100;
-    var _inertScroll = false;
+
     function _addScrollWatch() {
 
         _myDOMContent.first().on('scroll', function (e) {
@@ -192,10 +185,7 @@ NE.Plugin.page = function (i_params) {
             }
             _scrollBottomCountDown();
 
-            $('#tracer').html(_scrollOverflowTop + '<br/>' + _scrollOverflowBottom);
 
-            // _scrollNavTop(mp, sht);
-            // _scrollNavBottom(mp, shb);
 
         });
 
