@@ -106,24 +106,25 @@ NE.Plugin.page = function (i_params) {
     }
 
     function _renderScrollNav(i_overrideTop, i_overrideBottom) {
-        var navHintTop = $('#NE-scroll-nav-hint-top');
+        var topHinter = $('#NE-scroll-nav-hint-top');
         var header = $('#' + NE.Constants.FLOATING_HEADER_ID);
         var headerPush = header.outerHeight() + header.position().top;
-        var topPos = Math.max((headerPush - _scrollNavLimit) + _scrollOverflow.top, 0);
-        topPos = topPos + -navHintTop.outerHeight() + headerPush;
-        navHintTop.css({
-            'top': i_overrideTop || topPos + 'px'//,
-           // 'opacity': i_overrideTop || Math.min(Math.max(_scrollOverflow.top / 100, 0), 1)
+        var topPos = headerPush - topHinter.outerHeight();
+        topPos += _scrollOverflow.top;
+        topHinter.css({
+            'top': i_overrideTop || topPos + 'px',
+            'opacity': i_overrideTop || Math.min(Math.max(_scrollOverflow.top / 100, 0), 1)
         });
 
-        var navHintBottom = $('#NE-scroll-nav-hint-bottom');
+        var bottomHinter = $('#NE-scroll-nav-hint-bottom');
         var footer = $('#' + NE.Constants.FLOATING_FOOTER_ID);
         var footerPush = footer.outerHeight();
-        var bottomPos = Math.max((footerPush - _scrollNavLimit) + _scrollOverflow.bottom, 0);
-        bottomPos = bottomPos + -navHintBottom.outerHeight() + footerPush;
-        navHintBottom.css({
-            'bottom': i_overrideBottom || bottomPos + 'px'//,
-           // 'opacity': i_overrideBottom || Math.min(Math.max(_scrollOverflow.bottom / 100, 0), 1)
+        var bottomPos = footerPush - bottomHinter.outerHeight();
+        bottomPos += _scrollOverflow.bottom;
+
+        bottomHinter.css({
+            'bottom': i_overrideBottom || bottomPos + 'px',
+            'opacity': i_overrideBottom || Math.min(Math.max(_scrollOverflow.bottom / 100, 0), 1)
         });
     }
 
@@ -157,7 +158,7 @@ NE.Plugin.page = function (i_params) {
         _scrollIntervalDelay[i_value] = setTimeout(function () {
             _scrollInterval[i_value] = setInterval(function () {
                 if (_scrollOverflow[i_value] > 0) {
-                    _scrollOverflow[i_value] = Math.floor(_scrollOverflow[i_value] * 1.2);
+                    _scrollOverflow[i_value] = Math.floor(_scrollOverflow[i_value] * .9);
                 }
                 else {
                     clearInterval(_scrollInterval[i_value]);
