@@ -41,8 +41,7 @@ $(window).load(function () {
         NE.EventHandlers.WindowResize();
     });
 
-    FastClick.attach(document.getElementById('NE-top'));
-    FastClick.attach(document.getElementById('NE-floating-footer'));
+    FastClick.attach(document.body);
 
     NE.Events.Add(NE.Navigation.ON_NAVIGATION, NE.EventHandlers.Navigation);
 
