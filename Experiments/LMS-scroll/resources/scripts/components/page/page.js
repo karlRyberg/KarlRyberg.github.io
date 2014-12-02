@@ -234,7 +234,7 @@ NE.Plugin.page = function (i_params) {
     function _addScrollWatch() {
 
         _myDOMContent.first().on('scroll', function (e) {
-            console.log(NE.UI.AcceptScrollEvent);
+
             if (!NE.UI.AcceptScrollEvent) return;
 
             var mp = $(this);

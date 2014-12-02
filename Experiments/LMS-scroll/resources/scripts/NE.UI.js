@@ -207,7 +207,6 @@ NE.UI = (function () {
             var jqObj = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
 
             jqObj.css({
-                'padding-bottom': '0px',
                 'padding-left': _getScrollbarWidth() + 'px'
             });
 
@@ -215,10 +214,12 @@ NE.UI = (function () {
                 totalHeight += $(this).outerHeight(true);
             });
 
+            totalHeight += parseInt(jqObj.css('padding-bottom'), 10);
 
             if (totalHeight < jqObj.outerHeight(true)) {
                 var pad = (jqObj.outerHeight(true) - totalHeight) + 50;
-                jqObj.css( 'padding-bottom', pad + 'px').scrollTop(2);
+                jqObj.css('padding-bottom', pad + 'px').scrollTop(2);
+                console.log('Adding padding');
             }
 
 
@@ -252,7 +253,7 @@ NE.UI = (function () {
 
             setTimeout(function () {
                 NE.UI.ApplyVerticalScrollbar();
-                currentPage.stop(true, true).animate({ 'scrollTop': '+=10px' }, 500);
+                currentPage.stop(true, true).animate({ 'scrollTop': '+=0px' }, 0);
             }, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
