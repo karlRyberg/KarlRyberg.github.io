@@ -225,9 +225,8 @@ NE.UI = (function () {
             jqObj.css({
                 'overflow-y': 'scroll',
                 '-webkit-overflow-scrolling': 'touch'
-            });
+            }).focus();
 
-            jqObj.focus();
         },
 
         ResizeScrollContainer: function () {

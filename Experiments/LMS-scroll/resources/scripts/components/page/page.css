@@ -10,7 +10,9 @@
 }
 
     .NE-page:focus {
-        outline: none;
+        /*outline: none;*/
+        border: 2px dashed red;
+        outline:none;
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
     }
