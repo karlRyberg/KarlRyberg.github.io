@@ -169,16 +169,13 @@ NE.Plugin.page = function (i_params) {
                 _scrollOverflowTop = scrollPos;
             }
             else if (scrollPos == 0 && !_inertScroll) {
-
-                _scrollTopCountDown();
-
                 _scrollOverflowTop += (_scrollNavLimit - _scrollOverflowTop) * .4;
                 mp.scrollTop(1);
             }
             else if (scrollPos > 1) {
                 _scrollOverflowTop = 0;
             }
-
+            _scrollTopCountDown();
 
             var docOverflow = mp[0].scrollHeight - mp.innerHeight();
 
@@ -187,13 +184,13 @@ NE.Plugin.page = function (i_params) {
                 _scrollOverflowBottom = docOverflow;
             }
             else if ((scrollPos == docOverflow || scrollPos == docOverflow + 1) && !_inertScroll) {
-                _scrollBottomCountDown();
                 _scrollOverflowBottom += (_scrollNavLimit - _scrollOverflowBottom) * .4;
                 mp.scrollTop(docOverflow - 1);
             }
             else if (scrollPos < docOverflow - 1) {
                 _scrollOverflowBottom = 0;
             }
+            _scrollBottomCountDown();
 
             $('#tracer').html(_scrollOverflowTop + '<br/>' + _scrollOverflowBottom);
 
