@@ -171,7 +171,7 @@ NE.Plugin.page = function (i_params) {
     function _calcScrollNavTop(i_page, i_scrollTop) {
         if (i_scrollTop < 0) {
             _inertScroll = true;
-            _scrollOverflow.top = Math.abs(i_scrollTop) * 1.2;
+            _scrollOverflow.top = Math.abs(i_scrollTop) * 1;
         }
         else if (i_scrollTop == 0 && !_inertScroll) {
             _scrollOverflow.top += (_scrollNavLimit - _scrollOverflow.top) * .45;
@@ -188,7 +188,7 @@ NE.Plugin.page = function (i_params) {
         var docOverflow = i_page[0].scrollHeight - i_page.innerHeight();
         if (i_scrollTop > docOverflow + 1) {
             _inertScroll = true;
-            _scrollOverflow.bottom = (i_scrollTop - docOverflow) * 1.2;
+            _scrollOverflow.bottom = (i_scrollTop - docOverflow) * 1;
         }
         else if ((i_scrollTop == docOverflow || i_scrollTop == docOverflow + 1) && !_inertScroll) {
             _scrollOverflow.bottom += (_scrollNavLimit - _scrollOverflow.bottom) * .45;
