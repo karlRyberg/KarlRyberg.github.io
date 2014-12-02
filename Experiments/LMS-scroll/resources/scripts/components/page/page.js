@@ -105,139 +105,51 @@ NE.Plugin.page = function (i_params) {
         });
     }
 
-    function _hideTopScrollNavHinter(i_obj) {
-        i_obj.animate({
-            'top': (-i_obj.outerHeight()) + 'px',
-            'border-bottom-left-radius': '100%',
-            'border-bottom-right-radius': '100%',
-            'opacity': 0
-        }, 200);
-    }
 
-    function _hideBottomScrollNavHinter(i_obj) {
-        i_obj.animate({
-            'bottom': (-i_obj.outerHeight()) + 'px',
-            'border-top-left-radius': '100%',
-            'border-top-right-radius': '100%',
-            'opacity': 0
-        }, 200);
-    }
+    function _scrollTopCountDown() {
 
+        clearInterval(_scrollTopInterval);
+        clearTimeout(_scrollTopIntervalDelay);
 
-    function _scrollNavTop(i_pageDiv, i_hinter) {
-        var newPos;
-
-        if (NE.Navigation.CurrentChapterIndex == 0 && NE.Navigation.CurrentPageIndex == 0) return;
-        if (
-            _settings.chapterIndex != NE.Navigation.CurrentChapterIndex
-            ||
-            _settings.index != NE.Navigation.CurrentPageIndex
-            ) return;
-
-        clearTimeout(_exitTop);
-
-        if (i_pageDiv.scrollTop() < 0) {
-            _beenOverscrolledTop = true;
-            newPos = Math.min(-i_hinter.outerHeight() - i_pageDiv.scrollTop(), 0);
-            i_hinter.stop().css('top', newPos + 'px');
-
-        }
-        else if (i_pageDiv.scrollTop() === 0 && !_beenOverscrolledTop) {
-            newPos = Math.min(i_hinter.position().top - (i_hinter.position().top * .50), 0);
-            i_hinter.stop().css('top', newPos + 'px');
-            i_pageDiv.scrollTop(1);
-
-        }
-
-
-        _exitTop = setTimeout(function () {
-            _hideTopScrollNavHinter(i_hinter);
-        }, 250);
-
-
-
-        if (i_hinter.position().top > -40) {
-            if (!_navTopTimer) {
-                _navTopTimer = setTimeout(function () {
-                    if (i_hinter.position().top > -30) {
-                        _hideTopScrollNavHinter(i_hinter);
-                        NE.Navigation.Previous();
-                    }
-                    _navTopTimer = null;
-                }, 600);
-            }
-        }
-
-        var rad = Math.max((-i_hinter.position().top), 10);
-        i_hinter.css({
-            'border-bottom-left-radius': rad + '%',
-            'border-bottom-right-radius': rad + '%',
-            'opacity': ((i_hinter.outerHeight() + i_hinter.position().top) / 100)
-        });
-
+        _scrollTopIntervalDelay = setTimeout(function () {
+            _scrollTopInterval = setInterval(function () {
+                if (_scrollOverflowTop > 0) {
+                    _scrollOverflowTop = Math.floor(_scrollOverflowTop / 2);
+                }
+                else {
+                    clearInterval(_scrollTopInterval);
+                }
+                $('#tracer').html(_scrollOverflowTop + '<br/>' + _scrollOverflowBottom);
+            }, 100);
+        }, 300);
     }
 
 
-    function _scrollNavBottom(i_pageDiv, i_hinter) {
+    function _scrollBottomCountDown() {
 
+        clearInterval(_scrollBottomInterval);
+        clearTimeout(_scrollBottomIntervalDelay);
 
-
-        if (_settings.chapterIndex != NE.Navigation.CurrentChapterIndex
-            ||
-            _settings.index != NE.Navigation.CurrentPageIndex
-            ) return;
-
-        var newPos;
-
-        clearTimeout(_exitBottom);
-
-
-        var overFlowHeight = i_pageDiv[0].scrollHeight - i_pageDiv.innerHeight();
-        var bott = parseInt(i_hinter.css('bottom'), 10);
-        var scrollBottomReset = overFlowHeight - 1;
-
-        if (i_pageDiv.scrollTop() > overFlowHeight + 1) {
-            _beenOverscrolledBottom = true;
-            newPos = Math.min(-i_hinter.outerHeight() + (i_pageDiv.scrollTop() - overFlowHeight), 0);
-            i_hinter.stop().css('bottom', newPos + 'px');
-        }
-        else if (i_pageDiv.scrollTop() >= overFlowHeight && !_beenOverscrolledBottom) {
-            newPos = Math.min(bott - (bott * .50), 0);
-            i_hinter.stop().css('bottom', newPos + 'px');
-            i_pageDiv.scrollTop(scrollBottomReset);
-        }
-
-        _exitBottom = setTimeout(function () {
-            _hideBottomScrollNavHinter(i_hinter);
-        }, 250);
-
-
-        if (bott > -40) {
-            if (!_navBottomTimer) {
-                _navBottomTimer = setTimeout(function () {
-                    if (parseInt(i_hinter.css('bottom'), 10) > -30) {
-                        _hideBottomScrollNavHinter(i_hinter);
-                        NE.Navigation.Next();
-                    }
-                    _navBottomTimer = null;
-                }, 600);
-            }
-        }
-
-        var rad = Math.max((-bott), 10);
-        i_hinter.css({
-            'border-top-left-radius': rad + '%',
-            'border-top-right-radius': rad + '%',
-            'opacity': ((i_hinter.outerHeight() + bott) / 100)
-        });
-
-
+        _scrollBottomIntervalDelay = setTimeout(function () {
+            _scrollBottomInterval = setInterval(function () {
+                if (_scrollOverflowBottom > 0) {
+                    _scrollOverflowBottom = Math.floor(_scrollOverflowBottom / 2);
+                }
+                else {
+                    clearInterval(_scrollBottomInterval);
+                }
+                $('#tracer').html(_scrollOverflowTop + '<br/>' + _scrollOverflowBottom);
+            }, 100);
+        }, 300);
     }
 
     var _scrollOverflowTop = 0;
     var _scrollOverflowBottom = 0;
     var _scrollTopInterval;
     var _scrollTopIntervalDelay;
+    var _scrollBottomInterval;
+    var _scrollBottomIntervalDelay;
+    var _scrollNavLimit = 100;
     function _addScrollWatch() {
 
         _myDOMContent.first().on('scroll', function (e) {
@@ -255,34 +167,34 @@ NE.Plugin.page = function (i_params) {
                 _scrollOverflowTop = scrollPos;
             }
             else if (scrollPos == 0) {
-                clearInterval(_scrollTopInterval);
-                clearTimeout(_scrollTopIntervalDelay);
-                _scrollTopIntervalDelay = setTimeout(function () {
-                    _scrollTopInterval = setInterval(function () {
-                        if (_scrollOverflowTop < 0) {
-                            _scrollOverflowTop = Math.round(_scrollOverflowTop/2);
-                        }
-                        else {
-                            clearInterval(_scrollTopInterval);
-                        }
-                        $('#tracer').html(_scrollOverflowTop);
-                    }, 100);
-                }, 300);
-                _scrollOverflowTop -= 6;
-                mp.scrollTop(1);
-            }
-            else if (scrollPos == 1) {
 
+                _scrollTopCountDown();
+
+                _scrollOverflowTop += (_scrollNavLimit - _scrollOverflowTop) * .4;
+                mp.scrollTop(1);
             }
             else if (scrollPos > 1) {
                 _scrollOverflowTop = 0;
             }
 
-            $('#tracer').html(_scrollOverflowTop);
+
 
 
             var docOverflow = mp[0].scrollHeight - mp.innerHeight();
 
+            if (scrollPos > docOverflow + 1) {
+                _scrollOverflowBottom = docOverflow;
+            }
+            else if (scrollPos == docOverflow || scrollPos == docOverflow + 1) {
+                _scrollBottomCountDown();
+                _scrollOverflowBottom += (_scrollNavLimit - _scrollOverflowBottom) * .4;
+                mp.scrollTop(docOverflow - 1);
+            }
+            else if (scrollPos < docOverflow - 1) {
+                _scrollOverflowBottom = 0;
+            }
+
+            $('#tracer').html(_scrollOverflowTop + '<br/>' + _scrollOverflowBottom);
 
             // _scrollNavTop(mp, sht);
             // _scrollNavBottom(mp, shb);
