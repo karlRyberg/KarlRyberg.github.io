@@ -113,7 +113,7 @@ NE.Plugin.page = function (i_params) {
         topPos += _scrollOverflow.top;
         topHinter.css({
             'top': i_overrideTop || topPos + 'px',
-            'opacity': i_overrideTop || Math.min(Math.max(_scrollOverflow.top / 100, 0), 1)
+            'opacity': i_overrideTop || Math.min(Math.max(_scrollOverflow.top / 160, 0), 1)
         });
 
         var bottomHinter = $('#NE-scroll-nav-hint-bottom');
@@ -124,7 +124,7 @@ NE.Plugin.page = function (i_params) {
 
         bottomHinter.css({
             'bottom': i_overrideBottom || bottomPos + 'px',
-            'opacity': i_overrideBottom || Math.min(Math.max(_scrollOverflow.bottom / 100, 0), 1)
+            'opacity': i_overrideBottom || Math.min(Math.max(_scrollOverflow.bottom / 160, 0), 1)
         });
     }
 
