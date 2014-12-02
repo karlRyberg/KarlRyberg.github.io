@@ -119,6 +119,7 @@ button:active {
     color: #808080;
     text-align: center;
     opacity: 0;
+    -webkit-transform: translate3d(0px,0px,0px);
 }
 
 #NE-scroll-nav-hint-top {
