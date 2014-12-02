@@ -42,12 +42,9 @@ NE.Plugin.page = function (i_params) {
     var _componentsLoaded = 0;
 
 
-    var _scrollOverflowTop = 0;
-    var _scrollOverflowBottom = 0;
-    var _scrollTopInterval;
-    var _scrollTopIntervalDelay;
-    var _scrollBottomInterval;
-    var _scrollBottomIntervalDelay;
+    var _scrollOverflow = {top:0,bottom:0};
+    var _scrollInterval = { top: null, bottom: null };
+    var _scrollIntervalDelay = { top: null, bottom: null };
     var _scrollNavLimit = 100;
     var _inertScroll = false;
 
@@ -107,40 +104,40 @@ NE.Plugin.page = function (i_params) {
         });
     }
 
+    function _renderScrollNav() {
+        var header = $('#' + NE.Constants.FLOATING_HEADER_ID);
+        var headerPush = header.outerHeight() + header.position().top;
+        $('#NE-scroll-nav-hint-top').css({
+            'top': ((headerPush - _scrollNavLimit) + _scrollOverflow.top) + 'px',
+            'opacity': _scrollOverflow.top / 100
+        });
 
-    function _scrollTopCountDown() {
-
-        clearInterval(_scrollTopInterval);
-        clearTimeout(_scrollTopIntervalDelay);
-
-        _scrollTopIntervalDelay = setTimeout(function () {
-            _scrollTopInterval = setInterval(function () {
-                if (_scrollOverflowTop > 0) {
-                    _scrollOverflowTop = Math.floor(_scrollOverflowTop / 2);
-                }
-                else {
-                    clearInterval(_scrollTopInterval);
-                }
-            }, 100);
-        }, 300);
+        var footer = $('#' + NE.Constants.FLOATING_FOOTER_ID);
+        var footerPush = footer.outerHeight();
+        $('#NE-scroll-nav-hint-bottom').css({
+            'bottom': ((footerPush - _scrollNavLimit) + _scrollOverflow.bottom) + 'px',
+            'opacity': _scrollOverflow.bottom / 100
+        });
     }
 
 
-    function _scrollBottomCountDown() {
 
-        clearInterval(_scrollBottomInterval);
-        clearTimeout(_scrollBottomIntervalDelay);
+    function _scrollCountDown(i_value) {
 
-        _scrollBottomIntervalDelay = setTimeout(function () {
-            _scrollBottomInterval = setInterval(function () {
-                if (_scrollOverflowBottom > 0) {
-                    _scrollOverflowBottom = Math.floor(_scrollOverflowBottom / 2);
+        clearInterval(_scrollInterval[i_value]);
+        clearTimeout(_scrollIntervalDelay[i_value]);
+
+        _scrollIntervalDelay[i_value] = setTimeout(function () {
+            _scrollInterval[i_value] = setInterval(function () {
+                if (_scrollOverflow[i_value] > 0) {
+                    _scrollOverflow[i_value] = Math.floor(_scrollOverflow[i_value] * .9);
                 }
                 else {
-                    clearInterval(_scrollBottomInterval);
+                    clearInterval(_scrollInterval[i_value]);
                 }
-            }, 100);
-        }, 300);
+                _renderScrollNav();
+            }, 30);
+        }, 600);
     }
 
 
@@ -151,41 +148,40 @@ NE.Plugin.page = function (i_params) {
             if (!NE.UI.AcceptScrollEvent) return;
 
             var mp = $(this);
-            var sht = $('#NE-scroll-nav-hint-top');
-            var shb = $('#NE-scroll-nav-hint-bottom');
 
 
             var scrollPos = mp.scrollTop();
 
             if (scrollPos < 0) {
                 _inertScroll = true;
-                _scrollOverflowTop = Math.abs(scrollPos);
+                _scrollOverflow.top = Math.abs(scrollPos);
             }
             else if (scrollPos == 0 && !_inertScroll) {
-                _scrollOverflowTop += (_scrollNavLimit - _scrollOverflowTop) * .4;
+                _scrollOverflow.top += (_scrollNavLimit - _scrollOverflow.top) * .4;
                 mp.scrollTop(1);
             }
             else if (scrollPos > 1) {
-                _scrollOverflowTop = 0;
+                _scrollOverflow.top = 0;
             }
-            _scrollTopCountDown();
+            _scrollCountDown('top');
 
             var docOverflow = mp[0].scrollHeight - mp.innerHeight();
 
             if (scrollPos > docOverflow + 1) {
                 _inertScroll = true;
-                _scrollOverflowBottom = scrollPos - docOverflow;
+                _scrollOverflow.bottom = scrollPos - docOverflow;
             }
             else if ((scrollPos == docOverflow || scrollPos == docOverflow + 1) && !_inertScroll) {
-                _scrollOverflowBottom += (_scrollNavLimit - _scrollOverflowBottom) * .4;
+                _scrollOverflow.bottom += (_scrollNavLimit - _scrollOverflow.bottom) * .4;
                 mp.scrollTop(docOverflow - 1);
             }
             else if (scrollPos < docOverflow - 1) {
-                _scrollOverflowBottom = 0;
+                _scrollOverflow.bottom = 0;
             }
-            _scrollBottomCountDown();
 
+            _scrollCountDown('bottom');
 
+            _renderScrollNav();
 
         });
 
