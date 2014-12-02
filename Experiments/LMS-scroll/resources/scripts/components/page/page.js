@@ -184,9 +184,7 @@ NE.Plugin.page = function (i_params) {
                 _calcScrollNavTop(mp, scrollPos);
             }
 
-            var isLastChapter = NE.Navigation.CurrentChapterIndex == NE.CourseTree.chapters.length - 1;
-            var isLastPage = NE.Navigation.CurrentPageIndex == NE.CourseTree.chapters[NE.Navigation.CurrentChapterIndex].pages.length - 1;
-            if (!isLastChapter || !isLastPage) {
+            if (!NE.Navigation.IsAtLast()) {
                 _calcScrollNavBottom(mp, scrollPos);
             }
 

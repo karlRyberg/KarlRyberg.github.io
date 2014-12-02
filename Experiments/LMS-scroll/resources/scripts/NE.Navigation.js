@@ -80,6 +80,12 @@ NE.Navigation = (function () {
         //
         /////////////////////
 
+        IsAtLast: function(){
+            var isLastChapter = NE.Navigation.CurrentChapterIndex == NE.CourseTree.chapters.length - 1;
+            var isLastPage = NE.Navigation.CurrentPageIndex == NE.CourseTree.chapters[NE.Navigation.CurrentChapterIndex].pages.length - 1;
+            return isLastChapter && isLastPage;
+        },
+
         ToChapter: function (index) {
             if (index < 0 || index >= NE.CourseTree.chapters.length) return;
             this.CurrentChapterIndex = index;

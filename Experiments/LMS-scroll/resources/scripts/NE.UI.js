@@ -190,10 +190,7 @@ NE.UI = (function () {
                 $('.NE-nav-back').removeClass('disable');
             }
 
-            var isLastChapter = NE.Navigation.CurrentChapterIndex == NE.CourseTree.chapters.length - 1;
-            var isLastPage = NE.Navigation.CurrentPageIndex == NE.CourseTree.chapters[NE.Navigation.CurrentChapterIndex].pages.length - 1;
-
-            if (isLastChapter && isLastPage) {
+            if (NE.Navigation.IsAtLast()) {
                 $('.NE-nav-forward').addClass('disable');
             }
             else {
@@ -216,8 +213,8 @@ NE.UI = (function () {
 
             totalHeight += parseInt(jqObj.css('padding-bottom'), 10);
 
-            if (totalHeight < jqObj.outerHeight(true) + 50) {
-                var pad = (jqObj.outerHeight(true) - totalHeight) + 50;
+            if (totalHeight < jqObj.outerHeight(true) + 20) {
+                var pad = (jqObj.outerHeight(true) - totalHeight) + 20;
                 jqObj.css('padding-bottom', pad + 'px').scrollTop(2);
                 console.log('Adding padding');
             }
