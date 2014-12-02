@@ -11,8 +11,6 @@
 }
 
     .NE-page:focus {
-        /*outline: none;*/
-        border: 2px dashed lime;
         outline:none;
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch;

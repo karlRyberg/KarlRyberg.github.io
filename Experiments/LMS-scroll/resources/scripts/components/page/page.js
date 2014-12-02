@@ -105,19 +105,19 @@ NE.Plugin.page = function (i_params) {
         });
     }
 
-    function _renderScrollNav() {
+    function _renderScrollNav(i_overrideTop, i_overrideBottom) {
         var header = $('#' + NE.Constants.FLOATING_HEADER_ID);
         var headerPush = header.outerHeight() + header.position().top;
         $('#NE-scroll-nav-hint-top').css({
-            'top': ((headerPush - _scrollNavLimit) + _scrollOverflow.top) + 'px',
-            'opacity': _scrollOverflow.top / 120
+            'top': i_overrideTop || ((headerPush - _scrollNavLimit) + _scrollOverflow.top) + 'px',
+            'opacity': i_overrideTop || Math.min(Math.max(_scrollOverflow.top / 120, 0), 1)
         });
 
         var footer = $('#' + NE.Constants.FLOATING_FOOTER_ID);
         var footerPush = footer.outerHeight();
         $('#NE-scroll-nav-hint-bottom').css({
-            'bottom': ((footerPush - _scrollNavLimit) + _scrollOverflow.bottom) + 'px',
-            'opacity': _scrollOverflow.bottom / 120
+            'bottom': i_overrideBottom || ((footerPush - _scrollNavLimit) + _scrollOverflow.bottom) + 'px',
+            'opacity': i_overrideBottom || Math.min(Math.max(_scrollOverflow.bottom / 120, 0), 1)
         });
     }
 
@@ -128,9 +128,10 @@ NE.Plugin.page = function (i_params) {
             if (NE.Navigation.CurrentChapterIndex == _settings.chapterIndex && NE.Navigation.CurrentPageIndex == _settings.index && !_scrollNavTimer[i_value]) {
                 _scrollNavTimer[i_value] = setTimeout(function () {
                     if (_scrollOverflow[i_value] > _scrollNavLimit * .9) {
-                        _scrollOverflow.top = 0;
-                        _scrollOverflow.bottom = 0;
 
+                        _scrollOverflow.top = -_scrollNavLimit;
+                        _scrollOverflow.bottom = -_scrollNavLimit;
+                        _renderScrollNav(0, 0);
                         i_value == 'top' ? NE.Navigation.Previous() : NE.Navigation.Next();
                     }
                     _scrollNavTimer[i_value] = null;
@@ -139,6 +140,7 @@ NE.Plugin.page = function (i_params) {
         }
 
         _scrollCountDown(i_value);
+
 
     }
 
@@ -169,7 +171,7 @@ NE.Plugin.page = function (i_params) {
             _scrollOverflow.top += (_scrollNavLimit - _scrollOverflow.top) * .4;
             i_page.scrollTop(1);
         }
-        else if (i_scrollTop > 1) {
+        else if (i_scrollTop > 2) {
             _scrollOverflow.top = 0;
         }
 
@@ -186,7 +188,7 @@ NE.Plugin.page = function (i_params) {
             _scrollOverflow.bottom += (_scrollNavLimit - _scrollOverflow.bottom) * .4;
             i_page.scrollTop(docOverflow - 1);
         }
-        else if (i_scrollTop < docOverflow - 1) {
+        else if (i_scrollTop < docOverflow - 2) {
             _scrollOverflow.bottom = 0;
         }
 

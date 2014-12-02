@@ -225,6 +225,8 @@ NE.UI = (function () {
                 '-webkit-overflow-scrolling': 'touch'
             }).focus();
 
+            NE.UI.AcceptScrollEvent = true;
+
         },
 
         ResizeScrollContainer: function () {
@@ -236,6 +238,8 @@ NE.UI = (function () {
 
 
         ScrollToPage: function (i_skipAnimation) {
+
+            NE.UI.AcceptScrollEvent = false;
 
             _switchTopMenu();
 
