@@ -44,6 +44,8 @@ NE.Plugin.page = function (i_params) {
 
     var _navTopTimer;
     var _navBottomTimer;
+    var _exitTop;
+    var _exitBottom
     var _beenOverscrolledTop = false;
     var _beenOverscrolledBottom = false;
 
@@ -121,6 +123,7 @@ NE.Plugin.page = function (i_params) {
         }, 200);
     }
 
+
     function _scrollNavTop(i_pageDiv, i_hinter) {
         var newPos;
 
@@ -130,6 +133,7 @@ NE.Plugin.page = function (i_params) {
             _settings.index != NE.Navigation.CurrentPageIndex
             ) return;
 
+        clearTimeout(_exitTop);
 
         if (i_pageDiv.scrollTop() < 0) {
             _beenOverscrolledTop = true;
@@ -144,15 +148,12 @@ NE.Plugin.page = function (i_params) {
 
         }
 
-        else if ((i_pageDiv.scrollTop() === 1 && !_beenOverscrolledTop) || (i_pageDiv.scrollTop() === 0 && _beenOverscrolledTop)) {
-            setTimeout(function () {
-                _hideTopScrollNavHinter(i_hinter);
-            }, 250);
-        }
 
-        else if ((i_pageDiv.scrollTop() > 1 && i_hinter.position().top > -i_hinter.outerHeight())) {
+        _exitTop = setTimeout(function () {
             _hideTopScrollNavHinter(i_hinter);
-        }
+        }, 250);
+
+
 
         if (i_hinter.position().top > -40) {
             if (!_navTopTimer) {
@@ -185,6 +186,9 @@ NE.Plugin.page = function (i_params) {
 
         var newPos;
 
+        clearTimeout(_exitBottom);
+
+
         var overFlowHeight = i_pageDiv[0].scrollHeight - i_pageDiv.innerHeight();
         var bott = parseInt(i_hinter.css('bottom'), 10);
         var scrollBottomReset = overFlowHeight - 1;
@@ -200,15 +204,10 @@ NE.Plugin.page = function (i_params) {
             i_pageDiv.scrollTop(scrollBottomReset);
         }
 
-        else if ((i_pageDiv.scrollTop() === scrollBottomReset && !_beenOverscrolledBottom) || (i_pageDiv.scrollTop() === overFlowHeight && _beenOverscrolledBottom)) {
-            setTimeout(function () {
-                _hideBottomScrollNavHinter(i_hinter);
-            }, 250);
-        }
-
-        else if ((i_pageDiv.scrollTop() < scrollBottomReset && bott > -i_hinter.outerHeight())) {
+        _exitBottom = setTimeout(function () {
             _hideBottomScrollNavHinter(i_hinter);
-        }
+        }, 250);
+
 
         if (bott > -40) {
             if (!_navBottomTimer) {
