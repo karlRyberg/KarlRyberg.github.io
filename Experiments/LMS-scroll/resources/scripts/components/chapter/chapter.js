@@ -65,7 +65,6 @@ NE.Plugin.chapter = function (i_params) {
     function _pageOnLoad(e) {
         if (e.chapter == _settings.index) {
             me.LoadedPages++;
-            console.log(NE.Constants.PAGE_ID_PREFIX + e.chapter + '-' + e.index + ' Loaded!');
             if (me.LoadedPages == _settings.chapter.pages.length) {
                 me.OnLoaded({
                     guid: NE.CourseTree.chapters[_settings.index].guid,

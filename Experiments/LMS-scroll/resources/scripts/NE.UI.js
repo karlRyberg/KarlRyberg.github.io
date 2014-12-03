@@ -150,7 +150,7 @@ NE.UI = (function () {
         //
         /////////////////////
 
-        AcceptScrollEvent: true,
+
 
         //////////////////////
         //
@@ -200,32 +200,32 @@ NE.UI = (function () {
 
         ApplyVerticalScrollbar: function () {
 
+            var jqObj = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
+            var cssObj = {
+                'overflow-y': 'hidden',
+            };
+
             var totalHeight = 0;
-            var jqObj = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
-
-            jqObj.css({
-                'padding-left': _getScrollbarWidth() + 'px'
+            jqObj.children('.NE-page').each(function () {
+                totalHeight += $(this).outerHeight();
             });
 
-            jqObj.children('.container, .NE-full-width').each(function () {
-                totalHeight += $(this).outerHeight(true);
-            });
+            if (totalHeight > jqObj.innerHeight()) {
 
-            totalHeight += parseInt(jqObj.css('padding-bottom'), 10);
+                cssObj = {
+                    'overflow-y': 'auto',
+                };
 
-            if (totalHeight < jqObj.outerHeight(true) + 20) {
-                var pad = (jqObj.outerHeight(true) - totalHeight) + 40;
-                jqObj.children('.container, .NE-full-width').last().css('margin-bottom', pad + 'px').scrollTop(2);
-                console.log('Adding padding');
+
+                jqObj.children('.NE-page').css('padding-left', _getScrollbarWidth() + 'px');
+
             }
 
+            if (!_scrollHintDismissed) {
+                _hintTImer = setTimeout(NE.UI.ScrollHint, 5000);
+            }
 
-            jqObj.css({
-                'overflow-y': 'scroll',
-                '-webkit-overflow-scrolling': 'touch'
-            }).focus();
-
-            NE.UI.AcceptScrollEvent = true;
+            jqObj.css(cssObj);
 
         },
 
@@ -254,8 +254,6 @@ NE.UI = (function () {
 
             setTimeout(function () {
                 NE.UI.ApplyVerticalScrollbar();
-                var scrollDir = currentPage.scrollTop() < 2 ? 1 : -1
-                currentPage.stop(true, true).animate({ 'scrollTop': '+=' + scrollDir + 'px' }, 0);
             }, animTime);
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {

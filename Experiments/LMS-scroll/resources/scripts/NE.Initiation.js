@@ -30,6 +30,26 @@ $(window).load(function () {
         chapter.OnLoaded = function (e) {
             if (e.index == NE.Navigation.CurrentChapterIndex) {
                 NE.Navigation.ToPage(0);
+
+
+                $('.NE-page').on('sw-scrolled', function (e, scrollObj) {
+
+                    if (scrollObj.visibility > 0.8 && $(this).attr('id') != NE.Navigation.CurrentPageDiv().attr('id')) {
+                        NE.Navigation.CurrentChapterIndex = parseInt($(this).data('chapter'), 10);
+                        NE.Navigation.CurrentPageIndex = parseInt($(this).data('index'), 10);
+
+                        console.log(NE.Navigation.CurrentChapterIndex + ' ' + NE.Navigation.CurrentPageIndex);
+                    }
+
+                });;
+
+                $('.NE-page').ScrollWatch({
+                    axis: 'y',
+                    prioritize: 'max',//'partofviewport'//'partofobject'
+                    swWindow: '#' + NE.Constants.SCROLL_CONTAINER_ID,
+                    swDocument: '.NE-chapter'
+                });
+
             }
         }
         chapter.Init();
@@ -42,6 +62,8 @@ $(window).load(function () {
     });
 
     FastClick.attach(document.body);
+
+
 
     NE.Events.Add(NE.Navigation.ON_NAVIGATION, NE.EventHandlers.Navigation);
 

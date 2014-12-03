@@ -1,4 +1,5 @@
 ﻿/// <reference path="NE.Events.js" />
+/// <reference path="NE.Constants.js" />
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -80,7 +81,15 @@ NE.Navigation = (function () {
         //
         /////////////////////
 
-        IsAtLast: function(){
+        CurrentChapterDiv: function () {
+            return $(NE.Constants.PAGE_ID_PREFIX + '-' + this.CurrentChapterIndex);
+        },
+
+        CurrentPageDiv: function () {
+            return $(NE.Constants.PAGE_ID_PREFIX + '-' + this.CurrentChapterIndex + '-' + this.CurrentPageIndex);
+        },
+
+        IsAtLast: function () {
             var isLastChapter = NE.Navigation.CurrentChapterIndex == NE.CourseTree.chapters.length - 1;
             var isLastPage = NE.Navigation.CurrentPageIndex == NE.CourseTree.chapters[NE.Navigation.CurrentChapterIndex].pages.length - 1;
             return isLastChapter && isLastPage;
@@ -116,7 +125,7 @@ NE.Navigation = (function () {
             if (page < 0) {
                 if (this.CurrentChapterIndex < 1) return;
                 this.CurrentChapterIndex -= 1;
-                page = NE.CourseTree.chapters[this.CurrentChapterIndex].pages.length-1;
+                page = NE.CourseTree.chapters[this.CurrentChapterIndex].pages.length - 1;
             }
             this.ToPage(page);
         },

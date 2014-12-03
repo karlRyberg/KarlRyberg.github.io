@@ -194,8 +194,6 @@ NE.Plugin.quiz = function (i_params) {
         Render: function (params) {
             var returnVal = '';
 
-            console.log(_quizdata);
-
             if (_quizdata.title != '' || _quizdata.introContent != '') {
                 returnVal += params[0].data.replace(/{title}/g, _quizdata.title).replace(/{introContent}/g, _quizdata.introContent);
             }

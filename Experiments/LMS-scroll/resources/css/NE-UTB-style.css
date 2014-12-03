@@ -1,5 +1,6 @@
 ﻿body {
     background-color: white;
+    -webkit-transform: translate3d(0px,0px,0px);
 }
 
 .offering-header-text {
@@ -35,8 +36,8 @@ button:active {
 }
 
 .NE-full-width {
-    margin-left: -50%;
-    margin-right: -50%;
+    margin-left: -50% !important;
+    margin-right: -50% !important;
 }
 
 @media (max-width: 768px) {

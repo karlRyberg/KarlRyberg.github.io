@@ -95,134 +95,11 @@ NE.Plugin.page = function (i_params) {
     }
 
     function _pageComplete() {
-
-        _addScrollWatch();
-
         me.OnLoaded({
             chapter: _settings.chapterIndex,
             index: _settings.index,
             guid: _settings.guid,
         });
-    }
-
-    function _renderScrollNav(i_overrideTop, i_overrideBottom) {
-        var topHinter = $('#NE-scroll-nav-hint-top');
-        var header = $('#' + NE.Constants.FLOATING_HEADER_ID);
-        var headerPush = header.outerHeight() + header.position().top;
-        var topPos = headerPush - topHinter.outerHeight();
-        topPos += _scrollOverflow.top;
-        topHinter.css({
-            'top': i_overrideTop || topPos + 'px',
-            'opacity': i_overrideTop || Math.min(Math.max(_scrollOverflow.top / 160, 0), 1)
-        });
-
-        var bottomHinter = $('#NE-scroll-nav-hint-bottom');
-        var footer = $('#' + NE.Constants.FLOATING_FOOTER_ID);
-        var footerPush = footer.outerHeight();
-        var bottomPos = footerPush - bottomHinter.outerHeight();
-        bottomPos += _scrollOverflow.bottom;
-
-        bottomHinter.css({
-            'bottom': i_overrideBottom || bottomPos + 'px',
-            'opacity': i_overrideBottom || Math.min(Math.max(_scrollOverflow.bottom / 160, 0), 1)
-        });
-    }
-
-
-    function _scrollNavigate(i_value) {
-
-        if (_scrollOverflow[i_value] > _scrollNavLimit * .9) {
-            if (NE.Navigation.CurrentChapterIndex == _settings.chapterIndex && NE.Navigation.CurrentPageIndex == _settings.index && !_scrollNavTimer[i_value]) {
-                _scrollNavTimer[i_value] = setTimeout(function () {
-                    if (_scrollOverflow[i_value] > _scrollNavLimit * .9) {
-                        _scrollOverflow.top = -_scrollNavLimit;
-                        _scrollOverflow.bottom = -_scrollNavLimit;
-                        _renderScrollNav(0, 0);
-                        i_value == 'top' ? NE.Navigation.Previous() : NE.Navigation.Next();
-                    }
-                    _scrollNavTimer[i_value] = null;
-                }, 700);
-            }
-        }
-
-        _scrollCountDown(i_value);
-
-
-    }
-
-    function _scrollCountDown(i_value) {
-
-        clearInterval(_scrollInterval[i_value]);
-        clearTimeout(_scrollIntervalDelay[i_value]);
-
-        _scrollIntervalDelay[i_value] = setTimeout(function () {
-            _scrollInterval[i_value] = setInterval(function () {
-                if (_scrollOverflow[i_value] > 0) {
-                    _scrollOverflow[i_value] = Math.floor(_scrollOverflow[i_value] * .9);
-                }
-                else {
-                    clearInterval(_scrollInterval[i_value]);
-                }
-                _renderScrollNav();
-            }, 30);
-        }, 500);
-    }
-
-    function _calcScrollNavTop(i_page, i_scrollTop) {
-        if (i_scrollTop < 0) {
-            _inertScroll = true;
-            _scrollOverflow.top = Math.abs(i_scrollTop) * .9;
-        }
-        else if (i_scrollTop == 0 && !_inertScroll) {
-            _scrollOverflow.top += (_scrollNavLimit - _scrollOverflow.top) * .45;
-            i_page.scrollTop(1);
-        }
-        else if (i_scrollTop > 2) {
-            _scrollOverflow.top = 0;
-        }
-
-        _scrollNavigate('top');
-    }
-
-    function _calcScrollNavBottom(i_page, i_scrollTop) {
-        var docOverflow = i_page[0].scrollHeight - i_page.innerHeight();
-        if (i_scrollTop > docOverflow + 1) {
-            _inertScroll = true;
-            _scrollOverflow.bottom = (i_scrollTop - docOverflow) * .9;
-        }
-        else if ((i_scrollTop == docOverflow || i_scrollTop == docOverflow + 1) && !_inertScroll) {
-            _scrollOverflow.bottom += (_scrollNavLimit - _scrollOverflow.bottom) * .45;
-            i_page.scrollTop(docOverflow - 1);
-        }
-        else if (i_scrollTop < docOverflow - 2) {
-            _scrollOverflow.bottom = 0;
-        }
-
-        _scrollNavigate('bottom');
-    }
-
-    function _addScrollWatch() {
-
-        _myDOMContent.first().on('scroll', function (e) {
-
-            if (!NE.UI.AcceptScrollEvent) return;
-
-            var mp = $(this);
-            var scrollPos = mp.scrollTop();
-
-            if (NE.Navigation.CurrentChapterIndex != 0 || NE.Navigation.CurrentPageIndex !== 0) {
-                _calcScrollNavTop(mp, scrollPos);
-            }
-
-            if (!NE.Navigation.IsAtLast()) {
-                _calcScrollNavBottom(mp, scrollPos);
-            }
-
-            _renderScrollNav();
-
-        });
-
-
     }
 
     //////////////////////
@@ -275,7 +152,12 @@ NE.Plugin.page = function (i_params) {
 
         RenderPage: function (params) {
             var returnVal = '';
-            returnVal += params[0].data.replace(/{pageID}/g, NE.Constants.PAGE_ID_PREFIX + _settings.chapterIndex + '-' + _settings.index);
+            var firstData = params[0].data;
+            firstData = firstData.replace(/{pageID}/g, NE.Constants.PAGE_ID_PREFIX + _settings.chapterIndex + '-' + _settings.index);
+            firstData = firstData.replace(/{index}/g, _settings.index);
+            firstData = firstData.replace(/{chapterIndex}/g, _settings.chapterIndex);
+
+            returnVal += firstData; 
             returnVal += params[1].data;
             return returnVal;
         },
