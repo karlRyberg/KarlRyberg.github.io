@@ -202,7 +202,8 @@ NE.UI = (function () {
 
             var jqObj = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
             var cssObj = {
-                'overflow-y': 'hidden'
+                'overflow-y': 'hidden',
+                '-webkit-overflow-scrolling': 'touch'
             };
 
             var totalHeight = 0;
