@@ -192,6 +192,8 @@ NE.Plugin.quiz = function (i_params) {
         },
 
         Render: function (params) {
+
+    
             var returnVal = '';
 
             if (_quizdata.title != '' || _quizdata.introContent != '') {
@@ -203,22 +205,28 @@ NE.Plugin.quiz = function (i_params) {
 
                 if (question.title != '' || question.introContent != '') {
 
-                    if (_quizdata.title == '' && _quizdata.introContent == '') {
-                        returnVal += params[0].data.replace(/{title}/g, question.title).replace(/{introContent}/g, question.introContent);
-                    }
-                    else{
+   
                         returnVal += params[1].data.replace(/{title}/g, question.title).replace(/{introContent}/g, question.introContent);
-                    }
+                    
                 }
 
                 returnVal += params[2].data;
 
                 for (var j = 0; j < question.options.length; j++) {
                     var option = question.options[j];
-                    returnVal += params[3].data.replace(/{content}/g, option.content).replace(/{answerData}/g, option.answerData);
+                    var optData = params[3].data;
+                    optData = optData.replace(/{content}/g, option.content);
+                    optData = optData.replace(/{answerData}/g, option.answerData);
+                    optData = optData.replace(/{feedbackIndex}/g, option.feedbackIndex);
+                    returnVal += optData;
                 }
 
-                returnVal += params[4].data;
+                for (var j = 0; j < question.feedback.length; j++) {
+                    var feedback = question.feedback[j];
+                    returnVal += params[4].data.replace(/{content}/g, feedback.content).replace(/{mood}/g, feedback.mood);
+                }
+
+                returnVal += params[5].data;
             }
 
 

@@ -33,12 +33,12 @@ $(window).load(function () {
 
 
                 $('.NE-page').on('sw-scrolled', function (e, scrollObj) {
-
-                    if (scrollObj.visibility > 0.8 && $(this).attr('id') != NE.Navigation.CurrentPageDiv().attr('id')) {
+                    if (!NE.UI.AcceptScrollEvent) return;
+                    if (scrollObj.visibility == 1 && $(this).attr('id') != NE.Navigation.CurrentPageDiv().attr('id')) {
                         NE.Navigation.CurrentChapterIndex = parseInt($(this).data('chapter'), 10);
+                        console.log(parseInt($(this).data('index'), 10));
                         NE.Navigation.CurrentPageIndex = parseInt($(this).data('index'), 10);
-
-                        console.log(NE.Navigation.CurrentChapterIndex + ' ' + NE.Navigation.CurrentPageIndex);
+                        NE.UI.SetNavigationButtons();
                     }
 
                 });;

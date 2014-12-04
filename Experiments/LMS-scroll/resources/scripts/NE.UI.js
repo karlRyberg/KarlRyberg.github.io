@@ -2,6 +2,7 @@
 /// <reference path="NE.Constants.js" />
 /// <reference path="../../content/structure/courseTree.js" />
 /// <reference path="libraries/masala-ux/dist/js/jquery.min.js" />
+/// <reference path="NE.Scroll.js" />
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -150,7 +151,7 @@ NE.UI = (function () {
         //
         /////////////////////
 
-
+        AcceptScrollEvent: false,
 
         //////////////////////
         //
@@ -229,6 +230,8 @@ NE.UI = (function () {
 
             jqObj.css(cssObj);
 
+            NE.UI.AcceptScrollEvent = true;
+
         },
 
         ResizeScrollContainer: function () {
@@ -238,6 +241,20 @@ NE.UI = (function () {
             NE.UI.ApplyVerticalScrollbar();
         },
 
+        RevealPage: function (i_skipAnimation) {
+
+            var currentPage = NE.Navigation.CurrentPageDiv();
+            var animTime = i_skipAnimation ? 0 : 300;
+
+            if (currentPage.hasClass('hidden')) {
+                currentPage.removeClass('hidden').slideUp(0).slideDown(animTime, 'swing', function () {
+                    NE.UI.ScrollToPage(i_skipAnimation);
+                });
+            }
+            else {
+                NE.UI.ScrollToPage(i_skipAnimation);
+            }
+        },
 
         ScrollToPage: function (i_skipAnimation) {
 
@@ -245,13 +262,15 @@ NE.UI = (function () {
 
             _switchTopMenu();
 
-            var animTime = i_skipAnimation ? 0 : 500;
-            var currentPage = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
-            var currentChapter = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
+            var backing = _lastChapter > NE.Navigation.CurrentChapterIndex;
+            var animTime = i_skipAnimation ? 0 : 300;
+            var currentPage = NE.Navigation.CurrentPageDiv();
+            var currentChapter = NE.Navigation.CurrentChapterDiv();
             var scroller = $('#' + NE.Constants.SCROLL_CONTAINER_ID);
 
-
-            currentChapter.stop(true, true).animate({ 'scrollTop': '+=' + (currentPage.position().top - _topNavBarHeight) }, animTime);
+            if (!backing) {
+                currentChapter.stop(true, true).animate({ 'scrollTop': (currentPage.position().top + currentChapter.scrollTop()) }, animTime);
+            }
             scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
 
             setTimeout(function () {

@@ -1,21 +1,33 @@
 ﻿{
     "questionType": "singleChoice",
     "autoSubmit": true,
-    "title": "Quiz",
-    "introContent": "Lorem ipsum",
+    "title": "",
+    "introContent": "",
     "questions": [
         {
             "title": "Brukar du fundera på syftet med dina texter?",
-            "introContent": "Lorem  ipsum dolor sit amet",
-            "correctAnswer" : "answerYes",
+            "introContent": "",
+            "correctAnswer": "answerYes",
+            "feedback": [
+                {
+                    "content": "Bra! Försök att tänka ett steg till. Om syftet är att informera, fundera på varför informationen är viktig för läsaren.",
+                    "mood": "positive"
+                },
+                {
+                    "content":"Vad vill du att läsaren ska veta eller göra efter att ha läst din text? Se till att det framkommer i texten.",
+                    "mood": "negative"
+                }
+            ],
             "options": [
                 {
                     "content": "Ja",
-                    "answerData": "answerYes"
+                    "answerData": "answerYes",
+                    "feedbackIndex": 0
                 },
                 {
                     "content": "Nej",
-                    "answerData": "answerNo"
+                    "answerData": "answerNo",
+                    "feedbackIndex": 1
                 }
             ]
         }

@@ -2,7 +2,7 @@
 if (NE === null || NE === undefined) { var NE = {}; }
 
 NE.CourseTree = {
-    "name": "Klarspråket",
+    "name": "Klarspråk",
     "chapters": [
         {
             "guid": "D86D5675-6624-4C8D-86F1-D4EFF4AA9707",
@@ -11,7 +11,7 @@ NE.CourseTree = {
             "datasrc": "",
             "plugin": "startscreen",
             "properties": {
-                "displayInMenu": true
+                "displayInMenu": false
             },
             "pages": [
                 {

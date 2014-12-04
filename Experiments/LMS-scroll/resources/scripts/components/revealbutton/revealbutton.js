@@ -106,10 +106,12 @@ NE.Plugin.revealbutton = function (i_params) {
 
             var returnVal = params[0].data;
             var openText = _settings.openText || '';
+            var keepOpen = _settings.keepOpen || true;
 
             returnVal = returnVal.replace(/{revealItemID}/g, _settings.revealItemID);
             returnVal = returnVal.replace(/{initText}/g, _settings.initText);
             returnVal = returnVal.replace(/{openText}/g, openText);
+            returnVal = returnVal.replace(/{keepOpen}/g, keepOpen);
 
             return returnVal;
         },

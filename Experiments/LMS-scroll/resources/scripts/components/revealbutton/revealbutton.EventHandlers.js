@@ -89,11 +89,15 @@ NE.Plugin.revealbutton.EventHandlers = (function () {
                 that.addClass('active');
                 area.removeClass('hidden').slideUp(0).slideDown(500, function () {
                     NE.Scroll.ToElementY(area, 'top');
-                    if (sender.data('opentext')) that.html(sender.data('opentext'));
-                    that.removeClass('active').addClass('open');
+                    var btnAnimTime = 0;
+                    if (sender.data('keepopen') === true) {
+                        if (sender.data('opentext')) that.html(sender.data('opentext'));
+                        that.removeClass('active').addClass('open');
+                        btnAnimTime = 400
+                    }
                     setTimeout(function () {
                         NE.UI.ApplyVerticalScrollbar();
-                    }, 400);
+                    }, btnAnimTime);
                 });
 
             }

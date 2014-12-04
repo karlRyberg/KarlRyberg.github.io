@@ -82,11 +82,11 @@ NE.Navigation = (function () {
         /////////////////////
 
         CurrentChapterDiv: function () {
-            return $(NE.Constants.PAGE_ID_PREFIX + '-' + this.CurrentChapterIndex);
+            return $('#' + NE.Constants.CHAPTER_ID_PREFIX  + this.CurrentChapterIndex);
         },
 
         CurrentPageDiv: function () {
-            return $(NE.Constants.PAGE_ID_PREFIX + '-' + this.CurrentChapterIndex + '-' + this.CurrentPageIndex);
+            return $('#' + NE.Constants.PAGE_ID_PREFIX + this.CurrentChapterIndex + '-' + this.CurrentPageIndex);
         },
 
         IsAtLast: function () {

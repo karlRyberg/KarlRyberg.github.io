@@ -120,7 +120,16 @@ NE.Plugin.chapterlist = function (i_params) {
 
         Render: function (params) {
       
-            var numChapters = NE.CourseTree.chapters.length;
+            var renderChapters = [];
+
+            for(var i = 0; i < NE.CourseTree.chapters.length; i++){
+                var chapter = NE.CourseTree.chapters[i];
+                if(chapter.properties.displayInMenu !== false){
+                    renderChapters.push(chapter);
+                }
+            }
+
+            var numChapters = renderChapters.length;
             var half = Math.ceil(numChapters / 2);
             var reps = 1;
             var colspan = 'col-xs-12';
@@ -142,10 +151,10 @@ NE.Plugin.chapterlist = function (i_params) {
                 for (var j = half * i; j < (i == 0 && reps != 1 ? half : numChapters) ; j++) {
 
                     isLast = j == numChapters - 1 ? ' last-item' : '';
-                    var chapter = NE.CourseTree.chapters[j];
+                    var currentChapter = renderChapters[j];
 
-                    var link = params[1].data.replace(/{cahpterIndex}/g, chapter.index);
-                    link = link.replace(/{chapterTitle}/g, chapter.title);
+                    var link = params[1].data.replace(/{cahpterIndex}/g, currentChapter.index);
+                    link = link.replace(/{chapterTitle}/g, currentChapter.title);
                     link = link.replace(/{linkPrefix}/g, _settings.linkPrefix);
                     link = link.replace(/{isLastItem}/g, isLast);
 

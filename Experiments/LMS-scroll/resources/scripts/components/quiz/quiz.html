@@ -1,4 +1,4 @@
-﻿<div id="{quizID}" class="NE-Quiz-container">
+﻿<div id="{quizID}" class="NE-Quiz-container mt-md">
 
     {function:Render}
     {param}
@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <h1 class="offering-header-text">{title}</h1>
+                <h1 class="h1">{title}</h1>
                 <p class="lead">{introContent}</p>
             </div>
         </div>
@@ -15,42 +15,52 @@
     {/param}
 
     {param}
-    <div class="NE-full-width" style="background-color:#f2f2f2;">
+    <div class="NE-full-width NE-quiz-q-panel pb-md">
 
         <div class="container">
-            <div class="row">
+
+            <div class="row NE-quiz-raised-header">
                 <div class="col-xs-12">
-                    <h2 class="h2 font-weight-normal">{title}</h2>
+                    <h2 class="h2">{title}</h2>
                     <p class="lead">{introContent}</p>
                 </div>
             </div>
 
-        </div>
-    </div>
-    {/param}
-
-    {param}
-
-    <div class="container mt-sm">
-        <div class="row">
 
             {/param}
+
             {param}
 
-            <div class="col-xs-12 col-sm-4 NE-quiz-option-button-holder">
-                <div class="NE-button grey hover-blue NE-quiz-option-button" data-answer="{answerData}">
-                    <div class="inner-text">
-                        {content}
+            <div class="row">
+
+                {/param}
+                {param}
+
+                <div class="col-xs-12 col-sm-4 NE-quiz-option-button-holder">
+                    <div class="NE-button grey hover-blue NE-quiz-option-button" data-answer="{answerData}" data-fb="{feedbackIndex}">
+                        <div class="inner-text">
+                            {content}
+                        </div>
                     </div>
                 </div>
+
+
+                {/param}
+
+                {param}
+                <div class="col-xs-12 mt-sm hidden">
+                    <p class="NE-quiz-feedback {mood} lead">
+                        {content}
+                    </p>
+                </div>
+                {/param}
+
+                {param}
+
             </div>
-
-            {/param}
-            {param}
-
         </div>
-    </div>
 
+    </div>
     {/param}
 
     {/function}

@@ -9,6 +9,7 @@
     border-radius: 4px;
     -webkit-transition: background-color .2s ease-out, border-color .2s ease-out, color .2s ease-out !important;
     transition: background-color .2s ease-out, border-color .2s ease-out, color .2s ease-out !important;
+    font-size: 1.3em;
 }
 
     .NE-button:hover {
