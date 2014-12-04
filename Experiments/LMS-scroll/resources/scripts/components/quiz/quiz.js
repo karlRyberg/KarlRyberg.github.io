@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../libraries/masala-ux/dist/js/jquery.min.js" />
 /// <reference path="../../NE.Plugin.js" />
 /// <reference path="../../../../content/structure/courseTree.js" />
+/// <reference path="../../NE.Scroll.js" />
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -40,6 +41,8 @@ NE.Plugin.quiz = function (i_params) {
     var _numComponents = 0;
     var _componentsLoaded = 0;
     var _quizdata = null;
+    var _openFeedback;
+    var _currentQuestion = 0;
 
     //////////////////////
     //
@@ -61,6 +64,23 @@ NE.Plugin.quiz = function (i_params) {
 
     function _addToDOM(i_content) {
         _params.node.replaceWith(i_content);
+        var numButtons = $('.NE-quiz-option-button').length;
+
+        if (numButtons < 3) {
+            var colWidth = 'col-sm-' + (numButtons * 4);
+        //    var colOffset = 'col-sm-offset-' + numButtons;
+            $('.NE-quiz-feedback-holder').addClass(colWidth);//.addClass(colOffset);
+        //    $('.NE-quiz-option-button-holder').first().addClass(colOffset);
+        }
+
+    }
+
+    function _onComplete() {
+        _adjustButtons();
+        $('#' + _settings.ID).on('click', '.NE-quiz-option-button', function () {
+            _onButtonClick($(this));
+        });
+        me.OnLoaded();
     }
 
     function _onCompnentsLoad(e) {
@@ -74,6 +94,48 @@ NE.Plugin.quiz = function (i_params) {
                 gui: _settings.guid,
             });
         }
+
+    }
+
+    function _onButtonClick(i_sender) {
+        _toggleButtons(i_sender);
+        _displayFeedback(i_sender);
+
+        if (_settings.submitHandler && _quizdata.autoSubmit) {
+
+            eval('(function(){' + _settings.submitHandler + '();})();');
+
+        }
+
+    }
+
+    function _toggleButtons(i_sender) {
+        if (_quizdata.questions[_currentQuestion].questionType != 'singleChoice') return;
+        $('.NE-quiz-option-button', '#' + _settings.ID).removeClass('active');
+        i_sender.addClass('active');
+    }
+
+    function _displayFeedback(i_sender) {
+
+        var fbIndex = i_sender.data('fb');
+        var fbArea = $('#' + _settings.ID + '-fb-' + fbIndex);
+
+        if (_openFeedback) {
+            if (_openFeedback.attr('id') == fbArea.attr('id')) return;
+            fbArea.parent().css('height', fbArea.parent().outerHeight() + 'px');
+            _openFeedback.fadeOut(300, function () {
+                fbArea.removeClass('hidden').fadeOut(0).fadeIn(300, function () {
+                    NE.Scroll.ToElementY(fbArea, 'middle');
+                })
+            });
+        }
+        else {
+            fbArea.slideUp(0).removeClass('hidden').slideDown(300, function () {
+                NE.Scroll.ToElementY(fbArea, 'middle');
+            });
+        }
+
+        _openFeedback = fbArea;
 
     }
 
@@ -112,7 +174,7 @@ NE.Plugin.quiz = function (i_params) {
 
             row.push($(this));
 
-            if (cnt++ == limit-1) {
+            if (cnt++ == limit - 1) {
 
                 _padRow(row, highst, rowCount);
 
@@ -170,21 +232,14 @@ NE.Plugin.quiz = function (i_params) {
 
                         _myDOMContent = $(data.replace(/{quizID}/g, _settings.ID));
                         _addToDOM(_myDOMContent);
-
-                        _adjustButtons();
-
-                        $('#' + _settings.ID).on('click', '.NE-quiz-option-button', function () {
-
-                        });
-
-                        me.OnLoaded();
+                        _onComplete();
 
                     });
 
                 });
             }
             else {
-                me.OnLoaded();
+                _onComplete();
             }
 
 
@@ -193,7 +248,7 @@ NE.Plugin.quiz = function (i_params) {
 
         Render: function (params) {
 
-    
+
             var returnVal = '';
 
             if (_quizdata.title != '' || _quizdata.introContent != '') {
@@ -205,9 +260,9 @@ NE.Plugin.quiz = function (i_params) {
 
                 if (question.title != '' || question.introContent != '') {
 
-   
-                        returnVal += params[1].data.replace(/{title}/g, question.title).replace(/{introContent}/g, question.introContent);
-                    
+
+                    returnVal += params[1].data.replace(/{title}/g, question.title).replace(/{introContent}/g, question.introContent);
+
                 }
 
                 returnVal += params[2].data;
@@ -215,15 +270,23 @@ NE.Plugin.quiz = function (i_params) {
                 for (var j = 0; j < question.options.length; j++) {
                     var option = question.options[j];
                     var optData = params[3].data;
+                    var classes = '';
+                    if (question.questionType == 'singleChoice') classes += ' toggle'
                     optData = optData.replace(/{content}/g, option.content);
                     optData = optData.replace(/{answerData}/g, option.answerData);
                     optData = optData.replace(/{feedbackIndex}/g, option.feedbackIndex);
+                    optData = optData.replace(/{optionButtonClasses}/g, classes);
+
                     returnVal += optData;
                 }
 
                 for (var j = 0; j < question.feedback.length; j++) {
                     var feedback = question.feedback[j];
-                    returnVal += params[4].data.replace(/{content}/g, feedback.content).replace(/{mood}/g, feedback.mood);
+                    var fbData = params[4].data;
+                    fbData = fbData.replace(/{content}/g, feedback.content);
+                    fbData = fbData.replace(/{mood}/g, feedback.mood);
+                    fbData = fbData.replace(/{id}/g, _settings.ID + '-fb-' + j);
+                    returnVal += fbData;
                 }
 
                 returnVal += params[5].data;

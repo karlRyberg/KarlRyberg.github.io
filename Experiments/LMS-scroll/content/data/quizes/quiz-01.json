@@ -1,10 +1,10 @@
 ﻿{
-    "questionType": "singleChoice",
     "autoSubmit": true,
     "title": "",
     "introContent": "",
     "questions": [
         {
+            "questionType": "singleChoice",
             "title": "Brukar du fundera på syftet med dina texter?",
             "introContent": "",
             "correctAnswer": "answerYes",
@@ -14,8 +14,8 @@
                     "mood": "positive"
                 },
                 {
-                    "content":"Vad vill du att läsaren ska veta eller göra efter att ha läst din text? Se till att det framkommer i texten.",
-                    "mood": "negative"
+                    "content": "Vad vill du att läsaren ska veta eller göra efter att ha läst din text? Se till att det framkommer i texten.",
+                    "mood": "neutral"
                 }
             ],
             "options": [

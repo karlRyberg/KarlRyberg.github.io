@@ -106,39 +106,6 @@ button:active {
     animation-timing-function: ease-in-out;
 }
 
-.NE-scroll-nav-hint {
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    width: 80px;
-    height: 300px;
-    margin: auto;
-    font-size: 50px;
-    line-height: 80px;
-    /*border: 1px solid #fff;*/
-    background-color: #808080;
-    color: #fff;
-    text-align: center;
-    opacity: 1;
-    -webkit-transform: translate3d(0px,0px,0px);
-}
-
-#NE-scroll-nav-hint-top {
-    top: -300px;
-    border-top: none;
-    padding-top: 220px;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-}
-
-
-#NE-scroll-nav-hint-bottom {
-    position: fixed;
-    bottom: -300px;
-    border-bottom: none;
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-}
 
 @-webkit-keyframes scrollHintAnim {
     0% {
@@ -156,7 +123,7 @@ button:active {
     }
 }
 
-@keyframes kalle {
+@keyframes scrollHintAnim {
     0% {
         opacity: 0;
         bottom: 20px;

@@ -1,4 +1,4 @@
-﻿<div id="{quizID}" class="NE-Quiz-container mt-md">
+﻿<div id="{quizID}" class="NE-Quiz-container">
 
     {function:Render}
     {param}
@@ -21,7 +21,7 @@
 
             <div class="row NE-quiz-raised-header">
                 <div class="col-xs-12">
-                    <h2 class="h2">{title}</h2>
+                    <h1 class="h1">{title}</h1>
                     <p class="lead">{introContent}</p>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                 {param}
 
                 <div class="col-xs-12 col-sm-4 NE-quiz-option-button-holder">
-                    <div class="NE-button grey hover-blue NE-quiz-option-button" data-answer="{answerData}" data-fb="{feedbackIndex}">
+                    <div class="NE-button grey hover-blue NE-quiz-option-button{optionButtonClasses}" data-answer="{answerData}" data-fb="{feedbackIndex}">
                         <div class="inner-text">
                             {content}
                         </div>
@@ -48,7 +48,7 @@
                 {/param}
 
                 {param}
-                <div class="col-xs-12 mt-sm hidden">
+                <div id="{id}" class="NE-quiz-feedback-holder col-xs-12 mt-sm hidden">
                     <p class="NE-quiz-feedback {mood} lead">
                         {content}
                     </p>

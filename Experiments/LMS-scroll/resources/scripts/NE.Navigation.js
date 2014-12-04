@@ -81,12 +81,15 @@ NE.Navigation = (function () {
         //
         /////////////////////
 
-        CurrentChapterDiv: function () {
-            return $('#' + NE.Constants.CHAPTER_ID_PREFIX  + this.CurrentChapterIndex);
+        CurrentChapterDiv: function (i_chapterInc) {
+            i_chapterInc = i_chapterInc || 0;
+            return $('#' + NE.Constants.CHAPTER_ID_PREFIX + (this.CurrentChapterIndex + i_chapterInc));
         },
 
-        CurrentPageDiv: function () {
-            return $('#' + NE.Constants.PAGE_ID_PREFIX + this.CurrentChapterIndex + '-' + this.CurrentPageIndex);
+        CurrentPageDiv: function (i_chapterInc, i_pageInc) {
+            i_chapterInc = i_chapterInc || 0;
+            i_pageInc = i_pageInc || 0;
+            return $('#' + NE.Constants.PAGE_ID_PREFIX + (this.CurrentChapterIndex + i_chapterInc) + '-' + (this.CurrentPageIndex + i_pageInc));
         },
 
         IsAtLast: function () {

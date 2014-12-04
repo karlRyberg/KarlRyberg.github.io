@@ -1,5 +1,55 @@
-﻿<div class="NE-plugin-container" data-plugin="quiz" data-settings="{
+﻿<div class="container">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-5 mt-md">
+            <div class="text-center">
+                <img src="../content/media/screen_klarsprak.gif" style="max-height:360px;" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 mt-md">
+            <div class="NE-plugin-container" data-plugin="quiz" data-settings="{
             'datafile': '../content/data/quizes/quiz-01.json',
-            'ID':'quiz-01'
+            'ID':'quiz-01',
+            'submitHandler':'q1_afterSubmit'
             }">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="Next_button_2_2" class="row mt-md mb-sm text-center hidden NE-hidden-visited">
+            <div class="col-xs-12">
+                <div class="NE-plugin-container" data-plugin="nextbutton" data-settings="{
+                         'text': 'Gå vidare'
+                         }">
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+<script type="text/javascript">
+
+    /// <reference path="NE.Navigation.js" />
+
+    function q1_afterSubmit() {
+
+        var pageNavBtn = $('#Next_button_2_2');
+        var footerNavBtns = $('#NE-floating-footer').find('.NE-nav-forward');
+
+        if (pageNavBtn.hasClass('hidden')) {
+            pageNavBtn.slideUp(0).removeClass('hidden').slideDown(300);
+            footerNavBtns.addClass('hint');
+            setTimeout(function () {
+                footerNavBtns.removeClass('hint');
+            }, 1500);
+        }
+
+
+    }
+
+</script>

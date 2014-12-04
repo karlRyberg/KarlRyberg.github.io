@@ -1,0 +1,28 @@
+﻿.NE-next-button {
+    -webkit-transition: margin-top 0.3s, padding 0.3s, height 0.3s, background-color 0.2s !important;
+    transition: margin-top 0.3s, padding 0.3s, height 0.3s, background-color 0.2s !important;
+}
+
+    .NE-next-button:after {
+        font-family: FontAwesome;
+        font-weight: bold;
+        content: '\f107';
+        margin-left: 15px;
+    }
+
+    .NE-next-button:hover {
+        background-color: #1394a6;
+    }
+
+    .NE-next-button.open {
+    }
+
+        .NE-next-button.open:after {
+            content: '\f106';
+        }
+
+    .NE-next-button.active {
+        margin-top: 25px;
+        padding: 0px 40%;
+        height: 0px;
+    }

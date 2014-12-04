@@ -269,6 +269,8 @@ NE.UI = (function () {
             if (!backing) {
                 currentChapter.stop(true, true).animate({ 'scrollTop': (currentPage.position().top + currentChapter.scrollTop()) }, animTime);
             }
+
+
             scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, function () {
                 NE.UI.ApplyVerticalScrollbar();
                 NE.UI.AcceptScrollEvent = true;

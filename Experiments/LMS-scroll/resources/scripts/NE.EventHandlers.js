@@ -89,7 +89,7 @@ NE.EventHandlers = (function () {
         },
 
         Navigation: function (e) {
-
+   
             NE.UI.SetNavigationButtons();
             NE.UI.RevealPage();
 
