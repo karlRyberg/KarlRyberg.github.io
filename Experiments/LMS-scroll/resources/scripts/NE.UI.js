@@ -230,8 +230,6 @@ NE.UI = (function () {
 
             jqObj.css(cssObj);
 
-            NE.UI.AcceptScrollEvent = true;
-
         },
 
         ResizeScrollContainer: function () {
@@ -271,11 +269,11 @@ NE.UI = (function () {
             if (!backing) {
                 currentChapter.stop(true, true).animate({ 'scrollTop': (currentPage.position().top + currentChapter.scrollTop()) }, animTime);
             }
-            scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime);
-
-            setTimeout(function () {
+            scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, function () {
                 NE.UI.ApplyVerticalScrollbar();
-            }, animTime);
+                NE.UI.AcceptScrollEvent = true;
+            });
+
 
             if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
                 _lastChapter = NE.Navigation.CurrentChapterIndex;
