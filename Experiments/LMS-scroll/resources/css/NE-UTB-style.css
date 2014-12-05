@@ -7,6 +7,11 @@
     margin-top: 0px;
 }
 
+
+.NE-raised-header h1 {
+    margin-top: 0px;
+}
+
 .navigation .navbar-collapse {
     max-height: 500px;
 }

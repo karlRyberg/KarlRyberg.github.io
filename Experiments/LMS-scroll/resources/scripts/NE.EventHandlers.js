@@ -38,6 +38,7 @@ NE.EventHandlers = (function () {
     var _negScroll = 0;
     var _navTimer;
     var _beenNegative = false;
+    var _resizeTimer;
 
     //////////////////////
     //
@@ -74,8 +75,14 @@ NE.EventHandlers = (function () {
         /////////////////////
 
         WindowResize: function () {
+            NE.UI.AcceptScrollEvent = false;
             NE.UI.ResizeScrollContainer();
-            NE.UI.ScrollToPage(true);
+            $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).css('visibility', 'hidden');
+            clearTimeout(_resizeTimer);
+            _resizeTimer = setTimeout(function () {
+                $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).css('visibility', 'visible');
+                NE.UI.ScrollToPage(true);
+            }, 500);
         },
 
         NavBackBtnClick: function (i_item) {
@@ -90,6 +97,10 @@ NE.EventHandlers = (function () {
 
         Navigation: function (e) {
    
+            NE.Navigation.CurrentPageDiv(0, -1).find('.NE-hidden-visited').slideUp(300, function () {
+                $(this).addClass('hidden');
+            });
+
             NE.UI.SetNavigationButtons();
             NE.UI.RevealPage();
 

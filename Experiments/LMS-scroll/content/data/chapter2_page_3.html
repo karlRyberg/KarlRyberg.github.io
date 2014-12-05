@@ -1,8 +1,63 @@
 ﻿<div class="container">
-    <div class="row mt-xl mb-xl">
+    <div class="row mt-md pt-md pb-md">
 
+        <div class="col-xs-12 col-sm-5 NE-raised-header">
+            <h1 class="h1">Vem ska läsa texten?</h1>
+            <p class="lead">
+                Sätt dig in i läsarens situation. Vad har läsaren för förkunskaper? Du kan vara väl insatt i ditt eget ämnesområde utan att behärska andras.
+            </p>
+            <p class="lead">
+                Om du inte vet vem som ska läsa din text så föreställ dig en ung vuxen som inte känner till er verksamhet.
+            </p>
+        </div>
+
+
+        <div class="col-xs-12 col-sm-7">
+
+            <div class="mediaplayer-large">
+                <div class="mediaplayer-container">
+                    <figure id="video-2-3">
+                        <a href="../content/media/student.mp4" alt="Spela upp filmen" class="mediaplayer-fallback-container">
+                            <!-- <a href="https://www.youtube.com/watch?v=QZrYis7jFiI" alt="Spela upp filmen" class="mediaplayer-fallback-container"> -->
+                            <img src="../content/media/student.jpg" alt="">
+                            <span class="mediaplayer-play-icon">
+                                <span class="fa-stack fa-2x">
+                                    <i class="fa fa-square fa-stack-2x"></i>
+                                    <i class="fa fa-play fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </span>
+                        </a>
+                    </figure>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <div id="Next_button_2_3" class="row mt-md mb-sm text-center NE-hidden-visited">
         <div class="col-xs-12">
-            <h1>Sida 3</h1>
+            <div class="NE-plugin-container" data-plugin="nextbutton" data-settings="{
+                         'text': 'Gå vidare'
+                         }">
+            </div>
         </div>
     </div>
+
+    <script>
+        console.log(NE.Constants.APPLICATION_BASE_PATH + '/content/media/student.mp4');
+        jwplayer("video-2-3").setup({
+            //file: NE.Constants.APPLICATION_BASE_PATH + '/content/media/student.mp4',
+            file: 'https://www.youtube.com/watch?v=QZrYis7jFiI',
+            image: NE.Constants.APPLICATION_BASE_PATH + '/content/media/student.jpg',
+            flashplayer: 'http://masala-ux.ne.se/dist/swf/jwplayer.flash.swf',
+            skin: 'glow',
+            fontSize: 10,
+            width: '100%',
+            aspectratio: '16:9',
+            fallback: false
+        });
+    </script>
 </div>

@@ -83,6 +83,13 @@ NE.Plugin.nextbutton.EventHandlers = (function () {
             var that = sender;
 
             that.addClass('active');
+            var parentToHide = that.parents('.NE-hidden-visited').first();
+            if (parentToHide.length > 0) {
+                parentToHide.slideUp(300, function () {
+                    parentToHide.addClass('hidden');
+                });
+            }
+
             NE.Navigation.Next();
 
             e.preventDefault();

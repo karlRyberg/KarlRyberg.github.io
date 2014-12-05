@@ -34,9 +34,11 @@ $(window).load(function () {
 
                 $('.NE-page').on('sw-scrolled', function (e, scrollObj) {
                     if (!NE.UI.AcceptScrollEvent) return;
-                    if (scrollObj.visibility == 1 && $(this).attr('id') != NE.Navigation.CurrentPageDiv().attr('id')) {
+                    if (scrollObj.visibility > 0.95 && $(this).attr('id') != NE.Navigation.CurrentPageDiv().attr('id')) {
+
                         NE.Navigation.CurrentChapterIndex = parseInt($(this).data('chapter'), 10);
                         NE.Navigation.CurrentPageIndex = parseInt($(this).data('index'), 10);
+
                         NE.UI.SetNavigationButtons();
                     }
 

@@ -64,15 +64,6 @@ NE.Plugin.quiz = function (i_params) {
 
     function _addToDOM(i_content) {
         _params.node.replaceWith(i_content);
-        var numButtons = $('.NE-quiz-option-button').length;
-
-        if (numButtons < 3) {
-            var colWidth = 'col-sm-' + (numButtons * 4);
-        //    var colOffset = 'col-sm-offset-' + numButtons;
-            $('.NE-quiz-feedback-holder').addClass(colWidth);//.addClass(colOffset);
-        //    $('.NE-quiz-option-button-holder').first().addClass(colOffset);
-        }
-
     }
 
     function _onComplete() {
@@ -99,14 +90,18 @@ NE.Plugin.quiz = function (i_params) {
 
     function _onButtonClick(i_sender) {
         _toggleButtons(i_sender);
-        _displayFeedback(i_sender);
+        _displayFeedback(i_sender, function () {
+            _onAfterOption();
+        });
 
+
+
+    }
+
+    function _onAfterOption() {
         if (_settings.submitHandler && _quizdata.autoSubmit) {
-
             eval('(function(){' + _settings.submitHandler + '();})();');
-
         }
-
     }
 
     function _toggleButtons(i_sender) {
@@ -115,7 +110,7 @@ NE.Plugin.quiz = function (i_params) {
         i_sender.addClass('active');
     }
 
-    function _displayFeedback(i_sender) {
+    function _displayFeedback(i_sender, i_callback) {
 
         var fbIndex = i_sender.data('fb');
         var fbArea = $('#' + _settings.ID + '-fb-' + fbIndex);
@@ -125,13 +120,14 @@ NE.Plugin.quiz = function (i_params) {
             fbArea.parent().css('height', fbArea.parent().outerHeight() + 'px');
             _openFeedback.fadeOut(300, function () {
                 fbArea.removeClass('hidden').fadeOut(0).fadeIn(300, function () {
-                    NE.Scroll.ToElementY(fbArea, 'middle');
+                    if (i_callback) i_callback();
+                    //NE.Scroll.ToElementY(fbArea, 'middle', i_callback);
                 })
             });
         }
         else {
-            fbArea.slideUp(0).removeClass('hidden').slideDown(300, function () {
-                NE.Scroll.ToElementY(fbArea, 'middle');
+            fbArea.removeClass('hidden').slideUp(0).slideDown(300, function () {
+                NE.Scroll.ToElementY(fbArea, 'middle', i_callback);
             });
         }
 

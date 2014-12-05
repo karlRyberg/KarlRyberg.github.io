@@ -207,6 +207,8 @@ NE.UI = (function () {
                 '-webkit-overflow-scrolling': 'touch'
             };
 
+            jqObj.find('.NE-full-width').css('margin-left', '');
+
             var totalHeight = 0;
             jqObj.children('.NE-page').each(function () {
                 totalHeight += $(this).outerHeight();
@@ -221,6 +223,10 @@ NE.UI = (function () {
 
 
                 jqObj.children('.NE-page').css('padding-left', _getScrollbarWidth() + 'px');
+
+                if ($('#isXS').is(':visible')) {
+                    jqObj.find('.NE-full-width').css('margin-left', -_getScrollbarWidth() + 'px');
+                }
 
             }
 
@@ -271,7 +277,7 @@ NE.UI = (function () {
             }
 
 
-            scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, function () {
+            scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime, function () {
                 NE.UI.ApplyVerticalScrollbar();
                 NE.UI.AcceptScrollEvent = true;
             });
