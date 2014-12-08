@@ -74,7 +74,6 @@ NE.Constants = (function () {
         PAGE_ID_PREFIX: 'NE-page-',
         CHAPTER_ID_PREFIX: 'NE-chapter-',
         FLOATING_HEADER_ID: 'NE-top',
-        FLOATING_FOOTER_ID: 'NE-floating-footer',
         CLOSE_BUTTON_ID: 'NE-top-close-btn',
         OF_CANVAS_TOP_CLASS: 'NE-offcanvas',
         HEADER_CHAPTER_NAV_ICON: '<i class="fa fa-navicon ml-xs"></i>',

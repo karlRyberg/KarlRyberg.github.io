@@ -57,7 +57,6 @@ NE.Net = (function () {
                 if (i_callback) i_callback(i_data);
             })
             .fail(function (ida) {
-                console.log(ida);
                 if (i_callback) i_callback("failed to load " + i_file);
             });
     }

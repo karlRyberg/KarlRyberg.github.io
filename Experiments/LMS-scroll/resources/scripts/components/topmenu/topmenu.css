@@ -2,6 +2,9 @@
     position: absolute;
     top: -83px;
     width: 100%;
+    overflow: hidden;
+    -webkit-transition: top 0.2s ease-in;
+    transition: top 0.2s ease-in;
 }
 
     #NE-top .h4 {
@@ -18,12 +21,12 @@
         margin-left: 0px;
     }
 
-#NE-top.navigation .navbar-btn {
-    margin-top: 21.5px;
-    margin-bottom: 21.5px;
-    margin-left: 0px;
-    margin-right: 6px;
-}
+    #NE-top.navigation .navbar-btn {
+        margin-top: 21.5px;
+        margin-bottom: 21.5px;
+        margin-left: 0px;
+        margin-right: 6px;
+    }
 
 .NE-navbar-distance {
     border: 6px solid transparent;

@@ -95,9 +95,6 @@ NE.Plugin.revealbutton.EventHandlers = (function () {
                         that.removeClass('active').addClass('open');
                         btnAnimTime = 400
                     }
-                    setTimeout(function () {
-                        NE.UI.ApplyVerticalScrollbar();
-                    }, btnAnimTime);
                 });
 
             }
@@ -109,9 +106,6 @@ NE.Plugin.revealbutton.EventHandlers = (function () {
                     that.html(sender.data('inittext'));
                     that.removeClass('active').removeClass('open');
                     area.addClass('hidden');
-                    setTimeout(function () {
-                        NE.UI.ApplyVerticalScrollbar();
-                    }, 400);
                 });
 
             }

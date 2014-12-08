@@ -76,13 +76,34 @@ NE.EventHandlers = (function () {
 
         WindowResize: function () {
             NE.UI.AcceptScrollEvent = false;
-            NE.UI.ResizeScrollContainer();
+
             $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).css('visibility', 'hidden');
             clearTimeout(_resizeTimer);
             _resizeTimer = setTimeout(function () {
                 $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).css('visibility', 'visible');
                 NE.UI.ScrollToPage(true);
             }, 500);
+        },
+
+        ChaptersLoaded: function () {
+            $('.NE-page').on('sw-scrolled', function (e, scrollObj) {
+                if (!NE.UI.AcceptScrollEvent) return;
+                if (scrollObj.visibility > 0.95 && $(this).attr('id') != NE.Navigation.CurrentPageDiv().attr('id')) {
+
+                    NE.Navigation.CurrentChapterIndex = parseInt($(this).data('chapter'), 10);
+                    NE.Navigation.CurrentPageIndex = parseInt($(this).data('index'), 10);
+
+                    NE.UI.SetNavigationButtons();
+                }
+
+            });;
+
+            $('.NE-page').ScrollWatch({
+                axis: 'y',
+                prioritize: 'max',//'partofviewport'//'partofobject'
+                swWindow: '#' + NE.Constants.SCROLL_CONTAINER_ID,
+                swDocument: '.NE-chapter'
+            });
         },
 
         NavBackBtnClick: function (i_item) {
@@ -96,10 +117,12 @@ NE.EventHandlers = (function () {
         },
 
         Navigation: function (e) {
-   
+
             NE.Navigation.CurrentPageDiv(0, -1).find('.NE-hidden-visited').slideUp(300, function () {
                 $(this).addClass('hidden');
             });
+
+
 
             NE.UI.SetNavigationButtons();
             NE.UI.RevealPage();

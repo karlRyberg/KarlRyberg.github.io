@@ -17,7 +17,7 @@ $(window).load(function () {
         }).Init();
     });
 
-
+    var _chaptersLoaded = 0;
     for (var i = 0; i < NE.CourseTree.chapters.length; i++) {
         var chapter = NE.Plugin.Load({
             name: 'chapter',
@@ -28,30 +28,16 @@ $(window).load(function () {
             }
         });
         chapter.OnLoaded = function (e) {
+
             if (e.index == NE.Navigation.CurrentChapterIndex) {
                 NE.Navigation.ToPage(0);
-
-
-                $('.NE-page').on('sw-scrolled', function (e, scrollObj) {
-                    if (!NE.UI.AcceptScrollEvent) return;
-                    if (scrollObj.visibility > 0.95 && $(this).attr('id') != NE.Navigation.CurrentPageDiv().attr('id')) {
-
-                        NE.Navigation.CurrentChapterIndex = parseInt($(this).data('chapter'), 10);
-                        NE.Navigation.CurrentPageIndex = parseInt($(this).data('index'), 10);
-
-                        NE.UI.SetNavigationButtons();
-                    }
-
-                });;
-
-                $('.NE-page').ScrollWatch({
-                    axis: 'y',
-                    prioritize: 'max',//'partofviewport'//'partofobject'
-                    swWindow: '#' + NE.Constants.SCROLL_CONTAINER_ID,
-                    swDocument: '.NE-chapter'
-                });
-
             }
+            _chaptersLoaded++;
+
+            if (_chaptersLoaded >= NE.CourseTree.chapters.length) {
+                NE.EventHandlers.ChaptersLoaded();
+            }
+
         }
         chapter.Init();
     }
@@ -62,8 +48,8 @@ $(window).load(function () {
         NE.EventHandlers.WindowResize();
     });
 
-    FastClick.attach(document.body);
 
+    FastClick.attach(document.body);
 
 
     NE.Events.Add(NE.Navigation.ON_NAVIGATION, NE.EventHandlers.Navigation);

@@ -35,19 +35,10 @@ NE.UI = (function () {
     //
     /////////////////////
 
-    var _topNavBarHeight = 0;
-    var _lastChapter = 0;
-    var _lastPage = 0;
     var _scrollbarWidth = null;
     var _scrollerTarget = 0;
     var _scrollHintDismissed = false;
     var _hintTImer = null;
-
-    // Scroll nav vars
-    var _scrollExitTImer;
-    var _negScroll = 0;
-    var _navTimer;
-    var _beenNegative = false;
 
     //////////////////////
     //
@@ -96,27 +87,16 @@ NE.UI = (function () {
     }
 
     function _switchTopMenu() {
-        var navObj = $('#' + NE.Constants.FLOATING_HEADER_ID);
-        var mainContainer = $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID);
-        var navHeight = navObj.outerHeight();
-        var animtime = 300;
-        var isXs = $('#isXS').is(':visible');
-        _topNavBarHeight = 0;
+        var menu = $('#' + NE.Constants.FLOATING_HEADER_ID);
+        var main = $('#' + NE.Constants.SCROLL_CONTAINER_ID);
 
-        navObj.stop(true, true);
-        mainContainer.stop(true, true);
-
-        if ((NE.Navigation.CurrentPageIndex > 0 || NE.Navigation.CurrentChapterIndex > 0 || isXs) && navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
-            var h = mainContainer.innerHeight() - navHeight;
-            navObj.removeClass(NE.Constants.OF_CANVAS_TOP_CLASS);
-            navObj.animate({ 'top': 0 + 'px' }, animtime);
-            mainContainer.animate({ 'top': navHeight + 'px' }, animtime);
-            _topNavBarHeight = navHeight;
+        if ((NE.Navigation.CurrentPageIndex > 0 || NE.Navigation.CurrentChapterIndex > 0) || $('#isXS').is(':visible')) {
+            menu.css('top', '0px');
+            main.css('top', 83 + 'px');
         }
-        else if (NE.Navigation.CurrentPageIndex == 0 && NE.Navigation.CurrentChapterIndex == 0 && !isXs && !navObj.hasClass(NE.Constants.OF_CANVAS_TOP_CLASS)) {
-            navObj.addClass(NE.Constants.OF_CANVAS_TOP_CLASS);
-            navObj.animate({ 'top': -navHeight + 'px' }, animtime);
-            mainContainer.animate({ 'top': '0px' }, animtime);
+        else {
+            menu.css('top', -83 + 'px');
+            main.css('top', '0px');
         }
 
     }
@@ -160,9 +140,10 @@ NE.UI = (function () {
         /////////////////////
 
         Setup: function () {
-
-            NE.UI.ResizeScrollContainer();
-
+            if (!_scrollHintDismissed) {
+                _hintTImer = setTimeout(NE.UI.ScrollHint, 5000);
+            }
+            $('#' + NE.Constants.SCROLL_CONTAINER_ID).css('padding-left', _getScrollbarWidth() + 'px');
         },
 
         ToggleForwardNavButtons: function (onoff) {
@@ -199,52 +180,6 @@ NE.UI = (function () {
             }
         },
 
-        ApplyVerticalScrollbar: function () {
-
-            var jqObj = $('#' + NE.Constants.CHAPTER_ID_PREFIX + NE.Navigation.CurrentChapterIndex);
-            var cssObj = {
-                'overflow-y': 'hidden',
-                '-webkit-overflow-scrolling': 'touch'
-            };
-
-            jqObj.find('.NE-full-width').css('margin-left', '');
-
-            var totalHeight = 0;
-            jqObj.children('.NE-page').each(function () {
-                totalHeight += $(this).outerHeight();
-            });
-
-            if (totalHeight > jqObj.innerHeight()) {
-
-                cssObj = {
-                    'overflow-y': 'auto',
-                    '-webkit-overflow-scrolling': 'touch'
-                };
-
-
-                jqObj.children('.NE-page').css('padding-left', _getScrollbarWidth() + 'px');
-
-                if ($('#isXS').is(':visible')) {
-                    jqObj.find('.NE-full-width').css('margin-left', -_getScrollbarWidth() + 'px');
-                }
-
-            }
-
-            if (!_scrollHintDismissed) {
-                _hintTImer = setTimeout(NE.UI.ScrollHint, 5000);
-            }
-
-            jqObj.css(cssObj);
-
-        },
-
-        ResizeScrollContainer: function () {
-            $('#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID).css({
-                'bottom': $('#' + NE.Constants.FLOATING_FOOTER_ID).outerHeight()
-            });
-            NE.UI.ApplyVerticalScrollbar();
-        },
-
         RevealPage: function (i_skipAnimation) {
 
             var currentPage = NE.Navigation.CurrentPageDiv();
@@ -264,35 +199,22 @@ NE.UI = (function () {
 
             NE.UI.AcceptScrollEvent = false;
 
-            _switchTopMenu();
-
-            var backing = _lastChapter > NE.Navigation.CurrentChapterIndex;
             var animTime = i_skipAnimation ? 0 : 300;
             var currentPage = NE.Navigation.CurrentPageDiv();
             var currentChapter = NE.Navigation.CurrentChapterDiv();
             var scroller = $('#' + NE.Constants.SCROLL_CONTAINER_ID);
 
-            if (!backing) {
-                currentChapter.stop(true, true).animate({ 'scrollTop': (currentPage.position().top + currentChapter.scrollTop()) }, animTime);
-            }
+            _switchTopMenu();
 
+            scroller.animate({ 'scrollTop': '+=' + (currentChapter.position().top + currentPage.position().top) }, animTime);
 
-            scroller.stop(true, true).animate({ 'scrollTop': '+=' + (currentChapter.position().top - _topNavBarHeight) }, animTime, function () {
-                NE.UI.ApplyVerticalScrollbar();
-                NE.UI.AcceptScrollEvent = true;
-            });
-
-
-            if (_lastChapter != NE.Navigation.CurrentChapterIndex) {
-                _lastChapter = NE.Navigation.CurrentChapterIndex;
-            }
 
         },
 
         ScrollHint: function () {
-            var currentPage = $('#' + NE.Constants.PAGE_ID_PREFIX + NE.Navigation.CurrentChapterIndex + '-' + NE.Navigation.CurrentPageIndex);
+            var currentChapter = NE.Navigation.CurrentChapterDiv();
             $('#NE-scroll-hint').removeClass('hidden').addClass('active');
-            _scrollHintAnimate(currentPage, currentPage.scrollTop());
+            _scrollHintAnimate(currentChapter, currentChapter.scrollTop());
         },
 
         eof: null
