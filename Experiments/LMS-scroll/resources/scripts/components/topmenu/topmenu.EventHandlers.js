@@ -137,7 +137,7 @@ NE.Plugin.topmenu.EventHandlers = (function () {
             var now = new Date()
             var delay = _clickTimer ? now - _clickTimer : 1000;
             _clickTimer = now;
-            console.log(delay);
+
             if (delay < 500) return;
 
             var chapterMenuDiv = $('#NE-top-chapter-navigation');
@@ -156,6 +156,7 @@ NE.Plugin.topmenu.EventHandlers = (function () {
             if (i_item.hasClass('disable')) return;
             var chapterIndex = parseInt(i_item.data('chapter'), 10);
             NE.Navigation.ToChapter(chapterIndex);
+            NE.UI.ScrollToPage();
             $('.NE-chapter-label').click();
         },
 

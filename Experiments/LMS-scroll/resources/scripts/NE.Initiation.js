@@ -42,8 +42,6 @@ $(window).load(function () {
         chapter.Init();
     }
 
-    NE.UI.Setup();
-
     $(window).on('resize', function () {
         NE.EventHandlers.WindowResize();
     });

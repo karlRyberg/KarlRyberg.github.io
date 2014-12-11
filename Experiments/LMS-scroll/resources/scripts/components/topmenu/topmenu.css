@@ -1,11 +1,17 @@
 ﻿#NE-top {
-    position: absolute;
-    top: -83px;
-    width: 100%;
+    position: fixed;
+    top: 0px;
     overflow: hidden;
+    border-width:0px;
+    border-bottom-width:1px;
+    margin: 0px;
     -webkit-transition: top 0.2s ease-in;
     transition: top 0.2s ease-in;
 }
+
+    #NE-top.NE-offcanvas {
+        top: -83px;
+    }
 
     #NE-top .h4 {
         color: #808080;

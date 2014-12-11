@@ -91,6 +91,8 @@ NE.Plugin.nextbutton.EventHandlers = (function () {
             }
 
             NE.Navigation.Next();
+            console.log(NE.Navigation.CurrentChapterIndex + ' ' + NE.Navigation.CurrentPageIndex)
+            NE.UI.RevealPage();
 
             e.preventDefault();
             return false;

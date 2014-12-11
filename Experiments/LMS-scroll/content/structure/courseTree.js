@@ -1,5 +1,5 @@
 ﻿// Ensure that the NE namespace is avaiable
-if (NE === null || NE === undefined) { var NE = { } ; } NE.CourseTree = {
+if (NE === null || NE === undefined) { var NE = {}; } NE.CourseTree = {
     "name": "Klarspråk",
     "chapters": [
         {
@@ -37,7 +37,8 @@ if (NE === null || NE === undefined) { var NE = { } ; } NE.CourseTree = {
                 {
                     "guid": "7BFF52B4-9E09-4367-AF3D-9D5E3724951E",
                     "title": "Page 2",
-                    "datafile": "chapter2_page_2"
+                    "datafile": "chapter2_page_2",
+                    "stopprogress": true
                 },
                 {
                     "guid": "E507FE70-41B7-48F3-B68F-C51B51455D32",

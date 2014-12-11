@@ -52,31 +52,21 @@ button:active {
     }
 }
 
-#NE-floating-footer {
-    position: fixed;
-    height: 0px;
-    width: 100%;
-    bottom: 0px;
-    z-index: 10;
-    background-color: white;
-    border-top: 1px solid #d9d9d9;
-}
-
 #NE-main-container {
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 0px;
     bottom: 0px;
     margin: auto;
     padding: 0px;
     background-color: white;
-    -webkit-transition: top 0.2s ease-in;
-    transition: top 0.2s ease-in;
+    -webkit-transition: margin-top 0.2s ease-in;
+    transition: margin-top 0.2s ease-in;
     overflow: hidden;
 }
 
 #NE-scroller {
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 0px;
     bottom: 0px;

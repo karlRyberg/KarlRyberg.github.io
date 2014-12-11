@@ -128,7 +128,8 @@ NE.Plugin.chapter = function (i_params) {
                     guid: page.guid,
                     chapterIndex: _settings.index,
                     index: i,
-                    datafile: contentFile
+                    datafile: contentFile,
+                    stopprogress: page.stopprogress
                 }
 
                 returnVal += '<div class="NE-plugin-container" data-plugin="page" data-settings="' + escape(JSON.stringify(pageSettings)) + '"></div>';
