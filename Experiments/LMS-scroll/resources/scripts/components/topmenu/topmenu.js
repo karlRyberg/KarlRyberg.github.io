@@ -100,6 +100,7 @@ NE.Plugin.topmenu = function (i_params) {
                     });
 
                     $('.NE-chapter-label').on('click', function () {
+                        alert(23)
                         NE.Plugin.topmenu.EventHandlers.ChapterLabelClick($(this));
                     });
 
