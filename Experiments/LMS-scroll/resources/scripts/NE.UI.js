@@ -86,20 +86,6 @@ NE.UI = (function () {
         return _scrollbarWidth;
     }
 
-    function _switchTopMenu() {
-        var menu = $('#' + NE.Constants.FLOATING_HEADER_ID);
-        var main = $('#' + NE.Constants.SCROLL_CONTAINER_ID);
-
-        if ((NE.Navigation.CurrentPageIndex > 0 || NE.Navigation.CurrentChapterIndex > 0) || $('#isXS').is(':visible')) {
-            menu.css('top', '0px');
-            main.css('top', 83 + 'px');
-        }
-        else {
-            menu.css('top', -83 + 'px');
-            main.css('top', '0px');
-        }
-
-    }
 
     function _scrollHintAnimate(i_scrollElem, i_scrollTop) {
 
@@ -131,7 +117,7 @@ NE.UI = (function () {
         //
         /////////////////////
 
-        AcceptScrollEvent: false,
+        AcceptScrollEvent: true,
 
         //////////////////////
         //
@@ -162,6 +148,21 @@ NE.UI = (function () {
                 $('.NE-nav-back').removeClass('disable');
                 NE.UI.SetNavigationButtons();
             }
+        },
+
+        SwitchTopMenu: function () {
+            var menu = $('#' + NE.Constants.FLOATING_HEADER_ID);
+            var main = $('#' + NE.Constants.SCROLL_CONTAINER_ID);
+
+            if ((NE.Navigation.CurrentPageIndex > 0 || NE.Navigation.CurrentChapterIndex > 0) || $('#isXS').is(':visible')) {
+                menu.css('top', '0px');
+                main.css('top', 83 + 'px');
+            }
+            else {
+                menu.css('top', -83 + 'px');
+                main.css('top', '0px');
+            }
+
         },
 
         SetNavigationButtons: function () {
@@ -204,17 +205,17 @@ NE.UI = (function () {
             var currentChapter = NE.Navigation.CurrentChapterDiv();
             var scroller = $('#' + NE.Constants.SCROLL_CONTAINER_ID);
 
-            _switchTopMenu();
-
-            scroller.animate({ 'scrollTop': '+=' + (currentChapter.position().top + currentPage.position().top) }, animTime);
+            scroller.animate({ 'scrollTop': '+=' + (currentChapter.position().top + currentPage.position().top) }, animTime, function () {
+                NE.UI.AcceptScrollEvent = true;
+            });
 
 
         },
 
         ScrollHint: function () {
-            var currentChapter = NE.Navigation.CurrentChapterDiv();
+            var scroller = $('#' + NE.Constants.SCROLL_CONTAINER_ID);
             $('#NE-scroll-hint').removeClass('hidden').addClass('active');
-            _scrollHintAnimate(currentChapter, currentChapter.scrollTop());
+            _scrollHintAnimate(scroller, scroller.scrollTop());
         },
 
         eof: null

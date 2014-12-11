@@ -97,7 +97,7 @@ NE.Plugin.page = function (i_params) {
     function _pageComplete() {
 
         if (_settings.index > 0) {
-            _myDOMContent.first().addClass('hidden');
+          //  _myDOMContent.first().addClass('hidden');
         }
 
         me.OnLoaded({

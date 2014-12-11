@@ -88,11 +88,15 @@ NE.EventHandlers = (function () {
         ChaptersLoaded: function () {
             $('.NE-page').on('sw-scrolled', function (e, scrollObj) {
                 if (!NE.UI.AcceptScrollEvent) return;
-                if (scrollObj.visibility > 0.95 && $(this).attr('id') != NE.Navigation.CurrentPageDiv().attr('id')) {
+                if (scrollObj.visibility > 0.8 && $(this).attr('id') != NE.Navigation.CurrentPageDiv().attr('id')) {
 
                     NE.Navigation.CurrentChapterIndex = parseInt($(this).data('chapter'), 10);
                     NE.Navigation.CurrentPageIndex = parseInt($(this).data('index'), 10);
 
+                    NE.Navigation.ToChapter(NE.Navigation.CurrentChapterIndex);
+                    NE.Navigation.ToPage(NE.Navigation.CurrentPageIndex);
+
+                    console.log('Chapter: ' + NE.Navigation.CurrentChapterIndex + ' Page:' + NE.Navigation.CurrentPageIndex);
                     NE.UI.SetNavigationButtons();
                 }
 
@@ -101,8 +105,8 @@ NE.EventHandlers = (function () {
             $('.NE-page').ScrollWatch({
                 axis: 'y',
                 prioritize: 'max',//'partofviewport'//'partofobject'
-                swWindow: '#' + NE.Constants.SCROLL_CONTAINER_ID,
-                swDocument: '.NE-chapter'
+                swWindow: '#' + NE.Constants.MAIN_CONTENT_CONTAINER_ID,
+                swDocument: '#' + NE.Constants.SCROLL_CONTAINER_ID
             });
         },
 
@@ -122,10 +126,10 @@ NE.EventHandlers = (function () {
                 $(this).addClass('hidden');
             });
 
-
+            NE.UI.SwitchTopMenu();
 
             NE.UI.SetNavigationButtons();
-            NE.UI.RevealPage();
+          //  NE.UI.RevealPage();
 
         },
 

@@ -33,11 +33,14 @@
 
         function _calcItemRect(item) {
             var itemOffset = item.offset();
+            var itemPosition = item.position();
+            var t = itemOffset.top + $(settings.swDocument).scrollTop();
+            var l = itemOffset.left + $(settings.swDocument).scrollLeft();
             return {
-                top: itemOffset.top,
-                left: itemOffset.left,
-                bottom: itemOffset.top + item.outerHeight(),
-                right: itemOffset.left + item.outerWidth()
+                top: t,
+                left: l,
+                bottom: t + item.outerHeight(),
+                right: l + item.outerWidth()
             };
         }
 
@@ -74,7 +77,6 @@
         function _composeScrollObject(item) {
 
             var itemRect = _calcItemRect(item);
-
             var verticalOverlap = _calcOverlap(itemRect.bottom, _viewport.bottom, itemRect.top, _viewport.top);
             var horizontalOverlap = _calcOverlap(itemRect.right, _viewport.right, itemRect.left, _viewport.left);
 
