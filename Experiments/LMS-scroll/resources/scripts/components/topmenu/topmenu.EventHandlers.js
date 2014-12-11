@@ -34,7 +34,7 @@ NE.Plugin.topmenu.EventHandlers = (function () {
     //
     /////////////////////
 
-
+    var _clickTimer;
 
     //////////////////////
     //
@@ -132,8 +132,13 @@ NE.Plugin.topmenu.EventHandlers = (function () {
         },
 
         ChapterLabelClick: function (i_item) {
-         
             if (!i_item.is(':visible')) return;
+
+            var now = new Date()
+            var delay = _clickTimer ? now - _clickTimer : 1000;
+            _clickTimer = now;
+            console.log(delay);
+            if (delay < 500) return;
 
             var chapterMenuDiv = $('#NE-top-chapter-navigation');
 

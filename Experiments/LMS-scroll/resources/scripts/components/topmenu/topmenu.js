@@ -35,7 +35,6 @@ NE.Plugin.topmenu = function (i_params) {
 
     var _params = i_params;
     var _settings = {};
-    var _clickTimer;
 
     //////////////////////
     //
@@ -101,10 +100,6 @@ NE.Plugin.topmenu = function (i_params) {
                     });
 
                     $('.NE-chapter-label').on('click', function (e) {
-                        var now = new Date()
-                        var delay = _clickTimer ? now - _clickTimer : 1000;
-                        _clickTimer = now;
-                        $('#tracer').html($('#tracer').html() + '<br/>' + delay)
                         NE.Plugin.topmenu.EventHandlers.ChapterLabelClick($(this));
                     });
 
