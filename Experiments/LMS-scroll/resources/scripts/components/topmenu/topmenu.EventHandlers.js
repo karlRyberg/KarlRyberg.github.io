@@ -132,9 +132,9 @@ NE.Plugin.topmenu.EventHandlers = (function () {
         },
 
         ChapterLabelClick: function (i_item) {
-            alert('ChapterLabelClick')
+         
             if (!i_item.is(':visible')) return;
-
+            alert('ChapterLabelClick')
             var chapterMenuDiv = $('#NE-top-chapter-navigation');
 
             if (!chapterMenuDiv.hasClass('open')) {
