@@ -29,9 +29,6 @@ $(window).load(function () {
         });
         chapter.OnLoaded = function (e) {
 
-            if (e.index == NE.Navigation.CurrentChapterIndex) {
-                NE.Navigation.ToPage(0);
-            }
             _chaptersLoaded++;
 
             if (_chaptersLoaded >= NE.CourseTree.chapters.length) {

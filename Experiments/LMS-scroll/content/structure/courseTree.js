@@ -1,6 +1,7 @@
 ﻿// Ensure that the NE namespace is avaiable
 if (NE === null || NE === undefined) { var NE = {}; } NE.CourseTree = {
     "name": "Klarspråk",
+    "SCORM_name": "klarsprak_kurs_1",
     "chapters": [
         {
             "guid": "D86D5675-6624-4C8D-86F1-D4EFF4AA9707",

@@ -1,6 +1,7 @@
 ﻿/// <reference path="NE.Constants.js" />
 /// <reference path="NE.Navigation.js" />
 /// <reference path="NE.UI.js" />
+/// <reference path=//utb.ne.se/neutbshared/js/NE.LMS.js" />
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -39,6 +40,7 @@ NE.EventHandlers = (function () {
     var _navTimer;
     var _beenNegative = false;
     var _resizeTimer;
+    var _initBookmark = null;
 
     //////////////////////
     //
@@ -58,7 +60,13 @@ NE.EventHandlers = (function () {
     //
     /////////////////////
 
-
+    function _registerSCORMSections() {
+        var sections = [];
+        for (var i = 0; i < NE.CourseTree.chapters.length; i++) {
+            sections.push(NE.LMS.Section(NE.CourseTree.SCORM_name + '_' + NE.CourseTree.chapters[i].index));
+        }
+        NE.LMS.Sections.RegisterSections(sections);
+    }
 
     //////////////////////
     //
@@ -87,6 +95,8 @@ NE.EventHandlers = (function () {
 
         ChaptersLoaded: function () {
 
+            var _initBookmark = NE.LMS.Bookmark.GetBookmark();
+
             $('.NE-page').on('sw-scrolled', function (e, scrollObj) {
                 NE.EventHandlers.OnPageScroll($(this), scrollObj);
             });
@@ -98,28 +108,50 @@ NE.EventHandlers = (function () {
                 swDocument: '#' + NE.Constants.SCROLL_CONTAINER_ID
             });
 
+            _registerSCORMSections();
+
             NE.UI.PreHide();
 
             NE.UI.Setup();
 
+         
+            if (_initBookmark) {
+                var visitItem = $('#' + _initBookmark);
+                NE.Navigation.CurrentChapterIndex = parseInt(visitItem.data('chapter'), 10);
+                NE.Navigation.CurrentPageIndex = parseInt(visitItem.data('index'), 10);
+
+                NE.Navigation.ToChapter(NE.Navigation.CurrentChapterIndex);
+                NE.Navigation.ToPage(NE.Navigation.CurrentPageIndex);
+
+                NE.UI.ScrollToPage(false)
+
+                _initBookmark = null;
+            }
+            else {
+                NE.Navigation.ToPage(0);
+            }
+
+            NE.UI.AcceptScrollEvent = true;
         },
 
         OnPageScroll: function (i_item, scrollObj) {
-   
-                if (!NE.UI.AcceptScrollEvent) return;
-                if (scrollObj.visibility > 0.8 && i_item.attr('id') != NE.Navigation.CurrentPageDiv().attr('id')) {
 
-                    NE.Navigation.CurrentChapterIndex = parseInt(i_item.data('chapter'), 10);
-                    NE.Navigation.CurrentPageIndex = parseInt(i_item.data('index'), 10);
+            if (!NE.UI.AcceptScrollEvent) {
+                console.log('nope');
+                return;
+            }
+            if (scrollObj.visibility > 0.8 && i_item.attr('id') != NE.Navigation.CurrentPageDiv().attr('id')) {
 
-                    NE.Navigation.ToChapter(NE.Navigation.CurrentChapterIndex);
-                    NE.Navigation.ToPage(NE.Navigation.CurrentPageIndex);
+                NE.Navigation.CurrentChapterIndex = parseInt(i_item.data('chapter'), 10);
+                NE.Navigation.CurrentPageIndex = parseInt(i_item.data('index'), 10);
 
-                   
-                    NE.UI.SetNavigationButtons();
-                }
+                NE.Navigation.ToChapter(NE.Navigation.CurrentChapterIndex);
+                NE.Navigation.ToPage(NE.Navigation.CurrentPageIndex);
 
-          
+                NE.UI.SetNavigationButtons();
+            }
+
+
         },
 
         NavBackBtnClick: function (i_item) {
@@ -142,7 +174,11 @@ NE.EventHandlers = (function () {
 
             NE.UI.SwitchTopMenu();
             NE.UI.SetNavigationButtons();
-         
+
+            if (!_initBookmark) {
+                NE.LMS.Bookmark.SetBookmark(NE.Navigation.CurrentPageDiv().attr('id'));
+            }
+
         },
 
         ChapterLinkCLick: function (i_item, e) {
