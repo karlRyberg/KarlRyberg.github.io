@@ -3,15 +3,12 @@
     width: 100%;
     height: auto;
     overflow: hidden;
-    -webkit-overflow-scrolling: touch;
-    -webkit-transition: padding-left .1s;
     transition: padding-left .1s;
 }
 
     .NE-page:focus {
         outline: none;
         overflow: hidden;
-        -webkit-overflow-scrolling: touch;
     }
 
     .NE-page > .container {
