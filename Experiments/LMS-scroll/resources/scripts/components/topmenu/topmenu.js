@@ -99,8 +99,10 @@ NE.Plugin.topmenu = function (i_params) {
                         NE.Plugin.topmenu.EventHandlers.WindowResize();
                     });
 
-                    $('.NE-chapter-label').on('click', function () {
+                    $('.NE-chapter-label').on('click', function (e) {
                         NE.Plugin.topmenu.EventHandlers.ChapterLabelClick($(this));
+                        e.stopPropagation();
+                        e.preventDefault();
                     });
 
 
