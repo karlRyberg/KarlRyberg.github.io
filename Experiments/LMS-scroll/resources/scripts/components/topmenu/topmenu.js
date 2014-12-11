@@ -103,6 +103,7 @@ NE.Plugin.topmenu = function (i_params) {
                         NE.Plugin.topmenu.EventHandlers.ChapterLabelClick($(this));
                         e.stopPropagation();
                         e.preventDefault();
+                        return false;
                     });
 
 
