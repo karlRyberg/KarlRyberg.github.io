@@ -155,6 +155,7 @@ NE.Plugin.topmenu.EventHandlers = (function () {
         },
 
         OverlayClick: function () {
+            alert(23);
             $('.NE-chapter-label').click();
         },
 
