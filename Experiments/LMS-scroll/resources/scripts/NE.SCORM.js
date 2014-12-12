@@ -30,7 +30,9 @@ NE.SCORM = (function () {
     //
     /////////////////////
 
-
+    var _progress;
+    var _success;
+    var _completion;
 
     //////////////////////
     //
@@ -40,7 +42,31 @@ NE.SCORM = (function () {
 
     (function () {
 
+      
+        NE.LMS.AddEvent(NE.LMS.ON_COMPLETION_STATUS_CHANGED, function (e) {
+            _completion = e.status;
+            alert('_completion ' + _completion);
+            if (_completion == 'completed') {
+                NE.LMS.Objectives.Set([{
+                    id: NE.CourseTree.SCO_name,
+                    completion_status: _completion || 'incomplete',
+                    success_status: _success || 'failed,',
+                    progress_measure: _progress || 0
+                }]);
+            }
+        }, this);
 
+        
+        NE.LMS.AddEvent(NE.LMS.ON_PROGRESS_MESSURE_CHANGED, function (e) {
+            alert('_progress ' + _progress);
+            _progress = e.progress;
+        }, this);
+
+
+        NE.LMS.AddEvent(NE.LMS.ON_SUCCESS_STATUS_CHANGED, function (e) {
+            alert('_success ' +_success);
+            _success = e.success;
+        }, this);
 
     })();
 
@@ -96,14 +122,20 @@ NE.SCORM = (function () {
 
         Unlockhistory: function () {
             var sections = NE.LMS.Sections.GetSections();
+            var lastChapterIndex;
             for (var i = 0; i < sections.length; i++) {
                 if (sections[i].State == 'completed') {
                     var index = sections[i].ID.split('_');
                     index = parseInt(index[index.length - 1], 10);
-                    NE.UI.Unlock(index);
-                    NE.UI.HideVIsitedItems(index);
+                    lastChapterIndex = index;
                 }
             }
+
+            if (lastChapterIndex) {
+                NE.UI.Unlock(lastChapterIndex);
+                NE.UI.HideVIsitedItems(lastChapterIndex);
+            }
+
         },
 
 

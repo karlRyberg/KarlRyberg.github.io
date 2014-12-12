@@ -122,7 +122,7 @@ NE.EventHandlers = (function () {
             if (scrollObj.rect.bottom <= scrollObj.viewport.bottom && pageIndex == NE.CourseTree.chapters[chapterIndex].pages.length - 1) {
                 var sectionID = NE.CourseTree.SCO_name + '_' + chapterIndex;
                 if (NE.LMS.Sections.GetState(sectionID) != 'completed') NE.LMS.Sections.SetState(sectionID, 'completed');
-                NE.LMS.Sections.SetState(sectionID, 'failed');
+               // NE.LMS.Sections.SetState(sectionID, 'failed');
             }
 
             if (!NE.UI.AcceptScrollEvent) return;
@@ -158,9 +158,10 @@ NE.EventHandlers = (function () {
 
         Navigation: function (e) {
 
-            NE.Navigation.CurrentPageDiv(0, -1).find('.NE-hidden-visited').slideUp(300, function () {
-                $(this).addClass('hidden');
-            });
+            var prevPage = NE.Navigation.MockPrev();
+            if(prevPage.chapter != -1){
+                NE.UI.HideVIsitedItems(prevPage.chapter, prevPage.page);
+            }
 
             NE.UI.SwitchTopMenu();
             NE.UI.SetNavigationButtons();

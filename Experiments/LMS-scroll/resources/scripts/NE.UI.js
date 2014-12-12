@@ -131,6 +131,11 @@ NE.UI = (function () {
                 _hintTImer = setTimeout(NE.UI.ScrollHint, 5000);
             }
             $('#' + NE.Constants.FLOATING_HEADER_ID).css('right', _getScrollbarWidth() + 'px');
+            $('#NE-top-backdrop').css('right', _getScrollbarWidth() + 'px');
+
+            if ($('#isXS').is(':visible')) {
+                $('#'+NE.Constants.CHAPTER_ID_PREFIX + '0').css('padding-top','83px')
+            }
         },
 
         PreHide: function () {
@@ -156,12 +161,17 @@ NE.UI = (function () {
 
         },
 
-        HideVIsitedItems: function (i_chapter) {
-            $('#NE-chapter-' + i_chapter).find('.NE-hidden-visited').addClass('hidden');
+        HideVIsitedItems: function (i_chapter, i_page) {
+
+            if (i_page === null || i_page === undefined) {
+                $('#' + NE.Constants.CHAPTER_ID_PREFIX + i_chapter).find('.NE-hidden-visited').addClass('hidden');
+            }
+            else {
+                $('#' + NE.Constants.PAGE_ID_PREFIX + i_chapter + '-' + i_page).find('.NE-hidden-visited').addClass('hidden');
+            }
         },
 
         Unlock: function (i_chapter, i_page) {
-
             i_page = i_page || 0;
 
             for (var i = i_chapter; i < NE.CourseTree.chapters.length; i++) {
@@ -171,13 +181,12 @@ NE.UI = (function () {
                 for (var j = i_page; j < chapter.pages.length; j++) {
 
                     var page = chapter.pages[j];
-
+       
                     if (page.stopprogress) return;
 
                     $('#NE-page-' + i + '-' + j).removeClass('NE-nav-hidden');
                     oneVisible = true;
                 }
-
                 if (oneVisible) $('#NE-chapter-' + i).removeClass('NE-nav-hidden');
 
             }
@@ -235,7 +244,6 @@ NE.UI = (function () {
 
         RevealPage: function (i_skipAnimation) {
             NE.UI.AcceptScrollEvent = false;
-
             var currentPage = NE.Navigation.CurrentPageDiv();
             var animTime = i_skipAnimation ? 0 : 300;
 

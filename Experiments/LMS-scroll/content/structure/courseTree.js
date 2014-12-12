@@ -84,7 +84,8 @@ if (NE === null || NE === undefined) { var NE = {}; } NE.CourseTree = {
                 {
                     "guid": "8b42d829-9166-4231-8f22-c29260e32482",
                     "title": "Page 1",
-                    "datafile": "chapter4_page_1"
+                    "datafile": "chapter4_page_1",
+                    "stopprogress": true
                 }
             ]
         },
@@ -101,8 +102,7 @@ if (NE === null || NE === undefined) { var NE = {}; } NE.CourseTree = {
                 {
                     "guid": "0adddb83-a650-4e0a-ae77-5f5762fe04d5",
                     "title": "Page 1",
-                    "datafile": "chapter5_page_1",
-                    "stopprogress": true
+                    "datafile": "chapter5_page_1"
                 }
             ]
         },

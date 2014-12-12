@@ -81,15 +81,12 @@ NE.Navigation = (function () {
         //
         /////////////////////
 
-        CurrentChapterDiv: function (i_chapterInc) {
-            i_chapterInc = i_chapterInc || 0;
-            return $('#' + NE.Constants.CHAPTER_ID_PREFIX + (this.CurrentChapterIndex + i_chapterInc));
+        CurrentChapterDiv: function () {
+            return $('#' + NE.Constants.CHAPTER_ID_PREFIX + (this.CurrentChapterIndex));
         },
 
-        CurrentPageDiv: function (i_chapterInc, i_pageInc) {
-            i_chapterInc = i_chapterInc || 0;
-            i_pageInc = i_pageInc || 0;
-            return $('#' + NE.Constants.PAGE_ID_PREFIX + (this.CurrentChapterIndex + i_chapterInc) + '-' + (this.CurrentPageIndex + i_pageInc));
+        CurrentPageDiv: function () {
+            return $('#' + NE.Constants.PAGE_ID_PREFIX + this.CurrentChapterIndex + '-' + this.CurrentPageIndex);
         },
 
         IsAtLast: function () {
@@ -112,6 +109,42 @@ NE.Navigation = (function () {
                 page: this.CurrentPageIndex,
                 chapter: this.CurrentChapterIndex
             });
+        },
+
+        MockNext: function () {
+            var page = this.CurrentPageIndex + 1;
+            var chapter = this.CurrentChapterIndex;
+            if (page >= NE.CourseTree.chapters[chapter].pages.length) {
+                chapter += 1;
+                page = 0;
+                if (chapter >= NE.CourseTree.chapters.length - 1) {
+                    chapter = -1;
+                    page = -1;
+                }
+            }
+            return {
+                chapter: chapter,
+                page: page
+            };
+        },
+
+        MockPrev: function () {
+            var page = this.CurrentPageIndex - 1;
+            var chapter = this.CurrentChapterIndex;
+            if (page < 0) {
+                chapter -= 1;
+                if (chapter < 1) {
+                    chapter = -1;
+                    page = -1;
+                }
+                else {
+                    page = NE.CourseTree.chapters[chapter].pages.length - 1;
+                }
+            }
+            return {
+                chapter: chapter,
+                page: page
+            }
         },
 
         Next: function () {
