@@ -98,13 +98,14 @@ NE.Navigation = (function () {
             return isLastChapter && isLastPage;
         },
 
-        ToChapter: function (index) {
+        ToChapter: function (index, preventNav) {
             if (index < 0 || index >= NE.CourseTree.chapters.length) return;
             this.CurrentChapterIndex = index;
-            this.ToPage(0);
+            if (!preventNav) this.ToPage(0);
         },
 
-        ToPage: function (index) {
+        ToPage: function (index, chapter) {
+            if (chapter) this.ToChapter(chapter, true);
             if (index < 0 || index >= NE.CourseTree.chapters[this.CurrentChapterIndex].pages.length) return;
             this.CurrentPageIndex = index;
             _onNavigation({

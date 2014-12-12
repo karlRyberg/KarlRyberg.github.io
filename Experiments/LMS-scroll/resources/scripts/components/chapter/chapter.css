@@ -3,13 +3,17 @@
     width: 100%;
     height: auto;
     min-height: 100%;
-    overflow: hidden;
+    overflow: visible;
+    margin-bottom:60px;
 }
 
 .NE-chapter-divider {
-    position: relative;
+    position: absolute;
     height: 60px;
-    background-color: rgb(0,200,220);
+    left: 0px;
+    right: 0px;
+    bottom: -60px;
+    background-color: rgba(0,0,0,0.1);
     border: 1px solid #f2f2f2;
     border-left-width: 0px;
     border-right-width: 0px;

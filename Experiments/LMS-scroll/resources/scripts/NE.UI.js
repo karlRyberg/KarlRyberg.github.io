@@ -137,22 +137,50 @@ NE.UI = (function () {
             var isHidden = false;
             $('.NE-page').each(function () {
                 var page = $(this);
-                if (page.hasClass('hidden')) {
+                if (page.hasClass('NE-nav-hidden')) {
                     isHidden = true;
                 }
                 else if (isHidden) {
-                    page.addClass('hidden')
+                    page.addClass('NE-nav-hidden')
                 }
             });
             $('.NE-chapter').each(function () {
                 var chapter = $(this);
                 var pages = chapter.find('.NE-page');
-                var hiddenPages = chapter.find('.NE-page.hidden');
+                var hiddenPages = chapter.find('.NE-nav-hidden');
 
                 if (pages.length && pages.length == hiddenPages.length) {
-                    chapter.addClass('hidden');
+                    chapter.addClass('NE-nav-hidden');
                 }
             });
+
+        },
+
+        HideVIsitedItems: function (i_chapter) {
+            $('#NE-chapter-' + i_chapter).find('.NE-hidden-visited').addClass('hidden');
+        },
+
+        Unlock: function (i_chapter, i_page) {
+
+            i_page = i_page || 0;
+
+            for (var i = i_chapter; i < NE.CourseTree.chapters.length; i++) {
+                var oneVisible = false;
+                var chapter = NE.CourseTree.chapters[i];
+
+                for (var j = i_page; j < chapter.pages.length; j++) {
+
+                    var page = chapter.pages[j];
+
+                    if (page.stopprogress) return;
+
+                    $('#NE-page-' + i + '-' + j).removeClass('NE-nav-hidden');
+                    oneVisible = true;
+                }
+
+                if (oneVisible) $('#NE-chapter-' + i).removeClass('NE-nav-hidden');
+
+            }
 
         },
 
@@ -187,7 +215,6 @@ NE.UI = (function () {
                 menu.addClass('NE-offcanvas');
             }
 
-
         },
 
         SetNavigationButtons: function () {
@@ -211,10 +238,11 @@ NE.UI = (function () {
 
             var currentPage = NE.Navigation.CurrentPageDiv();
             var animTime = i_skipAnimation ? 0 : 300;
-   
-            if (currentPage.hasClass('hidden')) {
-                currentPage.parent('.NE-chapter').removeClass('hidden');
-                currentPage.removeClass('hidden').slideUp(0).slideDown(animTime, 'swing', function () {
+
+            if (currentPage.hasClass('hidden') || currentPage.hasClass('NE-nav-hidden')) {
+                currentPage.parent('.NE-chapter').removeClass('NE-nav-hidden hidden');
+                currentPage.removeClass('NE-nav-hidden hidden').slideUp(0).slideDown(animTime, 'swing', function () {
+                    NE.UI.Unlock(NE.Navigation.CurrentChapterIndex, NE.Navigation.CurrentPageIndex);
                     NE.UI.ScrollToPage(i_skipAnimation);
                 });
             }

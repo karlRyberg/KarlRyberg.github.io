@@ -1,7 +1,7 @@
 ﻿// Ensure that the NE namespace is avaiable
 if (NE === null || NE === undefined) { var NE = {}; } NE.CourseTree = {
     "name": "Klarspråk",
-    "SCORM_name": "klarsprak_kurs_1",
+    "SCO_name": "Klarsprak_1",
     "chapters": [
         {
             "guid": "D86D5675-6624-4C8D-86F1-D4EFF4AA9707",
@@ -44,7 +44,8 @@ if (NE === null || NE === undefined) { var NE = {}; } NE.CourseTree = {
                 {
                     "guid": "E507FE70-41B7-48F3-B68F-C51B51455D32",
                     "title": "Page 3",
-                    "datafile": "chapter2_page_3"
+                    "datafile": "chapter2_page_3",
+                    "stopprogress": true
                 }
             ]
         },
@@ -100,7 +101,8 @@ if (NE === null || NE === undefined) { var NE = {}; } NE.CourseTree = {
                 {
                     "guid": "0adddb83-a650-4e0a-ae77-5f5762fe04d5",
                     "title": "Page 1",
-                    "datafile": "chapter5_page_1"
+                    "datafile": "chapter5_page_1",
+                    "stopprogress": true
                 }
             ]
         },

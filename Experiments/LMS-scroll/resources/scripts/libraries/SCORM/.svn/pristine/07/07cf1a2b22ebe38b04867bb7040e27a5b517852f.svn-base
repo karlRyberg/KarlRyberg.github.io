@@ -1,99 +1,87 @@
-﻿/// <reference path="NE.API_1484_11.js" />
-///
-/// Contains the functions that are used by the SCO <-> LMS communication
-/// 
-
+﻿
 var NE = NE || {};
 
-NE.Infrastructure = (function () {
+NE.API_1484_11 = (function() {
 
-    var _api = null;
-    var _nFindAPITries = 0;
-    var _maxTries = 500;
-        
-    function _scanForAPI(win)
-    {
-        while ((win.API_1484_11 == null) && (win.parent != null) && (win.parent != win))
-        {
-            _nFindAPITries++;
-            if (_nFindAPITries > _maxTries)
-            {
-                return null;
-            }
-            win = win.parent;
-        }
-        return win.API_1484_11;
-    }
-    
-    function _getAPI(win) {
-
-        var foundAPI = null;
-
-        if ((win.parent != null) && (win.parent != win)) {
-            foundAPI = _scanForAPI(win.parent);
-        }
-        if ((foundAPI == null) && (win.opener != null)) {
-            foundAPI = _scanForAPI(win.opener);
-        }
-
-        if (!foundAPI && NE.API_1484_11) {
-            foundAPI = NE.API_1484_11;
-        }
-
-        return foundAPI;
-    }
+    // _apiData = [];
+    _apiData = {};
 
     return {
-
-        // Starts a communication session with the LMS
-        Initialize: function () {
-
-            if (!_api) _api = _getAPI(window);
-            if (!_api) throw Error('LMS could not be found');
-
-            var initResult = _api.Initialize("");
-            if (!initResult) throw Error('LMS could not initialize');
-
+        Initialize: function(str) {
+            console.log('NE.API_1484_11.Initialize()');
+            if (Modernizr && Modernizr.localstorage) {
+                console.log('window.localStorage is available!');
+                try {
+                    _apiData = JSON.parse(localStorage["_apiData"]);
+                }
+                catch (ex) {
+                    console.log('Failed to parse cmi.suspend_data: ' + ex.message);
+                    _apiData = {};
+                }
+            }
+            return true;
         },
 
-        // Saves a value to the LMS.
-        SetValue: function (key, value) {
-            return _api.SetValue(key, value);
+        Terminate: function(str) {
+            console.log('NE.API_1484_11.Terminate()');
+            
+            if (Modernizr && Modernizr.localstorage) {
+                console.log('window.localStorage is available!');
+
+                try {
+                    localStorage["_apiData"] = JSON.stringify(_apiData);
+                }
+                catch (ex) {
+                    console.log('Failed to stringify data: ' + ex.message);
+                }
+            }
+            return true;
         },
 
-        // Retrieves a value from the LMS.
-        GetValue: function (key) {
-            return _api.GetValue(key);
+        GetValue: function(key) {
+            console.log('NE.API_1484_11.GetValue(\'' + key + '\') returned: ' + _apiData[key]);
+            return _apiData[key];
         },
 
-        // Indicates to the LMS that all data should be persisted (not required).
-        Commit: function (str) {
-            return _api.Commit(str);
+        SetValue: function(key, value) {
+            console.log('NE.API_1484_11.SetValue(\'' + key + '\', \'' + value + '\')');
+            _apiData[key] = value;
+            return true;
         },
 
-        // Ends a communication session with the LMS.
-        Terminate: function (str) {
-            return _api.Terminate(str);
+        Commit: function(str) {
+            console.log('NE.API_1484_11.Commit()');
+            if (Modernizr && Modernizr.localstorage) {
+                console.log('window.localStorage is available!');
+
+                try {
+                    localStorage["_apiData"] = JSON.stringify(_apiData);
+                }
+                catch (ex) {
+                    console.log('Failed to stringify data: ' + ex.message);
+                }
+            }
+            return true;
         },
 
         // Returns the error code that resulted from the last API call.
         GetLastError: function() {
-            return _api.GetLastError();
+            return 0;
         },
 
         // Returns a short string describing the specified error code.
         GetErrorString: function(errorCode) {
-            return _api.GetErrorString(errorCode);
+            return "No error occurred, the previous API call was successful.";
         },
 
         // Returns detailed information about the last error that occurred.
         GetDiagnostic: function(errorCode) {
-            return _api.GetDiagnostic(errorCode);
+            return "No error occurred, the previous API call was successful.";
         }
-
     };
 
 })();
+
 
 /*
 

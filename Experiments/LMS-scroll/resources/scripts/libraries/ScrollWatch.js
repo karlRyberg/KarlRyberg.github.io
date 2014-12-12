@@ -96,7 +96,9 @@
                 partOfViewport: ofViewport,
                 visibility: visibility,
                 visibleV: verticalOverlap,
-                visibleH: horizontalOverlap
+                visibleH: horizontalOverlap,
+                rect: itemRect,
+                viewport: _viewport
             };
         }
 

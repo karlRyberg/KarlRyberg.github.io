@@ -36,7 +36,7 @@ NE.Infrastructure = (function () {
             foundAPI = _scanForAPI(win.opener);
         }
 
-        if (!foundAPI && NE.API_1484_11) {
+        if (!foundAPI && (!window.parent || window.parent == win) && !window.opener && NE.API_1484_11) {
             foundAPI = NE.API_1484_11;
         }
 

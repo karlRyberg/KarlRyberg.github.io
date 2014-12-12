@@ -97,7 +97,7 @@ NE.Plugin.page = function (i_params) {
     function _pageComplete() {
 
         if (_settings.stopprogress === true) {
-            _myDOMContent.first().addClass('hidden');
+            _myDOMContent.first().addClass('NE-nav-hidden');
         }
 
         me.OnLoaded({

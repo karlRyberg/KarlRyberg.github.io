@@ -83,15 +83,19 @@ NE.Plugin.nextbutton.EventHandlers = (function () {
             var that = sender;
 
             that.addClass('active');
-            var parentToHide = that.parents('.NE-hidden-visited').first();
+            var parentToHide = that.closest('.NE-hidden-visited').first();
             if (parentToHide.length > 0) {
                 parentToHide.slideUp(300, function () {
                     parentToHide.addClass('hidden');
                 });
             }
 
+            var parentPage = that.closest('.NE-page')
+
+            NE.Navigation.CurrentChapterIndex = parseInt(parentPage.data('chapter'), 10);
+            NE.Navigation.CurrentPageIndex = parseInt(parentPage.data('index'), 10);
+
             NE.Navigation.Next();
-            console.log(NE.Navigation.CurrentChapterIndex + ' ' + NE.Navigation.CurrentPageIndex)
             NE.UI.RevealPage();
 
             e.preventDefault();
