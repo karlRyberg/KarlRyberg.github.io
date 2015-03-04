@@ -136,7 +136,7 @@
 
         };
 
-        $(window).on('scroll resize', function (e) {
+        $(window).on('scroll scrollstop resize', function (e) {
             _loopItems();
         });
 

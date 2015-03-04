@@ -1,12 +1,11 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>inView</title>
+    <title>ScrollWatch - jQUery Plugin</title>
 
     <link href="css/style.css" rel="stylesheet" />
 </head>
 <body>
-
     <div id="section1" class="iv-watch">
     </div>
     <div id="section2" class="iv-watch">
@@ -54,8 +53,7 @@
                 e.stopPropagation();
                 var dist = 400 - textOffPos;
                 var newPos = textOffPos + (dist * scrollObj.visibility);
-                console.log(newPos);
-            
+
                 $('#anim-text').css('left', newPos + 'px');
              
             });;

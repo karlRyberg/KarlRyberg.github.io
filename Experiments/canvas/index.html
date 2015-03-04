@@ -1,0 +1,323 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body style="background-color:black;">
+    <canvas id="cvs" width="6000" height="10000" style="background-color:white;position:absolute;left:0px;right:0px;margin:auto;display:none;"></canvas>
+
+    <script type="text/javascript">
+
+        var cvs = document.getElementById('cvs');
+        var cx = cvs.getContext('2d');
+
+        var cvsWidth = cvs.width;
+        var cvsHeight = cvs.height;
+
+        var dividingLine = function () {
+            function point(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+
+            function midPoint(p1, p2) {
+
+                var x = (p1.x + p2.x) / 2;
+                var y = (p1.y + p2.y) / 2;
+
+                return new point(x, y);
+            }
+
+            function angleBetween(p1, p2) {
+
+                var deltaX = p1.x - p2.x;
+                var deltaY = p1.y - p2.y;
+
+                return Math.atan2(deltaY, deltaX);
+            }
+
+            function travelFromPoint(p, angle, distance) {
+                var x = p.x + (Math.cos(angle) * distance);
+                var y = p.y + (Math.sin(angle) * distance);
+
+                return new point(x, y);
+            }
+
+            function lineLength(l) {
+                var xd = l.end.x - l.start.x;
+                var yd = l.end.y - l.start.y;
+                return Math.sqrt((xd * xd) + (yd * yd));
+            }
+
+            var QUARTER_LAP = Math.PI / 2;
+            var HALF_LAP = Math.PI;
+            var WHOLE_LAP = Math.PI * 2;
+
+            var lines = [];
+
+            var depth = 0;
+            var stopRender = false;
+            var me;
+
+            function render(rLines) {
+
+                cx.fillStyle = me.Color;
+                cx.lineJoin = 'round';
+                cx.strokeStyle = me.LineColor;
+                cx.lineWidth = .5;
+
+                cx.beginPath();
+
+                for (var i = 1; i < rLines.length; i += 2) {
+                    if (rLines[i - 1].depth < 6) continue;
+                    cx.moveTo(rLines[i - 1].start.x, rLines[i - 1].start.y);
+                    cx.lineTo(rLines[i - 1].end.x, rLines[i - 1].end.y);
+                    cx.lineTo(rLines[i].end.x, rLines[i].end.y);
+
+                    cx.closePath();
+                    cx.fill();
+
+                    if (rLines[i - 1].depth > 8) cx.stroke();
+                }
+
+            }
+
+            function drawLines() {
+                var p1;
+                var p2;
+
+                if (lines.length < 1) {
+
+                    var p1 = me.InitPoint1;
+                    var p2 = me.InitPoint2;
+
+                    if (!me.InitPoint1) {
+                        p1 = new point(Math.random() * cvsWidth, 0);
+                        p2 = new point(Math.random() * cvsWidth, cvsHeight);
+                    }
+
+                    var xPos = 0;
+
+                    for (var i = 0; i < endY.length - 1; i++) {
+
+                        var p1 = { x: endX[i], y: endY[i] };
+                        var p2 = { x: endX[i + 1], y: endY[i + 1] };
+
+                        lines.push({
+                            start: p1,
+                            end: p2,
+                            depth: depth
+                        });
+
+                    }
+                    return;
+                }
+
+
+                var tmpLines = lines.slice();
+                lines = [];
+
+                for (var i = 0; i < tmpLines.length; i++) {
+
+                    var lineStart = tmpLines[i].start;
+                    var lineEnd = tmpLines[i].end;
+
+                    var dist = lineLength(tmpLines[i]);
+
+                    var offsetAngle = (angleBetween(lineStart, lineEnd));
+
+                    var ranPart = (dist / 3) + (Math.random() * (dist / 3));
+                    var rest = (dist - ranPart);
+
+                    var lineMid = travelFromPoint(lineStart, offsetAngle + HALF_LAP, ranPart);
+
+                    var addAng = QUARTER_LAP;
+
+                    if (me.SeedDir !== null) {
+                        addAng *= me.SeedDir;
+                        me.SeedDir = null;
+                    }
+                    else if (Math.random() > 0.5) {
+                        addAng *= -1;
+                    }
+
+                  
+                    var distance = Math.random() * (dist / 2);
+                    if (depth < 6) distance = Math.random() * (dist / 3);
+                    if (depth < 3) distance = Math.random() * (dist / 6);
+
+                    if (depth > 10) {
+                        stopRender = true;
+                    }
+
+                    var mid = travelFromPoint(lineMid, offsetAngle + addAng, distance);
+
+                    lines.push({
+                        start: lineStart,
+                        end: mid,
+                        depth: depth
+                    });
+
+                    lines.push({
+                        start: mid,
+                        end: lineEnd,
+                        depth: depth
+                    });
+
+                }
+
+
+            }
+
+
+            var start = 0;
+            function loop() {
+
+                if (lines.length < 1 || start >= lines.length) {
+                    start = 0;
+                    depth++;
+                    console.log(depth);
+                    drawLines();
+                }
+
+                var renderLength = start + 2 > lines.length ? lines.length : start + 2;
+                var toRender = lines.slice(start, start + 2);
+
+                start += 2;
+
+                render(toRender);
+
+                if (!stopRender) {
+                    setTimeout(loop, 1);
+                }
+                else {
+                    console.log('Stop');
+                    if (me.Callback) me.Callback();
+                }
+
+            }
+
+
+            return {
+                ImgID: Math.random().toString() + '' + Math.random().toString(),
+                Color: 'rgba(0,0,0,.1)',
+                LineColor: 'rgba(0,0,0,.1)',
+                SeedDir: 1,
+                InitPoint1: null,
+                InitPoint2: null,
+                Callback: null,
+                Init: function (dir, initp1, initp2, imgID, color, linecolor, callback) {
+                    me = this;
+                    me.InitPoint1 = initp1;
+                    me.InitPoint2 = initp2;
+                    me.ImgID = imgID || me.ImgID;
+                    me.Color = color || me.Color;
+                    me.LineColor = linecolor || me.LineColor;
+                    me.Callback = callback || me.Callback;
+                    if (dir) this.SeedDir = dir;
+                    loop();
+                }
+            };
+        }
+
+
+        var loaded = {};
+
+        function lineDone(id) {
+
+            loaded[id] = loaded[id] ? loaded[id] + 1 : 1;
+
+
+            if (loaded[id] == 1) {
+                var d = cvs.toDataURL("image/png");
+                document.write("<img id='" + id + "' src='" + d + "' alt='from canvas' height='100%'/>");
+                cx.clearRect(0, 0, cvsWidth, cvsHeight);
+
+            }
+
+            if (renderInst < shapes.length) startNext();
+        }
+
+        var renderInst = 0;
+        var segments = 5;
+
+
+        var endY = [0];
+        var endX = [cvsWidth / 2];
+        var maxY = cvsHeight;
+
+        var shapes = [
+         //   ['rgba(0, 0, 0, .1)', 'rgba(0, 0, 0, .2)', 'img_1', 1],
+            ['rgba(0, 0, 0, .05)', 'rgba(0, 0, 0, .2)', 'img_1', -1],
+          //  ['rgba(0, 0, 0, .1)', 'rgba(0, 0, 0, .2)', 'img_2', 1],
+            ['rgba(0, 0, 0, .03)', 'rgba(0, 0, 0, .2)', 'img_2', -1]
+
+            //['rgba(230, 0, 126, .1)', 'rgba(230, 10, 126, .2)', 'img_1', 1],
+            //['rgba(230, 0, 126, .1)', 'rgba(230, 10, 126, .2)', 'img_1', -1],
+            //['rgba(255, 237, 0, .1)', 'rgba(255, 237, 0, .2)', 'img_2', 1],
+            //['rgba(255, 237, 0, .1)', 'rgba(255, 237, 0, .2)', 'img_2', -1],
+            //['rgba(0, 159, 227, .1)', 'rgba(0, 159, 227, .2)', 'img_3', 1],
+            //['rgba(0, 159, 227, .1)', 'rgba(0, 159, 227, .2)', 'img_3', -1]
+        ];
+
+        maxrender = shapes.length;
+
+
+
+        function startNext() {
+
+            var id = shapes[renderInst][2];
+
+            if (renderInst == maxrender) {
+                return;
+            }
+
+
+            endY = [0];
+            endX = [cvsWidth / 2];
+            maxY = cvsHeight;
+
+            cx.strokeStyle = "rgba(0,0,128,.5)";
+            cx.lineWidth = 1;
+            for (var i = 0; i < segments; i++) {
+                var trim = i == segments - 1 ? maxY : Math.random() * (cvsHeight / (segments - 1));
+                maxY -= trim;
+                endY.push(endY[endY.length - 1] + trim);
+                
+                cx.moveTo(0, endY[endY.length - 1]);
+                cx.lineTo(cvsWidth, endY[endY.length - 1])
+
+                trim = i == segments - 1 ? (cvsWidth / 2) - endX[endX.length - 1] : ( Math.random() * (cvsWidth / 40)) - (Math.random() * (cvsWidth / 80));
+                endX.push(endX[endX.length - 1] + trim);
+
+                cx.moveTo(endX[endX.length - 1], 0);
+                cx.lineTo(endX[endX.length - 1], cvsHeight)
+
+            }
+
+            cx.stroke();
+
+            var p1 = { x: cvsWidth / 2, y: 0 };
+            var p2 = { x: cvsWidth / 2, y: cvsHeight };
+
+
+            new dividingLine().Init(shapes[renderInst][3], p1, p2, id, shapes[renderInst][0], shapes[renderInst][1], function () {
+                lineDone(id);
+            });
+
+            new dividingLine().Init(shapes[renderInst][3], p1, p2, id, shapes[renderInst][0], shapes[renderInst][1], function () {
+                lineDone(id);
+            });
+
+            renderInst++;
+        }
+
+        startNext();
+
+
+
+
+    </script>
+
+</body>
+</html>
