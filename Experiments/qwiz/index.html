@@ -13,9 +13,6 @@
 
 
 
-
-
-
             <div style="position: relative;">
                 <script type="text/javascript" src="http://81.91.13.190/js/quizplayer/embed.js" charset="utf-8"></script>
                 <script type="text/javascript">
@@ -23,15 +20,15 @@
                     function showPlayer() {
                         new quizPlayerEmbed().embed({
                             // CHANGE HERE
-                            sSize: 'medium',
-                            iWidth: '600',
-                            iHeight: '427',
+                            sSize: 'big',
+                            iWidth: '800',
+                            iHeight: '569',
                             sFrameURL: '', // Keep empty to use default quiz frame URL
 
                             // DO NOT CHANGE
                             iQuizId: 1014,
                             sPageURL: (window.location != window.parent.location) ? document.referrer : document.location.href,
-                            sDesign: 'default',
+                            sDesign: 'ne',
                             sLanguage: 'en',
                             sServerBaseUrl: 'http://81.91.13.190',
                             sPlayerDivId: sDivUniqueId,
@@ -44,15 +41,15 @@
                         /*        if ((navigator.userAgent.indexOf('Safari') != -1) && (navigator.userAgent.indexOf('Chrome') == -1)) {*/
 
                         iOverlayHeight = 100;
-                        iOverlayTop = (427 - iOverlayHeight) / 2;
+                        iOverlayTop = (569 - iOverlayHeight) / 2;
                         iOverlayWidth = 310;
-                        iOverlayLeft = (600 - iOverlayWidth) / 2;
+                        iOverlayLeft = (800 - iOverlayWidth) / 2;
 
                         sSafariOverlay =
                                 '<div id="qp-safari-background" style="z-index: 1004; ' +
                                     'background-color: rgb(0, 0, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; ' +
                                     'border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; opacity: 0.6; position: absolute; ' +
-                                    'top: 0px; left: 0px; width: 600px; height: 427px; "></div>' +
+                                    'top: 0px; left: 0px; width: 800px; height: 569px; "></div>' +
                                 '<div id="qp-safari-overlay" style="z-index: 1005; position: absolute; top: ' + iOverlayTop + 'px; left: ' + iOverlayLeft + 'px; ' +
                                     'width: ' + iOverlayWidth + 'px; height: ' + iOverlayHeight + 'px; border-radius: 5px 5px 5px 5px; ' +
                                     'background: none repeat scroll 0 0 #575757; color: white; opacity: 0.85; text-align: center;">' +
@@ -83,10 +80,6 @@
                     }
                 </script>
             </div>
-
-
-
-
 
 
 
