@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        #layout-area {
+            width: 400px;
+            height: 400px;
+            border: solid 1px Silver;
+        }
+
+        ul {
+            width: 140px;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: lime;
+            margin: 10px;
+            float: left;
+            position: relative;
+            left: 100px;
+        }
+
+        .floater {
+            width: 140px;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: lime;
+            margin: 10px;
+            float: left;
+            position: relative;
+            left: 100px;
+        }
+
+        li {
+            margin: 0px 20px;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="layout-area">
+        <ul>
+            <li>asdasd</li>
+            <li>asdasd</li>
+            <li>asdasd</li>
+            <li>asdasd</li>
+            <li>asdasd</li>
+            <li>asdasd</li>
+        </ul>
+        <ul>
+            <li>asdasd</li>
+            <li>asdasd</li>
+            <li>asdasd</li>
+            <li>asdasd</li>
+            <li>asdasd</li>
+            <li>asdasd</li>
+        </ul>
+        <div class="floater">
+            <p>asdasd</p>
+        </div>
+        <ul>
+            <li>asdasd</li>
+            <li>asdasd</li>
+            <li>asdasd</li>
+            <li>asdasd</li>
+            <li>asdasd</li>
+            <li>asdasd</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+
+        function getDom(id) {
+            return document.getElementById(id);
+        }
+
+        document.onclick = function () {
+
+            var layoutArea = getDom("layout-area");
+            var layoutChildren = layoutArea.childNodes;
+            for (var i = 0; i < layoutChildren.length; i++) {
+                var child = layoutChildren[i];
+                if (child.style !== undefined) {
+                    layoutChildren[i].style.left = layoutArea.offsetWidth + 'px';
+                }
+            }
+        }
+
+
+    </script>
+</body>
+</html>

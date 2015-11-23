@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        body {
+            background-color: #000;
+        }
+
+        #drawing {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            margin: auto;
+          
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="drawing" width="600" height="300"></canvas>
+    <script type="text/javascript">
+
+        var drawingBoard = document.getElementById('drawing');
+        drawingBoard.setAttribute('width', window.innerWidth.toString());
+        drawingBoard.setAttribute('height', window.innerHeight.toString());
+        var ctx;
+        var cw;
+        var ch;
+
+        var planet = function () {
+            this.x = 0;
+            this.y = 0;
+            this.velX = 0;
+            this.velY = 0;
+            this.mass = 0;
+            this.rad = 0;
+            this.collided = null;
+            this.index = null;
+        };
+
+        var PLANET_COUNT = 200;
+        var DRAG = .8;
+
+        var planets = [];
+
+        ctx = drawingBoard.getContext('2d');
+        cw = ctx.canvas.width;
+        ch = ctx.canvas.height;
+
+
+        for (var i = 0; i < PLANET_COUNT; i++) {
+            var p = new planet();
+            p.x = (Math.random() * cw);
+            p.y = (Math.random() * ch);
+            p.mass = (PLANET_COUNT - (PLANET_COUNT - i)) / PLANET_COUNT;
+            p.rad = 2 - p.mass;
+            p.index = i;
+            planets.push(p);
+        }
+
+        var LOOP_CEIL = 20000;
+        var LOOP_COUNT = 0;
+
+
+        var animLoop = function () {
+
+
+
+            for (var i = 0; i <= planets.length; i++) {
+                var p = planets[i];
+                if (!p) continue;
+                var collisions = [];
+
+                for (var j = 0; j <= planets.length; j++) {
+                    var n = planets[j];
+                    if (p === n || !n) continue;
+                    var xDiff = n.x - p.x;
+                    var yDiff = n.y - p.y;
+
+                    var dist = Math.sqrt((xDiff * xDiff) + (yDiff * yDiff));
+                    var grav = (p.mass * n.mass) / (dist * dist);
+
+
+                    // if (dist <= p.rad + n.rad) {
+                    //collisions.push(n);
+                    // }
+                    // else {
+                    if (dist > .1) {
+                        p.velX += (n.mass * xDiff * grav);
+                        p.velY += (n.mass * yDiff * grav);
+                    }
+                    //  }
+                }
+                /*
+                                for (j = 0; j < collisions.length; j++) {
+                                    var n = collisions[j];
+                                    p.velX += (n.velX * (n.mass - p.mass)) * .2;
+                                    p.velY += (n.velY * (n.mass - p.mass)) * .2;
+                                }
+
+                                */
+                p.lastX = p.x;
+                p.lastY = p.y;
+
+                p.x += p.velX;
+                p.y += p.velY;
+
+                if (p.x + (p.rad) > cw) {
+                    //   p.x = cw - (p.rad);
+                    //   p.velX *= -1;
+                    p.x = (p.rad);
+                    p.lastX = p.x;
+                }
+                else if (p.x - (p.rad) < 0) {
+                    //  p.x = (p.rad);
+                    //  p.velX *= -1;
+                    p.x = cw - (p.rad);
+                    p.lastX = p.x;
+                }
+
+                if (p.y + (p.rad) > ch) {
+                    // p.y = ch - (p.rad);
+                    //p.velY *= -1;
+                    p.y = (p.rad);
+                    p.lastY = p.y;
+                }
+                else if (p.y - (p.rad) < 0) {
+                    //  p.y = (p.rad);
+                    //p.velY *= -1;
+                    p.y = ch - (p.rad);
+                    p.lastY = p.y;
+                }
+
+                p.velX *= DRAG;
+                p.velY *= DRAG;
+
+            }
+
+            /*
+
+            ctx.beginPath();
+            ctx.fillStyle = 'rgba(0,0,0,.15)';
+            ctx.fillRect(0, 0, cw, ch);
+            ctx.fill();*/
+            ctx.clearRect(0, 0, cw, ch);
+
+            for (i = 0; i <= planets.length; i++) {
+                p = planets[i];
+                if (!p) continue;
+                ctx.beginPath();
+
+                ctx.strokeStyle = 'rgba(' + Math.floor(Math.min(p.mass * 510, 255)) + ',' + Math.floor(Math.min(p.mass * 1020, 255)) + ',' + Math.floor(Math.min(p.mass * 255, 255)) + ',' + (p.mass * .5) + ')';
+                ctx.lineWidth = p.rad * 2;
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p.lastX, p.lastY);
+                ctx.stroke();
+
+                
+                ctx.fillStyle = 'rgba(' + Math.floor(Math.min(p.mass * 510, 255)) + ',' + Math.floor(Math.min(p.mass * 1020, 255)) + ',' + Math.floor(Math.min(p.mass * 255, 255)) + ',' + (p.mass * .1) + ')';
+                ctx.moveTo(p.x, p.y);
+                ctx.arc(p.x, p.y, p.rad * 6, 0, 2 * Math.PI);
+
+
+                ctx.fill();
+                
+            }
+
+
+
+
+            if (LOOP_CEIL && LOOP_COUNT < LOOP_CEIL) {
+                LOOP_COUNT++;
+              //  console.log('running');
+                window.requestAnimationFrame(animLoop);
+            }
+        };
+
+
+        window.requestAnimationFrame(animLoop);
+
+
+
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        #main-board {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            border: 1px solid Silver;
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="main-board" width="200" height="300"></canvas>
+    <script src="blur.js"></script>
+    <script type="text/javascript">
+
+
+        var mainBoard = document.getElementById('main-board');
+        var ctx;
+        var cw;
+        var ch;
+        var pixels;
+
+        var cimg = new Image();
+        cimg.src = 'lorem.jpg';
+        cimg.onload = function () {
+
+
+            ctx = mainBoard.getContext('2d');
+            cw = ctx.canvas.width;
+            ch = ctx.canvas.height;
+
+            ctx.drawImage(cimg, 0, 0);
+
+            Blur.SetContext(ctx);
+
+        }
+
+        mainBoard.onclick = function () {
+            Blur.BoxBlur(12);
+        }
+    </script>
+</body>
+</html>

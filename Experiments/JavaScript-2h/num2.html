@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+
+        #main-board {
+            position:absolute;
+            top:20px;
+            left:20px;
+            width: 800px;
+            height: 600px;
+            border: 1px solid Silver;
+            background-color: #000c24;
+        }
+
+        #sky {
+            position:absolute;
+            top:320px;
+            left:20px;
+            width: 800px;
+            height: 300px;
+            background-image: url("sky.png");
+        }
+    </style>
+</head>
+<body>
+    <canvas id="main-board" width="800" height="600"></canvas>
+    <div id="sky"></div>
+    <script type="text/javascript">
+
+        var mainBoard = document.getElementById('main-board');
+        var ctx = mainBoard.getContext('2d');
+
+
+        ctx.lineWidth = 2;
+
+
+
+        var balls = [];
+
+
+        function renderBalls() {
+
+            ctx.clearRect(0, 0, mainBoard.clientWidth, mainBoard.clientHeight);
+
+
+            var p = 0;
+
+            for (var i = 0; i < balls.length; i++) {
+
+                var b = balls[i];
+
+                if (!b) continue;
+
+                if (b.alpha < 0.01) {
+                    balls[i] = null;
+                    continue;
+                }
+
+                p++;
+
+                //if (Math.random() > 0.2) {
+                   // b.initX = b.x;
+                   // b.initY = b.y;
+                //}
+
+                b.move();
+                var c = 'rgba(' + b.red + ',' + b.green + ',' + b.blue + ',' + b.alpha + ')';
+
+                ctx.fillStyle = c;
+                //ctx.strokeStyle = c;
+
+
+                b.red = b.red < 2 ? 0 : b.red - 2;
+                b.green = b.green < 16 ? 0 : b.green - 16;
+                b.blue = b.blue < 8 ? 0 : b.blue - 8;
+
+                var decay = Math.random() / 20;
+
+                b.alpha -= decay; // b.red / 255;
+                var s = Math.random() * 3;
+                ctx.fillRect(b.x - 2, b.y - 2, Math.random() * 4, Math.random() * 4);
+             //   ctx.beginPath();
+             //   ctx.moveTo(b.x, b.y);
+             //   ctx.lineTo(b.initX, b.initY);
+             //   ctx.stroke();
+            }
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText("Active of particles: " + p, 10, 20);
+        }
+
+        var ball = function (size) {
+
+            var me = {};
+            var vel = (Math.random() * size);
+            var ang = Math.random() * (Math.PI * 2)
+            me.x = 0;
+            me.y = 0;
+
+            me.initX = 0;
+            me.initY = 0;
+
+            me.red = 255;
+            me.green = 255;
+            me.blue = 255;
+
+            me.alpha = 1;
+
+            me.speed = { x: Math.cos(ang) * vel, y: Math.sin(ang) * vel };
+            me.grav = 0.15;
+            me.drag = 0.99;
+
+            me.move = function () {
+                me.speed.y += me.grav;
+                me.speed.y *= me.drag;
+                me.y += me.speed.y;
+                me.speed.x *= me.drag;
+                me.x += me.speed.x;
+            }
+
+            return me;
+        };
+
+        var MAX_BALLS = 10000;
+        var ballCount = 0;
+        function setUp(initX, initY) {
+            // balls = [];
+            var burstSize = 4 + Math.round(Math.random() * 8);
+            for (var i = 0; i < 1000; i++) {
+                var b = new ball(burstSize);
+                b.x = initX; //mainBoard.clientWidth / 2;
+                b.y = initY; //mainBoard.clientHeight / 2;
+
+                b.initX = b.x;
+                b.initY = b.y;
+
+                balls[ballCount] = b;
+                ballCount++;
+                if (ballCount >= MAX_BALLS) {
+                    ballCount = 0;
+                }
+            }
+        }
+
+        var animator;
+        function start(e) {
+            //clearInterval(animator);
+            setUp(e.pageX - mainBoard.offsetLeft, e.pageY - mainBoard.offsetTop);
+
+        }
+
+        animator = setInterval(function () {
+            renderBalls();
+        }, 30);
+
+        document.addEventListener('click', start);
+
+    </script>
+</body>
+</html>

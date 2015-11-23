@@ -176,7 +176,7 @@
                 if (lines.length < 1 || start >= lines.length) {
                     start = 0;
                     depth++;
-                    console.log(depth);
+                  //  console.log(depth);
                     drawLines();
                 }
 
@@ -247,8 +247,8 @@
         var maxY = cvsHeight;
 
         var shapes = [
-         //   ['rgba(0, 0, 0, .1)', 'rgba(0, 0, 0, .2)', 'img_1', 1],
-            ['rgba(0, 0, 0, .05)', 'rgba(0, 0, 0, .2)', 'img_1', -1],
+            ['rgba(0, 0, 0, .1)', 'rgba(0, 0, 0, .2)', 'img_1', 1],
+           // ['rgba(0, 0, 0, .05)', 'rgba(0, 0, 0, .2)', 'img_1', -1],
           //  ['rgba(0, 0, 0, .1)', 'rgba(0, 0, 0, .2)', 'img_2', 1],
             ['rgba(0, 0, 0, .03)', 'rgba(0, 0, 0, .2)', 'img_2', -1]
 
@@ -277,7 +277,7 @@
             endX = [cvsWidth / 2];
             maxY = cvsHeight;
 
-            cx.strokeStyle = "rgba(0,0,128,.5)";
+            cx.strokeStyle = "rgba(0,0,128,.0)";
             cx.lineWidth = 1;
             for (var i = 0; i < segments; i++) {
                 var trim = i == segments - 1 ? maxY : Math.random() * (cvsHeight / (segments - 1));
@@ -294,9 +294,9 @@
                 cx.lineTo(endX[endX.length - 1], cvsHeight)
 
             }
-
+            
             cx.stroke();
-
+            
             var p1 = { x: cvsWidth / 2, y: 0 };
             var p2 = { x: cvsWidth / 2, y: cvsHeight };
 

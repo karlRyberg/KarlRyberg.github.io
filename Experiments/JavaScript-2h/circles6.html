@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        #main-board {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            border: 1px solid Silver;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="main-board" width="550" height="400"></canvas>
+
+    <script type="text/javascript">
+
+        var alphaMapImg = new Image();
+
+
+        var mainBoard = document.getElementById('main-board');
+        var ctx;
+        var cw;
+        var ch;
+
+        ctx = mainBoard.getContext('2d');
+        cw = ctx.canvas.width;
+        ch = ctx.canvas.height;
+
+        alphaMapImg.onload = function () {
+            ctx.drawImage(alphaMapImg, 0, 0, alphaMapImg.width, alphaMapImg.height);
+            var red = [];
+            var green = [];
+            var blue = [];
+
+            var Rboard = [];
+            var Gboard = [];
+            var Bboard = [];
+
+            var maxPoints = 6000;
+            var threshhold = 255;
+
+            var imgData = ctx.getImageData(0, 0, cw, ch).data;
+            for (var px = 0; px < cw; px++) {
+                red[px] = [];
+                green[px] = [];
+                blue[px] = [];
+
+                Rboard[px] = [];
+                Gboard[px] = [];
+                Bboard[px] = [];
+
+                for (var py = 0; py < ch; py++) {
+
+                    red[px][py] = imgData[((cw * py) + px) * 4];
+                    green[px][py] = imgData[((cw * py) + px) * 4 + 1];
+                    blue[px][py] = imgData[((cw * py) + px) * 4 + 2];
+
+                    Rboard[px][py] = 255;
+                    Gboard[px][py] = 255;
+                    Bboard[px][py] = 255;
+
+                }
+            }
+
+            ctx.clearRect(0, 0, cw, ch);
+
+            function point(x, y) {
+                this.x = x;
+                this.y = y;
+                this.sat = 1 + (Math.random() * 60);
+                this.dir = Math.random() < 0.5 ? -1 : 1;
+
+                this.col = Math.round(Math.random() * 2);
+
+            }
+
+
+            var points = [];
+
+            for (var i = 0; i < maxPoints; i++) {
+
+                points.push(new point(Math.round(Math.random() * cw), Math.round(Math.random() * ch)));
+            }
+
+
+            interval = setInterval(function () {
+
+                for (var i = 0; i < points.length; i++) {
+
+                    var p = points[i];
+                    var x = p.x;
+                    var y = p.y;
+
+
+
+                    if (Rboard[x] != null && Rboard[x][y] != null) {
+
+                        var r;
+                        var g;
+                        var b;
+                        var currentCol;
+
+                        if (p.col == 0) {
+
+                            Rboard[x][y] -= p.sat;
+                            Rboard[x][y] = Math.max(Rboard[x][y], red[x][y]);
+
+                        }
+
+
+                        if (p.col == 1) {
+
+                            Gboard[x][y] -= p.sat;
+                            Gboard[x][y] = Math.max(Gboard[x][y], green[x][y]);
+
+                        }
+
+
+                        if (p.col == 2) {
+
+                            Bboard[x][y] -= p.sat;
+                            Bboard[x][y] = Math.max(Bboard[x][y], blue[x][y]);
+
+
+                        }
+
+                        r = Math.round(Rboard[x][y]);
+                        g = Math.round(Gboard[x][y]);
+                        b = Math.round(Bboard[x][y]);
+
+                        currentCol = red[x][y] * 0.2125;
+                        currentCol += green[x][y] * 0.7154;
+                        currentCol += blue[x][y] * 0.0721;
+
+                        if (currentCol < threshhold) {
+                            ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+                            ctx.fillRect(x, y, 1, 1);
+                        }
+                    }
+
+                    p.x += p.dir;
+                    p.y += -3 + Math.round(Math.random() * 6);
+                    if (p.x >= cw) {
+                        p.x = 0;
+                        p.y = Math.round(Math.random() * ch);
+                    }
+                    else if (p.x < 0) {
+                        p.x = cw;
+                        p.y = Math.round(Math.random() * ch);
+                    }
+
+
+                }
+
+            }, 4);
+
+        }
+
+        alphaMapImg.src = 'emma.png';
+
+
+    </script>
+</body>
+</html>

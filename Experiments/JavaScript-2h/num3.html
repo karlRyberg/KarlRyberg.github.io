@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        #main-board {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            height: 400px;
+            background-color: #000;
+        }
+        #canvas-info{
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            height: 400px;
+            background-color: #ddd;
+            color:black;
+            font: normal 10pt arial, sans-serif;
+            padding:20px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="main-board" width="100" height="400">
+         <p id="canvas-info">The HTML canvas element is not supported by this browser</p>
+    </canvas>
+    <script type="text/javascript">
+
+        ball = function (x, y, g, val) {
+            this.x = x || 0;
+            this.y = y || 0;
+            this.grav = g || 1;
+            this.val = val || 1;
+
+            var oldX = this.x;
+            var oldY = this.y;
+
+            this.move = function (field) {
+
+                oldX = this.x;
+                oldY = this.y;
+
+                var down = this.y + (this.grav * mainGrav);
+
+                if (field[down] && field[down][this.x] != 0) {
+
+                    var canGoLeft = field[down] && field[down][this.x - 1] == 0;
+                    var canGoRight = field[down] && field[down][this.x + 1] == 0;
+                    var dir = 0;
+
+                    if (canGoLeft && canGoRight) {
+                        dir = Math.random() > 0.5 ? 1 : -1;
+                        this.y = down;
+                    }
+                    else if (!canGoLeft && !canGoRight) {
+                        dir = 0;
+                    }
+                    else {
+                        dir = canGoLeft ? -1 : 1;
+                        this.y = down;
+                    }
+
+
+                    this.x = Math.min(Math.max(this.x + dir, 0), field[0].length - 1);
+
+                }
+                else {
+                    this.y = Math.min(Math.max(down, 0), field.length - 1);
+
+                }
+
+                field[oldY][oldX] = 0;
+
+
+                field[this.y][this.x] = this.val;
+            }
+            return this;
+        }
+
+        var mainBoard = document.getElementById('main-board');
+        var ctx = mainBoard.getContext('2d');
+        var mainGrav = 1;
+
+        var gravField = (function (h, w) {
+            var arr = [];
+            for (var y = 0; y < h; y++) {
+                arr[y] = []
+                for (var x = 0; x < w; x++) {
+                    arr[y][x] = 0;
+                }
+            }
+            return arr;
+        }(ctx.canvas.height, ctx.canvas.width));
+
+
+        var balls = (function () {
+
+            var arr = [];
+            var dropWidth = ctx.canvas.width;// / 1.4;
+            var dist = Math.round((ctx.canvas.width - dropWidth) / 2);
+            for (var i = 0; i < 3000; i++) {
+                arr.push(new ball(dist + Math.floor(Math.random() * dropWidth), Math.floor(Math.random() * 4), 1));
+            }
+
+            for (var j = 0; j < 3000; j++) {
+                arr.push(new ball(dist + Math.floor(Math.random() * dropWidth), ctx.canvas.height - Math.floor(Math.random() * 4) - 1, -1, 2));
+            }
+
+            return arr;
+
+            /*
+            var arr = [];
+            var dropWidth = ctx.canvas.width/6;
+            var dist = Math.round((ctx.canvas.width - dropWidth) / 2);
+           
+            for (var i = 0; i < 2000; i++) {
+                arr.push(new ball(dist + Math.floor(Math.random() * dropWidth), 0, 1));
+            }
+
+            for (var j = 0; j < 2000; j++) {
+                arr.push(new ball(dist + Math.floor(Math.random() * dropWidth), ctx.canvas.height - 1, -1, 2));
+            }
+
+            return arr;
+            */
+        }())
+
+        
+        var step = 0;
+        for (var i = 0; i < 30; i++) {
+            step += 0.5;
+            gravField[150 + Math.ceil(step)][i] = -1;
+            gravField[150 + Math.ceil(step) + 1][i] = -1;
+
+            gravField[150 + Math.ceil(step)][gravField[0].length - 1 - i] = -1;
+            gravField[150 + Math.ceil(step) + 1][gravField[0].length - 1 - i] = -1;
+        }
+
+        for (var i = 40; i < 61; i++) {
+            gravField[250][i] = -1;
+            gravField[251][i] = -1;
+        }
+
+        for (var i = 40; i < 61; i++) {
+            gravField[100][i] = -1;
+            gravField[101][i] = -1;
+        }
+        
+
+        renderField = function (field) {
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            for (var y = 0; y < field.length; y++) {
+                for (var x = 0; x < field[y].length; x++) {
+                    if (field[y][x] == 1) {
+                        ctx.fillStyle = '#bb0000';//'#deff00';
+                        ctx.fillRect(x, y, 1, 1);
+                    }
+                    else if (field[y][x] == 2) {
+                        ctx.fillStyle = '#ff0000';//'#ff00ba';
+                        ctx.fillRect(x, y, 1, 1);
+                    }
+                    else if (field[y][x] == -1) {
+                        ctx.fillStyle = '#990000';//'#fff';
+                        ctx.fillRect(x, y, 1, 1);
+                    }
+                }
+            }
+        }
+
+        window.requestAnimFrame = (function () {
+            return window.requestAnimationFrame ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame ||
+                    function (callback) {
+                        window.setTimeout(callback, 1000 / 60);
+                    };
+        })();
+
+
+        (function animate() {
+            requestAnimationFrame(animate);
+            for (var i = 0; i < balls.length / 2; i++) {
+                balls[Math.floor(Math.random() * balls.length)].move(gravField);
+            }
+            renderField(gravField);
+        })();
+
+        mainBoard.onclick = function () {
+            mainGrav *= -1;
+        }
+
+    </script>
+</body>
+</html>
