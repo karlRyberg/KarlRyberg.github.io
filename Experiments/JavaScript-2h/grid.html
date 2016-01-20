@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        html, body {
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        height: 100%;
+        }
+        #drawing {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            right: 0px;
+            background-color: #fff;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="drawing"></div>
+
+    <div id="drawing-second"></div>
+
+    <script src="LazyCanvas.js"></script>
+    <script>
+
+        var lc = null;
+        var GRID_WIDTH = 100;
+        var GRID_HEIGHT = 100;
+        var GRID_CELL_SIZE = 6;
+
+        var points = [];
+        var pointGrid = [];
+        var selectedPoint = null;
+
+        var ELASTICITY = 0.25;
+        var INERTIA = 0.9;
+
+
+        var Point = function (x, y, gridX, gridY) {
+            this.x = x;
+            this.y = y;
+            this.vx = 0;
+            this.vy = 0;
+            this.gridX = gridX;
+            this.gridY = gridY;
+            this.orgX = x;
+            this.orgY = y;
+            this.color = 'rgb(0,0,0)';
+        };
+
+        var _createGrid = function () {
+            for (var i = 0; i < GRID_HEIGHT; i++) {
+                pointGrid[i] = [];
+                for (var j = 0; j < GRID_WIDTH; j++) {
+                    var p = new Point(GRID_CELL_SIZE * j, GRID_CELL_SIZE * i, j, i);
+                    pointGrid[i][j] = p;
+                    points.push(p);
+                }
+            }
+        };
+
+        var _animPoints = function () {
+         //   if (selectedPoint) return;
+
+            for (var i = 0; i < points.length; i++) {
+                var p = points[i];
+                if (selectedPoint && selectedPoint == p) continue;
+                var dx = p.orgX - p.x;
+                var dy = p.orgY - p.y;
+
+                p.vx += (dx * ELASTICITY);
+                p.vy += (dy * ELASTICITY);
+                p.vx *= INERTIA;
+                p.vy *= INERTIA;
+
+                p.x += p.vx;
+                p.y += p.vy;
+            }
+        };
+
+        var _drawGrid = function () {
+            lc.Context.clearRect(0, 0, lc.Width, lc.Height);
+            lc.Context.beginPath();
+            for (var i = 0; i < GRID_HEIGHT; i++) {
+                for (var j = 0; j < GRID_WIDTH; j++) {
+                    var p = pointGrid[i][j];
+                //       lc.Context.fillRect(p.x - 1, p.y - 1, 2, 2);
+                    
+                    if (pointGrid[i - 1] && pointGrid[i - 1][j]) {
+                        var up = pointGrid[i - 1][j];
+                        lc.Context.moveTo(up.x, up.y);
+                        lc.Context.lineTo(p.x, p.y);
+                    }
+
+                    if (pointGrid[i][j - 1]) {
+                        var left = pointGrid[i][j - 1];
+                        lc.Context.moveTo(left.x, left.y);
+                        lc.Context.lineTo(p.x, p.y);
+                    }
+
+                }
+            }
+            lc.Context.stroke();
+        }
+
+        var _animLoop = function () {
+    
+            _animPoints();
+            _drawGrid();
+            _stretchGrid();
+
+            window.requestAnimationFrame(_animLoop);
+        };
+
+        var _influenceNeighbour = function (n, p, f) {
+            if (n && n !== selectedPoint) {
+
+                var diffX = p.x - n.orgX;
+                var diffY = p.y - n.orgY;
+
+                for (var i = 0; i <= f; i++) {
+                    diffX /= 1.2;
+                    diffY /= 1.2;
+                }
+
+                n.x = n.orgX + (diffX);
+                n.y = n.orgY + (diffY);
+            }
+
+        };
+
+
+        var _stretchGrid = function (s) {
+
+            var p = selectedPoint;
+            if (!p) return;
+
+            var pass = s || 1;
+            var hit = false;
+
+            for (var y = p.gridY - pass; y <= p.gridY + pass; y++) {
+                var inc = (y === p.gridY - pass) || (y === p.gridY + pass) ? 1 : pass * 2;
+                for (var x = p.gridX - pass; x <= p.gridX + pass; x += inc) {
+                    if (pointGrid[y] && pointGrid[y][x]) {
+                        _influenceNeighbour(pointGrid[y][x], p, pass);
+                        hit = true;
+                    }
+                }
+            }
+
+            if (hit && pass) {
+                _stretchGrid(++pass);
+            }
+
+        }
+
+
+        window.onload = function () {
+
+            lc = new LazyCanvas();
+            lc.Init(document.getElementById('drawing'));
+            lc.Context.strokeStyle = 'rgb(0,0,0)';
+            lc.Context.fillStyle = 'rgb(0,0,0)';
+
+
+            lc.Canvas.onmousedown = function (e) {
+                var x = Math.round(e.offsetX / GRID_CELL_SIZE);
+                var y = Math.round(e.offsetY / GRID_CELL_SIZE);
+                x = Math.min(x, GRID_WIDTH);
+                y = Math.min(y, GRID_HEIGHT);
+                if (pointGrid[y] && pointGrid[y][x]) {
+                    selectedPoint = pointGrid[y][x];
+                }
+            }
+            lc.Canvas.onmousemove = function (e) {
+                if (selectedPoint) {
+                    var diffX = e.offsetX - selectedPoint.orgX;
+                    var diffY = e.offsetY - selectedPoint.orgY;
+                    var max = 200;
+
+                    var stretchX = diffX * (ELASTICITY * 2);
+                    var stretchY = diffY * (ELASTICITY * 2);
+
+
+                    selectedPoint.x = selectedPoint.orgX + stretchX
+                    selectedPoint.y = selectedPoint.orgY + stretchY;
+                    //   _stretchGrid();
+                }
+            }
+            lc.Canvas.onmouseup = function (e) {
+                selectedPoint = null;
+            }
+
+            _createGrid();
+
+            window.requestAnimationFrame(_animLoop);
+        }
+    </script>
+</body>
+</html>

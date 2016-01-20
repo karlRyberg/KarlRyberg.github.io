@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        body {
+            background-color: #000;
+        }
+
+        #drawing {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            margin: auto;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="drawing" width="600" height="300"></canvas>
+    <script type="text/javascript">
+
+        var drawingBoard = document.getElementById('drawing');
+        drawingBoard.setAttribute('width', window.innerWidth.toString());
+        drawingBoard.setAttribute('height', window.innerHeight.toString());
+        var ctx;
+        var cw;
+        var ch;
+
+        ctx = drawingBoard.getContext('2d');
+        ctx.lineCap = 'round';
+        cw = ctx.canvas.width;
+        ch = ctx.canvas.height;
+
+        var RECT_POSITION = {
+            TOP: 0,
+            RIGHT: 1,
+            BOTTOM: 2,
+            LEFT: 3
+        };
+
+        var Point = function (x, y) {
+            this.x = x || 0;
+            this.y = y || 0;
+            return this;
+        };
+
+        var Line = function (p1, p2) {
+            this.p1 = p1 || new Point(0, 0);
+            this.p2 = p2 || new Point(0, 0);
+            this.rectPosition = null;
+            return this;
+        };
+
+        var Rect = function (points, gridX, gridY) {
+
+            this.lines = [];
+
+            var line = null;
+            for (var i = 0; i < 4; i++) {
+                var nextPoint = points[i + 1] || points[0];
+                var line = new Line(points[i], nextPoint);
+                line.rectPosition = i;
+                this.lines.push(line);
+            }
+
+            this.gridX = gridX;
+            this.gridY = gridY;
+
+            return this;
+
+        };
+
+        var constructRect = function (position, size, maxDistort, gridX, gridY) {
+            var halfSize = size / 2;
+
+            var topLeft = new Point(
+                position.x - halfSize - (Math.random() * maxDistort),
+                position.y - halfSize - (Math.random() * maxDistort)
+                );
+
+            var topRight = new Point(
+                position.x + halfSize + (Math.random() * maxDistort),
+                position.y - halfSize - (Math.random() * maxDistort)
+                );
+
+            var bottomRight = new Point(
+                position.x + halfSize + (Math.random() * maxDistort),
+                position.y + halfSize + (Math.random() * maxDistort)
+                );
+
+            var bottomLeft = new Point(
+                position.x - halfSize - (Math.random() * maxDistort),
+                position.y + halfSize + (Math.random() * maxDistort)
+                );
+
+            var rect = new Rect([
+                topLeft,
+                topRight,
+                bottomRight,
+                bottomLeft
+            ], gridX, gridY);
+
+            return rect;
+
+        };
+
+
+        var _positionFromLine = function (line, size) {
+
+            var halfSize = size / 2;
+
+            var position = new Point();
+
+            switch (line.rectPosition) {
+                case RECT_POSITION.TOP:
+                    position.x = line.p1.x + ((line.p2.x - line.p1.x) / 2);
+                    position.y = Math.min(line.p1.y, line.p2.y) - halfSize;
+                    break;
+                case RECT_POSITION.RIGHT:
+                    position.x = Math.max(line.p1.x, line.p2.x) + halfSize;
+                    position.y = line.p1.y + ((line.p2.y - line.p1.y) / 2);
+                    break;
+                case RECT_POSITION.BOTTOM:
+                    position.x = line.p2.x + ((line.p1.x - line.p2.x) / 2);
+                    position.y = Math.max(line.p1.y, line.p2.y) + halfSize;
+                    break;
+                case RECT_POSITION.LEFT:
+                    position.x = Math.min(line.p1.x, line.p2.x) - halfSize;
+                    position.y = line.p2.y + ((line.p1.y - line.p2.y) / 2);
+                    break;
+            }
+            return position;
+        };
+
+        var overridePoints = function (points, line) {
+
+            if (line.rectPosition === RECT_POSITION.TOP) {
+                points[2] = line.p2; //bottomRight
+                points[3] = line.p1; //bottomLeft
+            }
+            else if (line.rectPosition === RECT_POSITION.RIGHT) {
+                points[0] = line.p1; // topLeft
+                points[3] = line.p2; // bottomLeft
+            }
+            else if (line.rectPosition === RECT_POSITION.BOTTOM) {
+                points[0] = line.p2; // topLeft
+                points[1] = line.p1; // topRight
+            }
+            else if (line.rectPosition === RECT_POSITION.LEFT) {
+                points[1] = line.p2; //topRight
+                points[2] = line.p1; // bottomRight
+            }
+
+            return points;
+
+        };
+
+        var constructRectFromLine = function (lines, size, maxDistort, gridX, gridY) {
+
+            var halfSize = size / 2;
+
+            var position = _positionFromLine(lines[0], size);
+
+
+            var topLeft = new Point(
+                position.x - halfSize - (Math.random() * maxDistort),
+                position.y - halfSize - (Math.random() * maxDistort)
+                );
+
+            var topRight = new Point(
+                position.x + halfSize + (Math.random() * maxDistort),
+                position.y - halfSize - (Math.random() * maxDistort)
+                );
+
+            var bottomRight = new Point(
+                position.x + halfSize + (Math.random() * maxDistort),
+                position.y + halfSize + (Math.random() * maxDistort)
+                );
+
+            var bottomLeft = new Point(
+                position.x - halfSize - (Math.random() * maxDistort),
+                position.y + halfSize + (Math.random() * maxDistort)
+                );
+
+
+            var points = overridePoints([
+                topLeft,
+                topRight,
+                bottomRight,
+                bottomLeft
+            ], lines[0]);
+
+            for (var i = 1; i < lines.length; i++) {
+                points = overridePoints([
+                            points[0],
+                            points[1],
+                            points[2],
+                            points[3]
+                ], lines[i]);
+
+            }
+
+            var rect = new Rect(points, gridX, gridY);
+
+
+            return rect;
+        };
+
+        var drawRect = function (rect) {
+
+            var gray = 200 +  Math.round(Math.random() * 50);
+
+            ctx.fillStyle = 'rgb(' + Math.round(gray / 1.1) + ',255,' + Math.round(gray / 4) + ')';
+            ctx.strokeStyle = 'rgba(255,255,255,1)';
+            ctx.lineWidth = .1;
+
+            ctx.beginPath();
+            ctx.moveTo(rect.lines[0].p1.x, rect.lines[0].p1.y);
+
+            for (var i = 0; i < rect.lines.length; i++) {
+                var line = rect.lines[i];
+                ctx.lineTo(line.p1.x, line.p1.y);
+                ctx.lineTo(line.p2.x, line.p2.y);
+
+            }
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fill();
+
+        };
+
+
+        var getRectAtGridPoint = function (x, y) {
+
+            return abstractGrid[x + '' + y];
+
+        };
+
+
+        var selectPoint = function () {
+
+            var index = Math.round(Math.random() * (allRects.length - 1));
+            var selectedRect = allRects[index];
+            var direction = Math.round(Math.random() * 4);
+            var newPoint = new Point(
+                selectedRect.gridX,
+                selectedRect.gridY
+            );
+            switch (direction) {
+                case RECT_POSITION.TOP:
+                    newPoint.y -= 1;
+                    break;
+                case RECT_POSITION.RIGHT:
+                    newPoint.x += 1;
+                    break;
+                case RECT_POSITION.BOTTOM:
+                    newPoint.y += 1;
+                    break;
+                case RECT_POSITION.LEFT:
+                    newPoint.x -= 1;
+                    break;
+            }
+
+            if (getRectAtGridPoint(newPoint.x, newPoint.y)) {
+                return selectPoint();
+            }
+            else {
+                return newPoint;
+            }
+        };
+
+
+        var addPreLines = function (point) {
+
+            var lineArray = [];
+            var neighbour = getRectAtGridPoint(point.x, point.y - 1);
+            if (neighbour) {
+                lineArray.push(neighbour.lines[RECT_POSITION.TOP]);
+            }
+            neighbour = getRectAtGridPoint(point.x - 1, point.y);
+            if (neighbour) {
+                lineArray.push(neighbour.lines[RECT_POSITION.RIGHT]);
+            }
+            neighbour = getRectAtGridPoint(point.x, point.y + 1);
+            if (neighbour) {
+                lineArray.push(neighbour.lines[RECT_POSITION.BOTTOM]);
+            }
+            neighbour = getRectAtGridPoint(point.x + 1, point.y);
+            if (neighbour) {
+                lineArray.push(neighbour.lines[RECT_POSITION.LEFT]);
+            }
+            return lineArray;
+
+        };
+
+        var addNewRect = function () {
+
+            var newRect;
+
+            if (allRects.length < 1) {
+                newRect = constructRect(new Point(cw / 2, ch / 2), squareSize, squareDistort, 0, 0);
+            }
+            else {
+                var freePoint = selectPoint();
+                newRect = constructRectFromLine(addPreLines(freePoint), squareSize, squareDistort, freePoint.x, freePoint.y);
+            }
+
+            allRects.push(newRect);
+            abstractGrid[newRect.gridX + '' + newRect.gridY] = newRect;
+
+            drawRect(newRect);
+
+            ticker++;
+            if (ticker <= maxTick) {
+                setTimeout(addNewRect, 20);
+            }
+
+
+        };
+
+
+
+        var ticker = 0;
+        var maxTick = 100;
+        var allRects = [];
+        var abstractGrid = {};
+        var squareSize = 30;
+        var squareDistort = 20;
+
+        setTimeout(addNewRect, 50);
+
+    </script>
+</body>
+</html>

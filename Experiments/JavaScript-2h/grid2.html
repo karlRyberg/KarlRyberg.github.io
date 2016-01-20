@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        html, body {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        #drawing {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            right: 0px;
+            background-color: #00a8ff;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="drawing"></div>
+
+    <div id="drawing-second"></div>
+
+    <script src="LazyCanvas.js"></script>
+    <script>
+
+        var lc = null;
+        var GRID_WIDTH = 100;
+        var GRID_HEIGHT = 100;
+        var GRID_CELL_SIZE = 2;
+
+        var points = [];
+        var pointGrid = [];
+        var selectedPoints = null;
+
+        var ELASTICITY = 0.9;
+        var INERTIA = 0.99;
+
+
+        var Point = function (x, y, gridX, gridY) {
+            this.x = x;
+            this.y = y;
+            this.vx = 0;
+            this.vy = 0;
+            this.targetX = x;
+            this.targetY = y;
+            this.gridX = gridX;
+            this.gridY = gridY;
+            this.orgX = x;
+            this.orgY = y;
+            this.color = 'rgb(255,0,0)';
+        };
+
+        var _createGrid = function () {
+
+            var xStart = (lc.Width - (GRID_WIDTH * GRID_CELL_SIZE)) / 2;
+            var yStart = (lc.Height - (GRID_HEIGHT * GRID_CELL_SIZE)) / 2;
+
+            for (var i = 0; i < GRID_HEIGHT; i++) {
+                pointGrid[i] = [];
+                for (var j = 0; j < GRID_WIDTH; j++) {
+                    var p = new Point(xStart + (GRID_CELL_SIZE * j), yStart + (GRID_CELL_SIZE * i), j, i);
+                    pointGrid[i][j] = p;
+                    points.push(p);
+                }
+            }
+        };
+
+
+
+        var _drawGrid = function () {
+            lc.Context.clearRect(0, 0, lc.Width, lc.Height);
+            lc.Context.beginPath();
+
+
+            var xStart = (lc.Width - (GRID_WIDTH * GRID_CELL_SIZE)) / 2;
+            var yStart = (lc.Height - (GRID_HEIGHT * GRID_CELL_SIZE)) / 2;
+
+            lc.Context.fillStyle = '#00a8ff';
+            lc.Context.fillRect(xStart, yStart, (GRID_WIDTH * GRID_CELL_SIZE), (GRID_HEIGHT * GRID_CELL_SIZE));
+
+            for (var i = 0; i < GRID_HEIGHT; i++) {
+                for (var j = 0; j < GRID_WIDTH; j++) {
+                    var p = pointGrid[i][j];
+
+                    if (pointGrid[i - 1] && pointGrid[i - 1][j]) {
+                        var up = pointGrid[i - 1][j];
+                        lc.Context.moveTo(up.x, up.y);
+                        lc.Context.lineTo(p.x, p.y);
+                    }
+
+                    if (pointGrid[i][j - 1]) {
+                        var left = pointGrid[i][j - 1];
+                        lc.Context.moveTo(left.x, left.y);
+                        lc.Context.lineTo(p.x, p.y);
+                    }
+
+                }
+            }
+            lc.Context.stroke();
+        }
+
+        var findNeighbours = function (p, rad) {
+            pass = rad || 1;
+            var neighbours = [];
+            for (var y = p.gridY - pass; y <= p.gridY + pass; y++) {
+                var inc = (y === p.gridY - pass) || (y === p.gridY + pass) ? 1 : pass * 2;
+                for (var x = p.gridX - pass; x <= p.gridX + pass; x += inc) {
+                    if (pointGrid[y] && pointGrid[y][x]) {
+                        neighbours.push(pointGrid[y][x]);
+                    }
+                    else {
+                        return null;
+                    }
+                }
+            }
+            return neighbours;
+        };
+
+        var _stretchGrid = function () {
+            for (var i = 0; i < points.length; i++) {
+
+                var p = points[i]
+                if (p.dragging) continue;
+
+                var neighbours = findNeighbours(p);
+                if (!neighbours) continue;
+
+                var xDiff = 0;
+                var yDiff = 0;
+                for (var j = 0; j < neighbours.length; j++) {
+                    xDiff += neighbours[j].x - p.x;
+                    yDiff += neighbours[j].y - p.y;
+                }
+
+
+                xDiff /= neighbours.length;
+                yDiff /= neighbours.length;
+                if (neighbours.length == 8) {
+                    p.targetX = p.x + xDiff;
+                    p.targetY = p.y + yDiff;
+                }
+
+            }
+        };
+
+        var _animGrid = function () {
+
+            for (var i = 0; i < points.length; i++) {
+
+                var p = points[i]
+                if (p.dragging) continue;
+
+                var dx, dy;
+
+                dx = p.targetX - p.x;
+                dy = p.targetY - p.y;
+
+                p.vx += (dx * ELASTICITY);
+                p.vy += (dy * ELASTICITY);
+                p.vx *= INERTIA;
+                p.vy *= INERTIA;
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+            }
+        };
+
+        var _animLoop = function () {
+            _stretchGrid();
+            _animGrid();
+            _drawGrid();
+            window.requestAnimationFrame(_animLoop);
+        };
+
+
+        var getPointFromMousePos = function (mx, my) {
+
+            mx -= (lc.Width - (GRID_WIDTH * GRID_CELL_SIZE)) / 2;
+            my -= (lc.Height - (GRID_HEIGHT * GRID_CELL_SIZE)) / 2;
+
+            var x = Math.round(mx / GRID_CELL_SIZE);
+            var y = Math.round(my / GRID_CELL_SIZE);
+
+
+
+            x = Math.min(x, GRID_WIDTH);
+            y = Math.min(y, GRID_HEIGHT);
+            if (pointGrid[y] && pointGrid[y][x]) {
+                return pointGrid[y][x];
+            }
+            return null;
+        };
+
+
+        window.onload = function () {
+
+            lc = new LazyCanvas();
+            lc.Init(document.getElementById('drawing'));
+            lc.Context.lineWidth = .1;
+            lc.Context.strokeStyle = 'rgba(255,255,255,1)';
+            lc.Context.fillStyle = 'rgb(0,0,0)';
+
+
+            lc.Canvas.onmousedown = function (e) {
+
+                var selectedPoint = getPointFromMousePos(e.offsetX, e.offsetY);
+
+                if (!selectedPoint) return;
+
+                selectedPoints = findNeighbours(selectedPoint);
+
+                if (!selectedPoints) return;
+
+                selectedPoints.push(selectedPoint);
+
+                for (var i = 0; i < selectedPoints.length; i++) {
+                    var p = selectedPoints[i];
+                    if (p) {
+                        p.dragging = true;
+                        p.x = e.offsetX;
+                        p.y = e.offsetY;
+                    }
+
+                }
+            }
+
+            lc.Canvas.onmousemove = function (e) {
+                if (!selectedPoints) return;
+
+                for (var i = 0; i < selectedPoints.length; i++) {
+                    var p = selectedPoints[i];
+                    if (p) {
+                        p.x = e.offsetX;
+                        p.y = e.offsetY;
+                    }
+
+                }
+            }
+
+            lc.Canvas.onmouseup = function (e) {
+                if (!selectedPoints) return;
+
+                for (var i = 0; i < selectedPoints.length; i++) {
+                    var p = selectedPoints[i];
+                    if (p) {
+                        p.dragging = false;
+                    }
+
+                }
+
+                selectedPoints = null;
+
+            }
+
+            _createGrid();
+
+            window.requestAnimationFrame(_animLoop);
+        }
+    </script>
+</body>
+</html>
