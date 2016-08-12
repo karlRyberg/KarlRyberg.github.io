@@ -1,0 +1,373 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        html, body {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+        }
+
+        #drawing {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            right: 0px;
+            overflow: hidden;
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="drawing"></div>
+
+    <div id="drawing-second"></div>
+
+    <script src="LazyCanvas.js"></script>
+    <script>
+
+        var lc = null;
+        var GRID_WIDTH = 100;
+        var GRID_HEIGHT = 100;
+        var GRID_CELL_SIZE = 2;
+        var POINT_SIZE = 0;
+        var POINT_OFFSET = -1;
+        var POINT_COLOR = 'rgba(0, 0, 0, .1)';
+        var BACKGROUND_COLOR = '#fff';
+        var LINE_WIDTH = .2;
+        var LINE_COLOR = 'rgba(255,255,255, 1)';
+        var PADDING = 16 //multiple of 4
+        var PINCH_RADIUS = Math.min(GRID_HEIGHT * GRID_CELL_SIZE, GRID_WIDTH * GRID_CELL_SIZE) / 20;
+
+        var points = [];
+        var pointGrid = [];
+        var selectedPoints = null;
+
+        var ELASTICITY = 0.6;
+        var INERTIA = 0.97;
+
+
+        var Point = function (x, y, gridX, gridY) {
+            this.x = x;
+            this.y = y;
+            this.vx = 0;
+            this.vy = 0;
+            this.targetX = x;
+            this.targetY = y;
+            this.gridX = gridX;
+            this.gridY = gridY;
+            this.orgX = x;
+            this.orgY = y
+            this.valid = true;
+        };
+
+        var _createGrid = function () {
+
+            var xStart = (lc.Width - (GRID_WIDTH * GRID_CELL_SIZE) - (PADDING * GRID_CELL_SIZE)) / 2;
+            var yStart = (lc.Height - (GRID_HEIGHT * GRID_CELL_SIZE) - (PADDING * GRID_CELL_SIZE)) / 2;
+
+            for (var i = 0; i < GRID_HEIGHT + PADDING; i++) {
+                pointGrid[i] = [];
+                for (var j = 0; j < GRID_WIDTH + PADDING; j++) {
+                    var p = new Point(xStart + (GRID_CELL_SIZE * j), yStart + (GRID_CELL_SIZE * i), j, i);
+                    if (i < (PADDING / 2) || i > GRID_HEIGHT + (PADDING / 2) - 1 || j < (PADDING / 2) || j > GRID_HEIGHT + (PADDING / 2) - 1) {
+                        p.valid = false;
+                    }
+                    pointGrid[i][j] = p;
+                    points.push(p);
+                }
+            }
+        };
+
+        var bufferCanvas;
+        var bufferContext
+        var _createBuffer = function () {
+            bufferCanvas = document.createElement('canvas');
+            bufferCanvas.style.backgroundColor = '#000';
+            bufferCanvas.width = lc.Width;
+            bufferCanvas.height = lc.Height;
+            bufferContext = bufferCanvas.getContext('2d');
+        };
+
+
+        var buffer2Canvas;
+        var buffer2Context;
+        var _createBuffer2 = function () {
+            buffer2Canvas = document.createElement('canvas');
+            buffer2Canvas.style.backgroundColor = '#000';
+            buffer2Canvas.width = lc.Width;
+            buffer2Canvas.height = lc.Height;
+            buffer2Context = buffer2Canvas.getContext('2d');
+        };
+
+        var _drawLines = function () {
+
+            bufferContext.lineWidth = LINE_WIDTH;
+            bufferContext.strokeStyle = LINE_COLOR;
+
+            bufferContext.beginPath();
+
+            for (var i = (PADDING / 2) ; i < GRID_HEIGHT + (PADDING / 2) ; i++) {
+
+                for (var j = (PADDING / 2) ; j < GRID_WIDTH + (PADDING / 2) ; j++) {
+                    var p = pointGrid[i][j];
+
+
+                    var down = pointGrid[i + 1][j];
+                    var right = pointGrid[i][j + 1];
+
+                    bufferContext.moveTo(down.x, down.y);
+                    bufferContext.lineTo(p.x, p.y);
+                    bufferContext.lineTo(right.x, right.y);
+
+                    if (j == GRID_WIDTH + (PADDING / 2) - 1) {
+                        var downRight = pointGrid[i + 1][j + 1];
+                        bufferContext.lineTo(downRight.x, downRight.y);
+                    }
+
+                    if (i == GRID_HEIGHT + (PADDING / 2) - 1) {
+                        bufferContext.moveTo(down.x, down.y);
+                        var downRight = pointGrid[i + 1][j + 1];
+                        bufferContext.lineTo(downRight.x, downRight.y);
+                    }
+
+
+                }
+            }
+
+
+            bufferContext.stroke();
+
+        };
+
+        var _drawPoints = function () {
+            bufferContext.fillStyle = POINT_COLOR;
+
+            for (var i = (PADDING / 2) ; i < GRID_HEIGHT + (PADDING / 2) ; i++) {
+                for (var j = (PADDING / 2) ; j < GRID_WIDTH + (PADDING / 2) ; j++) {
+
+                    var p = pointGrid[i][j];
+                    bufferContext.fillRect(p.x + POINT_OFFSET, p.y + POINT_OFFSET, POINT_SIZE, POINT_SIZE);
+
+                }
+            }
+        };
+
+        var _drawGrid = function () {
+
+            bufferContext.clearRect(0, 0, lc.Width, lc.Height);
+
+            lc.Context.clearRect(0, 0, lc.Width, lc.Height);
+
+            if (LINE_WIDTH > 0) _drawLines();
+            if (POINT_SIZE > 0) _drawPoints();
+
+
+            buffer2Context.globalCompositeOperation = 'destination-atop';
+
+            buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
+            buffer2Context.fillStyle = 'rgba(0,0,255,1)';
+            buffer2Context.filter = 'blur(8px)';
+            buffer2Context.fillRect(0,0,lc.Width, lc.Height);
+            buffer2Context.drawImage(bufferCanvas, 0, 0);
+            lc.Context.drawImage(buffer2Canvas, 0, 0);
+
+            buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
+               buffer2Context.fillStyle = 'rgba(0,0,255,1)';
+            buffer2Context.filter = 'blur(6px)';
+            buffer2Context.fillRect(0,0,lc.Width, lc.Height);
+            buffer2Context.drawImage(bufferCanvas, 0, 0);
+            lc.Context.drawImage(buffer2Canvas, 0, 0);
+
+            buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
+              buffer2Context.fillStyle = 'rgba(0,0,255,1)';
+            buffer2Context.filter = 'blur(2px), opacity(.6)';
+            buffer2Context.fillRect(0,0,lc.Width, lc.Height);
+            buffer2Context.drawImage(bufferCanvas, 0, 0);
+            lc.Context.drawImage(buffer2Canvas, 0, 0);
+
+            buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
+            buffer2Context.fillStyle = 'rgba(0, 255, 255, 1)';
+            buffer2Context.filter = 'blur(4px)';
+            buffer2Context.fillRect(0,0,lc.Width, lc.Height);
+            buffer2Context.drawImage(bufferCanvas, 0, 0);
+            lc.Context.drawImage(buffer2Canvas, 0, 0);
+
+            buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
+            buffer2Context.filter = 'opacity(.1)';
+            buffer2Context.drawImage(bufferCanvas, 0, 0);
+            lc.Context.drawImage(buffer2Canvas, 0, 0);
+
+
+
+
+        }
+
+        var findNeighbours = function (p, rad) {
+            pass = rad || 1;
+            var neighbours = [];
+            for (var y = p.gridY - pass; y <= p.gridY + pass; y++) {
+                var inc = (y === p.gridY - pass) || (y === p.gridY + pass) ? 1 : pass * 2;
+                for (var x = p.gridX - pass; x <= p.gridX + pass; x += inc) {
+                    if (pointGrid[y] && pointGrid[y][x]) {
+                        neighbours.push(pointGrid[y][x]);
+                    }
+                    else {
+                        return null;
+                    }
+                }
+            }
+            return neighbours;
+        };
+
+        var _stretchGrid = function () {
+            for (var i = 0; i < points.length; i++) {
+
+                var p = points[i]
+                if (p.dragging) continue;
+
+                var neighbours = findNeighbours(p);
+                if (!neighbours) continue;
+
+                var xDiff = 0;
+                var yDiff = 0;
+                for (var j = 0; j < neighbours.length; j++) {
+                    xDiff += neighbours[j].x - p.x;
+                    yDiff += neighbours[j].y - p.y;
+                }
+
+
+                xDiff /= neighbours.length;
+                yDiff /= neighbours.length;
+                if (neighbours.length == 8) {
+                    p.targetX = p.x + xDiff;
+                    p.targetY = p.y + yDiff;
+                }
+
+            }
+        };
+
+        var _animGrid = function () {
+
+            for (var i = 0; i < points.length; i++) {
+
+                var p = points[i]
+                if (p.dragging) continue;
+
+                var dx, dy;
+
+                dx = p.targetX - p.x;
+                dy = p.targetY - p.y;
+
+                p.vx += (dx * ELASTICITY);
+                p.vy += (dy * ELASTICITY);
+                p.vx *= INERTIA;
+                p.vy *= INERTIA;
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+            }
+        };
+
+        var _animLoop = function () {
+            _stretchGrid();
+            _animGrid();
+            _drawGrid();
+            window.requestAnimationFrame(_animLoop);
+        };
+
+
+        var getPointFromMousePos = function (mx, my) {
+
+            mx -= (lc.Width - (GRID_WIDTH * GRID_CELL_SIZE)) / 2;
+            my -= (lc.Height - (GRID_HEIGHT * GRID_CELL_SIZE)) / 2;
+
+            var x = Math.round(mx / GRID_CELL_SIZE);
+            var y = Math.round(my / GRID_CELL_SIZE);
+
+
+
+            x = Math.min(x, GRID_WIDTH);
+            y = Math.min(y, GRID_HEIGHT);
+            if (pointGrid[y] && pointGrid[y][x]) {
+                return pointGrid[y][x];
+            }
+            return null;
+        };
+
+
+        window.onload = function () {
+
+            lc = new LazyCanvas();
+            lc.Init(document.getElementById('drawing'));
+
+            lc.Canvas.onmousedown = function (e) {
+
+               selectedPoints = [];
+
+               var mx = e.offsetX;
+               var my = e.offsetY;
+
+               for (var i = 0; i < points.length; i++) {
+                var p = points[i];
+                var dx = p.x - mx;
+                var dy = p.y - my;
+                var dist = Math.sqrt((dx * dx) + (dy * dy));
+
+                if (Math.abs(dist) < PINCH_RADIUS) {
+                    selectedPoints.push(p);
+                }
+            }
+
+            for (var i = 0; i < selectedPoints.length; i++) {
+                var p = selectedPoints[i];
+                if (p && p.valid) {
+                    p.dragging = true;
+                    p.x = e.offsetX;
+                    p.y = e.offsetY;
+                }
+            }
+        }
+
+        lc.Canvas.onmousemove = function (e) {
+            if (!selectedPoints) return;
+
+            for (var i = 0; i < selectedPoints.length; i++) {
+                var p = selectedPoints[i];
+                if (p && p.valid) {
+                    p.x = e.offsetX;
+                    p.y = e.offsetY;
+                }
+
+            }
+        }
+
+        lc.Canvas.onmouseup = function (e) {
+            if (!selectedPoints) return;
+
+            for (var i = 0; i < selectedPoints.length; i++) {
+                var p = selectedPoints[i];
+                if (p) {
+                    p.dragging = false;
+                }
+
+            }
+
+            selectedPoints = null;
+
+        }
+
+        _createGrid();
+        _createBuffer();
+        _createBuffer2();
+        window.requestAnimationFrame(_animLoop);
+    }
+</script>
+</body>
+</html>
