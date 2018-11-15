@@ -58,8 +58,19 @@
                 "float Cb = 0.5647 * (textureColor.b - Y);",
 
                 "float blendValue = smoothstep(thresholdSensitivity, thresholdSensitivity + smoothing, distance(vec2(Cr, Cb), vec2(maskCr, maskCb)));",
-                
-                "gl_FragColor = vec4(textureColor.r * blendValue, textureColor.g * blendValue, textureColor.b * blendValue, textureColor.a * blendValue);",
+                "if(blendValue < 0.3){",
+                "   gl_FragColor = vec4(textureColor.r * blendValue, textureColor.g * blendValue, textureColor.b * blendValue, textureColor.a * blendValue);",
+                "}",
+                "else if(blendValue > 0.3 && blendValue < 0.85){",
+                "   float grayAlpha = 0.2;",
+                "   float gray = (textureColor.g * 0.59 * grayAlpha) + (textureColor.r * 0.3 * grayAlpha) + (textureColor.b * 0.11 * grayAlpha);",
+                "   vec4 new = vec4(gray);",
+                "   gl_FragColor = mix(textureColor, new, textureColor.a);",
+                "}",
+                "else{",
+                "   gl_FragColor = textureColor;",
+                "}",
+
                 "}"
             ].join('\n');
 
