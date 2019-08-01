@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div id="mainStage" style="width: 550px; height: 343px;"></div>
+    <script src="../assets/js/LazyCanvas.js"></script>
+    <script>
+      var colors = [
+        {
+          red: 255,
+          green: 0,
+          blue: 0
+        },
+        {
+          red: 0,
+          green: 255,
+          blue: 0
+        },
+        {
+          red: 0,
+          green: 0,
+          blue: 255
+        }
+      ];
+      var ball = function(index) {
+        this.radius = 30 + Math.random() * 30;
+        this.x = this.radius + Math.random() * (550 - this.radius * 2);
+        this.y = this.radius + Math.random() * (343 - this.radius * 2);
+        this.velX = Math.random() * 6 - 3;
+        this.velY = Math.random() * 6 - 3;
+        this.color = colors[index % colors.length];
+        this.move = function(cv) {
+          var newX = this.x + this.velX;
+          var newY = this.y + this.velY;
+          if (newX - this.radius <= 0 || newX + this.radius >= cv.Width) {
+            this.velX *= -1;
+          }
+          if (newY - this.radius <= 0 || newY + this.radius >= cv.Height) {
+            this.velY *= -1;
+          }
+          this.x += this.velX;
+          this.y += this.velY;
+        };
+        this.draw = function(cx) {
+          cx.beginPath();
+          cx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+          cx.stroke();
+        };
+      };
+      var trace = 0;
+      var renderGrid = function(cv, cx, balls) {
+        var res = 6;
+        cx.fillStyle = "rgb(0,0,0)";
+        cx.strokeStyle = "rgb(0,0,0)";
+
+        cx.beginPath();
+        for (var y = 0; y <= cv.Height; y += res) {
+          for (var x = 0; x <= cv.Width; x += res) {
+            var heat = 0;
+
+            var ballInfluence = [];
+
+            for (var i = 0; i < balls.length; i++) {
+              var ball = balls[i];
+              var r2 = ball.radius * ball.radius;
+              var x2 = (x - ball.x) * (x - ball.x);
+              var y2 = (y - ball.y) * (y - ball.y);
+              var contact = r2 / (x2 + y2);
+              heat += contact;
+              ballInfluence[i] = Math.min(contact, 1);
+            }
+            if (heat >= 1) {
+              var r = 0;
+              var g = 0;
+              var b = 0;
+
+              for (var c = 0; c < balls.length; c++) {
+                var ball = balls[c];
+                r += ball.color.red * ballInfluence[c];
+                g += ball.color.green * ballInfluence[c];
+                b += ball.color.blue * ballInfluence[c];
+              }
+              cx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+              cx.fillRect(x - res / 2, y - res / 2, res, res);
+            }
+          }
+        }
+      };
+
+      var ballNum = 10;
+      var balls = [];
+
+      for (var i = 0; i < ballNum; i++) {
+        balls[i] = new ball(i);
+      }
+
+      var cv = new LazyCanvas();
+      cv.Init(document.getElementById("mainStage"));
+      cx = cv.Context;
+
+      var clicked = false;
+
+      cv.Canvas.addEventListener("click", function(e) {
+        clicked = !clicked;
+      });
+
+      var render = function() {
+        cx.fillStyle = "rgb(255,255,255)";
+        cx.fillRect(0, 0, cv.Width, cv.Height);
+
+        renderGrid(cv, cx, balls);
+
+        cx.lineWidth = 1;
+        cx.fillStyle = "rgb(0,0,0)";
+        cx.strokeStyle = "rgb(0,0,0)";
+
+        for (var i = 0; i < balls.length; i++) {
+          var ball = balls[i];
+          ball.move(cv);
+          if (clicked) {
+            ball.draw(cx);
+          }
+        }
+
+        requestAnimationFrame(render);
+      };
+
+      render();
+    </script>
+  </body>
+</html>

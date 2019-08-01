@@ -8,6 +8,7 @@
             padding: 0px;
             width: 100%;
             height: 100%;
+            background-color: #000;
         }
 
         #drawing {
@@ -17,6 +18,7 @@
             bottom: 0px;
             right: 0px;
             overflow: hidden;
+            background-color: transparent;
         }
     </style>
 </head>
@@ -30,16 +32,16 @@
     <script>
 
         var lc = null;
-        var GRID_WIDTH = 100;
-        var GRID_HEIGHT = 100;
-        var GRID_CELL_SIZE = 3;
+        var GRID_WIDTH = 40;
+        var GRID_HEIGHT = 200;
+        var GRID_CELL_SIZE = 1;
         var POINT_SIZE = 0;
         var POINT_OFFSET = -1;
         var POINT_COLOR = 'rgba(0, 0, 0, .1)';
         var BACKGROUND_COLOR = '#fff';
-        var LINE_WIDTH = .3;
-        var LINE_COLOR = 'rgba(0, 0, 0, .1)';
-        var PADDING = 12 //multiple of 4
+        var LINE_WIDTH = .2;
+        var LINE_COLOR = 'rgba(255,255,255, 1)';
+        var PADDING = 24 //multiple of 4
         var PINCH_RADIUS = Math.min(GRID_HEIGHT * GRID_CELL_SIZE, GRID_WIDTH * GRID_CELL_SIZE) / 20;
 
         var points = [];
@@ -92,6 +94,17 @@
             bufferContext = bufferCanvas.getContext('2d');
         };
 
+
+        var buffer2Canvas;
+        var buffer2Context;
+        var _createBuffer2 = function () {
+            buffer2Canvas = document.createElement('canvas');
+            buffer2Canvas.style.backgroundColor = '#000';
+            buffer2Canvas.width = lc.Width;
+            buffer2Canvas.height = lc.Height;
+            buffer2Context = buffer2Canvas.getContext('2d');
+        };
+
         var _drawLines = function () {
 
             bufferContext.lineWidth = LINE_WIDTH;
@@ -134,7 +147,7 @@
 
         var _drawPoints = function () {
             bufferContext.fillStyle = POINT_COLOR;
-      
+
             for (var i = (PADDING / 2) ; i < GRID_HEIGHT + (PADDING / 2) ; i++) {
                 for (var j = (PADDING / 2) ; j < GRID_WIDTH + (PADDING / 2) ; j++) {
 
@@ -148,13 +161,51 @@
         var _drawGrid = function () {
 
             bufferContext.clearRect(0, 0, lc.Width, lc.Height);
+
             lc.Context.clearRect(0, 0, lc.Width, lc.Height);
 
             if (LINE_WIDTH > 0) _drawLines();
-
             if (POINT_SIZE > 0) _drawPoints();
 
-            lc.Context.drawImage(bufferCanvas, 0, 0);
+
+            buffer2Context.globalCompositeOperation = 'destination-atop';
+
+            buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
+            buffer2Context.fillStyle = 'rgba(255,0,0,1)';
+            buffer2Context.filter = 'blur(8px)';
+            buffer2Context.fillRect(0,0,lc.Width, lc.Height);
+            buffer2Context.drawImage(bufferCanvas, 0, 0);
+            lc.Context.drawImage(buffer2Canvas, 0, 0);
+
+            buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
+            buffer2Context.fillStyle = 'rgba(255,0,0,1)';
+            buffer2Context.filter = 'blur(6px)';
+            buffer2Context.fillRect(0,0,lc.Width, lc.Height);
+            buffer2Context.drawImage(bufferCanvas, 0, 0);
+            lc.Context.drawImage(buffer2Canvas, 0, 0);
+
+            buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
+            buffer2Context.fillStyle = 'rgba(255,0,0,1)';
+            buffer2Context.filter = 'blur(2px)';
+            buffer2Context.fillRect(0,0,lc.Width, lc.Height);
+            buffer2Context.drawImage(bufferCanvas, 0, 0);
+            lc.Context.drawImage(buffer2Canvas, 0, 0);
+
+            buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
+            buffer2Context.fillStyle = 'rgba(255, 255, 0, 1)';
+            buffer2Context.filter = 'blur(3px), opacity(.2)';
+            buffer2Context.fillRect(0,0,lc.Width, lc.Height);
+            buffer2Context.drawImage(bufferCanvas, 0, 0);
+            lc.Context.drawImage(buffer2Canvas, 0, 0);
+
+            buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
+            buffer2Context.filter = 'opacity(.2)';
+            buffer2Context.drawImage(bufferCanvas, 0, 0);
+            lc.Context.drawImage(buffer2Canvas, 0, 0);
+
+
+
+
         }
 
         var findNeighbours = function (p, rad) {
@@ -258,64 +309,65 @@
 
             lc.Canvas.onmousedown = function (e) {
 
-               selectedPoints = [];
+             selectedPoints = [];
 
-               var mx = e.offsetX;
-                var my = e.offsetY;
+             var mx = e.offsetX;
+             var my = e.offsetY;
 
-                for (var i = 0; i < points.length; i++) {
-                    var p = points[i];
-                    var dx = p.x - mx;
-                    var dy = p.y - my;
-                    var dist = Math.sqrt((dx * dx) + (dy * dy));
+             for (var i = 0; i < points.length; i++) {
+                var p = points[i];
+                var dx = p.x - mx;
+                var dy = p.y - my;
+                var dist = Math.sqrt((dx * dx) + (dy * dy));
 
-                    if (Math.abs(dist) < PINCH_RADIUS) {
-                        selectedPoints.push(p);
-                    }
-                }
-
-                for (var i = 0; i < selectedPoints.length; i++) {
-                    var p = selectedPoints[i];
-                    if (p && p.valid) {
-                        p.dragging = true;
-                        p.x = e.offsetX;
-                        p.y = e.offsetY;
-                    }
+                if (Math.abs(dist) < PINCH_RADIUS) {
+                    selectedPoints.push(p);
                 }
             }
 
-            lc.Canvas.onmousemove = function (e) {
-                if (!selectedPoints) return;
-
-                for (var i = 0; i < selectedPoints.length; i++) {
-                    var p = selectedPoints[i];
-                    if (p && p.valid) {
-                        p.x = e.offsetX;
-                        p.y = e.offsetY;
-                    }
-
+            for (var i = 0; i < selectedPoints.length; i++) {
+                var p = selectedPoints[i];
+                if (p && p.valid) {
+                    p.dragging = true;
+                    p.x = e.offsetX;
+                    p.y = e.offsetY;
                 }
             }
-
-            lc.Canvas.onmouseup = function (e) {
-                if (!selectedPoints) return;
-
-                for (var i = 0; i < selectedPoints.length; i++) {
-                    var p = selectedPoints[i];
-                    if (p) {
-                        p.dragging = false;
-                    }
-
-                }
-
-                selectedPoints = null;
-
-            }
-
-            _createGrid();
-            _createBuffer();
-            window.requestAnimationFrame(_animLoop);
         }
-    </script>
+
+        lc.Canvas.onmousemove = function (e) {
+            if (!selectedPoints) return;
+
+            for (var i = 0; i < selectedPoints.length; i++) {
+                var p = selectedPoints[i];
+                if (p && p.valid) {
+                    p.x = e.offsetX;
+                    p.y = e.offsetY;
+                }
+
+            }
+        }
+
+        lc.Canvas.onmouseup = function (e) {
+            if (!selectedPoints) return;
+
+            for (var i = 0; i < selectedPoints.length; i++) {
+                var p = selectedPoints[i];
+                if (p) {
+                    p.dragging = false;
+                }
+
+            }
+
+            selectedPoints = null;
+
+        }
+
+        _createGrid();
+        _createBuffer();
+        _createBuffer2();
+        window.requestAnimationFrame(_animLoop);
+    }
+</script>
 </body>
 </html>

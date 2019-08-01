@@ -8,7 +8,7 @@
             padding: 0px;
             width: 100%;
             height: 100%;
-            background-color: #000;
+            background-color: #fff;
         }
 
         #drawing {
@@ -34,13 +34,13 @@
         var lc = null;
         var GRID_WIDTH = 100;
         var GRID_HEIGHT = 100;
-        var GRID_CELL_SIZE = 3;
+        var GRID_CELL_SIZE = 2;
         var POINT_SIZE = 0;
         var POINT_OFFSET = -1;
         var POINT_COLOR = 'rgba(255,255,255, 1)';
         var BACKGROUND_COLOR = '#fff';
         var LINE_WIDTH = 1;
-        var LINE_COLOR = 'rgba(255,255,255, 1)';
+        var LINE_COLOR = 'rgba(0,0,0, 1)';
         var PADDING = 16 //multiple of 4
         var PINCH_RADIUS = Math.min(GRID_HEIGHT * GRID_CELL_SIZE, GRID_WIDTH * GRID_CELL_SIZE) / 20;
 
@@ -164,7 +164,7 @@
 
             lc.Context.clearRect(0, 0, lc.Width, lc.Height);
 
-            LINE_WIDTH = .6;
+            LINE_WIDTH = .1;
             LINE_COLOR = 'rgba(255,255,255, 1)';
             if (LINE_WIDTH > 0) _drawLines();
             if (POINT_SIZE > 0) _drawPoints();
@@ -173,204 +173,209 @@
             buffer2Context.globalCompositeOperation = 'destination-atop';
 
             buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
-            buffer2Context.fillStyle = 'rgba(0,128,0,1)';
-            buffer2Context.filter = 'blur(12px)';
+            buffer2Context.fillStyle = 'rgba(255,255,0,1)';
+            buffer2Context.filter = 'blur(10px)';
             buffer2Context.fillRect(0,0,lc.Width, lc.Height);
             buffer2Context.drawImage(bufferCanvas, 0, 0);
             lc.Context.drawImage(buffer2Canvas, 0, 0);
 
             buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
-            buffer2Context.fillStyle = 'rgba(0,128,0,1)';
+            buffer2Context.fillStyle = 'rgba(255,255,0,1)';
             buffer2Context.filter = 'blur(8px)';
             buffer2Context.fillRect(0,0,lc.Width, lc.Height);
             buffer2Context.drawImage(bufferCanvas, 0, 0);
             lc.Context.drawImage(buffer2Canvas, 0, 0);
 
             buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
-            buffer2Context.fillStyle = 'rgba(170,255,0,1)';
-            buffer2Context.filter = 'blur(8px)';
+            buffer2Context.fillStyle = 'rgba(255,255,0,1)';
+            buffer2Context.filter = 'blur(6px)';
+            buffer2Context.fillRect(0,0,lc.Width, lc.Height);
+            buffer2Context.drawImage(bufferCanvas, 0, 0);
+            lc.Context.drawImage(buffer2Canvas, 0, 0);
+
+            buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
+            buffer2Context.fillStyle = 'rgba(255,0,0,1)';
+            buffer2Context.filter = 'blur(4px)';
+            buffer2Context.fillRect(0,0,lc.Width, lc.Height);
+            buffer2Context.drawImage(bufferCanvas, 0, 0);
+            lc.Context.drawImage(buffer2Canvas, 0, 0);
+
+
+         //   bufferContext.clearRect(0, 0, lc.Width, lc.Height);
+
+
+
+            buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
+            buffer2Context.fillStyle = 'rgba(255,0,0,1)';
+            buffer2Context.filter = 'blur(0px) opacity(.6)';
             buffer2Context.fillRect(0,0,lc.Width, lc.Height);
             buffer2Context.drawImage(bufferCanvas, 0, 0);
             lc.Context.drawImage(buffer2Canvas, 0, 0);
 
 
 
+     }
 
-            bufferContext.clearRect(0, 0, lc.Width, lc.Height);
-
-            LINE_WIDTH = .1;
-            LINE_COLOR = 'rgba(255,255,255, .6)';
-            if (LINE_WIDTH > 0) _drawLines();
-
-            buffer2Context.filter = 'none';
-            buffer2Context.clearRect(0, 0, lc.Width, lc.Height);
-            buffer2Context.drawImage(bufferCanvas, 0, 0);
-            lc.Context.drawImage(buffer2Canvas, 0, 0);
-
-
-
-        }
-
-        var findNeighbours = function (p, rad) {
-            pass = rad || 1;
-            var neighbours = [];
-            for (var y = p.gridY - pass; y <= p.gridY + pass; y++) {
-                var inc = (y === p.gridY - pass) || (y === p.gridY + pass) ? 1 : pass * 2;
-                for (var x = p.gridX - pass; x <= p.gridX + pass; x += inc) {
-                    if (pointGrid[y] && pointGrid[y][x]) {
-                        neighbours.push(pointGrid[y][x]);
-                    }
-                    else {
-                        return null;
-                    }
+     var findNeighbours = function (p, rad) {
+        pass = rad || 1;
+        var neighbours = [];
+        for (var y = p.gridY - pass; y <= p.gridY + pass; y++) {
+            var inc = (y === p.gridY - pass) || (y === p.gridY + pass) ? 1 : pass * 2;
+            for (var x = p.gridX - pass; x <= p.gridX + pass; x += inc) {
+                if (pointGrid[y] && pointGrid[y][x]) {
+                    neighbours.push(pointGrid[y][x]);
                 }
-            }
-            return neighbours;
-        };
-
-        var _stretchGrid = function () {
-            for (var i = 0; i < points.length; i++) {
-
-                var p = points[i]
-                if (p.dragging) continue;
-
-                var neighbours = findNeighbours(p);
-                if (!neighbours) continue;
-
-                var xDiff = 0;
-                var yDiff = 0;
-                for (var j = 0; j < neighbours.length; j++) {
-                    xDiff += neighbours[j].x - p.x;
-                    yDiff += neighbours[j].y - p.y;
-                }
-
-
-                xDiff /= neighbours.length;
-                yDiff /= neighbours.length;
-                if (neighbours.length == 8) {
-                    p.targetX = p.x + xDiff;
-                    p.targetY = p.y + yDiff;
-                }
-
-            }
-        };
-
-        var _animGrid = function () {
-
-            for (var i = 0; i < points.length; i++) {
-
-                var p = points[i]
-                if (p.dragging) continue;
-
-                var dx, dy;
-
-                dx = p.targetX - p.x;
-                dy = p.targetY - p.y;
-
-                p.vx += (dx * ELASTICITY);
-                p.vy += (dy * ELASTICITY);
-                p.vx *= INERTIA;
-                p.vy *= INERTIA;
-
-                p.x += p.vx;
-                p.y += p.vy;
-
-            }
-        };
-
-        var _animLoop = function () {
-            _stretchGrid();
-            _animGrid();
-            _drawGrid();
-            window.requestAnimationFrame(_animLoop);
-        };
-
-
-        var getPointFromMousePos = function (mx, my) {
-
-            mx -= (lc.Width - (GRID_WIDTH * GRID_CELL_SIZE)) / 2;
-            my -= (lc.Height - (GRID_HEIGHT * GRID_CELL_SIZE)) / 2;
-
-            var x = Math.round(mx / GRID_CELL_SIZE);
-            var y = Math.round(my / GRID_CELL_SIZE);
-
-
-
-            x = Math.min(x, GRID_WIDTH);
-            y = Math.min(y, GRID_HEIGHT);
-            if (pointGrid[y] && pointGrid[y][x]) {
-                return pointGrid[y][x];
-            }
-            return null;
-        };
-
-
-        window.onload = function () {
-
-            lc = new LazyCanvas();
-            lc.Init(document.getElementById('drawing'));
-
-            lc.Canvas.onmousedown = function (e) {
-
-               selectedPoints = [];
-
-               var mx = e.offsetX;
-               var my = e.offsetY;
-
-               for (var i = 0; i < points.length; i++) {
-                var p = points[i];
-                var dx = p.x - mx;
-                var dy = p.y - my;
-                var dist = Math.sqrt((dx * dx) + (dy * dy));
-
-                if (Math.abs(dist) < PINCH_RADIUS) {
-                    selectedPoints.push(p);
-                }
-            }
-
-            for (var i = 0; i < selectedPoints.length; i++) {
-                var p = selectedPoints[i];
-                if (p && p.valid) {
-                    p.dragging = true;
-                    p.x = e.offsetX;
-                    p.y = e.offsetY;
+                else {
+                    return null;
                 }
             }
         }
+        return neighbours;
+    };
 
-        lc.Canvas.onmousemove = function (e) {
-            if (!selectedPoints) return;
+    var _stretchGrid = function () {
+        for (var i = 0; i < points.length; i++) {
 
-            for (var i = 0; i < selectedPoints.length; i++) {
-                var p = selectedPoints[i];
-                if (p && p.valid) {
-                    p.x = e.offsetX;
-                    p.y = e.offsetY;
-                }
+            var p = points[i]
+            if (p.dragging) continue;
 
-            }
-        }
+            var neighbours = findNeighbours(p);
+            if (!neighbours) continue;
 
-        lc.Canvas.onmouseup = function (e) {
-            if (!selectedPoints) return;
-
-            for (var i = 0; i < selectedPoints.length; i++) {
-                var p = selectedPoints[i];
-                if (p) {
-                    p.dragging = false;
-                }
-
+            var xDiff = 0;
+            var yDiff = 0;
+            for (var j = 0; j < neighbours.length; j++) {
+                xDiff += neighbours[j].x - p.x;
+                yDiff += neighbours[j].y - p.y;
             }
 
-            selectedPoints = null;
+
+            xDiff /= neighbours.length;
+            yDiff /= neighbours.length;
+            if (neighbours.length == 8) {
+                p.targetX = p.x + xDiff;
+                p.targetY = p.y + yDiff;
+            }
 
         }
+    };
 
-        _createGrid();
-        _createBuffer();
-        _createBuffer2();
+    var _animGrid = function () {
+
+        for (var i = 0; i < points.length; i++) {
+
+            var p = points[i]
+            if (p.dragging) continue;
+
+            var dx, dy;
+
+            dx = p.targetX - p.x;
+            dy = p.targetY - p.y;
+
+            p.vx += (dx * ELASTICITY);
+            p.vy += (dy * ELASTICITY);
+            p.vx *= INERTIA;
+            p.vy *= INERTIA;
+
+            p.x += p.vx;
+            p.y += p.vy;
+
+        }
+    };
+
+    var _animLoop = function () {
+        _stretchGrid();
+        _animGrid();
+        _drawGrid();
         window.requestAnimationFrame(_animLoop);
+    };
+
+
+    var getPointFromMousePos = function (mx, my) {
+
+        mx -= (lc.Width - (GRID_WIDTH * GRID_CELL_SIZE)) / 2;
+        my -= (lc.Height - (GRID_HEIGHT * GRID_CELL_SIZE)) / 2;
+
+        var x = Math.round(mx / GRID_CELL_SIZE);
+        var y = Math.round(my / GRID_CELL_SIZE);
+
+
+
+        x = Math.min(x, GRID_WIDTH);
+        y = Math.min(y, GRID_HEIGHT);
+        if (pointGrid[y] && pointGrid[y][x]) {
+            return pointGrid[y][x];
+        }
+        return null;
+    };
+
+
+    window.onload = function () {
+
+        lc = new LazyCanvas();
+        lc.Init(document.getElementById('drawing'));
+
+        lc.Canvas.onmousedown = function (e) {
+
+           selectedPoints = [];
+
+           var mx = e.offsetX;
+           var my = e.offsetY;
+
+           for (var i = 0; i < points.length; i++) {
+            var p = points[i];
+            var dx = p.x - mx;
+            var dy = p.y - my;
+            var dist = Math.sqrt((dx * dx) + (dy * dy));
+
+            if (Math.abs(dist) < PINCH_RADIUS) {
+                selectedPoints.push(p);
+            }
+        }
+
+        for (var i = 0; i < selectedPoints.length; i++) {
+            var p = selectedPoints[i];
+            if (p && p.valid) {
+                p.dragging = true;
+                p.x = e.offsetX;
+                p.y = e.offsetY;
+            }
+        }
     }
+
+    lc.Canvas.onmousemove = function (e) {
+        if (!selectedPoints) return;
+
+        for (var i = 0; i < selectedPoints.length; i++) {
+            var p = selectedPoints[i];
+            if (p && p.valid) {
+                p.x = e.offsetX;
+                p.y = e.offsetY;
+            }
+
+        }
+    }
+
+    lc.Canvas.onmouseup = function (e) {
+        if (!selectedPoints) return;
+
+        for (var i = 0; i < selectedPoints.length; i++) {
+            var p = selectedPoints[i];
+            if (p) {
+                p.dragging = false;
+            }
+
+        }
+
+        selectedPoints = null;
+
+    }
+
+    _createGrid();
+    _createBuffer();
+    _createBuffer2();
+    window.requestAnimationFrame(_animLoop);
+}
 </script>
 </body>
 </html>

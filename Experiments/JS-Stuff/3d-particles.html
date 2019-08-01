@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title></title>
+    <meta name='description' content=''>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        html,
+        body {
+            padding: 0px;
+            margin: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        #main-canvas {
+            position: absolute;
+            background-color: #000;
+            width: 100%;
+            height: 100%;
+        }
+
+        #main-canvas canvas {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false;">
+
+    <div id='main-canvas'></div>
+
+    <script src='LazyCanvas.js'></script>
+    <script>
+        var TO_RADIANS = Math.PI / 180;
+        var points = [];
+        var mainCanvas;
+        var fov = 1000;
+        var midX = window.innerWidth / 2;
+        var midY = window.innerHeight / 2;
+        var midZ = 0;
+        var speedX = 0;
+        var speedY = 0;
+        var speedZ = 0;
+
+        function point(x, y, z) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+
+            this.ox = null;
+            this.oy = null;
+
+
+            var alpha = 100 + Math.round(Math.random() * 150);
+
+            this.red = Math.round(alpha / 1.1);
+            this.blue = Math.round(alpha / 4);
+            this.green = 255;
+
+        }
+
+        point.prototype.rotateY = function (angle) {
+
+            var cos = Math.cos(angle * TO_RADIANS);
+            var sin = Math.sin(angle * TO_RADIANS);
+
+            var x = (this.x * cos) + (this.z * sin);
+            var z = (this.x * -sin) + (this.z * cos);
+            this.x = x;
+            this.z = z;
+        };
+
+        point.prototype.rotateX = function (angle) {
+
+            var cos = Math.cos(angle * TO_RADIANS);
+            var sin = Math.sin(angle * TO_RADIANS);
+
+            var y = (this.y * cos) + (this.z * sin);
+            var z = (this.y * -sin) + (this.z * cos);
+            this.y = y;
+            this.z = z;
+        };
+
+        point.prototype.rotateZ = function (angle) {
+
+            var cos = Math.cos(angle * TO_RADIANS);
+            var sin = Math.sin(angle * TO_RADIANS);
+
+            var x = (this.x * cos) - (this.y * sin);
+            var y = (this.x * sin) + (this.y * cos);
+            this.x = x;
+            this.y = y;
+
+        };
+
+        function anim() {
+
+            for (var i = 0; i < points.length; i++) {
+                var p = points[i];
+                if (speedY != 0) p.rotateY(speedY);
+                if (speedX != 0) p.rotateX(speedX);
+                if (speedZ != 0) p.rotateZ(speedZ);
+            }
+        }
+
+        function draw() {
+
+            var ctx = mainCanvas.Context;
+
+            ctx.fillStyle = 'rgba(0,0,0,.4)';
+            ctx.fillRect(0, 0, mainCanvas.Width, mainCanvas.Height);
+
+
+            //ctx.fillStyle = 'rgb(255,255,255)';
+            ctx.strokeStyle = 'rgb(255,255,255)';
+            ctx.lineCap = 'round';
+            ctx.lineWidth = 1;
+
+
+            for (var i = 0; i < points.length; i++) {
+                var p = points[i];
+
+
+                var scale = fov / (fov + p.z + midZ);
+
+                var alpha = Math.max(Math.min(1, (-p.z / 100)), .4);
+
+                ctx.strokeStyle = 'rgba(' + p.red + ',' + p.blue + ',' + p.green + ',' + alpha + ')';
+                //ctx.strokeStyle = p.color;
+
+                var size = Math.max(.5, 1 * scale);
+                ctx.lineWidth = size;
+                var x = midX + (p.x * scale);
+                var y = midY + (p.y * scale);
+
+
+
+                // ctx.arc(midX + (p.x * scale), midY + (p.y * scale), size, 0, Math.PI * 2, true);
+                // ctx.fill();
+
+
+                if (x > 0 && x < mainCanvas.Width && y > 0 && y < mainCanvas.Height) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    if (p.ox) ctx.lineTo(p.ox, p.oy);
+                    ctx.stroke();
+                }
+                p.ox = x;
+                p.oy = y;
+
+            }
+
+
+        }
+
+        function loop() {
+
+            anim();
+            draw();
+            window.requestAnimationFrame(loop);
+
+        }
+
+        window.addEventListener('load', function () {
+
+            mainCanvas = new LazyCanvas;
+            mainCanvas.Init(document.getElementById('main-canvas'))
+
+            for (var i = 0; i < 2000; i++) {
+
+
+                // points.push(new point(
+                //     Math.random() * (midX * 4) - (midX * 2),
+                //     Math.random() * (midY * 4) - (midY * 2),
+                //     Math.random() * (midX * 4) - (midX * 2)
+                //     ));
+
+                var ang = Math.random() * (Math.PI * 2);
+
+                points.push(new point(
+                    200 * Math.cos(ang),
+                    Math.random() * 400 - 200,
+                    200 * Math.sin(ang)));
+                //Math.random() * 400 - 200));
+
+            }
+
+            loop();
+
+        }, false);
+
+
+        window.addEventListener('mousemove', function (e) {
+
+            speedY = (midX - e.clientX) * 0.005;
+            speedX = (midY - e.clientY) * 0.005;
+
+        }, false);
+
+        var zoomTimer = null;
+        document.addEventListener('mousedown', function (e) {
+
+            var btn = e.which;
+
+            zoomTimer = setInterval(function () {
+
+                midZ += btn == 1 ? -1 : 1;
+
+            }, 1);
+
+
+        }, false);
+
+        document.addEventListener('mouseup', function (e) {
+
+            clearInterval(zoomTimer);
+            return false;
+
+        }, false);
+    </script>
+</body>
+
+</html>
