@@ -5,7 +5,7 @@
     "ResizeMode": "parent"
   },
   "ContentType": "html",
-  "Data": ["data/000-Start-welcome/001.html"],
+  "Data": ["https://karlryberg.github.io/cali-content/data/000-Start-welcome/001.html"],
   "Children": [
     {
       "ID": "930af047-bfd4-4854-b99a-371299e737d2",
@@ -16,7 +16,7 @@
         "ExcludeFromMenu": true
       },
       "ContentType": "html",
-      "Data": ["data/000-Start-welcome/002.html"]
+      "Data": ["https://karlryberg.github.io/cali-content/data/000-Start-welcome/002.html"]
     },
     {
       "ID": "8c1f3fd3-388f-43c4-b465-5d57a6cd6d0b",
@@ -27,7 +27,7 @@
         "Locked": "sequential"
       },
       "ContentType": "html",
-      "Data": ["data/001-Alternative-fuels/000.html"],
+      "Data": ["https://karlryberg.github.io/cali-content/data/001-Alternative-fuels/000.html"],
       "Children": [
         {
           "ID": "6808175b-bdc4-4673-b198-43a8b29320ee",
@@ -38,7 +38,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/001-Alternative-fuels/001.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/001-Alternative-fuels/001.html"]
         },
         {
           "ID": "68790175b-bdc4-4673-b198-43ane64820ee",
@@ -49,7 +49,7 @@
             "ExcludeFromMenu": true
           },
           "ContentType": "html",
-          "Data": ["data/001-Alternative-fuels/002.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/001-Alternative-fuels/002.html"]
         },
         {
           "ID": "680ft6705b-bdc4-4673-b1sdg8-43a8b29320ee",
@@ -60,7 +60,7 @@
             "ExcludeFromMenu": true
           },
           "ContentType": "html",
-          "Data": ["data/001-Alternative-fuels/003.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/001-Alternative-fuels/003.html"]
         },
         {
           "ID": "68063jh175b-bdc4-46i73-b198-43au87se320ee",
@@ -71,7 +71,7 @@
             "ExcludeFromMenu": true
           },
           "ContentType": "html",
-          "Data": ["data/001-Alternative-fuels/004.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/001-Alternative-fuels/004.html"]
         },
         {
           "ID": "986f6674-56e4-43d9-b542-07ee3c4029ce",
@@ -82,7 +82,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/001-Alternative-fuels/005.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/001-Alternative-fuels/005.html"]
         },
         {
           "ID": "98656kj674-5ffde4-43d9-b542-0785hsgs4ce",
@@ -94,7 +94,7 @@
             "ExcludeFromMenu": true
           },
           "ContentType": "html",
-          "Data": ["data/001-Alternative-fuels/006.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/001-Alternative-fuels/006.html"]
         },
         {
           "ID": "29d0b117-fda1-410d-9a14-ce3141a9e2a7",
@@ -105,7 +105,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/001-Alternative-fuels/007.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/001-Alternative-fuels/007.html"]
         },
         {
           "ID": "26b88bf0-4289-46e3-ad9e-f6119futd6",
@@ -116,7 +116,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/001-Alternative-fuels/007b.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/001-Alternative-fuels/007b.html"]
         },
         {
           "ID": "26b23bf0-4289-46e3-ad9e-f65e3jtdf496b2",
@@ -129,7 +129,7 @@
             "MaxScore": 0
           },
           "ContentType": "quiz",
-          "Data": ["data/001-Alternative-fuels/008.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/001-Alternative-fuels/008.html"]
         },
         {
           "ID": "26cpsjfrf0-42h9-46e3-ad9e-f65846fab2",
@@ -142,7 +142,7 @@
             "MaxScore": 0
           },
           "ContentType": "quiz",
-          "Data": ["data/001-Alternative-fuels/009.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/001-Alternative-fuels/009.html"]
         },
         {
           "ID": "296hskbfc6swf0-42h9-46e3-agye-fskt96qfab2",
@@ -155,7 +155,7 @@
             "MaxScore": 0
           },
           "ContentType": "quiz",
-          "Data": ["data/001-Alternative-fuels/010.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/001-Alternative-fuels/010.html"]
         },
         {
           "ID": "26b23bf0-4289-46e3-ad9e-f658dh2k58d2",
@@ -166,7 +166,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/001-Alternative-fuels/011.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/001-Alternative-fuels/011.html"]
         }
       ]
     },
@@ -179,7 +179,7 @@
         "Locked": "sequential"
       },
       "ContentType": "html",
-      "Data": ["data/002-Our-CNG-offer/000.html"],
+      "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/000.html"],
       "Children": [
         {
           "ID": "78cf3b39-de6e-4cb6-9067-090c9b28c655",
@@ -190,7 +190,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/002-Our-CNG-offer/001.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/001.html"]
         },
 
         {
@@ -202,7 +202,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/002-Our-CNG-offer/002.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/002.html"]
         },
         {
           "ID": "584bec5d-1b89-4496-a7d4-8aj686d3b",
@@ -214,7 +214,7 @@
             "ExcludeFromMenu": true
           },
           "ContentType": "html",
-          "Data": ["data/002-Our-CNG-offer/003.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/003.html"]
         },
         {
           "ID": "5885695d-1b89-4496-a7d4-8a0gc4wb",
@@ -226,7 +226,7 @@
             "ExcludeFromMenu": true
           },
           "ContentType": "html",
-          "Data": ["data/002-Our-CNG-offer/004.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/004.html"]
         },
         {
           "ID": "5895735d-1b89-4rd6-a7d4-87gfs54b",
@@ -238,7 +238,7 @@
             "ExcludeFromMenu": true
           },
           "ContentType": "html",
-          "Data": ["data/002-Our-CNG-offer/005.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/005.html"]
         },
         {
           "ID": "54jf7sfd-1b89-4ry6-a7d4-882645b",
@@ -250,7 +250,7 @@
             "ExcludeFromMenu": true
           },
           "ContentType": "html",
-          "Data": ["data/002-Our-CNG-offer/005b.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/005b.html"]
         },
         {
           "ID": "b91848d1-4c65-4f89-afee-4acdcbb53480",
@@ -261,7 +261,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/002-Our-CNG-offer/006.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/006.html"]
         },
         {
           "ID": "48243897-6696-41bf-a05c-e701787c7203",
@@ -272,7 +272,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/002-Our-CNG-offer/007.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/007.html"]
         },
         {
           "ID": "48243897-6696-41bf-a05c-e7kfhe87363",
@@ -284,7 +284,7 @@
             "ExcludeFromMenu": true
           },
           "ContentType": "html",
-          "Data": ["data/002-Our-CNG-offer/008.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/008.html"]
         },
         {
           "ID": "5f3c4e77-a036-430b-bf09-cffff0dbf5df",
@@ -295,7 +295,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/002-Our-CNG-offer/009.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/009.html"]
         },
         {
           "ID": "5f653e77-a0d56-430b-bf09-cffj683gd5df",
@@ -307,7 +307,7 @@
             "ExcludeFromMenu": true
           },
           "ContentType": "html",
-          "Data": ["data/002-Our-CNG-offer/010.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/010.html"]
         },
         {
           "ID": "24185a3c-4bde-453c-bb99-20882cd74510",
@@ -318,7 +318,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/002-Our-CNG-offer/011.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/011.html"]
         },
         {
           "ID": "367c0048-b4bd-48be-b2d7-293483bb3db0",
@@ -329,7 +329,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/002-Our-CNG-offer/012.html"]
+          "Data": ["https://karlryberg.github.io/cali-content/data/002-Our-CNG-offer/012.html"]
         }
       ]
     },
@@ -342,7 +342,7 @@
         "Locked": "sequential"
       },
       "ContentType": "html",
-      "Data": ["data/003-The-CNG-market/000.html"],
+      "Data": ["https://karlryberg.github.io/cali-content/data/003-The-CNG-market/000.html"],
       "Children": [
         {
           "ID": "21a02eab-9f1a-44a9-bf56-2a9ccb42f64f",
@@ -353,7 +353,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/003-The-CNG-market/001.html"],
+          "Data": ["https://karlryberg.github.io/cali-content/data/003-The-CNG-market/001.html"],
           "Children": []
         },
         {
@@ -365,7 +365,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/003-The-CNG-market/002.html"],
+          "Data": ["https://karlryberg.github.io/cali-content/data/003-The-CNG-market/002.html"],
           "Children": []
         },
         {
@@ -378,7 +378,7 @@
             "ExcludeFromMenu": true
           },
           "ContentType": "html",
-          "Data": ["data/003-The-CNG-market/003.html"],
+          "Data": ["https://karlryberg.github.io/cali-content/data/003-The-CNG-market/003.html"],
           "Children": []
         },
         {
@@ -390,7 +390,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/003-The-CNG-market/004.html"],
+          "Data": ["https://karlryberg.github.io/cali-content/data/003-The-CNG-market/004.html"],
           "Children": []
         },
         {
@@ -403,7 +403,7 @@
             "ExcludeFromMenu": true
           },
           "ContentType": "html",
-          "Data": ["data/003-The-CNG-market/005.html"],
+          "Data": ["https://karlryberg.github.io/cali-content/data/003-The-CNG-market/005.html"],
           "Children": []
         },
         {
@@ -415,7 +415,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/003-The-CNG-market/006.html"],
+          "Data": ["https://karlryberg.github.io/cali-content/data/003-The-CNG-market/006.html"],
           "Children": []
         },
         {
@@ -428,7 +428,7 @@
             "ExcludeFromMenu": true
           },
           "ContentType": "html",
-          "Data": ["data/003-The-CNG-market/007.html"],
+          "Data": ["https://karlryberg.github.io/cali-content/data/003-The-CNG-market/007.html"],
           "Children": []
         },
         {
@@ -440,7 +440,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/003-The-CNG-market/008.html"],
+          "Data": ["https://karlryberg.github.io/cali-content/data/003-The-CNG-market/008.html"],
           "Children": []
         },
         {
@@ -452,7 +452,7 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/003-The-CNG-market/009.html"],
+          "Data": ["https://karlryberg.github.io/cali-content/data/003-The-CNG-market/009.html"],
           "Children": []
         }
       ]
@@ -466,7 +466,9 @@
         "Locked": "sequential"
       },
       "ContentType": "html",
-      "Data": ["data/004-Convince-your-customer/000.html"],
+      "Data": [
+        "https://karlryberg.github.io/cali-content/data/004-Convince-your-customer/000.html"
+      ],
       "Children": [
         {
           "ID": "183f104b-9a0d-4a50-b547-c58f4d415d59",
@@ -477,7 +479,9 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/004-Convince-your-customer/001.html"],
+          "Data": [
+            "https://karlryberg.github.io/cali-content/data/004-Convince-your-customer/001.html"
+          ],
           "Children": []
         },
         {
@@ -490,7 +494,9 @@
             "MaxScore": 0
           },
           "ContentType": "quiz",
-          "Data": ["data/004-Convince-your-customer/002.html"]
+          "Data": [
+            "https://karlryberg.github.io/cali-content/data/004-Convince-your-customer/002.html"
+          ]
         },
         {
           "ID": "10f0d7cc-ccb4-4d26-a78b-132952e96a30",
@@ -502,7 +508,9 @@
             "MaxScore": 0
           },
           "ContentType": "quiz",
-          "Data": ["data/004-Convince-your-customer/004.html"]
+          "Data": [
+            "https://karlryberg.github.io/cali-content/data/004-Convince-your-customer/004.html"
+          ]
         },
         {
           "ID": "7cd8f203-680c-453c-9c6c-762cc12c3bfc",
@@ -514,7 +522,9 @@
             "MaxScore": 0
           },
           "ContentType": "quiz",
-          "Data": ["data/004-Convince-your-customer/006.html"]
+          "Data": [
+            "https://karlryberg.github.io/cali-content/data/004-Convince-your-customer/006.html"
+          ]
         },
 
         {
@@ -526,7 +536,9 @@
             "Locked": "sequential"
           },
           "ContentType": "html",
-          "Data": ["data/004-Convince-your-customer/007.html"],
+          "Data": [
+            "https://karlryberg.github.io/cali-content/data/004-Convince-your-customer/007.html"
+          ],
           "Children": []
         }
       ]
@@ -541,7 +553,7 @@
         "ExcludeFromMenu": true
       },
       "ContentType": "html",
-      "Data": ["data/005-summary/000.html"],
+      "Data": ["https://karlryberg.github.io/cali-content/data/005-summary/000.html"],
       "Children": []
     }
   ]
