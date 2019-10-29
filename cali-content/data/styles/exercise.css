@@ -1,0 +1,150 @@
+.quiz-alternatives {
+    list-style: none;
+    margin: 0px;
+    padding: 13vh 0px 0px 0px;
+}
+
+.quiz-alternatives li {
+    position: relative;
+    padding: 0px 0px 20px 68px;
+    color: #000;
+    transition: all .1s ease-in-out;
+    cursor: pointer;
+}
+
+.quiz-alternatives li.selected {
+    color: #E3021B;
+}
+
+.quiz-alternatives li.disabled {
+    color: #D9DADB;
+}
+
+.quiz-alternatives li.correction-key {
+    color: #000;
+}
+
+.quiz-alternatives li label {
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.quiz-alternatives li input[type="checkbox"] {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    top: 0px;
+    left: 0px;
+    bottom: 20px;
+    margin: auto;
+    cursor: pointer;
+}
+
+.quiz-alternatives li:before {
+    content: '';
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    top: 0;
+    left: 0;
+    bottom: 19px;
+    margin: auto;
+    border: 3px solid #000;
+    transition: all .1s ease-in-out;
+}
+
+.quiz-alternatives li.selected:before {
+    content: '';
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border: 8px solid #E3021B;
+}
+
+.quiz-alternatives li.disabled:before {
+    width: 42px;
+    height: 42px;
+    border: 3px solid #D9DADB;
+}
+
+.quiz-alternatives li.correction-key:before {
+    content: '';
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border: 8px solid #000;
+}
+
+[data-california-quiz-feedback]:not([data-california-quiz-retry]) {
+    display: block;
+    opacity: 0;
+    transform: scale(0);
+    transition: transform .1s ease-in-out, opacity .2s ease-in-out;
+}
+
+[data-california-quiz-feedback]:not([data-california-quiz-retry]).active {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+}
+
+[data-california-quiz-feedback]:not([data-california-quiz-retry]).inline-feedback {
+    display: block;
+    opacity: 0;
+    max-height: 0px;
+    transition: max-height .1s ease-in-out, opacity .2s ease-in-out;
+}
+
+[data-california-quiz-feedback]:not([data-california-quiz-retry]).inline-feedback.active {
+    display: block;
+    opacity: 1;
+    max-height: 100%;
+}
+
+button[data-california-quiz-submit], button[data-california-quiz-feedback][data-california-quiz-retry] {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    max-height: 100px;
+    padding: 10px;
+    font-size: 2em;
+    text-transform: uppercase;
+    color: #fff;
+    border: 0px solid;
+    background-color: #000;
+    opacity: 1;
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+    overflow: hidden;
+}
+
+button.bottom[data-california-quiz-submit], button.bottom[data-california-quiz-feedback][data-california-quiz-retry] {
+    top: auto;
+    bottom: 0px;
+}
+
+button[data-california-quiz-feedback][data-california-quiz-retry] {
+    transition: all .1s ease-in-out .1s;
+    padding: 0px 10px;
+    max-height: 0px;
+    background-color: #E3021B;
+    opacity: 0;
+}
+
+button[data-california-quiz-feedback][data-california-quiz-retry].active {
+    padding: 10px;
+    max-height: 100px;
+    opacity: 1;
+}
+
+button[data-california-quiz-submit].disabled {
+    padding: 0px 10px;
+    max-height: 0px;
+    opacity: 0;
+}
+
+button[data-california-quiz-submit].quiz, button[data-california-quiz-feedback].quiz[data-california-quiz-retry].quiz {
+    bottom: 0px;
+}

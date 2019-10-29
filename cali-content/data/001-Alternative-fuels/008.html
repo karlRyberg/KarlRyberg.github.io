@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/pages.css">
+    <link rel="stylesheet" href="../styles/exercise.css">
+</head>
+
+<body>
+    <style>
+        .cali-component.cali-html .container[data-california-quiz-feedback] {
+            transform-origin: top left;
+        }
+    </style>
+
+    <div class="rt-page page-background" id="cng-alternative-fuels">
+
+        <div class="container half-page left">
+            <h1 class="black-decore">QUIZ</h1>
+            
+            <h2>QUESTION 1</h2>
+            <p>Why are alternative fuels important for the truck industry? (Several answers are correct.)</p>
+            <p class="inline-feedback" data-california-quiz-feedback="correct">
+                <b>CORRECT!</b> <br>Alternative fuels are one way to decrease well-to-wheel CO<sub>2</sub> emissions as well as particle and NOX emissions. This in turn will reduce the global warming effect
+                and improve the air quality. In addition to that, it lessens reliability on non-renewable energy sources
+                such as fossil fuels.
+            </p>
+            <p class="inline-feedback" data-california-quiz-feedback="incorrect" data-auto-correct="true">
+                    <b>INCORRECT</b> <br>That was unfortunately incorrect. Remember, alternative fuels are one way to decrease well-to-wheel CO<sub>2</sub> emissions as well as particle and NO<sub>x</sub> emissions. This in turn will reduce the global warming effect and improve the air quality. In addition
+                to that, it lessens reliability on non-renewable energy sources such as fossil fuels. The fuels used for
+                trucks do not affect the ozone layer.
+            </p>
+        </div>
+
+        <div class="container half-page bottom right">
+            <div class="scroll-wrapper">
+                <ul class="quiz-alternatives" data-lock-navigation="true">
+
+                    <li data-california-quiz-alternative="1" data-california-quiz-correct="true">
+                        <label>
+                            <input type="checkbox" /> To lessen CO<sub>2</sub> emissions and through that prevent environmental changes due to global warming of the
+                            Earth.
+                        </label>
+                    </li>
+                    <li data-california-quiz-alternative="2" data-california-quiz-correct="true">
+                        <label>
+                            <input type="checkbox" /> To improve the air quality in cities by using low or zero emission fuels.
+                        </label>
+                    </li>
+                    <li data-california-quiz-alternative="3" data-california-quiz-correct="false">
+                        <label>
+                            <input type="checkbox" /> To work against the depletion of the ozone layer, that protects the Earth from harmful sun radiation.
+                        </label>
+                    </li>
+                    <li data-california-quiz-alternative="4" data-california-quiz-correct="true">
+                        <label>
+                            <input type="checkbox" /> To lessen the reliability on non-renewable energy sources.
+                        </label>
+                    </li>
+                </ul>
+
+                <button class="bottom" data-california-quiz-submit="true">SUBMIT</button>
+                <button class="bottom" data-california-quiz-retry="true" data-california-quiz-feedback="incorrect" data-auto-correct="true">TRY AGAIN</button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

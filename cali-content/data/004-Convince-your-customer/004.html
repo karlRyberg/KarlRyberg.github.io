@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/pages.css">
+    <link rel="stylesheet" href="../styles/exercise.css">
+</head>
+
+<body>
+    <style>
+        .cali-component.cali-html .container[data-california-quiz-feedback] {
+            transform-origin: top left;
+        }
+    </style>
+    <div class="rt-page page-background" id="cng-convince-your-customer">
+
+        <div class="container half-page left">
+            <h1 class="black-decore">OFFER ARGUMENT</h1>
+            <p>
+                Now that Aurélien understands the environmental benefits of CNG, he gets interested in our CNG offer.
+            </p>
+            <p>
+                Which of the following features of the D Wide CNG truck are correctly described? (One answer is correct.)
+            </p>
+            <p class="inline-feedback" data-california-quiz-feedback="correct">
+                <b>CORRECT!</b>
+                <br>You pointed out the engine as the correctly described key feature of the CNG truck, which is correct! As
+                you said, it has the same displacement and power output, but a higher torque. It is a spark ignited engine
+                which can run both on natural gas and biogas.
+            </p>
+            <p class="inline-feedback" data-california-quiz-feedback="incorrect" data-california-quiz-feedback-index="1" data-auto-correct="true">
+                <b>INCORRECT</b>
+                <br>You pointed out the tanks as the correctly described key feature of the CNG truck, which is incorrect. The
+                tanks are a key feature, but are not available with a 60 kg capacity, since that would not be suitable for
+                our customers’ operation. The available tank capacities are 90 kg and 120 kg. With the 120 kg tank, the truck
+                can have a range of up to 400 km.
+            </p>
+            <p class="inline-feedback" data-california-quiz-feedback="incorrect" data-california-quiz-feedback-index="2" data-auto-correct="true">
+                <b>INCORRECT</b>
+                <br>You pointed out the focus on the distribution segment as the correctly described key feature of the CNG truck,
+                which is incorrect. The information about the distribution segment adaptations were correct, but there is
+                also a refuse collection offer which is specifically adapted to that type of operation’s needs. For instance,
+                the wheelbase is shortened to be able to navigate narrow streets, and the chassis is prepared for additional
+                bodywork.
+            </p>
+        </div>
+
+        <div class="container half-page bottom right">
+            <div class="scroll-wrapper">
+                <ul class="quiz-alternatives" data-lock-navigation="true">
+
+                    <li data-california-quiz-alternative="1" data-california-quiz-correct="true">
+                        <label>
+                            <input type="checkbox" /> The engine has the same displacement and power output as the diesel engine. The torque output
+                            is higher than from the diesel version, 1356 Nm compared to 1200 Nm. The engine can run on both
+                            natural gas as well as biogas! In addition to that, we offer an Allison automatic transmission
+                            that enables high levels of productivity!
+
+                        </label>
+                    </li>
+                    <li data-california-quiz-alternative="2" data-california-quiz-correct="false" data-california-quiz-feedback-index="1">
+                        <label>
+                            <input type="checkbox" /> Instead of tanks with liquid fuel, the CNG truck is equipped with gas tanks. Only one tank capacity
+                            is available for the truck, 60 kg. With that, the truck has a range of up to 200 km.
+
+                        </label>
+                    </li>
+                    <li data-california-quiz-alternative="3" data-california-quiz-correct="false" data-california-quiz-feedback-index="2">
+                        <label>
+                            <input type="checkbox" /> The D Wide CNG offer is only focused on the distribution segment, and is only adapted to that
+                            use. For instance, it comes with a long wheelbase to be able to load more goods, higher position
+                            for the gas tanks to improve ground clearance and an optimal van body installation.
+                        </label>
+                    </li>
+                </ul>
+
+                <button class="bottom" data-california-quiz-submit="true">SUBMIT</button>
+                <button class="bottom" data-california-quiz-retry="true" data-california-quiz-feedback="incorrect" data-auto-correct="true">TRY AGAIN</button>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

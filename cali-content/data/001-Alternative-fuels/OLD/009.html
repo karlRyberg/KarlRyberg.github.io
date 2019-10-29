@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/pages.css">
+    <link rel="stylesheet" href="../styles/exercise.css">
+</head>
+
+<body>
+    <style>
+        .cali-component.cali-html .container[data-california-quiz-feedback] {
+            transform-origin: top left;
+        }
+    </style>
+
+    <div class="rt-page page-background" id="cng-alternative-fuels">
+
+        <div class="container half-page left">
+            <h1 class="black-decore">QUIZ</h1>
+            
+            <h2>QUESTION 2</h2>
+            <p>Which of the following statements describing biogas are correct? (Several answers are correct.)</p>
+            <p class="inline-feedback" data-california-quiz-feedback="correct">
+                Correct! As you pointed out, CO<sub>2</sub> emissions are reduced by up to 70 % in a well-to-wheel perspective.
+                Emissions of
+                particles are substantially reduced. Biogas is formed in certain conditions when biomass
+                decomposes.
+                And
+                natural
+                gas can be used as a fuel both in its gaseous form as well as in its liquid form.
+            </p>
+            <p class="inline-feedback" data-california-quiz-feedback="incorrect" data-auto-correct="true">
+                That was unfortunately incorrect. Remember, CO<sub>2</sub> emissions are reduced by up to 70 % in a
+                well-to-wheel
+                perspective.
+                Emissions of particles are substantially reduced. Biogas is formed in certain conditions when
+                biomass
+                decomposes.
+                And natural gas can be used as a fuel both in its gaseous form as well as in its liquid form.
+            </p>
+        </div>
+
+        <div class="container half-page bottom right">
+            <div class="scroll-wrapper">
+                <ul class="quiz-alternatives" data-lock-navigation="true">
+
+                    <li data-california-quiz-alternative="1" data-california-quiz-correct="true">
+                        <label>
+                            <input type="checkbox" /> CO<sub>2</sub> emissions are reduced by up to 70 % from a well-to-wheel
+                            perspective
+                            compared to ordinary diesel
+                            if biogas is used.
+                        </label>
+                    </li>
+                    <li data-california-quiz-alternative="2" data-california-quiz-correct="false">
+                        <label>
+                            <input type="checkbox" /> Natural gas can only be used as a fuel in its compressed gaseous
+                            form
+                            (CNG).
+                        </label>
+                    </li>
+                    <li data-california-quiz-alternative="3" data-california-quiz-correct="true">
+                        <label>
+                            <input type="checkbox" /> Emissions of particles are substantially reduced compared to a
+                            truck
+                            running on diesel.
+                        </label>
+                    </li>
+                    <li data-california-quiz-alternative="4" data-california-quiz-correct="true">
+                        <label>
+                            <input type="checkbox" /> Biogas is formed in certain conditions when biomass decomposes.
+                        </label>
+                    </li>
+                </ul>
+
+                <button class="bottom" data-california-quiz-submit="true">SUBMIT</button>
+                <button class="bottom" data-california-quiz-retry="true" data-california-quiz-feedback="incorrect" data-auto-correct="true">TRY AGAIN</button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

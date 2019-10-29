@@ -1,0 +1,622 @@
+/* WELLCOME */
+
+#cng-start-page {
+    background-position: center right;
+    background-image: url("images/0_CourseIntro_2018_06_rt_cng_2319.jpg");
+}
+
+#cng-wellcome-page {
+    background-position: center right;
+    background-image: url("images/0_CourseIntro_2018_06_rt_cng_2319.jpg");
+}
+
+#cng-alternative-fuels {
+    background-image: url("images/2_AlternativeFuels_Intro-iStock491712724.png");
+}
+
+#cng-our-cng-offer {
+    
+    background-image: url("images/3-3-1_Offer_Carlos_iStock155140831.png");
+}
+
+#cng-our-cng-offer-truck {
+    background-position: top center;
+    background-image: url("images/3-4-1_024243_01.jpg");
+    
+}
+
+#cng-our-cng-offer-truck-product {
+    background-position: top center;
+    background-image: url("images/3-4-1_024243_01.jpg");
+    
+}
+
+#cng-our-cng-offer-intro {
+    background-image: url("images/4-6-2_2018_06_rt_cng_2450.jpg");
+}
+
+#cali-app .page-background.truck {
+    background-position: top center;
+}
+
+#cng-the-cng-market {
+    background-image: url("images/4_Market_2018_06_rt_cng_3170.jpg");
+}
+
+#cng-the-cng-market-carlos {
+    background-image: url("images/3-3-1_Offer_Carlos_iStock155140831.png");
+}
+
+#cng-the-cng-market-safety {
+    background-image: url("images/4-5-2_Market_ATEX.jpg");
+}
+
+
+
+#cng-convince-your-customer {
+    background-image: url("images/5_IntroBild_ConvinceCustomer_031558_01.jpg");
+}
+
+#cng-convince-your-customer-aurelien {
+    background-image: url("images/5-1_Aurelien_Intro-iStock839169378.jpg");
+}
+
+/* ALTERNATIVE FUELS */
+
+#cng-alternative-fuels .energy-sources-selector-panel,
+#cng-alternative-fuels .energy-strategy-selector-panel {
+    padding: 0px;
+    padding-top: 2%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector,
+#cng-alternative-fuels .energy-strategy-selector-panel .energy-strategy-selector {
+    position: relative;
+    flex: 0 0 25%;
+    height: 40%;
+    background-position: 45% 50%;
+    background-repeat: no-repeat;
+    background-size: auto 50%;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+#cng-alternative-fuels .energy-strategy-selector-panel .energy-strategy-selector {
+    position: relative;
+    flex: 0 0 50%;
+    height: 80%;
+    background-position: 50% calc(100% - 50px);
+    background-size: 30% auto;
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.california-clicked-item{
+    background-position: 45% 50%;
+    background-size: auto 50%;
+}
+
+#cng-alternative-fuels .energy-strategy-selector-panel .energy-strategy-selector.california-clicked-item  {
+    background-size: 35% auto;
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector .label,
+#cng-alternative-fuels .energy-strategy-selector-panel .energy-strategy-selector .label {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 16px;
+    text-align: center;
+    line-height: 16px;
+    box-sizing: border-box;
+    padding-left: 1.2vh;
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.california-visited-item .label,
+#cng-alternative-fuels .energy-strategy-selector-panel .energy-strategy-selector.california-visited-item .label {
+    color: #9DBAAE;
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.california-clicked-item .label,
+#cng-alternative-fuels .energy-strategy-selector-panel .energy-strategy-selector.california-clicked-item .label {
+    color: #E3021B;
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.diesel-icon {
+    background-image: url(images/2-4_1-EnergySources_Diesel.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.diesel-icon.california-visited-item {
+    background-image: url(images/2-4_1-EnergySources_Diesel_GREEN.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.diesel-icon.california-clicked-item {
+    background-image: url(images/2-4_1-EnergySources_Diesel_RED.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.biodiesel-icon {
+    background-image: url(images/2-4_2-EnergySources_BioDiesel.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.biodiesel-icon.california-visited-item {
+    background-image: url(images/2-4_2-EnergySources_BioDiesel_GREEN.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.biodiesel-icon.california-clicked-item {
+    background-image: url(images/2-4_2-EnergySources_BioDiesel_RED.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.synthetic-icon {
+    background-image: url(images/2-4_3-EnergySources_Synthetic.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.synthetic-icon.california-visited-item {
+    background-image: url(images/2-4_3-EnergySources_Synthetic_GREEN.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.synthetic-icon.california-clicked-item {
+    background-image: url(images/2-4_3-EnergySources_Synthetic_RED.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.naturalgas-icon {
+    background-image: url(images/2-4_4-EnergySources_NaturalGas.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.naturalgas-icon.california-visited-item {
+    background-image: url(images/2-4_4-EnergySources_NaturalGas_GREEN.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.naturalgas-icon.california-clicked-item {
+    background-image: url(images/2-4_4-EnergySources_NaturalGas_RED.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.biogas-icon {
+    background-image: url(images/2-4_7-EnergySources_BioGas.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.biogas-icon.california-visited-item {
+    background-image: url(images/2-4_7-EnergySources_BioGas_GREEN.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.biogas-icon.california-clicked-item {
+    background-image: url(images/2-4_7-EnergySources_BioGas_RED.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.hydrogen-icon {
+    background-image: url(images/2-4_5-EnergySources_Hydrogen.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.hydrogen-icon.california-visited-item {
+    background-image: url(images/2-4_5-EnergySources_Hydrogen_GREEN.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.hydrogen-icon.california-clicked-item {
+    background-image: url(images/2-4_5-EnergySources_Hydrogen_RED.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.electricity-icon {
+    background-image: url(images/2-4_6-EnergySources_Electricity.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.electricity-icon.california-visited-item {
+    background-image: url(images/2-4_6-EnergySources_Electricity_GREEN.png);
+}
+
+#cng-alternative-fuels .energy-sources-selector-panel .energy-sources-selector.electricity-icon.california-clicked-item {
+    background-image: url(images/2-4_6-EnergySources_Electricity_RED.png);
+}
+
+
+#cng-alternative-fuels .energy-strategy-selector-panel .energy-strategy-selector.long-haul-icon {
+    background-image: url(images/2-5-1-Strategy_LongHaul_ICON.png);
+}
+
+#cng-alternative-fuels .energy-strategy-selector-panel .energy-strategy-selector.long-haul-icon.california-visited-item {
+    background-image: url(images/2-5-1-Strategy_LongHaul_ICON_DONE.png);
+}
+
+#cng-alternative-fuels .energy-strategy-selector-panel .energy-strategy-selector.long-haul-icon.california-clicked-item {
+    background-image: url(images/2-5-1-Strategy_LongHaul_ICON_RED.png);
+}
+
+#cng-alternative-fuels .energy-strategy-selector-panel .energy-strategy-selector.urban-transport-icon {
+    background-image: url(images/2-5-1-Strategy_Urban_ICON.png);
+}
+
+#cng-alternative-fuels .energy-strategy-selector-panel .energy-strategy-selector.urban-transport-icon.california-visited-item {
+    background-image: url(images/2-5-1-Strategy_Urban_ICON_DONE.png);
+}
+
+#cng-alternative-fuels .energy-strategy-selector-panel .energy-strategy-selector.urban-transport-icon.california-clicked-item {
+    background-image: url(images/2-5-1-Strategy_Urban_ICON_RED.png);
+}
+
+
+#cng-alternative-fuels .energy-sources-data-panel {
+    padding: 0px;
+    display: flex;
+    flex-direction: row;
+}
+
+
+#cng-alternative-fuels .energy-sources-data-panel.california-sub-page-hidden {
+    display: none;
+}
+
+#cng-alternative-fuels .energy-sources-data-column {
+    position: relative;
+    flex: 0 0 33.33333%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+#cng-alternative-fuels .energy-sources-data-column .top-label {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    width: 100%;
+    height: 20%;
+    top: 0px;
+    left: 0px;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+}
+
+#cng-alternative-fuels .energy-sources-data-column .diagram {
+    position: absolute;
+    width: 80%;
+    max-width: 90px;
+    height: 58%;
+    top: 20%;
+    left: 0px;
+    bottom: 22%;
+    right: 0px;
+    margin: auto;
+}
+
+#cng-alternative-fuels .energy-sources-data-column .diagram .empty {
+    float: left;
+    background-color: #D9DADB;
+    width: 100%;
+    height: 50%;
+    top: 0px;
+    left: 0px;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    clip-path: inset(5px 0 0 0);
+}
+
+#cng-alternative-fuels .energy-sources-data-column .diagram .filled {
+    float: left;
+    background-color: #E3021B;
+    width: 100%;
+    height: 50%;
+    left: 0px;
+    bottom: 0px;
+    clear: both;
+}
+
+#cng-alternative-fuels .energy-sources-data-column .bottom-label {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    width: 100%;
+    height: 22%;
+    left: 0px;
+    bottom: 0px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* OUR CNG OFFER */
+
+#cng-our-cng-offer .energy-sources-selector-panel,
+#cng-our-cng-offer-truck .customer-segments-selector-panel,
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel {
+    padding: 0px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector,
+#cng-our-cng-offer .energy-sources-selector-panel .energy-sources-selector,
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector {
+    position: relative;
+    flex: 0 0 33.33333%;
+    height: 50%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: auto 70%;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector {
+    position: relative;
+    flex: 0 0 50%;
+    height: 35%;
+    background-position: 50% calc(100% - 50px);
+    background-size: 70% auto;
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.california-clicked-item,
+#cng-our-cng-offer .energy-sources-selector-panel .energy-sources-selector.california-clicked-item{
+    background-position: 50% 50%;
+    background-size: auto 70%;
+}
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.california-clicked-item  {
+    background-size: 70% auto;
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector .label,
+#cng-our-cng-offer .energy-sources-selector-panel .energy-sources-selector .label,
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector .label {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 35px;
+    text-align: center;
+    line-height: 50px;
+    box-sizing: border-box;
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.california-visited-item .label,
+#cng-our-cng-offer .energy-sources-selector-panel .energy-sources-selector.california-visited-item .label,
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.california-visited-item .label {
+    color: #9DBAAE;
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.california-clicked-item .label,
+#cng-our-cng-offer .energy-sources-selector-panel .energy-sources-selector.california-clicked-item .label,
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.california-clicked-item .label {
+    color: #E3021B;
+}
+
+
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.parcel-icon {
+    background-image: url(images/3-44_Segments_Parcel.png);
+}
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.parcel-icon.california-visited-item {
+    background-image: url(images/3-4-4_Segments_Parcel_DONE.png);
+}
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.parcel-icon.california-clicked-item {
+    background-image: url(images/3-4-4_Segments_Parcel_RED.png);
+}
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.consumer-goods-icon {
+    background-image: url(images/3-4-5_Segments_ConsumerGoods.png);
+}
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.consumer-goods-icon.california-visited-item {
+    background-image: url(images/3-4-5_Segments_ConsumerGoods_DONE.png);
+}
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.consumer-goods-icon.california-clicked-item {
+    background-image: url(images/3-4-5_Segments_ConsumerGoods_RED.png);
+}
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.waste-recycle-icon {
+    background-image: url(images/3-4-6_Segments_WasteRecycle.png);
+}
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.waste-recycle-icon.california-visited-item {
+    background-image: url(images/3-4-6_Segments_WasteRecycle_DONE.png);
+}
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.waste-recycle-icon.california-clicked-item {
+    background-image: url(images/3-4-6_Segments_WasteRecycle_RED.png);
+}
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.commodities-icon {
+    background-image: url(images/3-4-7_Segments_Commoditites.png);
+}
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.commodities-icon.california-visited-item {
+    background-image: url(images/3-4-7_Segments_Commoditites_DONE.png);
+}
+
+#cng-our-cng-offer-truck .customer-segments-selector-panel .customer-segments-selector.commodities-icon.california-clicked-item {
+    background-image: url(images/3-4-7_Segments_Commoditites_RED.png);
+}
+
+
+
+
+
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.engine-icon {
+    background-image: url(images/3-5-2_Offer_Engine.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.engine-icon.california-visited-item {
+    background-image: url(images/3-5-2_Offer_Engine_DONE.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.engine-icon.california-clicked-item {
+    background-image: url(images/3-5-2_Offer_Engine_RED.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.exhaust-icon {
+    background-image: url(images/3-5-3_Offer_Exhaust.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.exhaust-icon.california-visited-item {
+    background-image: url(images/3-5-3_Offer_Exhaust_DONE.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.exhaust-icon.california-clicked-item {
+    background-image: url(images/3-5-3_Offer_Exhaust_RED.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.tank-icon {
+    background-image: url(images/3-5-4_Offer_Tank.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.tank-icon.california-visited-item {
+    background-image: url(images/3-5-4_Offer_Tank_DONE.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.tank-icon.california-clicked-item {
+    background-image: url(images/3-5-4_Offer_Tank_RED.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.refuelling-icon {
+    background-image: url(images/3-5-5_Offer_Refuelling.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.refuelling-icon.california-visited-item {
+    background-image: url(images/3-5-5_Offer_Refuelling_DONE.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.refuelling-icon.california-clicked-item {
+    background-image: url(images/3-5-5_Offer_Refuelling_RED.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.gearbox-icon {
+    background-image: url(images/3-5-6_Offer_Gearbox.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.gearbox-icon.california-visited-item {
+    background-image: url(images/3-5-6_Offer_Gearbox_DONE.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.gearbox-icon.california-clicked-item {
+    background-image: url(images/3-5-6_Offer_Gearbox_RED.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.wheelbase-icon {
+    background-image: url(images/3-5-7_Offer_WheelBase.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.wheelbase-icon.california-visited-item {
+    background-image: url(images/3-5-7_Offer_WheelBase_DONE.png);
+}
+
+#cng-our-cng-offer-truck-product .energy-sources-selector-panel .energy-sources-selector.wheelbase-icon.california-clicked-item {
+    background-image: url(images/3-5-7_Offer_WheelBase_RED.png);
+}
+
+#cali-app .cali-component .container.cover {
+    padding: 0;
+}
+
+/* OUR CNG OFFER - SERVICES */
+
+#cng-our-cng-offer .services-panel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+}
+
+#cng-our-cng-offer .services-selector {
+    position: relative;
+    flex: 0 0 20%;
+    height: 15%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: auto 70%;
+    box-sizing: border-box;
+    margin-bottom: 2%;
+}
+
+#cng-our-cng-offer .services-selector .services-icon{
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: top center;
+    left: 5%;
+    background-size: auto 60%;
+}
+
+#cng-our-cng-offer .services-selector .bottom-label {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    bottom: 0px;
+    font-size: 14px;
+    padding: 10px;
+    text-align: center;
+}
+
+#cng-our-cng-offer .services-selector .top-label {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 6vh;
+    font-size: 14px;
+    padding: 10px;
+    text-align: center;
+}
+
+#cng-our-cng-offer .services-selector .head-label {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    bottom: 0px;
+    font-size: 16px;
+    padding: 10px;
+    text-align: center;
+    font-weight: bolder;
+}
+
+#cng-our-cng-offer .services-panel .services-selector .services-icon.start-drive {
+    background-image: url(images/icon_start_drive.png);
+}
+#cng-our-cng-offer .services-panel .services-selector .services-icon.finance {
+    background-image: url(images/icon_finance.png);
+}
+#cng-our-cng-offer .services-panel .services-selector .services-icon.genuine-parts {
+    background-image: url(images/icon_genuine_parts.png);
+}
+#cng-our-cng-offer .services-panel .services-selector .services-icon.phone {
+    background-image: url(images/icon_phone.png);
+}
+#cng-our-cng-offer .services-panel .services-selector .services-icon.builder {
+    background-image: url(images/icon_builder.png);
+}
+#cng-our-cng-offer .services-panel .services-selector .services-icon.pricing {
+    background-image: url(images/icon_pricing.png);
+}
+#cng-our-cng-offer .services-panel .services-selector .services-icon.insurance {
+    background-image: url(images/icon_insurance.png);
+}
+#cng-our-cng-offer .services-panel .services-selector .services-icon.exchange {
+    background-image: url(images/icon_exchange.png);
+}
+#cng-our-cng-offer .services-panel .services-selector .services-icon.pms {
+    background-image: url(images/icon_pms.png);
+}
+#cng-our-cng-offer .services-panel .services-selector .services-icon.rental-key {
+    background-image: url(images/icon_rental_key.png);
+}
+#cng-our-cng-offer .services-panel .services-selector .services-icon.rental-house {
+    background-image: url(images/icon_rental_house.png);
+}
+#cng-our-cng-offer .services-panel .services-selector .services-icon.accessories {
+    background-image: url(images/icon_accessories.png);
+}
+
+
+

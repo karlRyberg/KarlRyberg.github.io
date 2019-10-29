@@ -1,0 +1,548 @@
+{
+  "ID": "67b02d1c-0df4-447c-b992-e02cea22b8fd",
+  "Name": "Renault trucks CNG",
+  "Settings": {
+    "ResizeMode": "parent"
+  },
+  "ContentType": "html",
+  "Data": ["data/000-Start-welcome/001.html"],
+  "Children": [
+    {
+      "ID": "930af047-bfd4-4854-b99a-371299e737d2",
+      "Name": "Welcome",
+      "Settings": {
+        "ResizeMode": "parent",
+        "Progresstype": "visited",
+        "ExcludeFromMenu": true
+      },
+      "ContentType": "html",
+      "Data": ["data/000-Start-welcome/002.html"]
+    },
+    {
+      "ID": "8c1f3fd3-388f-43c4-b465-5d57a6cd6d0b",
+      "Name": "Alternative Fuels",
+      "Settings": {
+        "ResizeMode": "parent",
+        "Progresstype": "visited",
+        "Locked": "sequential"
+      },
+      "ContentType": "html",
+      "Data": ["data/001-Alternative-fuels/000.html"],
+      "Children": [
+        {
+          "ID": "6808175b-bdc4-4673-b198-43a8b29320ee",
+          "Name": "Background",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/001-Alternative-fuels/001.html"]
+        },
+        {
+          "ID": "68790175b-bdc4-4673-b198-43ane64820ee",
+          "Name": "Background",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "ExcludeFromMenu": true
+          },
+          "ContentType": "html",
+          "Data": ["data/001-Alternative-fuels/002.html"]
+        },
+        {
+          "ID": "680ft6705b-bdc4-4673-b1sdg8-43a8b29320ee",
+          "Name": "Background",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "ExcludeFromMenu": true
+          },
+          "ContentType": "html",
+          "Data": ["data/001-Alternative-fuels/003.html"]
+        },
+        {
+          "ID": "68063jh175b-bdc4-46i73-b198-43au87se320ee",
+          "Name": "Background",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "ExcludeFromMenu": true
+          },
+          "ContentType": "html",
+          "Data": ["data/001-Alternative-fuels/004.html"]
+        },
+        {
+          "ID": "986f6674-56e4-43d9-b542-07ee3c4029ce",
+          "Name": "Energy Sources",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/001-Alternative-fuels/005.html"]
+        },
+        {
+          "ID": "98656kj674-5ffde4-43d9-b542-0785hsgs4ce",
+          "Name": "Energy Sources",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "completed",
+            "Locked": "sequential",
+            "ExcludeFromMenu": true
+          },
+          "ContentType": "html",
+          "Data": ["data/001-Alternative-fuels/006.html"]
+        },
+        {
+          "ID": "29d0b117-fda1-410d-9a14-ce3141a9e2a7",
+          "Name": "Renault Truck's Strategy",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "completed",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/001-Alternative-fuels/007.html"]
+        },
+        {
+          "ID": "26b88bf0-4289-46e3-ad9e-f6119futd6",
+          "Name": "Quiz",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/001-Alternative-fuels/007b.html"]
+        },
+        {
+          "ID": "26b23bf0-4289-46e3-ad9e-f65e3jtdf496b2",
+          "Name": "Exercise1",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential",
+            "ExcludeFromMenu": true,
+            "MaxScore": 0
+          },
+          "ContentType": "quiz",
+          "Data": ["data/001-Alternative-fuels/008.html"]
+        },
+        {
+          "ID": "26cpsjfrf0-42h9-46e3-ad9e-f65846fab2",
+          "Name": "Exercise2",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential",
+            "ExcludeFromMenu": true,
+            "MaxScore": 0
+          },
+          "ContentType": "quiz",
+          "Data": ["data/001-Alternative-fuels/009.html"]
+        },
+        {
+          "ID": "296hskbfc6swf0-42h9-46e3-agye-fskt96qfab2",
+          "Name": "Exercise3",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential",
+            "ExcludeFromMenu": true,
+            "MaxScore": 0
+          },
+          "ContentType": "quiz",
+          "Data": ["data/001-Alternative-fuels/010.html"]
+        },
+        {
+          "ID": "26b23bf0-4289-46e3-ad9e-f658dh2k58d2",
+          "Name": "Summary",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/001-Alternative-fuels/011.html"]
+        }
+      ]
+    },
+    {
+      "ID": "b4d5d1b3-9957-4f55-94b3-5caea50ec79f",
+      "Name": "Our CNG Offer",
+      "Settings": {
+        "ResizeMode": "parent",
+        "Progresstype": "visited",
+        "Locked": "sequential"
+      },
+      "ContentType": "html",
+      "Data": ["data/002-Our-CNG-offer/000.html"],
+      "Children": [
+        {
+          "ID": "78cf3b39-de6e-4cb6-9067-090c9b28c655",
+          "Name": "Introduction",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/002-Our-CNG-offer/001.html"]
+        },
+
+        {
+          "ID": "584bec5d-1b89-4496-a7d4-8afceee9683b",
+          "Name": "Customer Segments & Type",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/002-Our-CNG-offer/002.html"]
+        },
+        {
+          "ID": "584bec5d-1b89-4496-a7d4-8aj686d3b",
+          "Name": "Customer Segments & Type",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential",
+            "ExcludeFromMenu": true
+          },
+          "ContentType": "html",
+          "Data": ["data/002-Our-CNG-offer/003.html"]
+        },
+        {
+          "ID": "5885695d-1b89-4496-a7d4-8a0gc4wb",
+          "Name": "Customer Segments & Type",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "completed",
+            "Locked": "sequential",
+            "ExcludeFromMenu": true
+          },
+          "ContentType": "html",
+          "Data": ["data/002-Our-CNG-offer/004.html"]
+        },
+        {
+          "ID": "5895735d-1b89-4rd6-a7d4-87gfs54b",
+          "Name": "Our CNG Product",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential",
+            "ExcludeFromMenu": true
+          },
+          "ContentType": "html",
+          "Data": ["data/002-Our-CNG-offer/005.html"]
+        },
+        {
+          "ID": "54jf7sfd-1b89-4ry6-a7d4-882645b",
+          "Name": "Our CNG Product",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential",
+            "ExcludeFromMenu": true
+          },
+          "ContentType": "html",
+          "Data": ["data/002-Our-CNG-offer/005b.html"]
+        },
+        {
+          "ID": "b91848d1-4c65-4f89-afee-4acdcbb53480",
+          "Name": "Our CNG Product",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "completed",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/002-Our-CNG-offer/006.html"]
+        },
+        {
+          "ID": "48243897-6696-41bf-a05c-e701787c7203",
+          "Name": "Services",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/002-Our-CNG-offer/007.html"]
+        },
+        {
+          "ID": "48243897-6696-41bf-a05c-e7kfhe87363",
+          "Name": "Services",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential",
+            "ExcludeFromMenu": true
+          },
+          "ContentType": "html",
+          "Data": ["data/002-Our-CNG-offer/008.html"]
+        },
+        {
+          "ID": "5f3c4e77-a036-430b-bf09-cffff0dbf5df",
+          "Name": "Pricing",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/002-Our-CNG-offer/009.html"]
+        },
+        {
+          "ID": "5f653e77-a0d56-430b-bf09-cffj683gd5df",
+          "Name": "Pricing",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential",
+            "ExcludeFromMenu": true
+          },
+          "ContentType": "html",
+          "Data": ["data/002-Our-CNG-offer/010.html"]
+        },
+        {
+          "ID": "24185a3c-4bde-453c-bb99-20882cd74510",
+          "Name": "Summary",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/002-Our-CNG-offer/011.html"]
+        },
+        {
+          "ID": "367c0048-b4bd-48be-b2d7-293483bb3db0",
+          "Name": "Exercise",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/002-Our-CNG-offer/012.html"]
+        }
+      ]
+    },
+    {
+      "ID": "36ec4942-7155-4851-adcc-7deda2a57668",
+      "Name": "The CNG Market",
+      "Settings": {
+        "ResizeMode": "parent",
+        "Progresstype": "visited",
+        "Locked": "sequential"
+      },
+      "ContentType": "html",
+      "Data": ["data/003-The-CNG-market/000.html"],
+      "Children": [
+        {
+          "ID": "21a02eab-9f1a-44a9-bf56-2a9ccb42f64f",
+          "Name": "Introduction",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/003-The-CNG-market/001.html"],
+          "Children": []
+        },
+        {
+          "ID": "2a189dc1-3f0e-493b-b772-1dccb3934280",
+          "Name": "Political Situation",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/003-The-CNG-market/002.html"],
+          "Children": []
+        },
+        {
+          "ID": "081dce8f-421e-4fe5-aa7a-2a89b0cd31cd",
+          "Name": "Political Situation",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "subpages",
+            "Locked": "sequential",
+            "ExcludeFromMenu": true
+          },
+          "ContentType": "html",
+          "Data": ["data/003-The-CNG-market/003.html"],
+          "Children": []
+        },
+        {
+          "ID": "b1efbac9-d06e-457f-8893-0b0792d4dd04",
+          "Name": "Safety Situation",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/003-The-CNG-market/004.html"],
+          "Children": []
+        },
+        {
+          "ID": "75819ebb-5073-4e25-a4b0-8c237ccaf1af",
+          "Name": "Safety situation",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential",
+            "ExcludeFromMenu": true
+          },
+          "ContentType": "html",
+          "Data": ["data/003-The-CNG-market/005.html"],
+          "Children": []
+        },
+        {
+          "ID": "1fbebeb1-005f-44d2-ab04-2c05558acc6b",
+          "Name": "Positioning and competitors",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/003-The-CNG-market/006.html"],
+          "Children": []
+        },
+        {
+          "ID": "bbc516e6-4320-4e04-b772-277fea5f5b1b",
+          "Name": "Positioning and competitors",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential",
+            "ExcludeFromMenu": true
+          },
+          "ContentType": "html",
+          "Data": ["data/003-The-CNG-market/007.html"],
+          "Children": []
+        },
+        {
+          "ID": "1fbe4231-005f-44d2-ab04-2h77433tacc6b",
+          "Name": "Summary",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/003-The-CNG-market/008.html"],
+          "Children": []
+        },
+        {
+          "ID": "bb4t3e6-4320-4e04-b772-2k8422f5b1b",
+          "Name": "Exercise",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/003-The-CNG-market/009.html"],
+          "Children": []
+        }
+      ]
+    },
+    {
+      "ID": "628bcb72-024a-4d85-9c8c-9a86e17f3d3d",
+      "Name": "Convince Your Customer",
+      "Settings": {
+        "ResizeMode": "parent",
+        "Progresstype": "visited",
+        "Locked": "sequential"
+      },
+      "ContentType": "html",
+      "Data": ["data/004-Convince-your-customer/000.html"],
+      "Children": [
+        {
+          "ID": "183f104b-9a0d-4a50-b547-c58f4d415d59",
+          "Name": "Introduction",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/004-Convince-your-customer/001.html"],
+          "Children": []
+        },
+        {
+          "ID": "a3044e8b-9371-416a-a442-c1c066ff433f",
+          "Name": "Environmental argument",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential",
+            "MaxScore": 0
+          },
+          "ContentType": "quiz",
+          "Data": ["data/004-Convince-your-customer/002.html"]
+        },
+        {
+          "ID": "10f0d7cc-ccb4-4d26-a78b-132952e96a30",
+          "Name": "Offer Argument",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential",
+            "MaxScore": 0
+          },
+          "ContentType": "quiz",
+          "Data": ["data/004-Convince-your-customer/004.html"]
+        },
+        {
+          "ID": "7cd8f203-680c-453c-9c6c-762cc12c3bfc",
+          "Name": "Economic Argument",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential",
+            "MaxScore": 0
+          },
+          "ContentType": "quiz",
+          "Data": ["data/004-Convince-your-customer/006.html"]
+        },
+
+        {
+          "ID": "546a0648-2b47-49de-b220-b2a504d01897",
+          "Name": "Summary",
+          "Settings": {
+            "ResizeMode": "parent",
+            "Progresstype": "visited",
+            "Locked": "sequential"
+          },
+          "ContentType": "html",
+          "Data": ["data/004-Convince-your-customer/007.html"],
+          "Children": []
+        }
+      ]
+    },
+    {
+      "ID": "294cb482-18a1-47c6-a0c7-023726534b",
+      "Name": "Summary",
+      "Settings": {
+        "ResizeMode": "parent",
+        "Progresstype": "visited",
+        "Locked": "sequential",
+        "ExcludeFromMenu": true
+      },
+      "ContentType": "html",
+      "Data": ["data/005-summary/000.html"],
+      "Children": []
+    }
+  ]
+}
