@@ -175,3 +175,4 @@ FakesAssemblies/
 
 # Videos
 *.mp4
+.vscode

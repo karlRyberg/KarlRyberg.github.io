@@ -75,7 +75,7 @@
               heat += contact;
               ballInfluence[i] = Math.min(contact, 1);
             }
-            if (heat >= 1) {
+            //if (heat >= 1) {
               var r = 0;
               var g = 0;
               var b = 0;
@@ -88,7 +88,7 @@
               }
               cx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
               cx.fillRect(x - res / 2, y - res / 2, res, res);
-            }
+          //  }
           }
         }
       };
@@ -118,7 +118,7 @@
 
         cx.lineWidth = 1;
         cx.fillStyle = "rgb(0,0,0)";
-        cx.strokeStyle = "rgb(0,0,0)";
+        cx.strokeStyle = "rgb(255,255,255)";
 
         for (var i = 0; i < balls.length; i++) {
           var ball = balls[i];

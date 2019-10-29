@@ -15,8 +15,9 @@ LazyCanvas.prototype.Init = function (element) {
 
     this.Canvas = canvasElement;
     this.Context = ctx;
-    this.Width= ctx.canvas.width;
-    this.Height = ctx.canvas.height;
+    this.Width= canvasElement.width;
+    this.Height = canvasElement.height;
+
 
     element.innerHTML = '';
     element.appendChild(canvasElement);

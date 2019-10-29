@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div id="mainStage" style="width: 550px; height: 343px; border: 1px solid silver"></div>
+    <input
+      type="range"
+      id="blur-slider"
+      value="0"
+      name="amount"
+      min="0"
+      max="100"
+      style="width: 550px;"
+    />
+
+    <script src="../assets/js/LazyCanvas.js"></script>
+    <script src="../assets/js/blur.js"></script>
+    <script>
+      var cv = new LazyCanvas();
+      cv.Init(document.getElementById("mainStage"));
+      cx = cv.Context;
+
+      var clicked = true;
+      cv.Canvas.addEventListener("click", function() {
+        clicked = !clicked;
+      });
+
+      var slider = document.getElementById("blur-slider");
+      slider.addEventListener("change", function() {
+        reset();
+        blur(parseInt(slider.value, 10), cv.Canvas, cx);
+      });
+
+      var cimg = new Image();
+      cimg.src = "lorem.jpg";
+      cimg.onload = function() {
+        reset();
+      };
+
+      function reset() {
+        cx.clearRect(0, 0, cv.Width, cv.Height);
+        cx.drawImage(cimg, (cv.Width - cimg.width) / 2, (cv.Height - cimg.height) / 2);
+      }
+    </script>
+  </body>
+</html>

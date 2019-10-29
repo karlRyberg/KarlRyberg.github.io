@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div id="mainStage" style="width: 550px; height: 343px; border: 1px solid silver"></div>
+    <input
+      type="range"
+      id="blur-slider"
+      value="0"
+      name="amount"
+      min="0"
+      max="100"
+      style="width: 550px;"
+    />
+
+    <script src="../assets/js/LazyCanvas.js"></script>
+    <script src="../assets/js/blur.js"></script>
+    <script>
+      var cv = new LazyCanvas();
+      cv.Init(document.getElementById("mainStage"));
+      cx = cv.Context;
+
+      var clicked = true;
+      cv.Canvas.addEventListener("click", function() {
+        clicked = !clicked;
+      });
+
+      var slider = document.getElementById("blur-slider");
+      slider.addEventListener("change", function() {
+        reset();
+
+        cx.drawImage(getLight(parseInt(slider.value, 10)), 0, 0);
+      });
+
+      var cimg = new Image();
+      cimg.src = "_emma.png";
+      cimg.onload = function() {
+        reset();
+      };
+
+      function reset() {
+        cx.clearRect(0, 0, cv.Width, cv.Height);
+        cx.drawImage(cimg, (cv.Width - cimg.width) / 2, (cv.Height - cimg.height) / 2);
+      }
+
+      function getPixel(x, y) {
+        var r = y * (cv.Width * 4) + x * 4;
+        return {
+          r: r,
+          g: r + 1,
+          b: r + 2,
+          a: r + 3
+        };
+      }
+
+      function getLight(blurAmount) {
+        var tmpCv = document.createElement("canvas");
+        tmpCv.width = cv.Width;
+        tmpCv.height = cv.Height;
+        var tmpCx = tmpCv.getContext("2d");
+
+        var imageData = cx.getImageData(0, 0, cv.Width, cv.Height);
+        var imageBuffer = tmpCx.getImageData(0, 0, cv.Width, cv.Height);
+
+        for (var x = 0; x < cv.Width; x++) {
+          for (var y = 0; y < cv.Height; y++) {
+            var pix = getPixel(x, y);
+            var r = imageData.data[pix.r];
+            var g = imageData.data[pix.g];
+            var b = imageData.data[pix.b];
+            var a = imageData.data[pix.a];
+            var luminance = r * 0.3 + g * 0.59 + b * 0.11;
+
+            if (luminance > 222) {
+              imageBuffer.data[pix.r] = r;
+              imageBuffer.data[pix.g] = g;
+              imageBuffer.data[pix.b] = b;
+              imageBuffer.data[pix.a] = a;
+            }
+          }
+        }
+
+        
+        tmpCx.putImageData(imageBuffer, 0, 0);
+        blur(blurAmount, tmpCv, tmpCx);
+   
+        return tmpCv;
+      }
+    </script>
+  </body>
+</html>

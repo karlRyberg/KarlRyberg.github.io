@@ -12,7 +12,7 @@
     <script src="../assets/js/LazyCanvas.js"></script>
     <script>
       var ball = function(index) {
-        this.radius = 20 + Math.random() * 100;
+        this.radius = 30 + Math.random() * 30;
         this.x = this.radius + Math.random() * (550 - this.radius * 2);
         this.y = this.radius + Math.random() * (343 - this.radius * 2);
         this.velX = Math.random() * 6 - 3;
@@ -60,19 +60,19 @@
               heat += contact;
             }
 
-            if (heat >= 1) {
+           // if (heat >= 1) {
               var r = 0;
               var g = 0;
               var b = 0;
 
-              r += 255 * heat * 0.2;
-              g += 100 * heat * 0.2;
-              b += 40 * heat * 0.2;
+              r += 255 *( heat);
+              g += 100 * (heat * 0.7);
+              b += 40 * (heat * 0.3);
 
               cx.fillStyle = "rgb(" + Math.min(r, 255) + "," + Math.min(g, 255) + "," + Math.min(b, 255) + ")";
               cx.fillRect(x - res / 2, y - res / 2, res, res);
             }
-          }
+         // }
         }
       };
 
@@ -101,7 +101,7 @@
 
         cx.lineWidth = 1;
         cx.fillStyle = "rgb(0,0,0)";
-        cx.strokeStyle = "rgb(0,0,0)";
+        cx.strokeStyle = "rgb(255,255,255)";
 
         for (var i = 0; i < balls.length; i++) {
           var ball = balls[i];
