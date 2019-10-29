@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PIXI JS Video</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background-image: url('lorem.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: #fff;
+        }
+
+        canvas {
+            background-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.7.1/pixi.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi-filters@2.6.1/dist/pixi-filters.js"></script>
+
+
+    <script>
+        // FILTER
+        function ChromaFilter() {
+            const vertexShader = null;
+            const fragmentShader = [
+                "varying vec2 vTextureCoord;",
+
+                "uniform float thresholdSensitivity;",
+                "uniform float smoothing;",
+                "uniform vec3 colorToReplace;",
+                "uniform sampler2D uSampler;",
+
+                "void main() {",
+                "vec4 textureColor = texture2D(uSampler, vTextureCoord);",
+
+                "float maskY = 0.2989 * colorToReplace.r + 0.5866 * colorToReplace.g + 0.1145 * colorToReplace.b;",
+                "float maskCr = 0.7132 * (colorToReplace.r - maskY);",
+                "float maskCb = 0.5647 * (colorToReplace.b - maskY);",
+
+                "float Y = 0.2989 * textureColor.r + 0.5866 * textureColor.g + 0.1145 * textureColor.b;",
+                "float Cr = 0.7132 * (textureColor.r - Y);",
+                "float Cb = 0.5647 * (textureColor.b - Y);",
+
+                "float blendValue = smoothstep(thresholdSensitivity, thresholdSensitivity + smoothing, distance(vec2(Cr, Cb), vec2(maskCr, maskCb)));",
+                "if(blendValue < 0.3){",
+                "   gl_FragColor = vec4(textureColor.r * blendValue, textureColor.g * blendValue, textureColor.b * blendValue, textureColor.a * blendValue);",
+                "}",
+                "else if(blendValue > 0.3 && blendValue < 0.85){",
+                "   float grayAlpha = 0.2;",
+                "   float gray = (textureColor.g * 0.59 * grayAlpha) + (textureColor.r * 0.3 * grayAlpha) + (textureColor.b * 0.11 * grayAlpha);",
+                "   vec4 new = vec4(gray);",
+                "   gl_FragColor = mix(textureColor, new, textureColor.a);",
+                "}",
+                "else{",
+                "   gl_FragColor = textureColor;",
+                "}",
+
+                "}"
+            ].join('\n');
+
+
+            let uniforms = {};
+
+            PIXI.Filter.call(this,
+                vertexShader,
+                fragmentShader
+            );
+
+            this.uniforms.thresholdSensitivity = 0.08;
+            this.uniforms.smoothing = 0.1;
+            this.uniforms.colorToReplace = [(114 / 255), (205 / 255), (123 / 255)];
+        }
+
+        ChromaFilter.prototype = Object.create(PIXI.Filter.prototype);
+        ChromaFilter.prototype.constructor = ChromaFilter;
+    </script>
+
+
+    <script>
+        var app = new PIXI.Application(800, 450, {
+            transparent: true
+        });
+        document.body.appendChild(app.view);
+
+        // Create play button that can be used to trigger the video
+        var button = new PIXI.Graphics()
+            .beginFill(0x0, 0.5)
+            .drawRoundedRect(0, 0, 100, 100, 10)
+            .endFill()
+            .beginFill(0xffffff)
+            .moveTo(36, 30)
+            .lineTo(36, 70)
+            .lineTo(70, 50);
+
+        // Position the button
+        button.x = (app.screen.width - button.width) / 2;
+        button.y = (app.screen.height - button.height) / 2;
+
+        // Enable interactivity on the button
+        button.interactive = true;
+        button.buttonMode = true;
+
+        // Add to the stage
+        app.stage.addChild(button);
+
+        // Listen for a click/tap event to start playing the video
+        // this is useful for some mobile platforms. For example:
+        // ios9 and under cannot render videos in PIXI without a
+        // polyfill - https://github.com/bfred-it/iphone-inline-video
+        // ios10 and above require a click/tap event to render videos
+        // that contain audio in PIXI. Videos with no audio track do
+        // not have this requirement
+        button.on('pointertap', onPlayVideo);
+
+        function onPlayVideo() {
+
+            // Don't need the button anymore
+            button.destroy();
+
+            // create a video texture from a path
+            var texture = PIXI.Texture.fromVideo('video.mp4');
+
+            // create a new Sprite using the video texture (yes it's that easy)
+            var videoSprite = new PIXI.Sprite(texture);
+
+            // Stetch the fullscreen
+            videoSprite.width = app.screen.width;
+            videoSprite.height = app.screen.height;
+
+            app.stage.addChild(videoSprite);
+
+            // var filter = new PIXI.filters.ColorReplaceFilter(0x72cd7b, 0xffffff, 0.25);
+
+            videoSprite.filters = [new ChromaFilter()];
+
+
+        }
+    </script>
+</body>
+
+</html>
