@@ -176,3 +176,7 @@ FakesAssemblies/
 # Videos
 *.mp4
 .vscode
+
+#3D
+JS-diary/20191029/assets/3Dmodel/
+JS-diary/20191029/assets/3Dmodel/**.*
