@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div
+      id="mainStage"
+      style="
+        width: 800px;
+        height: 600px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+      "
+    ></div>
+    <script src="../assets/js/LazyCanvas.js"></script>
+    <script>
+      function rotate(velocity, angle) {
+        const rotatedVelocities = {
+          x: velocity.x * Math.cos(angle) - velocity.y * Math.sin(angle),
+          y: velocity.x * Math.sin(angle) + velocity.y * Math.cos(angle),
+        };
+
+        return rotatedVelocities;
+      }
+
+      function resolveCollision(particle, otherParticle) {
+        const xVelocityDiff = particle.velocity.x - otherParticle.velocity.x;
+        const yVelocityDiff = particle.velocity.y - otherParticle.velocity.y;
+
+        const xDist = otherParticle.x - particle.x;
+        const yDist = otherParticle.y - particle.y;
+
+        if (xVelocityDiff * xDist + yVelocityDiff * yDist >= 0) {
+          // Grab angle between the two colliding particles
+          const angle = -Math.atan2(otherParticle.y - particle.y, otherParticle.x - particle.x);
+
+          // Store mass in var for better readability in collision equation
+          const m1 = particle.mass;
+          const m2 = otherParticle.mass;
+
+          // Velocity before equation
+          const u1 = rotate(particle.velocity, angle);
+          const u2 = rotate(otherParticle.velocity, angle);
+
+          // Velocity after 1d collision equation
+          const v1 = { x: (u1.x * (m1 - m2)) / (m1 + m2) + (u2.x * 2 * m2) / (m1 + m2), y: u1.y };
+          const v2 = { x: (u2.x * (m1 - m2)) / (m1 + m2) + (u1.x * 2 * m2) / (m1 + m2), y: u2.y };
+
+          // Final velocity after rotating axis back to original location
+          const vFinal1 = rotate(v1, -angle);
+          const vFinal2 = rotate(v2, -angle);
+
+          // Swap particle velocities for realistic bounce effect
+          particle.velocity.x = vFinal1.x;
+          particle.velocity.y = vFinal1.y;
+
+          otherParticle.velocity.x = vFinal2.x;
+          otherParticle.velocity.y = vFinal2.y;
+        }
+      }
+
+      var ball = function () {
+        this.radius = 40 + Math.random() * 50;
+
+        this.x = this.radius + Math.random() * (800 - this.radius * 2);
+        this.y = this.radius + Math.random() * (600 - this.radius * 2);
+        this.velocity = {
+          x: Math.random() * 4 - 2,
+          y: Math.random() * 4 - 2,
+        };
+
+        this.orgVX = this.velocity.x;
+        this.orgVY = this.velocity.y;
+
+        this.mass = this.radius;
+
+        this.move = function (cv, friends) {
+          var newX = this.x;
+          var newY = this.y;
+          if (newX - this.radius <= 0 || newX + this.radius >= cv.Width) {
+            this.velocity.x *= -1;
+          }
+          if (newY - this.radius <= 0 || newY + this.radius >= cv.Height) {
+            this.velocity.y *= -1;
+          }
+
+          for (var i = 0; i < friends.length; i++) {
+            var friend = friends[i];
+            if (this == friend) continue;
+            var distx = this.x - friend.x;
+            var disty = this.y - friend.y;
+            var dist = Math.sqrt(distx * distx + disty * disty);
+            var combRad = this.radius + friend.radius;
+
+            if (dist <= combRad) {
+              resolveCollision(this, friend);
+            }
+          }
+
+          this.x += this.velocity.x;
+          this.y += this.velocity.y;
+
+          if (newX - this.radius <= 0) {
+            this.x = this.radius + 1;
+          }
+          if (newX + this.radius >= cv.Width) {
+            this.x = cv.Width - this.radius - 1;
+          }
+          if (newY - this.radius <= 0) {
+            this.y = this.radius + 1;
+          }
+          if (newY + this.radius >= cv.Height) {
+            this.y = cv.Height - this.radius - 1;
+          }
+
+        };
+        this.draw = function (cx) {
+          cx.beginPath();
+          cx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+          cx.fill();
+          cx.stroke();
+        };
+      };
+      var trace = 0;
+      var renderGrid = function (cv, cx, balls) {
+        var res = 4;
+        cx.fillStyle = "rgb(0,0,0)";
+        // cx.strokeStyle = "rgb(0,0,0)";
+
+        cx.beginPath();
+        for (var y = 0; y <= cv.Height; y += res) {
+          for (var x = 0; x <= cv.Width; x += res) {
+            var heat = 0;
+
+            var ballInfluence = [];
+            for (var i = 0; i < balls.length; i++) {
+              var ball = balls[i];
+              var r2 = ball.radius * ball.radius;
+              var x2 = (x - ball.x) * (x - ball.x);
+              var y2 = (y - ball.y) * (y - ball.y);
+              var contact = r2 / (x2 + y2);
+              heat += contact;
+            }
+            if (heat >= 1) {
+              cx.fillRect(x - res / 2, y - res / 2, res, res);
+            }
+          }
+        }
+      };
+
+      var ballNum = 8;
+      var balls = [];
+
+      for (var i = 0; i < ballNum; i++) {
+        balls[i] = new ball();
+      }
+
+      var cv = new LazyCanvas();
+      cv.Init(document.getElementById("mainStage"));
+      cx = cv.Context;
+
+      var clicked = true;
+      cv.Canvas.addEventListener("click", function () {
+        clicked = !clicked;
+      });
+
+      var render = function () {
+        cx.fillStyle = "rgba(255,255,255)";
+        cx.fillRect(0, 0, cv.Width, cv.Height);
+
+        renderGrid(cv, cx, balls);
+
+        cx.lineWidth = 1;
+        cx.fillStyle = "rgb(255,255,255)";
+        cx.strokeStyle = "rgb(128,0,0)";
+
+        for (var i = 0; i < balls.length; i++) {
+          var ball = balls[i];
+          ball.move(cv, balls);
+          if (clicked) {
+            ball.draw(cx);
+          }
+        }
+
+        requestAnimationFrame(render);
+      };
+
+      render();
+    </script>
+  </body>
+</html>

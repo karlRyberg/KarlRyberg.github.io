@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Video To Canvas</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+      }
+      video,
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      video {
+        left: 10px;
+      }
+      canvas {
+        top: 100px;
+        background-color: rgb(255, 207, 0);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas width="1000" height="1000"></canvas>
+    <video width="0" height="0" loop="true"></video>
+    <button id="btn-play-video" disabled="disabled">Play</button>
+    <input type="file" id="video-input-file" />
+    <button id="btn-start-camera">Camera</button>
+    <button id="btn-set-res-small">1 x 1</button>
+    <button id="btn-set-res-smallish">1 x 2</button>
+    <button id="btn-set-res-big">2 x 2</button>
+    <button id="btn-set-res-long">1 x 3</button>
+    <button id="btn-set-res-tall">3 x 1</button>
+    <button id="btn-color-video">Video Color</button>
+    <button id="btn-color-lego">Lego Color</button>
+    <script>
+      const legoColors = [
+        //   "000000",
+        //   "6C6E68",
+        //   "A0A5A9",
+        //   "ffffff"
+        "FF698F",
+        "DF6695",
+        "DF6695",
+        "E4ADC8",
+        "C870A0",
+        "923978",
+        "CE1D9B",
+        "E1D5ED",
+        "AC78BA",
+        "3F3691",
+        "A5A5CB",
+        "A5A5CB",
+        "A5A9B4",
+        "0020A0",
+        "0020A0",
+        "6074A1",
+        "0055BF",
+        "0A3463",
+        "5A93DB",
+        "9FC3E9",
+        "078BC9",
+        "68BCC5",
+        "68BCC5",
+        "36AEBF",
+        "008F9B",
+        "05131D",
+        "AEEFEC",
+        "ADC3C0",
+        "184632",
+        "237841",
+        "4B9F4A",
+        "84B68D",
+        "84B68D",
+        "A0BCAC",
+        "DFEEA5",
+        "D9E4A7",
+        "BBE90B",
+        "FFF03A",
+        "F8F184",
+        "9B9A5A",
+        "BBA53D",
+        "F5CD2F",
+        "F2CD37",
+        "DBAC34",
+        "352100",
+        "F8BB3D",
+        "AA7F2E",
+        "E4CD9E",
+        "FF800D",
+        "A95500",
+        "FE8A18",
+        "F08F1C",
+        "CC702A",
+        "F6D7B3",
+        "958A73",
+        "D09168",
+        "583927",
+        "582A12",
+        "C91A09",
+        "C91A09",
+        "720E0F",
+        "635F52",
+        "FFFFFF",
+        "FFFFFF",
+        "FCFCFC",
+        "FCFCFC",
+        "D9D9D9",
+        "A0A5A9",
+        "898788",
+        "6C6E68",
+        "575857",
+      ];
+
+      let ColorMode = "video";
+
+      const canvas = document.querySelector("canvas");
+      canvas.height = window.innerHeight - 100;
+      canvas.width = window.innerWidth;
+
+      const ctx = canvas.getContext("2d");
+      const video = document.querySelector("video");
+      let stud_size = 20;
+      let sample_size_x = stud_size;
+      let sample_size_y = stud_size;
+
+      const buffer = document.createElement("canvas");
+      const bufferCtx = buffer.getContext("2d");
+
+      const stud = document.createElement("img");
+      stud.src = "stud.png";
+
+      let renderScale = 0;
+      let renderWidth = 0;
+      let renderHeight = 0;
+
+      const fileSelector = document.querySelector("#video-input-file");
+      let selectedFile = null;
+
+      fileSelector.addEventListener("change", () => {
+        selectedFile = null;
+        selectedFile = fileSelector.files[0];
+        let canPlay = video.canPlayType(selectedFile.type);
+        if (canPlay === "") canPlay = "no";
+        const err = canPlay === "no";
+        if (err) {
+          selectedFile = null;
+          alert("Cannot play video");
+        }
+
+        if (selectedFile) {
+          playBtn.removeAttribute("disabled");
+        } else {
+          playBtn.setAttribute("disabled", "disabled");
+        }
+      });
+
+      const playBtn = document.querySelector("#btn-play-video");
+
+      playBtn.addEventListener("click", () => {
+        video.srcObject = null;
+        video.src = (window.URL || window.webkitURL).createObjectURL(selectedFile);
+
+        // video.src = "rick-astley-never-gonna-give-you-up-(720p).mp4" || "IMG_5752.mp4";
+        bufferCtx.clearRect(0, 0, bufferCtx.width, bufferCtx.height);
+        video.load();
+        // video.play();
+      });
+
+      document.querySelector("#btn-start-camera").addEventListener("click", () => {
+        bufferCtx.clearRect(0, 0, bufferCtx.width, bufferCtx.height);
+        navigator.mediaDevices
+          .getUserMedia({ video: true, audio: false })
+          .then((stream) => {
+            console.log(stream);
+            video.srcObject = stream;
+            //video.play();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+
+      document.querySelector("#btn-set-res-small").addEventListener("click", () => {
+        sample_size_x = stud_size;
+        sample_size_y = stud_size;
+      });
+
+      document.querySelector("#btn-set-res-smallish").addEventListener("click", () => {
+        sample_size_x = stud_size * 2;
+        sample_size_y = stud_size;
+      });
+
+      document.querySelector("#btn-set-res-long").addEventListener("click", () => {
+        sample_size_x = stud_size * 3;
+        sample_size_y = stud_size;
+      });
+
+      document.querySelector("#btn-set-res-tall").addEventListener("click", () => {
+        sample_size_x = stud_size;
+        sample_size_y = stud_size * 3;
+      });
+
+      document.querySelector("#btn-set-res-big").addEventListener("click", () => {
+        sample_size_x = stud_size * 2;
+        sample_size_y = stud_size * 2;
+      });
+
+      document.querySelector("#btn-color-video").addEventListener("click", () => {
+        ColorMode = "video";
+      });
+
+      document.querySelector("#btn-color-lego").addEventListener("click", () => {
+        ColorMode = "lego";
+      });
+
+      getLegoColor = (rgbIn) => {
+        let nearest = Number.MAX_VALUE;
+        let selected = 0;
+
+        for (let i = 0; i < legoColors.length; i++) {
+          const comp = legoColors[i];
+          rgbCompare = {
+            r: parseInt(comp.substring(0, 2), 16),
+            g: parseInt(comp.substring(2, 4), 16),
+            b: parseInt(comp.substring(4, 6), 16),
+          };
+
+          const distance = Math.sqrt(
+            Math.pow(rgbIn.r - rgbCompare.r, 2) + Math.pow(rgbIn.g - rgbCompare.g, 2) + Math.pow(rgbIn.b - rgbCompare.b, 2)
+          );
+          if (distance < nearest) {
+            nearest = distance;
+            selected = i;
+          }
+        }
+        return legoColors[selected];
+      };
+
+      applyStuds = (initX, initY) => {
+        for (let y = 0; y < sample_size_y; y += stud_size) {
+          for (let x = 0; x < sample_size_x; x += stud_size) {
+            bufferCtx.drawImage(stud, initX + x, initY + y, stud_size, stud_size);
+          }
+        }
+      };
+
+      applyHighLights = (initX, initY) => {
+        bufferCtx.strokeStyle = "rgba(255,255,255,0.6)";
+        bufferCtx.lineWidth = 1;
+        bufferCtx.beginPath();
+        bufferCtx.moveTo(initX + 1, initY + 1);
+        bufferCtx.lineTo(initX + 1 + sample_size_x, initY + 1);
+        bufferCtx.moveTo(initX + 1, initY + 1);
+        bufferCtx.lineTo(initX + 1, initY + 1 + sample_size_y);
+        bufferCtx.stroke();
+        bufferCtx.strokeStyle = "rgba(0,0,0,0.4)";
+        bufferCtx.lineWidth = 1;
+        bufferCtx.beginPath();
+        bufferCtx.moveTo(initX - 1, initY - 1 + sample_size_y);
+        bufferCtx.lineTo(initX - 1 + sample_size_x, initY - 1 + sample_size_y);
+        bufferCtx.moveTo(initX - 1 + sample_size_x, initY - 1);
+        bufferCtx.lineTo(initX - 1 + sample_size_x, initY - 1 + sample_size_y);
+        bufferCtx.stroke();
+      };
+
+      processFrame = () => {
+        if (bufferCtx.width == 0) return;
+
+        bufferCtx.drawImage(video, 0, 0, buffer.width, buffer.height);
+        let pixels = bufferCtx.getImageData(0, 0, buffer.width, buffer.height).data;
+
+        for (let y = 0; y < buffer.height; y += sample_size_y) {
+          for (let x = 0; x < buffer.width; x += sample_size_x) {
+            let pixel = (x + y * buffer.width) * 4;
+
+            if (ColorMode == "lego") {
+              const color = getLegoColor({
+                r: pixels[pixel],
+                g: pixels[pixel + 1],
+                b: pixels[pixel + 2],
+              });
+              bufferCtx.fillStyle = "#" + color;
+            } else {
+              bufferCtx.fillStyle = "rgb(" + pixels[pixel] + "," + pixels[pixel + 1] + "," + pixels[pixel + 2] + ")";
+            }
+
+            bufferCtx.fillRect(x, y, sample_size_x, sample_size_y);
+            applyStuds(x, y);
+            applyHighLights(x, y);
+          }
+        }
+      };
+
+      animationStep = () => {
+        if (video.videoWidth > 0 && video.videoHeight > 0) {
+          processFrame();
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(buffer, (canvas.width - renderWidth) / 2, (canvas.height - renderHeight) / 2, renderWidth, renderHeight);
+        }
+        clearTimeout(animTimer);
+        animTimer = setTimeout(animationStep, 20);
+      };
+
+      video.addEventListener("loadedmetadata", () => {
+        const ratio = video.videoWidth / video.videoHeight;
+        buffer.height = Math.min(video.videoHeight, 1080);
+        buffer.width = Math.min(video.videoWidth, 1080 * ratio);
+
+        renderScale = Math.min(canvas.width / video.videoWidth, canvas.height / video.videoHeight);
+        renderWidth = Math.min(video.videoWidth * renderScale, buffer.width);
+        renderHeight = Math.min(video.videoHeight * renderScale, buffer.height);
+
+        video.play();
+      });
+
+      let animTimer = null;
+
+      video.addEventListener("play", () => {
+        clearTimeout(animTimer);
+        animTimer = setTimeout(animationStep, 20);
+        video.style.display = "none";
+      });
+    </script>
+  </body>
+</html>

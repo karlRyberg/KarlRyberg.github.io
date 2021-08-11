@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div
+      id="mainStage"
+      style="
+        width: 1024px;
+        height: 604px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 60px;
+        right: 0;
+        margin: auto;
+        box-shadow: 0 20px 50px -40px rgba(0, 0, 0, 0.3);
+      "
+    ></div>
+    <script src="../assets/js/LazyCanvas.js"></script>
+    <script>
+      function rotate(velocity, angle) {
+        const rotatedVelocities = {
+          x: velocity.x * Math.cos(angle) - velocity.y * Math.sin(angle),
+          y: velocity.x * Math.sin(angle) + velocity.y * Math.cos(angle),
+        };
+
+        return rotatedVelocities;
+      }
+
+      function resolveCollision(particle, otherParticle) {
+        const xVelocityDiff = particle.velocity.x - otherParticle.velocity.x;
+        const yVelocityDiff = particle.velocity.y - otherParticle.velocity.y;
+
+        const xDist = otherParticle.x - particle.x;
+        const yDist = otherParticle.y - particle.y;
+
+        if (xVelocityDiff * xDist + yVelocityDiff * yDist >= 0) {
+          // Grab angle between the two colliding particles
+          const angle = -Math.atan2(otherParticle.y - particle.y, otherParticle.x - particle.x);
+
+          // Store mass in var for better readability in collision equation
+          const m1 = particle.mass;
+          const m2 = otherParticle.mass;
+
+          // Velocity before equation
+          const u1 = rotate(particle.velocity, angle);
+          const u2 = rotate(otherParticle.velocity, angle);
+
+          // Velocity after 1d collision equation
+          const v1 = { x: (u1.x * (m1 - m2)) / (m1 + m2) + (u2.x * 2 * m2) / (m1 + m2), y: u1.y };
+          const v2 = { x: (u2.x * (m1 - m2)) / (m1 + m2) + (u1.x * 2 * m2) / (m1 + m2), y: u2.y };
+
+          // Final velocity after rotating axis back to original location
+          const vFinal1 = rotate(v1, -angle);
+          const vFinal2 = rotate(v2, -angle);
+
+          // Swap particle velocities for realistic bounce effect
+          particle.velocity.x = vFinal1.x;
+          particle.velocity.y = vFinal1.y;
+
+          otherParticle.velocity.x = vFinal2.x;
+          otherParticle.velocity.y = vFinal2.y;
+        }
+      }
+
+      var ball = function () {
+        this.radius = 50 + Math.random() * 60;
+
+        this.x = this.radius + Math.random() * (cv.Width - this.radius * 2);
+        this.y = this.radius + Math.random() * (cv.Height - this.radius * 2);
+        this.velocity = {
+          x: Math.random() * 4 - 2,
+          y: Math.random() * 4 - 2,
+        };
+
+        this.orgVX = this.velocity.x;
+        this.orgVY = this.velocity.y;
+
+        this.mass = 1; //Math.max(1, Math.round(this.radius / 20));
+
+        this.stageMargin = res * 0;
+
+        this.move = function (cv, friends) {
+          var newX = this.x;
+          var newY = this.y;
+          if (
+            newX - this.radius <= this.stageMargin ||
+            newX + this.radius >= cv.Width - this.stageMargin
+          ) {
+            this.velocity.x *= -1;
+          }
+          if (
+            newY - this.radius <= this.stageMargin ||
+            newY + this.radius >= cv.Height - this.stageMargin
+          ) {
+            this.velocity.y *= -1;
+          }
+
+          for (var i = 0; i < friends.length; i++) {
+            var friend = friends[i];
+            if (this == friend) continue;
+            var distx = this.x - friend.x;
+            var disty = this.y - friend.y;
+            var dist = Math.sqrt(distx * distx + disty * disty);
+            var combRad = this.radius + friend.radius;
+
+            if (dist <= combRad) {
+              resolveCollision(this, friend);
+            }
+          }
+
+          this.x += this.velocity.x;
+          this.y += this.velocity.y;
+
+          if (newX - this.radius <= this.stageMargin) {
+            this.x = this.radius + this.stageMargin + 1;
+          }
+          if (newX + this.radius >= cv.Width - this.stageMargin) {
+            this.x = cv.Width - this.radius - this.stageMargin - 1;
+          }
+          if (newY - this.radius <= this.stageMargin) {
+            this.y = this.radius + this.stageMargin + 1;
+          }
+          if (newY + this.radius >= cv.Height - this.stageMargin) {
+            this.y = cv.Height - this.radius - this.stageMargin - 1;
+          }
+        };
+        this.draw = function (cx) {
+          cx.beginPath();
+          cx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+          cx.fill();
+          // cx.stroke();
+        };
+      };
+
+      var point = function (x, y) {
+        this.x = x;
+        this.y = y;
+      };
+
+      var indexFromCellBin = function (a, b, c, d) {
+        return parseInt(`${+(a >= 1)}${+(b >= 1)}${+(c >= 1)}${+(d >= 1)}`, 2);
+      };
+
+      var renderGrid = function (cx) {
+        // cx.beginPath();
+
+        // for (var x = 0; x < cols; x++) {
+        //   cx.moveTo(x * res, 0);
+        //   cx.lineTo(x * res, rows * res);
+        // }
+        // for (var y = 0; y < rows; y++) {
+        //   cx.moveTo(0, y * res);
+        //   cx.lineTo(cols * res, y * res);
+        // }
+        // cx.lineWidth = "0.5";
+        // cx.strokeStyle = "rgba(0,0,0,0.2)";
+        // cx.closePath();
+        // cx.stroke();
+
+        cx.beginPath();
+        for (var x = 0; x < cols - 1; x++) {
+          for (var y = 0; y < rows - 1; y++) {
+            var lineType = indexFromCellBin(
+              corners[x][y],
+              corners[x + 1][y],
+              corners[x + 1][y + 1],
+              corners[x][y + 1]
+            );
+
+            var xPix = x * res;
+            var yPix = y * res;
+
+            // cx.fillStyle = "rgb(0,0,0)";
+            // if (corners[x][y] >= 1) {
+            //   cx.fillStyle = "rgb(128,200,0)";
+            // }
+
+            // cx.fillText(corners[x][y].toFixed(2), x * res - 10, y * res);
+            // cx.fillText(lineType, xPix + res / 2, yPix + res / 2);
+
+            var topPos = lerp(corners[x][y], corners[x + 1][y], 0, 1);
+            var rightPos = lerp(corners[x + 1][y], corners[x + 1][y + 1], 0, 1);
+            var bottomPos = lerp(corners[x][y + 1], corners[x + 1][y + 1], 0, 1);
+            var leftPos = lerp(corners[x][y], corners[x][y + 1], 0, 1);
+
+            // topPos = 0;
+            // rightPos = 0;
+            // bottomPos = 0;
+            // leftPos = 0;
+
+            var c1 = new point((x + topPos) * res, yPix);
+            var c2 = new point(xPix + res, (y + rightPos) * res);
+            var c3 = new point((x + bottomPos) * res, yPix + res);
+            var c4 = new point(xPix, (y + leftPos) * res);
+
+            switch (lineType) {
+              case 1:
+                drawCell([c3, c4, new point(xPix, yPix + res)]);
+                break;
+              case 2:
+                drawCell([c2, c3, new point(xPix + res, yPix + res)]);
+                break;
+              case 3:
+                drawCell([c2, c4, new point(xPix, yPix + res), new point(xPix + res, yPix + res)]);
+                break;
+              case 4:
+                drawCell([c1, c2, new point(xPix + res, yPix)]);
+                break;
+              case 5:
+                drawCell([
+                  c1,
+                  new point(xPix + res, yPix),
+                  c2,
+                  c3,
+                  new point(xPix, yPix + res),
+                  c4,
+                ]);
+                break;
+              case 6:
+                drawCell([c1, new point(xPix + res, yPix), new point(xPix + res, yPix + res), c3]);
+                break;
+              case 7:
+                drawCell([
+                  c1,
+                  new point(xPix + res, yPix),
+                  new point(xPix + res, yPix + res),
+                  new point(xPix, yPix + res),
+                  c4,
+                ]);
+                break;
+              case 8:
+                drawCell([new point(xPix, yPix), c1, c4]);
+                break;
+              case 9:
+                drawCell([new point(xPix, yPix), c1, c3, new point(xPix, yPix + res)]);
+                break;
+              case 10:
+                drawCell([
+                  c1,
+                  c2,
+                  new point(xPix + res, yPix + res),
+                  c3,
+                  c4,
+                  new point(xPix, yPix),
+                ]);
+                break;
+              case 11:
+                drawCell([
+                  new point(xPix, yPix),
+                  c1,
+                  c2,
+                  new point(xPix + res, yPix + res),
+                  new point(xPix, yPix + res),
+                ]);
+                break;
+              case 12:
+                drawCell([new point(xPix, yPix), new point(xPix + res, yPix), c2, c4]);
+                break;
+              case 13:
+                drawCell([
+                  new point(xPix, yPix),
+                  new point(xPix + res, yPix),
+                  c2,
+                  c3,
+                  new point(xPix, yPix + res),
+                ]);
+                break;
+              case 14:
+                drawCell([
+                  new point(xPix, yPix),
+                  new point(xPix + res, yPix),
+                  new point(xPix + res, yPix + res),
+                  c3,
+                  c4,
+                ]);
+                break;
+              case 15:
+                drawCell([
+                  new point(xPix, yPix),
+                  new point(xPix + res, yPix),
+                  new point(xPix + res, yPix + res),
+                  new point(xPix, yPix + res),
+                ]);
+                break;
+            }
+          }
+        }
+
+        //cx.strokeStyle = "rgb(193,109,199)";
+        //  cx.fillStyle = "rgb(148, 199,109)";
+        cx.closePath();
+        cx.fillStyle = "rgb(40, 40, 40)";
+        cx.fill();
+        // cx.shadowColor = "rgb(40, 40, 40)";
+        // cx.shadowOffsetX = 0;
+        // cx.shadowOffsetY = 0;
+        // cx.shadowBlur = 6;
+
+        // cx.stroke();
+      };
+
+      var drawCell = function (points) {
+        cx.moveTo(points[0].x, points[0].y);
+        for (var i = 1; i < points.length; i++) {
+          cx.lineTo(points[i].x, points[i].y);
+        }
+      };
+
+      var lerp = function (x0, x1) {
+        return (1 - x0) / (x1 - x0);
+      };
+
+      var fillGrid = function (balls) {
+        for (var x = 0; x < cols; x++) {
+          for (var y = 0; y < rows; y++) {
+            var heat = 0;
+            corners[x][y] = 0;
+            for (var i = 0; i < balls.length; i++) {
+              var ball = balls[i];
+              var xPix = x * res;
+              var yPix = y * res;
+              var r2 = ball.radius * ball.radius;
+              var x2 = (xPix - ball.x) * (xPix - ball.x);
+              var y2 = (yPix - ball.y) * (yPix - ball.y);
+              var contact = r2 / (x2 + y2);
+              heat += contact;
+            }
+            //console.log(heat)
+            corners[x][y] = heat * sensitivity;
+          }
+        }
+      };
+
+      var cv = new LazyCanvas();
+      cv.Init(document.getElementById("mainStage"));
+      cx = cv.Context;
+
+      var sensitivity = 0.95;
+      var res = 10;
+      var cols = 1 + cv.Width / res;
+      var rows = 1 + cv.Height / res;
+      var corners = [];
+      var ballNum = 8;
+      var balls = [];
+
+      for (var i = 0; i < ballNum; i++) {
+        balls[i] = new ball();
+      }
+
+      for (var x = 0; x < cols; x++) {
+        corners[x] = [];
+        for (var y = 0; y < rows; y++) {
+          corners[x][y] = 0;
+        }
+      }
+
+      var clicked = true;
+      cv.Canvas.addEventListener("click", function () {
+        clicked = !clicked;
+      });
+
+      var render = function () {
+        // cx.fillStyle = "rgb(129, 176,199)";
+        cx.fillStyle = "rgb(255, 255,255)";
+        cx.fillRect(0, 0, cv.Width, cv.Height);
+
+        fillGrid(balls);
+        renderGrid(cx);
+
+        cx.fillStyle = "rgb(255,255,255)";
+        // cx.shadowColor = "transparent";
+        // cx.shadowBlur = 0;
+        for (var i = 0; i < balls.length; i++) {
+          var ball = balls[i];
+          ball.move(cv, balls);
+          if (!clicked) {
+            ball.draw(cx);
+          }
+        }
+
+        requestAnimationFrame(render);
+      };
+
+      render();
+    </script>
+  </body>
+</html>

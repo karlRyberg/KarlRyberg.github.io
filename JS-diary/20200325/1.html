@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div id="mainStage" style="position:absolute; top: 0; left: 0; width: 800px; height: 800px;"></div>
+    <script src="../assets/js/LazyCanvas.js"></script>
+    <script>
+      var cv = new LazyCanvas();
+      cv.Init(document.getElementById("mainStage"));
+      cx = cv.Context;
+
+      const ball = function() {
+        let x = Math.random() * cv.Width;
+        let y = Math.random() * cv.Height;
+        let vel = 0;
+
+        let angle = Math.random() * 2 * Math.PI;
+        let radius = 1;
+
+        this.draw = function() {
+          cx.fillStyle = "rgb(0,0,0)";
+          cx.beginPath();
+        //  cx.fillRect(x, y, 1, 1);
+          cx.arc(x, y, radius * 2, 0, Math.PI * 2, true);
+         // cx.fillStyle = "rgba(0,0,0,0.2)";
+          cx.fill();
+        //  cx.lineWidth = 1;
+        //  cx.strokeStyle = "rgba(0,0,0,1)";
+          cx.stroke();
+        };
+
+        this.move = function() {
+          vel += 1;
+          vel = Math.min(4, vel);
+
+          let velx = vel * Math.cos(angle);
+          let vely = vel * Math.sin(angle);
+
+          x = x + velx;
+          y = y + vely;
+          if (x > cv.Width) x = 0;
+          if (x < 0) x = cv.Width;
+          if (y > cv.Height) y = 0;
+          if (y < 0) y = cv.Height;
+          angle = getGridAngle(x, y);
+          if (angle === null) {
+            return;
+          }
+        };
+      };
+
+      const getGridAngle = function(x, y) {
+        let col = Math.floor(x / resolution);
+        let row = Math.floor(y / resolution);
+        if (col >= columns) col = 0;
+        if (col < 0) col = columns;
+        if (row >= rows) row = 0;
+        if (row < 0) row = rows;
+        activeCol = col;
+        activeRow = row;
+        // console.log(`grid[${col}][${row}] `);
+        if (grid[col][row] === null || grid[col][row] === undefined) {
+          return null;
+        } else {
+          return grid[col][row];
+        }
+      };
+
+      const resolution = 20;
+      const columns = cv.Width / resolution;
+      const rows = cv.Height / resolution;
+      const grid = new Array(columns).fill(0).map(() => new Array(rows).fill(0));
+      const balls = [];
+      const ballCount = 400;
+
+      for (let i = 0; i < ballCount; i++) {
+        balls[i] = new ball();
+      }
+      const setAngles = function() {
+        for (let column = 0; column < columns; column++) {
+          for (let row = 0; row < rows; row++) {
+            grid[column][row] = ((row + 1) / (rows + 1)) * Math.PI;
+          }
+        }
+      };
+
+      const clear = function() {
+        cx.fillStyle = "rgb(255,255,255)";
+        cx.fillRect(0, 0, cv.Width, cv.Height);
+      };
+
+      const drawActiveCell = function() {
+        for (let column = 0; column < columns; column++) {
+          for (let row = 0; row < rows; row++) {
+            if (activeCol == column && activeRow == row) {
+              cx.fillStyle = "rgb(0,255,0)";
+              x1 = resolution * column;
+              y1 = resolution * row;
+              cx.fillRect(x1, y1, resolution, resolution);
+            }
+          }
+        }
+      };
+
+      let activeCol = null;
+      let activeRow = null;
+      const drawFieldAngles = function() {
+        cx.lineWidth = 0.5;
+        cx.fillStyle = "rgb(0,0,0)";
+        cx.strokeStyle = "rgba(0,0,0, .5)";
+
+        for (let column = 0; column < columns; column++) {
+          for (let row = 0; row < rows; row++) {
+            x1 = resolution * column;
+            y1 = resolution * row;
+            r = resolution / 4;
+            theta = grid[row][column];
+            cx.strokeRect(x1, y1, resolution, resolution);
+            x1 += resolution / 2;
+            y1 += resolution / 2;
+            cx.moveTo(x1 - r * Math.cos(theta), y1 - r * Math.sin(theta));
+            cx.lineTo(x1 + r * Math.cos(theta), y1 + r * Math.sin(theta));
+            cx.fillRect(x1 - 1 + r * Math.cos(theta), y1 - 1 + r * Math.sin(theta), 2, 2);
+          }
+        }
+        cx.stroke();
+      };
+
+      setAngles();
+      drawFieldAngles();
+
+      const draw = function() {
+        clear();
+        for (let i = 0; i < ballCount; i++) {
+          balls[i].move();
+        }
+
+        // drawActiveCell();
+        drawFieldAngles();
+        for (let i = 0; i < ballCount; i++) {
+          balls[i].draw();
+        }
+
+        window.requestAnimationFrame(draw);
+      };
+
+      draw();
+    </script>
+  </body>
+</html>
