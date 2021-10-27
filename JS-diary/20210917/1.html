@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div id="mainStage" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; bottom: 0; right: 0; margin: auto"></div>
+    <script src="../assets/js/LazyCanvas.js"></script>
+    <script>
+      var particles = [];
+      var particleCount = 60;
+      function particle(index, x, y, size, radius, angle) {
+        this.Move = function (force) {
+          var tx = cv.Width / 2;
+          var ty = cv.Height / 2;
+          var rad = this.angle * (Math.PI / 180);
+
+          var prev = particles[this.index - 1] || particles[particles.length - 1];
+          var next = particles[this.index + 1] || particles[0];
+
+          this.radius = this.selected || force ? this.radius : (prev.radius + next.radius + this.radius) / 3;
+
+          tx += this.radius * Math.cos(rad);
+          ty += this.radius * Math.sin(rad);
+
+          if (force) {
+            this.x = tx;
+            this.y = ty;
+          } else {
+            this.vx += (tx - this.x) * baseElactisy;
+            this.vy += (ty - this.y) * baseElactisy;
+            this.vx *= baseDrag;
+            this.vy *= baseDrag;
+            this.x += this.vx;
+            this.y += this.vy;
+          }
+        };
+        this.Scale = function (force) {
+          var ts = this.size;
+
+          var prev = particles[this.index - 1] || particles[particles.length - 1];
+          var next = particles[this.index + 1] || particles[0];
+
+          this.renderSize = this.selected || force ? this.renderSize : (prev.renderSize + next.renderSize + this.renderSize) / 3;
+
+          ts = (ts - this.renderSize) * 0.02;
+          this.alpha = 1.5 - baseSize / this.renderSize;
+          this.renderSize += ts;
+        };
+        this.Draw = function () {
+          cx.fillStyle = `rgba(0,0,0,${1})`;
+          cx.beginPath();
+          cx.arc(this.x, this.y, this.renderSize / 2, 0, Math.PI * 2, true);
+          cx.fill();
+        };
+        this.index = index;
+        this.x = x;
+        this.y = y;
+        this.vx = 0;
+        this.vy = 0;
+        this.size = size;
+        this.renderSize = size;
+        this.angle = angle || 0;
+        this.radius = radius || 0;
+        this.alpha = 0;
+        this.selected = false;
+        this.Move(true);
+        this.Scale(true);
+      }
+
+      var cv = new LazyCanvas();
+      cv.Init(document.getElementById("mainStage"));
+      cx = cv.Context;
+
+      var clicked = true;
+      cv.Canvas.addEventListener("click", function () {
+        render();
+      });
+
+      var deg = 270;
+      var baseElactisy = 0.01;
+      var baseRadius = 100;
+      var baseSize = 4;
+      var baseDrag = 0.95;
+      var step = 360 / 60;
+      for (var i = 0; i < particleCount; i++) {
+        particles[i] = new particle(i, cv.Width / 2, cv.Height / 2, baseSize, baseRadius, deg);
+        deg += step;
+      }
+
+      var findRenderStart = function () {
+        var renderBuffer = 2;
+        for (var i = renderBuffer; i < particles.length + renderBuffer; i++) {
+          var found = false;
+          for (var j = -renderBuffer; j <= renderBuffer; j++) {
+            index = (i + j) % particles.length;
+            var p = particles[index];
+            if (p.selected){
+              found = true;
+              break;
+            } 
+          }
+          if(!found){
+            return i;
+          }
+     
+        }
+      };
+
+      var renderLine = function () {
+        cx.fillStyle = `rgba(0,0,0,${1})`;
+        cx.strokeStyle = `rgba(0,0,0,${1})`;
+
+        var startIndex = findRenderStart();
+
+        var p = particles[startIndex];
+        var next = null;
+        var cpx = 0;
+        var cpy = 0;
+        cx.beginPath();
+        cx.moveTo(p.x, p.y);
+
+        for (var i = 0; i < particles.length + 1; i++) {
+          index = (i + startIndex) % particles.length;
+          p = particles[index];
+          next = particles[(index + 1) % particles.length];
+          cpx = (p.x + next.x) / 2;
+          cpy = (p.y + next.y) / 2;
+          cx.quadraticCurveTo(p.x, p.y, cpx, cpy);
+
+          if (i == particles.length - 1) {
+            cx.quadraticCurveTo(cpx, cpy, next.x, next.y);
+          }
+        }
+
+        cx.fill();
+        cx.stroke();
+      };
+
+
+      var renderCover = function(){
+        cx.fillStyle = `rgba(255,255,255,${1})`;
+          cx.beginPath();
+          cx.arc(cv.Width / 2, cv.Height / 2, baseRadius + 1, 0, Math.PI * 2, true);
+          cx.fill();
+      };
+
+      var date = new Date();
+      var hour = (date.getHours() % 12) * 5;
+      var minute = date.getMinutes();
+      var second = date.getSeconds();
+
+      var render = function () {
+        cx.fillStyle = "rgba(255,255,255)";
+        cx.fillRect(0, 0, cv.Width, cv.Height);
+
+        date = new Date();
+        hour = (date.getHours() % 12) * 5;
+        minute = date.getMinutes();
+        second = date.getSeconds();
+
+        for (var i = 0; i < particles.length; i++) {
+          particles[i].size = baseSize;
+          particles[i].radius = baseRadius;
+          particles[i].selected = false;
+
+          if (i == hour) {
+            particles[i].size += baseSize * 4;
+            particles[i].radius += baseRadius * 0.2;
+            particles[i].selected = true;
+          }
+          if (i == minute) {
+            particles[i].size += baseSize * 3;
+            particles[i].radius += baseRadius * 0.6;
+            particles[i].selected = true;
+          }
+          if (i == second) {
+            particles[i].size += baseSize * 2;
+            particles[i].radius += baseRadius * 0.8;
+            particles[i].selected = true;
+          } else {
+          }
+
+          particles[i].Move();
+          particles[i].Scale();
+         // particles[i].Draw();
+        }
+        renderLine();
+        renderCover();
+        requestAnimationFrame(render);
+      };
+
+      render();
+
+     
+    </script>
+  </body>
+</html>

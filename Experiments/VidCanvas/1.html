@@ -31,20 +31,45 @@
     <video width="0" height="0" loop="true"></video>
     <button id="btn-play-video" disabled="disabled">Play</button>
     <input type="file" id="video-input-file" />
+
     <button id="btn-start-camera">Camera</button>
-    <button id="btn-set-res-small">1 x 1</button>
-    <button id="btn-set-res-smallish">1 x 2</button>
-    <button id="btn-set-res-big">2 x 2</button>
-    <button id="btn-set-res-long">1 x 3</button>
-    <button id="btn-set-res-tall">3 x 1</button>
-    <button id="btn-color-video">Video Color</button>
-    <button id="btn-color-lego">Lego Color</button>
+
+    <label>
+      <input type="radio" class="brick-size" name="brick-size" value="1x1" checked="checked" />
+      1 x 1
+    </label>
+    <label>
+      <input type="radio" class="brick-size" name="brick-size" value="2x1" />
+      2 x 1
+    </label>
+    <label>
+      <input type="radio" class="brick-size" name="brick-size" value="1x2" />
+      1 x 2
+    </label>
+    <label>
+      <input type="radio" class="brick-size" name="brick-size" value="2x2" />
+      2 x 2
+    </label>
+    <label>
+      <input type="radio" class="brick-size" name="brick-size" value="3x1" />
+      3 x 1
+    </label>
+    <label>
+      <input type="radio" class="brick-size" name="brick-size" value="1x3" />
+      1 x 3
+    </label>
+
+    <label>
+      <input type="radio" class="color-palette" name="color-palette" value="video" checked="checked" />
+      Video
+    </label>
+    <label>
+      <input type="radio" class="color-palette" name="color-palette" value="lego" />
+      lego
+    </label>
+
     <script>
       const legoColors = [
-        //   "000000",
-        //   "6C6E68",
-        //   "A0A5A9",
-        //   "ffffff"
         "FF698F",
         "DF6695",
         "DF6695",
@@ -187,38 +212,23 @@
           });
       });
 
-      document.querySelector("#btn-set-res-small").addEventListener("click", () => {
-        sample_size_x = stud_size;
-        sample_size_y = stud_size;
-      });
+      const sizeRadios = document.querySelectorAll(".brick-size");
+      for (let i = 0; i < sizeRadios.length; i++) {
+        const radio = sizeRadios[i];
+        radio.addEventListener("change", () => {
+          v = radio.value.split("x");
+          sample_size_x = stud_size * parseInt(v[0], 10);
+          sample_size_y = stud_size * parseInt(v[1], 10);
+        });
+      }
 
-      document.querySelector("#btn-set-res-smallish").addEventListener("click", () => {
-        sample_size_x = stud_size * 2;
-        sample_size_y = stud_size;
-      });
-
-      document.querySelector("#btn-set-res-long").addEventListener("click", () => {
-        sample_size_x = stud_size * 3;
-        sample_size_y = stud_size;
-      });
-
-      document.querySelector("#btn-set-res-tall").addEventListener("click", () => {
-        sample_size_x = stud_size;
-        sample_size_y = stud_size * 3;
-      });
-
-      document.querySelector("#btn-set-res-big").addEventListener("click", () => {
-        sample_size_x = stud_size * 2;
-        sample_size_y = stud_size * 2;
-      });
-
-      document.querySelector("#btn-color-video").addEventListener("click", () => {
-        ColorMode = "video";
-      });
-
-      document.querySelector("#btn-color-lego").addEventListener("click", () => {
-        ColorMode = "lego";
-      });
+      const colorRadios = document.querySelectorAll(".color-palette");
+      for (let i = 0; i < colorRadios.length; i++) {
+        const radio = colorRadios[i];
+        radio.addEventListener("change", () => {
+          ColorMode = radio.value;
+        });
+      }
 
       getLegoColor = (rgbIn) => {
         let nearest = Number.MAX_VALUE;
@@ -270,25 +280,61 @@
         bufferCtx.stroke();
       };
 
+      sampleColor = (pixels, x, y) => {
+        let pixel = (x + y * buffer.width) * 4;
+        let r = pixels[pixel];
+        let g = pixels[pixel + 1];
+        let b = pixels[pixel + 2];
+        return {
+          r: r,
+          g: g,
+          b: b,
+        };
+      };
+
+      smoothColor = (pixels, x, y) => {
+        let r = 0;
+        let g = 0;
+        let b = 0;
+
+        for (let w = 0; w < sample_size_x; w++) {
+          for (let h = 0; h < sample_size_y; h++) {
+            let pixel = (x + w + (y + h) * buffer.width) * 4;
+            r += pixels[pixel];
+            g += pixels[pixel + 1];
+            b += pixels[pixel + 2];
+          }
+        }
+
+        r = r / (sample_size_x * sample_size_y);
+        g = g / (sample_size_x * sample_size_y);
+        b = b / (sample_size_x * sample_size_y);
+        return {
+          r: r,
+          g: g,
+          b: b,
+        };
+      };
+
       processFrame = () => {
         if (bufferCtx.width == 0) return;
 
         bufferCtx.drawImage(video, 0, 0, buffer.width, buffer.height);
         let pixels = bufferCtx.getImageData(0, 0, buffer.width, buffer.height).data;
-
         for (let y = 0; y < buffer.height; y += sample_size_y) {
           for (let x = 0; x < buffer.width; x += sample_size_x) {
-            let pixel = (x + y * buffer.width) * 4;
+            const col = smoothColor(pixels, x, y);
+           // const col = sampleColor(pixels, x, y);
 
             if (ColorMode == "lego") {
               const color = getLegoColor({
-                r: pixels[pixel],
-                g: pixels[pixel + 1],
-                b: pixels[pixel + 2],
+                r: col.r,
+                g: col.g,
+                b: col.b,
               });
               bufferCtx.fillStyle = "#" + color;
             } else {
-              bufferCtx.fillStyle = "rgb(" + pixels[pixel] + "," + pixels[pixel + 1] + "," + pixels[pixel + 2] + ")";
+              bufferCtx.fillStyle = "rgb(" + col.r + "," + col.g + "," + col.b + ")";
             }
 
             bufferCtx.fillRect(x, y, sample_size_x, sample_size_y);
